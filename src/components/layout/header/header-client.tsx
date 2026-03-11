@@ -69,7 +69,9 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
       <div className="container mx-auto flex items-center justify-between px-6 md:px-12 lg:px-24">
         <Link
           href="/"
-          className={`font-display font-bold text-xl hover:scale-105 transition-all duration-200 ${(scrolled && theme === "light") ? "text-foreground" : "text-white"}`}
+          className={`font-display font-bold text-xl hover:scale-105 transition-all duration-200 ${
+            ((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-white"
+          }`}
         >
           NF<span className="text-accent">.</span>
         </Link>
@@ -80,7 +82,9 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
             <Button
               key={item.to}
               variant="link"
-              className={isActive(item.to) ? "text-accent" : "text-muted-foreground"}
+              className={isActive(item.to) 
+                ? "text-accent" 
+                : ((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-muted-foreground"}
             >
               <Link href={item.to as any}>
                 {item.label}
@@ -95,7 +99,7 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
             onClick={toggleLocale}
             variant="ghost"
             aria-label="Toggle language"
-            className="text-muted-foreground hover:text-accent transition-all duration-200"
+            className={`hover:text-accent transition-all duration-200 ${((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-muted-foreground"}`}
           >
             <Globe className="w-4 h-4" />
             {locale === "es" ? "EN" : "ES"}
@@ -106,7 +110,7 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
             onClick={toggleTheme}
             variant="ghost"
             aria-label="Toggle theme"
-            className="text-muted-foreground hover:text-accent transition-all duration-200"
+            className={`hover:text-accent transition-all duration-200 ${((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-muted-foreground"}`}
           >
             {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
           </Button>
@@ -118,7 +122,7 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
             onClick={toggleLocale}
             aria-label="Toggle language"
             variant="ghost"
-            className="text-muted-foreground hover:text-accent transition-all duration-200"
+            className={`hover:text-accent transition-all duration-200 ${((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-muted-foreground"}`}
           >
             <Globe className="w-4 h-4" />
           </Button>
@@ -126,7 +130,7 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
             onClick={toggleTheme}
             variant="ghost"
             aria-label="Toggle theme"
-            className="text-muted-foreground hover:text-accent transition-all duration-200"
+            className={`hover:text-accent transition-all duration-200 ${((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-muted-foreground"}`}
           >
             {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
           </Button>
@@ -134,7 +138,7 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
             onClick={() => setMobileOpen(!mobileOpen)}
             variant="ghost"
             aria-label="Toggle menu"
-            className="text-muted-foreground hover:text-accent transition-all duration-200"
+            className={`hover:text-accent transition-all duration-200 ${((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-muted-foreground"}`}
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </Button>
