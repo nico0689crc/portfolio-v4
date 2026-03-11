@@ -10,6 +10,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: t('homeTitle'),
     description: t('homeDescription'),
+    alternates: {
+      canonical: 'https://nicolasarielfernandez.com/en',
+    },
   };
 }
 

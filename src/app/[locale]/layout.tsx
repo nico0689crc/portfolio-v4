@@ -32,6 +32,13 @@ export async function generateMetadata({
       default: t('defaultTitle'),
     },
     description: t('defaultDescription'),
+    alternates: {
+      canonical: 'https://nicolasarielfernandez.com/en', // Force English as the canonical base
+      languages: {
+        'en': 'https://nicolasarielfernandez.com/en',
+        'es': 'https://nicolasarielfernandez.com/es',
+      },
+    },
   };
 }
 

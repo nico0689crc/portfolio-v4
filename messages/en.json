@@ -139,6 +139,12 @@
       "name": "Nicolás Fernández"
     }
   },
+  "NotFound": {
+    "title": "Oops, you're lost",
+    "description": "It seems the page you're looking for doesn't exist or was moved. Don't worry, even the best explorers lose their way sometimes.",
+    "button": "Back to home",
+    "errorCode": "404 Error"
+  },
   "Metadata": {
     "titleTemplate": "%s | Nico's Portfolio",
     "defaultTitle": "Nico's Portfolio | Web Developer",

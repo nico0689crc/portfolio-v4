@@ -139,6 +139,12 @@
       "name": "Nicolás Fernández"
     }
   },
+  "NotFound": {
+    "title": "Ups, te has perdido",
+    "description": "Parece que la página que buscas no existe o fue movida. No te preocupes, incluso los mejores exploradores pierden el rumbo a veces.",
+    "button": "Volver al inicio",
+    "errorCode": "Error 404"
+  },
   "Metadata": {
     "titleTemplate": "%s | Nico's Portfolio",
     "defaultTitle": "Nico's Portfolio | Desarrollador Web",
