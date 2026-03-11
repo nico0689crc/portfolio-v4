@@ -1,0 +1,157 @@
+{
+  "Header": {
+    "home": "Home",
+    "about": "About",
+    "portfolio": "Portfolio",
+    "resume": "Resume",
+    "contact": "Contact"
+  },
+  "Footer": {
+    "title": "Shall we build something together?",
+    "desc": "I'm always learning, exploring new technologies, and looking for projects where I can bring real value. If you have an idea, a team, or a challenge, I'd love to hear from you.",
+    "email": "Send an email",
+    "made": "Made with",
+    "by": "by Nicolás Fernández"
+  },
+  "Home": {
+    "title": "Home",
+    "welcome": "Welcome to my portfolio.",
+    "hero": {
+      "badge": "Available for remote work",
+      "title": {
+        "1": "Web development with",
+        "2": "design vision"
+      },
+      "subtitle": "Full Stack Developer & UX/UI Designer. I build scalable, intuitive digital products with real impact.",
+      "location": "Argentina · Worldwide remote",
+      "cta": {
+        "projects": "View Projects",
+        "contact": "Get in Touch"
+      }
+    },
+    "skills": {
+      "title": "Tecnologías & Skills",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "databases": "Bases de Datos",
+      "devops": "DevOps & CMS"
+    },
+    "why": {
+      "title": "Why Choose Me?",
+      "ux": {
+        "title": "UX/UI Focus",
+        "desc": "Every line of code I write has the user in mind. I design intuitive, accessible, and efficient interfaces that solve real problems."
+      },
+      "pressure": {
+        "title": "Problem-solving Under Pressure",
+        "desc": "7 years in international kitchens trained me to make quick decisions, prioritize, and deliver results when it matters most."
+      },
+      "fullstack": {
+        "title": "Full Stack Vision",
+        "desc": "From wireframe to deploy. I handle the entire product lifecycle: design, frontend, backend, databases, and infrastructure."
+      }
+    }
+  },
+  "About": {
+    "title": "About Me",
+    "about": {
+      "p1": "I'm <strong>Nicolás Ariel Fernández</strong>, a Full Stack Developer with 3+ years of experience building web applications with JavaScript, TypeScript, React, and Node.js. I'm currently pursuing a diploma in UX/UI Design, which allows me to create products that don't just work well — they <em>feel</em> right.",
+      "p2": "But my story doesn't start with code. For 7 years I worked as a professional chef in <strong class='text-accent'>New Zealand, Sweden, Germany, and Australia</strong>. High-pressure kitchens taught me something no bootcamp can: solving problems in real time, communicating across cultures, and staying calm when everything's on fire (literally and figuratively).",
+      "p3": "That unconventional combination — culinary discipline + technical thinking + design empathy — is what makes me different. I don't just write clean code; I understand the user, the business, and the team."
+    },
+    "card1": {
+      "title": "3+ years in web development",
+      "desc": "React, Node.js, TypeScript, NestJS and more."
+    },
+    "card2": {
+      "title": "7 years of international experience",
+      "desc": "4 countries, multicultural teams, extreme adaptability."
+    },
+    "card3": {
+      "title": "From the kitchen to code",
+      "desc": "Problem-solving under pressure, attention to detail, teamwork."
+    },
+    "cta": "Let's talk"
+  },
+  "Portfolio": {
+    "title": "Projects",
+    "subtitle": "A selection of projects where I combine technical development with user-centered design.",
+    "code": "Code",
+    "demo": "Demo",
+    "image": "Project image",
+    "project1": {
+      "title": "E-Commerce Dashboard",
+      "desc": "Admin panel for an online store with real-time metrics, product management, and sales analytics."
+    },
+    "project2": {
+      "title": "Task Management App",
+      "desc": "Task management application with drag & drop, real-time collaboration, and smart notifications."
+    },
+    "project3": {
+      "title": "Restaurant Booking System",
+      "desc": "Online booking system for restaurants with interactive calendar, table management, and automatic confirmations."
+    },
+    "project4": {
+      "title": "Portfolio & Blog",
+      "desc": "Personal site with integrated blog, dynamic content system, and advanced SEO optimization."
+    }
+  },
+  "Contact": {
+    "title": "Contact",
+    "desc": "Do you have any questions, proposals, or just want to say hi? Leave me a message and I'll get back to you as soon as possible.",
+    "footer": {
+      "title": "Shall we build something together?",
+      "desc": "I'm always learning, exploring new technologies, and looking for projects where I can bring real value. If you have an idea, a team, or a challenge, I'd love to hear from you."
+    },
+    "hero": {
+      "badge": "Available for remote work"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "message": "Message",
+      "messagePlaceholder": "How can I help you?",
+      "submit": "Send Message",
+      "sending": "Sending..."
+    },
+    "validation": {
+      "nameMin": "Name must be at least 2 characters",
+      "nameMax": "Name cannot exceed 50 characters",
+      "emailInvalid": "Must be a valid email address",
+      "messageMin": "Message must be at least 10 characters",
+      "messageMax": "Message cannot exceed 1000 characters",
+      "serverError": "There was an error sending the message. Please try again later."
+    },
+    "success": {
+      "title": "Message sent!",
+      "desc": "Thanks for contacting me. I'll get back to you as soon as possible.",
+      "button": "Send another message"
+    },
+    "email": {
+      "subject": "I have received your message - Nicolás Fernández",
+      "greeting": "Hello",
+      "body1": "Thank you for reaching out to me through my portfolio.",
+      "body2": "I have successfully received your message and will get back to you as soon as possible.",
+      "body3": "Here is a copy of your message:",
+      "signoff": "Best regards,",
+      "name": "Nicolás Fernández"
+    }
+  },
+  "Metadata": {
+    "titleTemplate": "%s | Nico's Portfolio",
+    "defaultTitle": "Nico's Portfolio | Web Developer",
+    "defaultDescription": "Personal portfolio of Nico, a web developer specialized in creating modern digital experiences.",
+    "homeTitle": "Home",
+    "homeDescription": "Welcome to Nico's portfolio. Explore my projects and skills.",
+    "aboutTitle": "About",
+    "aboutDescription": "Learn more about my background, skills, and experience as a developer.",
+    "portfolioTitle": "Portfolio",
+    "portfolioDescription": "Explore my recent web development projects and work.",
+    "resumeTitle": "Resume",
+    "resumeDescription": "My work experience and education as a software developer.",
+    "contactTitle": "Contact",
+    "contactDescription": "Get in touch with me for work opportunities or collaborations."
+  }
+}

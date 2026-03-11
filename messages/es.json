@@ -1,0 +1,157 @@
+{
+  "Header": {
+    "home": "Inicio",
+    "about": "Sobre mi",
+    "portfolio": "Portafolio",
+    "resume": "Curriculum",
+    "contact": "Contacto"
+  },
+  "Footer": {
+    "title": "¿Construimos algo juntos?",
+    "desc": "Siempre estoy aprendiendo, explorando nuevas tecnologías y buscando proyectos donde pueda aportar valor real. Si tienes una idea, un equipo o un desafío, me encantaría escucharte.",
+    "email": "Enviar un correo",
+    "made": "Hecho con",
+    "by": "por Nicolás Fernández"
+  },
+  "Home": {
+    "title": "Inicio",
+    "welcome": "Bienvenido a mi portafolio.",
+    "hero": {
+      "badge": "Disponible para trabajo remoto",
+      "title": {
+        "1": "Desarrollo web con",
+        "2": "visión de diseño"
+      },
+      "subtitle": "Full Stack Developer & UX/UI Designer. Construyo productos digitales escalables, intuitivos y con impacto real.",
+      "location": "Argentina · Remoto global",
+      "cta": {
+        "projects": "Ver Proyectos",
+        "contact": "Contactar"
+      }
+    },
+    "skills": {
+      "title": "Tecnologías & Skills",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "databases": "Bases de Datos",
+      "devops": "DevOps & CMS"
+    },
+    "why": {
+      "title": "¿Por qué elegirme?",
+      "ux": {
+        "title": "Enfoque UX/UI",
+        "desc": "Cada línea de código que escribo tiene al usuario en mente. Diseño interfaces intuitivas, accesibles y eficientes que resuelven problemas reales."
+      },
+      "pressure": {
+        "title": "Resolución bajo presión",
+        "desc": "7 años en cocinas internacionales me entrenaron para tomar decisiones rápidas, priorizar y entregar resultados cuando más importa."
+      },
+      "fullstack": {
+        "title": "Visión Full Stack",
+        "desc": "Del wireframe al deploy. Manejo todo el ciclo de vida del producto: diseño, frontend, backend, bases de datos e infraestructura."
+      }
+    }
+  },
+  "About": {
+    "title": "Sobre mí",
+    "about": {
+      "p1": "Soy <strong>Nicolás Ariel Fernández</strong>, Desarrollador Full Stack con más de 3 años de experiencia construyendo aplicaciones web con JavaScript, TypeScript, React y Node.js. Actualmente curso una Diplomatura en Diseño UX/UI, lo que me permite crear productos que no solo funcionan bien, sino que se <em>sienten</em> bien.",
+      "p2": "Pero mi historia no empieza en el código. Durante 7 años trabajé como cocinero profesional en <strong class=\"text-accent\">Nueva Zelanda, Suecia, Alemania y Australia</strong>. Las cocinas de alta presión me enseñaron algo que ningún bootcamp puede: resolver problemas en tiempo real, comunicarme en equipos multiculturales y mantener la calma cuando todo se prende fuego (literal y figurativamente).",
+      "p3": "Esa combinación poco convencional —disciplina gastronómica + pensamiento técnico + empatía de diseño— es lo que me hace diferente. No solo escribo código limpio; entiendo al usuario, al negocio y al equipo."
+    },
+    "card1": {
+      "title": "+3 años en desarrollo web",
+      "desc": "React, Node.js, TypeScript, NestJS y más."
+    },
+    "card2": {
+      "title": "7 años de experiencia internacional",
+      "desc": "4 países, equipos multiculturales, adaptabilidad extrema."
+    },
+    "card3": {
+      "title": "De la cocina al código",
+      "desc": "Resolución bajo presión, atención al detalle, trabajo en equipo."
+    },
+    "cta": "Hablemos"
+  },
+  "Portfolio": {
+    "title": "Proyectos",
+    "subtitle": "Una selección de proyectos donde combino desarrollo técnico con diseño centrado en el usuario.",
+    "code": "Código",
+    "demo": "Demo",
+    "image": "Imagen del proyecto",
+    "project1": {
+      "title": "E-Commerce Dashboard",
+      "desc": "Panel de administración para tienda online con métricas en tiempo real, gestión de productos y analíticas de ventas."
+    },
+    "project2": {
+      "title": "Task Management App",
+      "desc": "Aplicación de gestión de tareas con drag & drop, colaboración en tiempo real y notificaciones inteligentes."
+    },
+    "project3": {
+      "title": "Restaurant Booking System",
+      "desc": "Sistema de reservas online para restaurantes con calendario interactivo, gestión de mesas y confirmaciones automáticas."
+    },
+    "project4": {
+      "title": "Portfolio & Blog",
+      "desc": "Sitio personal con blog integrado, sistema de contenido dinámico y optimización SEO avanzada."
+    }
+  },
+  "Contact": {
+    "title": "Contacto",
+    "desc": "¿Tienes alguna pregunta, propuesta o simplemente quieres saludar? Déjame un mensaje y te responderé lo antes posible.",
+    "footer": {
+      "title": "¿Construimos algo juntos?",
+      "desc": "Siempre estoy aprendiendo, explorando nuevas tecnologías y buscando proyectos donde pueda aportar valor real. Si tienes una idea, un equipo o un desafío, me encantaría escucharte."
+    },
+    "hero": {
+      "badge": "Disponible para trabajo remoto"
+    },
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Tu nombre",
+      "email": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "message": "Mensaje",
+      "messagePlaceholder": "¿En qué puedo ayudarte?",
+      "submit": "Enviar Mensaje",
+      "sending": "Enviando..."
+    },
+    "validation": {
+      "nameMin": "El nombre debe tener al menos 2 caracteres",
+      "nameMax": "El nombre no puede exceder los 50 caracteres",
+      "emailInvalid": "Debe ser un correo electrónico válido",
+      "messageMin": "El mensaje debe tener al menos 10 caracteres",
+      "messageMax": "El mensaje no puede exceder los 1000 caracteres",
+      "serverError": "Hubo un error al enviar el mensaje. Por favor intenta nuevamente más tarde."
+    },
+    "success": {
+      "title": "¡Mensaje enviado!",
+      "desc": "Gracias por contactarme. Te responderé lo antes posible.",
+      "button": "Enviar otro mensaje"
+    },
+    "email": {
+      "subject": "He recibido tu mensaje - Nicolás Fernández",
+      "greeting": "Hola",
+      "body1": "Gracias por ponerte en contacto conmigo a través de mi portafolio.",
+      "body2": "He recibido tu mensaje correctamente y te responderé lo antes posible.",
+      "body3": "Aquí tienes una copia de tu mensaje:",
+      "signoff": "Saludos cordiales,",
+      "name": "Nicolás Fernández"
+    }
+  },
+  "Metadata": {
+    "titleTemplate": "%s | Nico's Portfolio",
+    "defaultTitle": "Nico's Portfolio | Desarrollador Web",
+    "defaultDescription": "Portafolio personal de Nico, desarrollador web especializado en crear experiencias digitales modernas.",
+    "homeTitle": "Inicio",
+    "homeDescription": "Bienvenido al portafolio de Nico. Explora mis proyectos y habilidades.",
+    "aboutTitle": "Sobre mi",
+    "aboutDescription": "Conoce más sobre mi trayectoria, habilidades y experiencia como desarrollador.",
+    "portfolioTitle": "Portafolio",
+    "portfolioDescription": "Explora mis proyectos y trabajos recientes en desarrollo web.",
+    "resumeTitle": "Curriculum",
+    "resumeDescription": "Mi experiencia laboral y educación como desarrollador de software.",
+    "contactTitle": "Contacto",
+    "contactDescription": "Ponte en contacto conmigo para oportunidades de trabajo o colaboraciones."
+  }
+}
