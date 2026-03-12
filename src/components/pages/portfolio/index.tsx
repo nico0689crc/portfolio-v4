@@ -120,10 +120,12 @@ const Projects = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex gap-4">
-                      <a href={project.github} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
-                        <Github className="w-4 h-4" /> {t("projects.code")}
-                      </a>
-                      <a href={project.demo} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
+                      {project.github && (
+                        <a href={project.github} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
+                          <Github className="w-4 h-4" /> {t("projects.code")}
+                        </a>
+                      )}
+                      <a href={project.demo} target="_blank" className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
                         <ExternalLink className="w-4 h-4" /> {t("projects.demo")}
                       </a>
                     </div>
