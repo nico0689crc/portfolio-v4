@@ -3,6 +3,8 @@ import { Github, Linkedin, Mail, Heart } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button-variants';
+import { cn } from '@/lib/utils';
 
 export function Footer() {
   const t = useTranslations('Footer');
@@ -27,31 +29,36 @@ export function Footer() {
           </p>
 
           <div className="flex justify-center gap-6 mb-12">
+            {/* Social links */}
             {[
               { icon: Linkedin, href: "https://www.linkedin.com/in/nicolas-ariel-fernandez", label: "LinkedIn" },
               { icon: Github, href: "https://github.com/nico0689crc", label: "GitHub" },
               { icon: Mail, href: "mailto:contacto@nicolasarielfernandez.com", label: "Email" },
-            ].map((link) => (
-
-              <Link
-                key={link.label}
-                href={link.href}
+            ].map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={link.label}
+                aria-label={social.label}
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "[&_svg:not([class*='size-'])]:size-5 px-4 py-2"
+                )}
               >
-                <Button variant="outline" size="lg" className="[&_svg:not([class*='size-'])]:size-5 px-4 py-2">
-                  <link.icon />
-                </Button>
-              </Link>
+                <social.icon />
+              </a>
             ))}
+
           </div>
-          <Link href="mailto:contacto@nicolasarielfernandez.com">
-            <Button size="lg">
-              <Mail className="w-5 h-5" />
-              {t("email")}
-            </Button>
+          <Link 
+            href="mailto:contacto@nicolasarielfernandez.com"
+            className={cn(buttonVariants({ size: "lg" }), "gap-2")}
+          >
+            <Mail className="w-5 h-5" />
+            {t("email")}
           </Link>
+
         </Reveal>
       </div>
 

@@ -16,7 +16,7 @@ export default function Hero() {
       <div className="absolute top-20 right-20 w-72 h-72 bg-accent/10 rounded-full blur-3xl" />
       <div className="absolute bottom-20 left-10 w-48 h-48 bg-accent/5 rounded-full blur-2xl" />
 
-      <div className="container mx-auto relative z-10 px-6 md:px-12 lg:px-24">
+      <div className="container mx-auto relative z-10 px-6 md:px-12 lg:px-24 pb-4">
         <div className="flex flex-col-reverse md:flex-row items-center gap-12 lg:gap-20 mt-20 lg:mt-0">
           <Reveal
             initial={{ opacity: 0, y: 40 }}

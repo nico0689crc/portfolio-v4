@@ -6,6 +6,8 @@ import { Menu, X, Moon, Sun, Globe } from "lucide-react";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { Link } from '@/i18n/routing';
 import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
+import { cn } from "@/lib/utils";
 
 interface NavItem {
   label: string;
@@ -79,17 +81,18 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-6">
           {navItems.map((item) => (
-            <Button
+            <Link
               key={item.to}
-              variant="link"
-              className={isActive(item.to) 
-                ? "text-accent" 
-                : ((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-muted-foreground"}
+              href={item.to as any}
+              className={cn(
+                buttonVariants({ variant: "link" }),
+                isActive(item.to)
+                  ? "text-accent"
+                  : ((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-muted-foreground"
+              )}
             >
-              <Link href={item.to as any}>
-                {item.label}
-              </Link>
-            </Button>
+              {item.label}
+            </Link>
           ))}
 
           <div className="w-px h-5 bg-border mx-2" />
@@ -156,15 +159,17 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
           >
             <div className="flex flex-col gap-4 px-6 py-6">
               {navItems.map((item) => (
-                <Button
+                <Link
                   key={item.to}
-                  variant="link"
-                  className={isActive(item.to) ? "text-accent" : "text-muted-foreground"}
+                  href={item.to as any}
+                  className={cn(
+                    buttonVariants({ variant: "link" }),
+                    isActive(item.to) ? "text-accent" : "text-muted-foreground"
+                  )}
+                  onClick={() => setMobileOpen(false)}
                 >
-                  <Link href={item.to as any}>
-                    {item.label}
-                  </Link>
-                </Button>
+                  {item.label}
+                </Link>
               ))}
             </div>
           </motion.div>
