@@ -9,7 +9,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: t('aboutTitle'),
     description: t('aboutDescription'),
     alternates: {
-      canonical: 'https://nicolasarielfernandez.com/en/about',
+      canonical: 'https://nicolasarielfernandez.com/about',
+      languages: {
+        'en': 'https://nicolasarielfernandez.com/en/about',
+        'es': 'https://nicolasarielfernandez.com/es/sobre-mi',
+      },
     },
   };
 }
@@ -17,7 +21,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function SobreMiPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations('Header');
   return (
     <About />
   );

@@ -29,12 +29,20 @@
         "contact": "Get in Touch"
       }
     },
+    "shortAbout": {
+      "title": "A bit about me",
+      "desc": "I am a Full Stack Developer and UX/UI Design Student dedicated to building robust and memorable digital tools. I actively leverage Artificial Intelligence in my workflows to accelerate development and maintain flawless code. I prioritize server-side scalability while designing interfaces that end-users actually enjoy using.",
+      "cv": "Download CV",
+      "cvUrl": "/CV_Nicolas_Fernandez_FullStack_UXUI_EN.pdf"
+    },
     "skills": {
-      "title": "Tecnologías & Skills",
+      "title": "Technologies & Skills",
       "frontend": "Frontend",
       "backend": "Backend",
-      "databases": "Bases de Datos",
-      "devops": "DevOps & CMS"
+      "databases": "Databases",
+      "devops": "DevOps & CMS",
+      "ai": "AI & Tools",
+      "soft": "Soft Skills"
     },
     "why": {
       "title": "Why Choose Me?",
@@ -42,9 +50,9 @@
         "title": "UX/UI Focus",
         "desc": "Every line of code I write has the user in mind. I design intuitive, accessible, and efficient interfaces that solve real problems."
       },
-      "pressure": {
-        "title": "Problem-solving Under Pressure",
-        "desc": "7 years in international kitchens trained me to make quick decisions, prioritize, and deliver results when it matters most."
+      "soft": {
+        "title": "Collaborative Mindset",
+        "desc": "I believe in assertive communication and teamwork as pillars of success. I adapt quickly to new challenges, bringing proactivity and practical solutions to the project."
       },
       "fullstack": {
         "title": "Full Stack Vision",
@@ -54,22 +62,90 @@
   },
   "About": {
     "title": "About Me",
+    "cv": "Download CV",
+    "cvUrl": "/CV_Nicolas_Fernandez_FullStack_UXUI_EN.pdf",
     "about": {
-      "p1": "I'm <strong>Nicolás Ariel Fernández</strong>, a Full Stack Developer with 3+ years of experience building web applications with JavaScript, TypeScript, React, and Node.js. I'm currently pursuing a diploma in UX/UI Design, which allows me to create products that don't just work well — they <em>feel</em> right.",
-      "p2": "But my story doesn't start with code. For 7 years I worked as a professional chef in <strong class='text-accent'>New Zealand, Sweden, Germany, and Australia</strong>. High-pressure kitchens taught me something no bootcamp can: solving problems in real time, communicating across cultures, and staying calm when everything's on fire (literally and figuratively).",
-      "p3": "That unconventional combination — culinary discipline + technical thinking + design empathy — is what makes me different. I don't just write clean code; I understand the user, the business, and the team."
+      "p1": "I'm <strong>Nicolás Ariel Fernández</strong>, a Full Stack Developer and UX/UI Design Student, with over 3 years of software development experience.",
+      "p2": "My main focus is developing efficient web applications using modern technologies like <strong class='text-accent'>React, Next.js, Node.js, and TypeScript</strong>. In parallel, my training in UX/UI Design gives me a user-centered vision, allowing me to design interfaces that not only look amazing but are highly functional, intuitive, and accessible.",
+      "p3": "I consider myself a proactive professional, detail-oriented, and always ready to learn new industry tools. I enjoy working in teams and being involved in the entire product lifecycle: from visual conceptualization to the final code in production."
     },
     "card1": {
-      "title": "3+ years in web development",
-      "desc": "React, Node.js, TypeScript, NestJS and more."
+      "title": "3+ years of experience",
+      "desc": "React, Next.js, TypeScript, Node.js, and modern architectures."
     },
     "card2": {
-      "title": "7 years of international experience",
-      "desc": "4 countries, multicultural teams, extreme adaptability."
+      "title": "UX/UI Design Focus",
+      "desc": "Creating intuitive interfaces and user-centered experiences."
     },
     "card3": {
-      "title": "From the kitchen to code",
-      "desc": "Problem-solving under pressure, attention to detail, teamwork."
+      "title": "Continuous Learning",
+      "desc": "Proactivity, adaptability, and passion for technical best practices."
+    },
+    "experience": {
+      "title": "Work Experience",
+      "jobs": [
+        {
+          "role": "Freelance Web Developer",
+          "company": "Freelance - Corrientes, Argentina",
+          "date": "March, 2025 - Present",
+          "desc": "I work with a wide range of clients to help turn their ideas into solid, functional web applications. From the early stages, I support them in shaping a realistic development plan—breaking down ideas into smaller, actionable steps and moving forward through modular iterations. Day to day, I’m building and maintaining full-stack solutions, from UI design and frontend development to backend APIs and deployment pipelines. I enjoy collaborating closely with clients, writing clean and maintainable code.",
+          "tech": "React.js, Next.js, TypeScript, Node.js, Express, Tailwind CSS, Material UI, MongoDB, PostgreSQL, Laravel, Docker, Git, AWS"
+        },
+        {
+          "role": "Fullstack Developer (Remote)",
+          "company": "IT Crowd - Buenos Aires, Argentina",
+          "date": "April, 2022 - January, 2023",
+          "desc": "Developed web applications using full-stack technologies, including backend services with Ruby on Rails and frontend frameworks like React.js, working closely with cross-functional teams.",
+          "tech": "AWS, Ruby on Rails, Python, JavaScript, Node.js, React.js, Teamwork"
+        },
+        {
+          "role": "International Career in Gastronomy and Hospitality",
+          "company": "Oceania and Europe",
+          "date": "January 2016 – March 2022 | January 2023 - January 2025",
+          "desc": "Professional Chef and Team Leader: Successful development of a career in Culinary Arts working in fast-paced professional kitchens in Australia, New Zealand, Sweden, and Germany. Development of high-performance work habits transferable to software development: strict time management, attention to detail, adaptability to new environments, and ability to execute complex workflows under pressure.",
+          "tech": "Leadership, Working under pressure, Multicultural adaptability, Time management"
+        },
+        {
+          "role": "Frontend Web Developer (Remote)",
+          "company": "Freelance - Corrientes, Argentina",
+          "date": "January, 2015 - March, 2016",
+          "desc": "Designed and developed websites for clients across various industries, gathering client requirements and delivering projects on time.",
+          "tech": "SQL, HTML, CSS, JavaScript, AngularJS, jQuery, PHP (Laravel)"
+        },
+        {
+          "role": "Android & Web Developer (On-site)",
+          "company": "Soluciones Palm SA - Corrientes, Argentina",
+          "date": "August, 2013 - January, 2015",
+          "desc": "Developed Android applications and web platforms, working with cross-functional teams and ensuring seamless user experiences.",
+          "tech": "Android, Java, Web Development"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Learn a bit more about how I work and how I can help you.",
+      "questions": [
+        {
+          "q": "What does your typical work process look like?",
+          "a": "My process is divided into 4 main phases: <strong>1. Discovery:</strong> Fully understanding your needs and the product's objective. <strong>2. Design & Planning:</strong> Defining the architecture, UX/UI design, and breaking the project into clear stages. <strong>3. Modular Development:</strong> Iteratively building the project, delivering functional versions in short cycles. <strong>4. Delivery & Maintenance:</strong> Production deployment with clean, scalable, and SEO-optimized code."
+        },
+        {
+          "q": "What kind of projects can you help me with?",
+          "a": "With a Full Stack profile and UX/UI design skills, I can help you from scratch: interface design (Figma), attractive and accessible visual development (Frontend), and implementing business logic, databases, and server deployment (Backend & DevOps). Ideal for MVPs (Minimum Viable Products), custom web platforms, e-commerce, and internal systems."
+        },
+        {
+          "q": "What values guide your work?",
+          "a": "<strong>Transparency:</strong> Clear communication about deadlines and technical feasibility. <strong>Quality over speed:</strong> I prefer writing maintainable and secure code rather than taking quick shortcuts. <strong>Empathy:</strong> Always putting the final user at the center of the product. <strong>Responsibility:</strong> If a problem arises, I take ownership and look for the solution immediately."
+        },
+        {
+          "q": "What did your culinary career bring to software development?",
+          "a": "At first glance, they seem worlds apart, but they share the same operational foundation: the need to communicate efficiently under high pressure, impeccable time management, knowing how to prioritize critical tasks, and never losing your cool when the unexpected happens. It has given me an extreme resilience and adaptability that I consider my greatest professional edge."
+        },
+        {
+          "q": "How do you integrate Artificial Intelligence (AI) into your workflow?",
+          "a": "I use AI (such as ChatGPT, Claude, or Copilots) as a constant productivity accelerator. Far from replacing technical judgment, it allows me to automate repetitive tasks, debug code faster, build prototypes in record time, and research efficient architectural solutions. By delegating mechanical writing to AI, I invest more energy in the user experience and the structural quality of the application."
+        }
+      ]
     },
     "cta": "Let's talk"
   },
@@ -79,6 +155,7 @@
     "code": "Code",
     "demo": "Demo",
     "image": "Project image",
+    "noProjects": "I'm currently working on this section. Check back soon to see my latest projects!",
     "project1": {
       "title": "E-Commerce Dashboard",
       "desc": "Admin panel for an online store with real-time metrics, product management, and sales analytics."
@@ -146,18 +223,18 @@
     "errorCode": "404 Error"
   },
   "Metadata": {
-    "titleTemplate": "%s | Nico's Portfolio",
-    "defaultTitle": "Nico's Portfolio | Web Developer",
-    "defaultDescription": "Personal portfolio of Nico, a web developer specialized in creating modern digital experiences.",
+    "titleTemplate": "%s | Nicolás Ariel Fernández",
+    "defaultTitle": "Nicolás Ariel Fernández | Full Stack Developer & UX/UI Designer",
+    "defaultDescription": "Portfolio of Nicolás Ariel Fernández, AI-Assisted Full Stack Developer and UX/UI Designer from Argentina. Specialized in React, Next.js, and crafting efficient digital products.",
     "homeTitle": "Home",
-    "homeDescription": "Welcome to Nico's portfolio. Explore my projects and skills.",
-    "aboutTitle": "About",
-    "aboutDescription": "Learn more about my background, skills, and experience as a developer.",
-    "portfolioTitle": "Portfolio",
-    "portfolioDescription": "Explore my recent web development projects and work.",
+    "homeDescription": "Full Stack Developer & UX/UI Designer. I build scalable, intuitive web applications supported by AI workflows and modern technologies like Next.js.",
+    "aboutTitle": "About Me",
+    "aboutDescription": "Learn about my work experience, my technical and AI tool integrations, and how my UX/UI vision enhances fast, high-quality software development.",
+    "portfolioTitle": "Projects & Portfolio",
+    "portfolioDescription": "Explore my web project portfolio. Discover real Full Stack solutions, rapidly generated with AI for efficiency, clean code, and functional interface designs.",
     "resumeTitle": "Resume",
-    "resumeDescription": "My work experience and education as a software developer.",
-    "contactTitle": "Contact",
-    "contactDescription": "Get in touch with me for work opportunities or collaborations."
+    "resumeDescription": "Read and download the CV of Nicolás Ariel Fernández. Over 3 years of web development experience, agile methodologies, AI tools, and collaborative mindset.",
+    "contactTitle": "Get In Touch",
+    "contactDescription": "Need a fast-paced Full Stack Developer or UX/UI Designer? Get in touch with me to discuss your next digital product or job opportunity."
   }
 }

@@ -9,7 +9,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: t('portfolioTitle'),
     description: t('portfolioDescription'),
     alternates: {
-      canonical: 'https://nicolasarielfernandez.com/en/portfolio',
+      canonical: 'https://nicolasarielfernandez.com/portfolio',
+      languages: {
+        'en': 'https://nicolasarielfernandez.com/en/portfolio',
+        'es': 'https://nicolasarielfernandez.com/es/portafolio',
+      },
     },
   };
 }

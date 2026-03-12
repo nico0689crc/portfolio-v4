@@ -3,12 +3,16 @@ import { getTranslations } from "next-intl/server";
 
 const Skills = async () => {
   const t = await getTranslations("Home");
+  const locale = await getTranslations("Metadata"); // To check current active locale
+  const isEnglish = locale("defaultDescription").includes("developer");
 
   const categories = [
     { title: t("skills.frontend"), skills: ["React.js", "Next.js", "JavaScript", "TypeScript", "HTML", "CSS", "Tailwind CSS", "Material UI"] },
     { title: t("skills.backend"), skills: ["Node.js", "Express.js", "NestJS", "GraphQL", "REST APIs", "Laravel", "Ruby on Rails"] },
     { title: t("skills.databases"), skills: ["MongoDB", "PostgreSQL", "MySQL"] },
     { title: t("skills.devops"), skills: ["Docker", "Git", "CI/CD", "GitHub Actions", "AWS", "Linux", "WordPress", "Bricks Builder", "Automaticss"] },
+    { title: t("skills.ai"), skills: ["GitHub Copilot", "ChatGPT", "Claude", "Cursor", "Prompt Engineering"] },
+    { title: t("skills.soft"), skills: isEnglish ? ["Leadership", "Teamwork", "Problem Solving", "Assertive Communication", "Time Management", "Adaptability", "Proactivity"] : ["Liderazgo", "Trabajo en equipo", "Resolución de problemas", "Comunicación asertiva", "Gestión del tiempo", "Adaptabilidad", "Proactividad"] },
   ];
 
   return (
@@ -25,7 +29,7 @@ const Skills = async () => {
           <div className="w-12 h-1 bg-accent mx-auto rounded-full" />
         </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto">
           {categories.map((cat, catIndex) => (
             <Reveal
               key={cat.title}
@@ -33,8 +37,8 @@ const Skills = async () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: catIndex * 0.1, duration: 0.5 }}
-              className="p-6 rounded-xl border border-primary-foreground/10 bg-primary-foreground/5"
-              as="span"
+              className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] p-6 rounded-xl border border-primary-foreground/10 bg-primary-foreground/5 flex flex-col"
+              as="div"
             >
               <h3 className="font-bold text-lg mb-4 text-accent">{cat.title}</h3>
               <div className="flex flex-wrap gap-2">

@@ -9,7 +9,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: t('contactTitle'),
     description: t('contactDescription'),
     alternates: {
-      canonical: 'https://nicolasarielfernandez.com/en/contact',
+      canonical: 'https://nicolasarielfernandez.com/contact',
+      languages: {
+        'en': 'https://nicolasarielfernandez.com/en/contact',
+        'es': 'https://nicolasarielfernandez.com/es/contacto',
+      },
     },
   };
 }

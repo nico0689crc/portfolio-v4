@@ -34,11 +34,33 @@ export async function generateMetadata({
     },
     description: t('defaultDescription'),
     alternates: {
-      canonical: 'https://nicolasarielfernandez.com/en', // Force English as the canonical base
+      canonical: 'https://nicolasarielfernandez.com', // Force root as the canonical base
       languages: {
         'en': 'https://nicolasarielfernandez.com/en',
         'es': 'https://nicolasarielfernandez.com/es',
       },
+    },
+    openGraph: {
+      type: 'website',
+      locale: locale,
+      url: `https://nicolasarielfernandez.com/${locale}`,
+      title: t('defaultTitle'),
+      description: t('defaultDescription'),
+      siteName: 'Nicolás Ariel Fernández',
+      images: [
+        {
+          url: '/profile-picture.webp',
+          width: 800,
+          height: 800,
+          alt: 'Nicolás Ariel Fernández',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('defaultTitle'),
+      description: t('defaultDescription'),
+      images: ['/profile-picture.webp'],
     },
   };
 }

@@ -8,7 +8,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: t('resumeTitle'),
     description: t('resumeDescription'),
     alternates: {
-      canonical: 'https://nicolasarielfernandez.com/en/resume',
+      canonical: 'https://nicolasarielfernandez.com/resume',
+      languages: {
+        'en': 'https://nicolasarielfernandez.com/en/resume',
+        'es': 'https://nicolasarielfernandez.com/es/curriculum',
+      },
     },
   };
 }
