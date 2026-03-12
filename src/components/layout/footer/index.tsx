@@ -28,9 +28,9 @@ export function Footer() {
 
           <div className="flex justify-center gap-6 mb-12">
             {[
-              { icon: Linkedin, href: "https://linkedin.com/in/nicolas-fernandez", label: "LinkedIn" },
-              { icon: Github, href: "https://github.com/nicolas-fernandez", label: "GitHub" },
-              { icon: Mail, href: "mailto:contacto@nicolasfernandez.dev", label: "Email" },
+              { icon: Linkedin, href: "https://www.linkedin.com/in/nicolas-ariel-fernandez", label: "LinkedIn" },
+              { icon: Github, href: "https://github.com/nico0689crc", label: "GitHub" },
+              { icon: Mail, href: "mailto:contacto@nicolasarielfernandez.com", label: "Email" },
             ].map((link) => (
 
               <Link
@@ -46,7 +46,7 @@ export function Footer() {
               </Link>
             ))}
           </div>
-          <Link href="mailto:contacto@nicolasfernandez.dev">
+          <Link href="mailto:contacto@nicolasarielfernandez.com">
             <Button size="lg">
               <Mail className="w-5 h-5" />
               {t("email")}
