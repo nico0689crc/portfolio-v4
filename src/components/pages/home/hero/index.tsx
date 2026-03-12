@@ -17,7 +17,7 @@ export default function Hero() {
       <div className="absolute bottom-20 left-10 w-48 h-48 bg-accent/5 rounded-full blur-2xl" />
 
       <div className="container mx-auto relative z-10 px-6 md:px-12 lg:px-24">
-        <div className="flex flex-col-reverse md:flex-row items-center gap-12 lg:gap-20">
+        <div className="flex flex-col-reverse md:flex-row items-center gap-12 lg:gap-20 mt-20 lg:mt-0">
           <Reveal
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -48,7 +48,7 @@ export default function Hero() {
               <Reveal whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   href="/portfolio"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-accent-foreground font-semibold rounded-lg hover:bg-amber-hover transition-colors duration-200"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-accent-foreground font-semibold rounded-lg hover:bg-amber-hover transition-colors duration-200 text-nowrap"
                 >
                   {t("hero.cta.projects")}
                   <ArrowDown className="w-4 h-4" />
