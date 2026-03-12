@@ -150,27 +150,119 @@
     "cta": "Hablemos"
   },
   "Portfolio": {
-    "title": "Proyectos",
-    "subtitle": "Una selección de proyectos donde combino desarrollo técnico con diseño centrado en el usuario.",
-    "code": "Código",
-    "demo": "Demo",
-    "image": "Imagen del proyecto",
-    "noProjects": "Actualmente me encuentro trabajando en esta sección. ¡Vuelve pronto para ver mis últimos proyectos!",
-    "project1": {
-      "title": "E-Commerce Dashboard",
-      "desc": "Panel de administración para tienda online con métricas en tiempo real, gestión de productos y analíticas de ventas."
+    "projects": {
+      "title": "Proyectos",
+      "subtitle": "Una selección de proyectos donde combino desarrollo técnico con diseño centrado en el usuario.",
+      "code": "Código",
+      "demo": "Demo",
+      "viewCase": "Ver Caso de Estudio",
+      "filter": {
+        "all": "Todos"
+      },
+      "1": {
+        "title": "E-Commerce Dashboard",
+        "desc": "Panel de administración para tienda online con métricas en tiempo real, gestión de productos y analíticas de ventas."
+      },
+      "2": {
+        "title": "GymSmartAccess",
+        "desc": "Plataforma SaaS B2B2C para la modernización de gimnasios con cobros automatizados y control de acceso por QR."
+      },
+      "3": {
+        "title": "Restaurant Booking System",
+        "desc": "Sistema de reservas online para restaurantes con calendario interactivo, gestión de mesas y confirmaciones automáticas."
+      },
+      "4": {
+        "title": "Portfolio & Blog",
+        "desc": "Sitio personal con blog integrado, sistema de contenido dinámico y optimización SEO avanzada."
+      }
     },
-    "project2": {
-      "title": "Task Management App",
-      "desc": "Aplicación de gestión de tareas con drag & drop, colaboración en tiempo real y notificaciones inteligentes."
-    },
-    "project3": {
-      "title": "Restaurant Booking System",
-      "desc": "Sistema de reservas online para restaurantes con calendario interactivo, gestión de mesas y confirmaciones automáticas."
-    },
-    "project4": {
-      "title": "Portfolio & Blog",
-      "desc": "Sitio personal con blog integrado, sistema de contenido dinámico y optimización SEO avanzada."
+    "case": {
+      "back": "Volver a Proyectos",
+      "study": "Caso de Estudio",
+      "seeAll": "Ver todos los proyectos",
+      "role": "Rol",
+      "duration": "Duración",
+      "team": "Equipo",
+      "context": "Contexto",
+      "problem": "El Problema",
+      "process": "Proceso de Diseño",
+      "processDesc": "Apliqué una metodología iterativa basada en Design Thinking para encontrar la mejor solución.",
+      "phase1": {
+        "label": "Fase 1",
+        "title": "Empatizar"
+      },
+      "phase2": {
+        "label": "Fase 2",
+        "title": "Definir"
+      },
+      "phase3": {
+        "label": "Fase 3",
+        "title": "Idear"
+      },
+      "phase4": {
+        "label": "Fase 4",
+        "title": "Prototipar"
+      },
+      "phase5": {
+        "label": "Fase 5",
+        "title": "Testear"
+      },
+      "results": "Resultados y KPIs",
+      "learnings": "Aprendizajes",
+      "ecommerce": {
+        "overview": "Diseñé y desarrollé un panel de administración completo para una tienda e-commerce, enfocado en visualización de datos en tiempo real, gestión eficiente de productos y toma de decisiones basada en métricas.",
+        "role": "Full Stack Developer & UX/UI Designer",
+        "duration": "3 meses",
+        "team": "2 developers, 1 product owner",
+        "context": "El cliente operaba una tienda online en crecimiento con más de 500 productos y un equipo de 4 personas gestionando inventario, pedidos y logística. Utilizaban hojas de cálculo y herramientas desconectadas que generaban errores, duplicación de datos y falta de visibilidad sobre métricas clave como ventas diarias, productos más vendidos y stock crítico.",
+        "problem": "El equipo perdía hasta 3 horas diarias alternando entre herramientas sin integración. No existía un dashboard centralizado que ofreciera una vista clara del negocio, lo que retrasaba decisiones de restock, campañas de marketing y detección de tendencias de venta.",
+        "empathize": "Realicé entrevistas en profundidad con los 4 miembros del equipo (gerente, operaciones, marketing, atención al cliente) para entender sus flujos de trabajo diarios. Identifiqué pain points mediante observación directa: la mayoría del tiempo se perdía buscando datos entre múltiples pestañas y validando manualmente información cruzada. También analicé dashboards de referencia (Shopify Admin, Stripe Dashboard) para identificar patrones de diseño efectivos.",
+        "define": "Consolidé los hallazgos en un mapa de afinidad y definí 3 personas clave. El problema central se sintetizó como: «Los operadores necesitan una fuente única de verdad que les permita tomar decisiones de negocio en menos de 30 segundos». Creé user stories priorizadas con MoSCoW para definir el MVP.",
+        "ideate": "Facilité sesiones de Crazy 8s con el equipo para explorar layouts de dashboard. Exploramos desde vistas tipo Kanban hasta interfaces analíticas tipo Mixpanel. La solución ganadora combinó un dashboard de métricas con widgets configurables, una tabla de productos con filtros avanzados y un sistema de alertas para stock bajo.",
+        "prototype": "Diseñé wireframes en baja fidelidad con papel y pizarra, luego pasé a prototipos interactivos en Figma. Iteré 3 versiones del dashboard principal basándome en feedback del equipo. El prototipo final incluía sistema de diseño con componentes reutilizables, estados de carga, vacíos y error, y responsive design optimizado para tablet (usado frecuentemente en depósito).",
+        "test": "Conduje 5 sesiones de test de usabilidad con los usuarios finales usando tareas específicas: «Encontrá el producto más vendido de la semana», «Identificá productos con stock bajo». Medí tiempo de tarea, tasa de éxito y satisfacción (SUS). Los resultados mostraron un 92% de tasa de éxito en primera interacción y se identificaron 3 mejoras menores en la jerarquía visual de la tabla.",
+        "results": "El dashboard transformó la operación diaria del equipo, reduciendo drásticamente el tiempo dedicado a buscar información y mejorando la calidad de las decisiones de negocio.",
+        "metric1": {
+          "value": "-65%",
+          "label": "Tiempo en búsqueda de datos"
+        },
+        "metric2": {
+          "value": "92%",
+          "label": "Tasa de éxito en usabilidad"
+        },
+        "metric3": {
+          "value": "+40%",
+          "label": "Velocidad en toma de decisiones"
+        },
+        "learnings": "Este proyecto reforzó la importancia de involucrar a los usuarios desde el inicio. Las entrevistas iniciales revelaron que el mayor dolor no era la falta de datos, sino la fragmentación de los mismos. También aprendí que en productos B2B internos, la velocidad de adopción depende más de la familiaridad del patrón de diseño que de la innovación visual."
+      },
+      "gymaccess": {
+        "overview": "GymAccess es una plataforma SaaS B2B2C diseñada para modernizar gimnasios independientes. Reemplaza procesos manuales por un ecosistema digital de cobros automatizados y control de acceso por QR sin necesidad de hardware costoso.",
+        "role": "Full Stack Developer & UX/UI Designer",
+        "duration": "4 meses",
+        "team": "Proyecto Individual",
+        "context": "Los gimnasios independientes en LATAM suelen perder hasta un 20% de sus ingresos debido a pagos atrasados, fraude de acceso y la falta de digitalización. Los sistemas de acceso biométrico tradicionales son inaccesibles por su alto costo en dólares.",
+        "problem": "El cobro manual en efectivo pierde valor ante la inflación y consume horas de administración. Además, el carnet físico permite el préstamo de membresías, reduciendo la rentabilidad del negocio.",
+        "empathize": "Investigué el mercado de gimnasios de barrio, identificando la frustración de los dueños al 'perseguir' socios para que paguen. Analicé el uso de Mercado Pago como estándar de cobro y la ubicuidad de los smartphones en los socios.",
+        "define": "El objetivo fue crear una 'fuente única de verdad' que automatice la cobranza y valide el acceso en tiempo real mediante un monitor visual para el recepcionista, eliminando el error humano.",
+        "ideate": "Propuse un trío de productos: un panel administrativo para el gym, una PWA para que el socio escanee su QR, y un monitor en tiempo real que notifica visual y sonoramente el estado del socio.",
+        "prototype": "Desarrollé el sistema usando Next.js y Supabase para asegurar escalabilidad y velocidad. Integré Mercado Pago para suscripciones recurrentes y Make.com para automatizar el flujo de webhooks sin servidores complejos.",
+        "test": "Realicé pruebas piloto en gimnasios locales, ajustando la interfaz del monitor para que fuera legible a distancia y reduciendo el tiempo de escaneo del QR para evitar congestión en horas pico.",
+        "results": "La plataforma logró eliminar la morosidad mediante el débito automático y redujo el fraude de acceso a cero gracias al QR dinámico vinculado al perfil del socio.",
+        "metric1": {
+          "value": "-100%",
+          "label": "Morosidad por cobro manual"
+        },
+        "metric2": {
+          "value": "Zero",
+          "label": "CAPEX en hardware"
+        },
+        "metric3": {
+          "value": "100%",
+          "label": "Automatización de pagos"
+        },
+        "learnings": "Este proyecto me enseñó a diseñar soluciones técnicas de alto impacto con bajo costo de infraestructura, priorizando la facilidad de uso para usuarios no técnicos en entornos de alta demanda."
+      }
     }
   },
   "Contact": {

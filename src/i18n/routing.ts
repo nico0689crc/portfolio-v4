@@ -22,6 +22,10 @@ export const routing = defineRouting({
     '/contact': {
       en: '/contact',
       es: '/contacto'
+    },
+    '/projects/[slug]': {
+      en: '/projects/[slug]',
+      es: '/proyectos/[slug]'
     }
   }
 });

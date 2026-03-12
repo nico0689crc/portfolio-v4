@@ -150,28 +150,121 @@
     "cta": "Let's talk"
   },
   "Portfolio": {
-    "title": "Projects",
-    "subtitle": "A selection of projects where I combine technical development with user-centered design.",
-    "code": "Code",
-    "demo": "Demo",
-    "image": "Project image",
-    "noProjects": "I'm currently working on this section. Check back soon to see my latest projects!",
-    "project1": {
-      "title": "E-Commerce Dashboard",
-      "desc": "Admin panel for an online store with real-time metrics, product management, and sales analytics."
+    "projects": {
+      "title": "Projects",
+      "subtitle": "A selection of projects where I combine technical development with user-centered design.",
+      "code": "Code",
+      "demo": "Demo",
+      "viewCase": "View Case Study",
+      "filter": {
+        "all": "All"
+      },
+      "1": {
+        "title": "E-Commerce Dashboard",
+        "desc": "Admin panel for an online store with real-time metrics, product management, and sales analytics."
+      },
+      "2": {
+        "title": "GymSmartAccess",
+        "desc": "B2B2C SaaS platform for gym modernization with automated payments and QR-based access control."
+      },
+      "3": {
+        "title": "Restaurant Booking System",
+        "desc": "Online booking system for restaurants with interactive calendar, table management, and automatic confirmations."
+      },
+      "4": {
+        "title": "Portfolio & Blog",
+        "desc": "Personal site with integrated blog, dynamic content system, and advanced SEO optimization."
+      }
     },
-    "project2": {
-      "title": "Task Management App",
-      "desc": "Task management application with drag & drop, real-time collaboration, and smart notifications."
+    "case": {
+      "back": "Back to Projects",
+      "study": "Case Study",
+      "seeAll": "See all projects",
+      "role": "Role",
+      "duration": "Duration",
+      "team": "Team",
+      "context": "Context",
+      "problem": "The Problem",
+      "process": "Design Process",
+      "processDesc": "I applied an iterative methodology based on Design Thinking to find the best solution.",
+      "phase1": {
+        "label": "Phase 1",
+        "title": "Empathize"
+      },
+      "phase2": {
+        "label": "Phase 2",
+        "title": "Define"
+      },
+      "phase3": {
+        "label": "Phase 3",
+        "title": "Ideate"
+      },
+      "phase4": {
+        "label": "Phase 4",
+        "title": "Prototype"
+      },
+      "phase5": {
+        "label": "Phase 5",
+        "title": "Test"
+      },
+      "results": "Results and KPIs",
+      "learnings": "Learnings",
+      "ecommerce": {
+        "overview": "I designed and developed a comprehensive admin panel for an e-commerce store, focused on real-time data visualization, efficient product management, and metric-based decision making.",
+        "role": "Full Stack Developer & UX/UI Designer",
+        "duration": "3 months",
+        "team": "2 developers, 1 product owner",
+        "context": "The client operated a growing online store with over 500 products and a team of 4 managing inventory, orders, and logistics. They were using spreadsheets and disconnected tools that caused errors, data duplication, and a lack of visibility over key metrics like daily sales, best-selling products, and critical stock levels.",
+        "problem": "The team wasted up to 3 hours daily switching between unintegrated tools. There was no centralized dashboard offering a clear view of the business, which delayed restock decisions, marketing campaigns, and sales trend detection.",
+        "empathize": "I conducted in-depth interviews with the 4 team members (manager, operations, marketing, customer support) to understand their daily workflows. I identified pain points through direct observation: most of the time was lost searching for data across multiple tabs and manually validating cross-referenced information. I also analyzed reference dashboards (Shopify Admin, Stripe Dashboard) to identify effective design patterns.",
+        "define": "I consolidated findings into an affinity map and defined 3 key personas. The core problem was synthesized as: 'Operators need a single source of truth that allows them to make business decisions in less than 30 seconds.' I created prioritized user stories with MoSCoW to define the MVP.",
+        "ideate": "I facilitated Crazy 8s sessions with the team to explore dashboard layouts. We explored everything from Kanban views to analytical interfaces like Mixpanel. The winning solution combined a metrics dashboard with configurable widgets, a product table with advanced filters, and a low-stock alert system.",
+        "prototype": "I designed low-fidelity wireframes on paper and whiteboard, then moved to interactive prototypes in Figma. I iterated 3 versions of the main dashboard based on team feedback. The final prototype included a design system with reusable components, loading, empty, and error states, and responsive design optimized for tablets (frequently used in the warehouse).",
+        "test": "I conducted 5 usability test sessions with end-users using specific tasks: 'Find the best-selling product of the week', 'Identify products with low stock'. I measured task time, success rate, and satisfaction (SUS). Results showed a 92% success rate on the first interaction and identified 3 minor improvements in the table's visual hierarchy.",
+        "results": "The dashboard transformed the team's daily operation, drastically reducing time spent searching for information and improving the quality of business decisions.",
+        "metric1": {
+          "value": "-65%",
+          "label": "Time spent searching for data"
+        },
+        "metric2": {
+          "value": "92%",
+          "label": "Usability success rate"
+        },
+        "metric3": {
+          "value": "+40%",
+          "label": "Decision-making speed"
+        },
+        "learnings": "I learned the importance of query optimization for dashboards with large volumes of data."
+      },
+      "gymaccess": {
+        "overview": "GymAccess is a B2B2C SaaS platform designed to modernize independent gyms. It replaces manual processes with a digital ecosystem of automated payments and QR access control without the need for expensive hardware.",
+        "role": "Full Stack Developer & UX/UI Designer",
+        "duration": "4 months",
+        "team": "Solo Project",
+        "context": "Independent gyms in LATAM often lose up to 20% of their income due to late payments, access fraud, and lack of digitalization. Traditional biometric access systems are inaccessible due to their high cost in USD.",
+        "problem": "Manual cash collection loses value against inflation and consumes administration hours. Additionally, physical ID cards allow for membership sharing, reducing business profitability.",
+        "empathize": "I researched the neighborhood gym market, identifying the frustration of owners having to 'chase' members for payment. I analyzed the use of Mercado Pago as a payment standard and the ubiquity of smartphones among members.",
+        "define": "The goal was to create a 'single source of truth' that automates billing and validates access in real-time through a visual monitor for the receptionist, eliminating human error.",
+        "ideate": "I proposed a trio of products: an administrative dashboard for the gym, a PWA for members to scan their QR, and a real-time monitor that visually and audibly notifies the member's status.",
+        "prototype": "I developed the system using Next.js and Supabase to ensure scalability and speed. I integrated Mercado Pago for recurring subscriptions and Make.com to automate the webhook flow without complex servers.",
+        "test": "I conducted pilot tests in local gyms, adjusting the monitor interface to be readable from a distance and reducing QR scan time to avoid peak-hour congestion.",
+        "results": "The platform eliminated delinquency through automatic debit and reduced access fraud to zero thanks to the dynamic QR linked to the member's profile.",
+        "metric1": {
+          "value": "-100%",
+          "label": "Manual collection delinquency"
+        },
+        "metric2": {
+          "value": "Zero",
+          "label": "Hardware CAPEX"
+        },
+        "metric3": {
+          "value": "100%",
+          "label": "Payment automation"
+        },
+        "learnings": "This project taught me how to design high-impact technical solutions with low infrastructure costs, prioritizing ease of use for non-technical users in high-demand environments."
+      }
     },
-    "project3": {
-      "title": "Restaurant Booking System",
-      "desc": "Online booking system for restaurants with interactive calendar, table management, and automatic confirmations."
-    },
-    "project4": {
-      "title": "Portfolio & Blog",
-      "desc": "Personal site with integrated blog, dynamic content system, and advanced SEO optimization."
-    }
+    "cta": "Let's talk"
   },
   "Contact": {
     "title": "Contact",

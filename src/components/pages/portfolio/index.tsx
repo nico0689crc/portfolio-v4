@@ -1,114 +1,147 @@
-import { Reveal } from "@/components/ui/reveal";
-import { ExternalLink, Github, Hammer } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+"use client";
 
-interface Project {
-  title: string;
-  desc: string;
-  techs: string[];
-  github: string;
-  figma: string;
-  demo: string;
-}
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ExternalLink, Github, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import { StaticImageData } from "next/image";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
+import { projects, type Category } from "@/data/projectsData";
 
-const Projects = async () => {
-  const t = await getTranslations("Portfolio")
-  const projects: Project[] = []
-  // const projects = [
-  //   {
-  //     title: t("project1.title"),
-  //     desc: t("project1.desc"),
-  //     techs: ["React", "TypeScript", "Node.js", "PostgreSQL", "Tailwind CSS"],
-  //     github: "#", demo: "#",
-  //   },
-  //   {
-  //     title: t("project2.title"),
-  //     desc: t("project2.desc"),
-  //     techs: ["Next.js", "GraphQL", "MongoDB", "Framer Motion"],
-  //     github: "#", demo: "#",
-  //   },
-  //   {
-  //     title: t("project3.title"),
-  //     desc: t("project3.desc"),
-  //     techs: ["React", "NestJS", "PostgreSQL", "Docker", "AWS"],
-  //     github: "#", demo: "#",
-  //   },
-  //   {
-  //     title: t("project4.title"),
-  //     desc: t("project4.desc"),
-  //     techs: ["Next.js", "TypeScript", "Tailwind CSS", "MDX"],
-  //     github: "#", demo: "#",
-  //   },
-  // ];
+const ImageCarousel = ({ images }: { images: (string | StaticImageData)[] }) => {
+  const [current, setCurrent] = useState(0);
+
+  const prev = () => setCurrent((c) => (c === 0 ? images.length - 1 : c - 1));
+  const next = () => setCurrent((c) => (c === images.length - 1 ? 0 : c + 1));
+
+  const currentImage = images[current];
+  const src = typeof currentImage === "string" ? currentImage : currentImage.src;
+
+  return (
+    <div className="relative h-52 overflow-hidden bg-muted">
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={current}
+          src={src}
+          alt="Project screenshot"
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -40 }}
+          transition={{ duration: 0.25 }}
+          className="w-full h-full object-cover"
+        />
+      </AnimatePresence>
+      {images.length > 1 && (
+        <>
+          <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-foreground hover:bg-background transition-colors opacity-0 group-hover:opacity-100">
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-foreground hover:bg-background transition-colors opacity-0 group-hover:opacity-100">
+            <ChevronRight className="w-4 h-4" />
+          </button>
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+            {images.map((_, i) => (
+              <button key={i} onClick={() => setCurrent(i)} className={`w-2 h-2 rounded-full transition-colors ${i === current ? "bg-accent" : "bg-background/60"}`} />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+const Projects = () => {
+  const t = useTranslations("Portfolio");
+  const [activeCategory, setActiveCategory] = useState<Category>("all");
+
+  const categories: { key: Category; label: string }[] = [
+    { key: "all", label: t("projects.filter.all") },
+    { key: "fullstack", label: "Full Stack" },
+    { key: "ux-ui", label: "UX/UI" },
+    { key: "wordpress", label: "WordPress" },
+  ];
+
+  const filtered = activeCategory === "all"
+    ? projects
+    : projects.filter((p) => p.category === activeCategory);
 
   return (
     <section className="section-padding bg-background">
       <div className="container mx-auto">
-        <Reveal
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">{t("title")}</h2>
-          <p className="text-muted-foreground max-w-lg mx-auto">{t("subtitle")}</p>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">{t("projects.title")}</h2>
+          <p className="text-muted-foreground max-w-lg mx-auto">{t("projects.subtitle")}</p>
           <div className="w-12 h-1 bg-accent mx-auto rounded-full mt-4" />
-        </Reveal>
+        </motion.div>
 
-        <div className={projects.length === 0 ? "max-w-2xl mx-auto w-full" : "grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"}>
-          {projects.length === 0 ? (
-            <Reveal
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="card-portfolio p-12 flex flex-col items-center justify-center text-center bg-accent/5 border-dashed border-2 border-accent/30"
+        <div className="flex flex-wrap justify-center gap-2 mb-10">
+          {categories.map((cat) => (
+            <button
+              key={cat.key}
+              onClick={() => setActiveCategory(cat.key)}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 border ${activeCategory === cat.key
+                ? "bg-accent text-accent-foreground border-accent shadow-md"
+                : "bg-muted/50 text-muted-foreground border-border hover:bg-muted hover:text-foreground"
+                }`}
             >
-              <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mb-6 text-accent">
-                <Hammer className="w-8 h-8 animate-pulse" />
-              </div>
-              <h3 className="font-display font-bold text-2xl text-foreground mb-3 group-hover:text-accent transition-colors">
-                {t("title")}
-              </h3>
-              <p className="text-muted-foreground text-lg leading-relaxed max-w-md mx-auto">{t("noProjects")}</p>
-            </Reveal>
-          ) : (
-            projects.map((project, i) => (
-              <Reveal
-                key={project.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        <motion.div layout className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <AnimatePresence mode="popLayout">
+            {filtered.map((project) => (
+              <motion.div
+                key={project.slug}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
                 className="card-portfolio group"
               >
-                <div className="h-48 bg-linear-to-br from-primary/5 to-accent/10 flex items-center justify-center border-b border-border">
-                  <span className="text-muted-foreground/40 text-sm font-medium">{t("image")}</span>
-                </div>
+                <ImageCarousel images={project.images} />
                 <div className="p-6">
                   <h3 className="font-display font-bold text-xl text-foreground mb-2 group-hover:text-accent transition-colors duration-200">
-                    {project.title}
+                    {t(project.titleKey)}
                   </h3>
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{project.desc}</p>
+                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{t(project.descKey)}</p>
                   <div className="flex flex-wrap gap-1.5 mb-5">
                     {project.techs.map((tech) => (
                       <span key={tech} className="tech-tag">{tech}</span>
                     ))}
                   </div>
-                  <div className="flex gap-4">
-                    <a href={project.github} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
-                      <Github className="w-4 h-4" /> {t("code")}
-                    </a>
-                    <a href={project.demo} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
-                      <ExternalLink className="w-4 h-4" /> {t("demo")}
-                    </a>
+                  <div className="flex items-center justify-between">
+                    <div className="flex gap-4">
+                      <a href={project.github} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
+                        <Github className="w-4 h-4" /> {t("projects.code")}
+                      </a>
+                      <a href={project.demo} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
+                        <ExternalLink className="w-4 h-4" /> {t("projects.demo")}
+                      </a>
+                    </div>
+                    <Link
+                      href={{
+                        pathname: "/projects/[slug]",
+                        params: { slug: project.slug }
+                      }}
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline transition-colors duration-200"
+                    >
+                      {t("projects.viewCase")} <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
                   </div>
                 </div>
-                </Reveal>
-              ))
-            )}
-        </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );

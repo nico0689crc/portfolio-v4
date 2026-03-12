@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Moon, Sun, Globe } from "lucide-react";
 import { usePathname, useRouter } from "@/i18n/routing";
@@ -27,6 +28,7 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
 
   const pathname = usePathname();
   const router = useRouter();
+  const params = useParams();
 
   // Detect scroll for the blurred background effect
   useEffect(() => {
@@ -53,7 +55,11 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
 
   const toggleLocale = () => {
     const nextLocale = locale === "es" ? "en" : "es";
-    router.replace(pathname, { locale: nextLocale });
+    router.replace(
+      // @ts-expect-error -- Using dynamic router.replace with params
+      { pathname, params }, 
+      { locale: nextLocale }
+    );
   };
 
   const isActive = (to: string) => pathname === to;
