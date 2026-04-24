@@ -156,6 +156,9 @@
       "code": "Code",
       "demo": "Demo",
       "viewCase": "View Case Study",
+      "canva": "Presentation",
+      "figjam": "Diagrams",
+      "lofi": "Lo-Fi Prototype",
       "filter": {
         "all": "All"
       },
@@ -166,6 +169,10 @@
       "2": {
         "title": "GymSmartAccess",
         "desc": "B2B2C SaaS platform for gym modernization with automated payments and QR-based access control."
+      },
+      "5": {
+        "title": "Mexx UX Redesign",
+        "desc": "UX/UI redesign of Argentina's largest tech retailer, solving critical cart persistence and hidden shipping cost frictions."
       },
       "3": {
         "title": "Restaurant Booking System",
@@ -262,6 +269,42 @@
           "label": "Payment automation"
         },
         "learnings": "This project taught me how to design high-impact technical solutions with low infrastructure costs, prioritizing ease of use for non-technical users in high-demand environments."
+      },
+      "mexx": {
+        "overview": "Mexx is Argentina's largest tech retailer with 34 years of history. This case study documents how I identified, validated, and redesigned two critical flows — cross-device cart persistence and hidden shipping costs — using user research and real data validation.",
+        "diplomaNote": "This case study is the final project of the UX/UI Design Diploma at Coderhouse, for the Advanced UX/UI Design course.",
+        "diplomaUrl": "https://www.coderhouse.com/ar/diplomaturas/diseno",
+        "diplomaLinkText": "UX/UI Design Diploma at Coderhouse",
+        "processDesc": "I applied James Garrett's Five Planes methodology, working from abstract strategy down to concrete visual surface.",
+        "phase1": { "label": "Plane 1", "title": "Strategy" },
+        "phase2": { "label": "Plane 2", "title": "Scope" },
+        "phase3": { "label": "Plane 3", "title": "Structure" },
+        "phase4": { "label": "Plane 4", "title": "Skeleton" },
+        "phase5": { "label": "Plane 5", "title": "Surface" },
+        "role": "UX/UI Designer",
+        "duration": "4 weeks",
+        "team": "Solo Project",
+        "context": "Mexx leads Argentina's tech retail market but its digital platform had two critical frictions costing real conversions: 80% of users research on mobile but buy on desktop (cart lost between devices), and 100% of surveyed users cited unexpected shipping costs on digital products as a reason for abandonment.",
+        "problem": "Users added products on mobile, then found an empty cart on desktop — up to 15 minutes of rework per session. Digital products like Windows 11 licenses were incorrectly charged physical shipping ($250+), revealed only at the Mercado Pago checkout step, causing immediate abandonment.",
+        "empathize": "I conducted a heuristic audit against Nielsen's 10 principles (7 of 10 failed), a strategic survey with 10 users (12 unbiased questions), and analyzed 6 UX laws being violated. I created 2 personas (Lucas, 26, developer; Sofía, 32, freelancer) and journey maps tracing pain points with emotional curves.",
+        "define": "Validated both hypotheses with real data: 80% of users lost carts between devices, 100% cited hidden costs as an abandonment reason. Ran Tree Testing on UXTweak with 10 participants — discovered 'Software' category had only 40% directness, leading to a rename to 'Licencias Digitales'. Mapped 2 core taskflows and redesigned the information architecture.",
+        "ideate": "Used Lean UX Canvas + FVD Matrix to prioritize 10 ideas. Selected 6 solutions: persistent cart (DB sync instead of localStorage), transparent floating cost breakdown, digital product label, express login modal, guest checkout, and magic link cart recovery. Discarded 4 low-value ideas: WhatsApp cart integration, AFIP tax calculator, AI chatbot, and gamification.",
+        "prototype": "Built a high-fidelity interactive prototype in Figma covering both complete flows. Designed a full design system: Mexx red (#E73E3E) color palette, Inter + Merriweather typography, 4px spacing system, atomic reusable components, and 6 documented UI animations (hero slider, auth modal, cost breakdown, save indicator, loading states, checkout transitions).",
+        "test": "Usability testing on Maze with 10 participants across 2 tasks. Task 1 (cart continuity): 100% success rate, 32s avg time, 80% directness, 0% drop-off. Task 2 (cost transparency): 85.7% success, 71s avg, 40% directness, 14.3% drop-off (rational decision after reviewing cost — not friction). Key insight: 49-51% misclick rate reveals a header hierarchy improvement opportunity.",
+        "results": "Both hypotheses validated with real data. Cart persistence achieved perfect task completion; transparent cost breakdown eliminated surprise abandonments. The design system is scalable, documented with CSS tokens, and ready for developer handoff.",
+        "metric1": {
+          "value": "+15%",
+          "label": "Projected conversion rate"
+        },
+        "metric2": {
+          "value": "100%",
+          "label": "Hypotheses validated with data"
+        },
+        "metric3": {
+          "value": "85.7%",
+          "label": "Usability task success rate"
+        },
+        "learnings": "Rigorous research (Nielsen audit + UX Laws + Survey + Tree Testing) identifies real problems — not assumptions. Validation with real users confirms solutions work before implementation. Every design decision in this project was backed by evidence: the FVD matrix rejected 4 ideas, the tree test renamed a category, and Maze testing confirmed both flows were intuitive."
       }
     },
     "cta": "Let's talk"
@@ -318,7 +361,7 @@
   "Metadata": {
     "titleTemplate": "%s | Nicolás Ariel Fernández",
     "defaultTitle": "Nicolás Ariel Fernández | Full Stack Developer & UX/UI Designer",
-    "defaultDescription": "Portfolio of Nicolás Ariel Fernández, AI-Assisted Full Stack Developer and UX/UI Designer from Argentina. Specialized in React, Next.js, and crafting efficient digital products.",
+    "defaultDescription": "Portfolio of Nicolás Ariel Fernández — Full Stack Developer & UX/UI Designer from Argentina. React, Next.js, and user-centered digital products.",
     "homeTitle": "Home",
     "homeDescription": "Full Stack Developer & UX/UI Designer. I build scalable, intuitive web applications supported by AI workflows and modern technologies like Next.js.",
     "aboutTitle": "About Me",
@@ -328,6 +371,10 @@
     "resumeTitle": "Resume",
     "resumeDescription": "Read and download the CV of Nicolás Ariel Fernández. Over 3 years of web development experience, agile methodologies, AI tools, and collaborative mindset.",
     "contactTitle": "Get In Touch",
-    "contactDescription": "Need a fast-paced Full Stack Developer or UX/UI Designer? Get in touch with me to discuss your next digital product or job opportunity."
+    "contactDescription": "Need a fast-paced Full Stack Developer or UX/UI Designer? Get in touch with me to discuss your next digital product or job opportunity.",
+    "mexxTitle": "Mexx UX Redesign — UX/UI Case Study",
+    "mexxDescription": "UX/UI portfolio case study: redesign of Mexx, Argentina's largest tech retailer. Cart persistence & transparent shipping costs validated with Maze and UXTweak.",
+    "gymTitle": "GymSmartAccess — Full Stack Case Study",
+    "gymDescription": "Full Stack SaaS portfolio case study. Gym management platform with automated Mercado Pago payments and QR access control, built with Next.js and Supabase."
   }
 }

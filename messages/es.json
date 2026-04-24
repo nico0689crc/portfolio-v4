@@ -156,6 +156,9 @@
       "code": "Código",
       "demo": "Demo",
       "viewCase": "Ver Caso de Estudio",
+      "canva": "Presentación",
+      "figjam": "Diagramas",
+      "lofi": "Prototipo Baja Fidelidad",
       "filter": {
         "all": "Todos"
       },
@@ -166,6 +169,10 @@
       "2": {
         "title": "GymSmartAccess",
         "desc": "Plataforma SaaS B2B2C para la modernización de gimnasios con cobros automatizados y control de acceso por QR."
+      },
+      "5": {
+        "title": "Mexx UX Redesign",
+        "desc": "Rediseño UX/UI de la tienda tech más grande de Argentina, resolviendo fricciones críticas de persistencia de carrito y costos de envío ocultos."
       },
       "3": {
         "title": "Restaurant Booking System",
@@ -262,6 +269,42 @@
           "label": "Automatización de pagos"
         },
         "learnings": "Este proyecto me enseñó a diseñar soluciones técnicas de alto impacto con bajo costo de infraestructura, priorizando la facilidad de uso para usuarios no técnicos en entornos de alta demanda."
+      },
+      "mexx": {
+        "overview": "Mexx es líder indiscutible en retail de tecnología en Argentina con 34 años de trayectoria. Este caso de estudio documenta cómo identifiqué, validé y rediseñé dos flujos críticos — persistencia de carrito entre dispositivos y costos de envío ocultos — usando investigación con usuarios y validación con datos reales.",
+        "diplomaNote": "Este caso de estudio es el trabajo final de la Diplomatura de Diseño UX/UI de Coderhouse, para la materia de Diseño UX/UI Avanzado.",
+        "diplomaUrl": "https://www.coderhouse.com/ar/diplomaturas/diseno",
+        "diplomaLinkText": "Diplomatura de Diseño UX/UI de Coderhouse",
+        "processDesc": "Apliqué la metodología de los Cinco Planos de James Garrett, trabajando desde la estrategia abstracta hacia la superficie visual concreta.",
+        "phase1": { "label": "Plano 1", "title": "Estrategia" },
+        "phase2": { "label": "Plano 2", "title": "Alcance" },
+        "phase3": { "label": "Plano 3", "title": "Estructura" },
+        "phase4": { "label": "Plano 4", "title": "Esqueleto" },
+        "phase5": { "label": "Plano 5", "title": "Superficie" },
+        "role": "UX/UI Designer",
+        "duration": "4 semanas",
+        "team": "Proyecto Individual",
+        "context": "Mexx lidera el mercado argentino de retail tech, pero su plataforma digital tenía dos fricciones críticas que costaban conversiones reales: el 80% de los usuarios investigan en celular pero compran en PC (carrito perdido entre dispositivos), y el 100% de los encuestados citó costos de envío inesperados en productos digitales como motivo de abandono.",
+        "problem": "Los usuarios agregaban productos en el celular y encontraban el carrito vacío en la PC — hasta 15 minutos de retrabajo por sesión. Los productos digitales como licencias de Windows 11 eran cobrados con envío físico ($250+), revelado recién en el paso de Mercado Pago, causando abandono inmediato.",
+        "empathize": "Realicé una auditoría heurística contra los 10 principios de Nielsen (7 de 10 fallaban), una encuesta estratégica con 10 usuarios (12 preguntas sin sesgo) y analicé 6 leyes de UX siendo violadas. Creé 2 personas (Lucas, 26 años, developer; Sofía, 32 años, freelancer) y journey maps trazando pain points con curvas emocionales.",
+        "define": "Validé ambas hipótesis con datos reales: 80% de usuarios perdía el carrito entre dispositivos, 100% citó costos ocultos como motivo de abandono. Realicé Tree Testing en UXTweak con 10 participantes — descubrí que la categoría 'Software' tenía solo 40% de directness, lo que llevó a renombrarla a 'Licencias Digitales'. Mapeé 2 taskflows principales y rediseñé la arquitectura de información.",
+        "ideate": "Usé Lean UX Canvas + Matriz FVD para priorizar 10 ideas. Seleccioné 6 soluciones: carrito persistente (sincronización en BD en lugar de localStorage), desglose flotante de costos transparente, etiqueta de producto digital, modal de login exprés, guest checkout y recuperación de carrito por magic link. Descarté 4 ideas de bajo valor: integración de carrito por WhatsApp, calculadora fiscal AFIP, chatbot IA y gamificación.",
+        "prototype": "Construí un prototipo interactivo de alta fidelidad en Figma cubriendo ambos flujos completos. Diseñé un sistema de diseño completo: paleta rojo Mexx (#E73E3E), tipografía Inter + Merriweather, sistema de espaciado de 4px, componentes atómicos reutilizables y 6 animaciones UI documentadas (slider hero, modal de auth, desglose de costos, indicador de guardado, estados de carga, transiciones de checkout).",
+        "test": "Testing de usabilidad en Maze con 10 participantes en 2 tareas. Tarea 1 (continuidad del carrito): 100% de tasa de éxito, 32s promedio, 80% directness, 0% drop-off. Tarea 2 (transparencia de costos): 85.7% de éxito, 71s promedio, 40% directness, 14.3% drop-off (decisión racional tras revisar el costo — no es fricción). Insight clave: 49-51% de misclick rate revela una oportunidad de mejora en la jerarquía visual del header.",
+        "results": "Ambas hipótesis validadas con datos reales. La persistencia de carrito logró tasa de éxito perfecta; la transparencia de costos eliminó los abandonos por sorpresa. El sistema de diseño es escalable, documentado con tokens CSS y listo para handoff a desarrolladores.",
+        "metric1": {
+          "value": "+15%",
+          "label": "Tasa de conversión proyectada"
+        },
+        "metric2": {
+          "value": "100%",
+          "label": "Hipótesis validadas con datos"
+        },
+        "metric3": {
+          "value": "85.7%",
+          "label": "Tasa de éxito en usabilidad"
+        },
+        "learnings": "La investigación rigurosa (auditoría Nielsen + Leyes UX + Encuesta + Tree Testing) identifica problemas reales, no suposiciones. La validación con usuarios reales confirma que las soluciones funcionan antes de implementar. Cada decisión de diseño en este proyecto estuvo respaldada por evidencia: la matriz FVD rechazó 4 ideas, el tree test renombró una categoría, y el testing en Maze confirmó que ambos flujos eran intuitivos."
       }
     }
   },
@@ -317,7 +360,7 @@
   "Metadata": {
     "titleTemplate": "%s | Nicolás Ariel Fernández",
     "defaultTitle": "Nicolás Ariel Fernández | Full Stack Developer & UX/UI Designer",
-    "defaultDescription": "Portafolio de Nicolás Ariel Fernández, Desarrollador Full Stack potenciado por IA y Diseñador UX/UI. Especialista en React, Next.js, y creación ágil de productos digitales eficientes.",
+    "defaultDescription": "Portafolio de Nicolás Ariel Fernández — Desarrollador Full Stack & Diseñador UX/UI de Argentina. React, Next.js y productos digitales centrados en el usuario.",
     "homeTitle": "Inicio",
     "homeDescription": "Desarrollador Full Stack & Diseñador UX/UI. Construyo aplicaciones web escalables e intuitivas apoyado en flujos de Inteligencia Artificial y tecnologías modernas como Next.js.",
     "aboutTitle": "Sobre Mí",
@@ -327,6 +370,10 @@
     "resumeTitle": "Curriculum Vitae",
     "resumeDescription": "Lee y descarga el CV de Nicolás Ariel Fernández. Más de 3 años de experiencia en desarrollo web, metodologías ágiles, IA tools y mentalidad colaborativa.",
     "contactTitle": "Contacto",
-    "contactDescription": "¿Necesitas un Desarrollador Full Stack o Diseñador UX/UI ágil? Ponte en contacto conmigo para discutir tu próximo producto digital o propuesta laboral."
+    "contactDescription": "¿Necesitas un Desarrollador Full Stack o Diseñador UX/UI ágil? Ponte en contacto conmigo para discutir tu próximo producto digital o propuesta laboral.",
+    "mexxTitle": "Mexx UX Redesign — Caso de Estudio UX/UI",
+    "mexxDescription": "Caso de estudio UX/UI: rediseño de Mexx, el retailer tech más grande de Argentina. Carrito persistente y costos transparentes validados con Maze y UXTweak.",
+    "gymTitle": "GymSmartAccess — Caso de Estudio Full Stack",
+    "gymDescription": "Caso de estudio Full Stack. Plataforma de gestión de gimnasios con pagos automáticos vía Mercado Pago y acceso QR, desarrollada con Next.js y Supabase."
   }
 }
