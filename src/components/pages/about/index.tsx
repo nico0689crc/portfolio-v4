@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { PenTool, Lightbulb, Code, ArrowRight, Download } from "lucide-react";
 import { Link } from "@/i18n/routing";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { TrackedLink } from "@/components/analytics/tracked-link";
 import { Reveal } from "@/components/ui/reveal";
 import {
   Accordion,
@@ -12,6 +13,7 @@ import {
 
 const About = async () => {
   const t = await getTranslations("About");
+  const locale = await getLocale();
 
   const cards = [
     { icon: Code, title: t("card1.title"), desc: t("card1.desc") },
@@ -46,15 +48,16 @@ const About = async () => {
             <p className="text-lg text-foreground/80 leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: t.raw("about.p2") }} />
             <p className="text-lg text-foreground/80 leading-relaxed mb-8">{t("about.p3")}</p>
             
-            <a
+            <TrackedLink
               href={t("cvUrl")}
               target="_blank"
               rel="noopener noreferrer"
+              event={{ name: "cv_download", params: { file_language: locale, source: "about" } }}
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-accent-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity duration-200 text-nowrap"
             >
               <Download className="w-5 h-5" />
               {t("cv")}
-            </a>
+            </TrackedLink>
           </Reveal>
 
           <Reveal

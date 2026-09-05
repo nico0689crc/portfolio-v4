@@ -276,11 +276,26 @@
         "diplomaUrl": "https://www.coderhouse.com/ar/diplomaturas/diseno",
         "diplomaLinkText": "UX/UI Design Diploma at Coderhouse",
         "processDesc": "I applied James Garrett's Five Planes methodology, working from abstract strategy down to concrete visual surface.",
-        "phase1": { "label": "Plane 1", "title": "Strategy" },
-        "phase2": { "label": "Plane 2", "title": "Scope" },
-        "phase3": { "label": "Plane 3", "title": "Structure" },
-        "phase4": { "label": "Plane 4", "title": "Skeleton" },
-        "phase5": { "label": "Plane 5", "title": "Surface" },
+        "phase1": {
+          "label": "Plane 1",
+          "title": "Strategy"
+        },
+        "phase2": {
+          "label": "Plane 2",
+          "title": "Scope"
+        },
+        "phase3": {
+          "label": "Plane 3",
+          "title": "Structure"
+        },
+        "phase4": {
+          "label": "Plane 4",
+          "title": "Skeleton"
+        },
+        "phase5": {
+          "label": "Plane 5",
+          "title": "Surface"
+        },
         "role": "UX/UI Designer",
         "duration": "4 weeks",
         "team": "Solo Project",
@@ -375,6 +390,79 @@
     "mexxTitle": "Mexx UX Redesign — UX/UI Case Study",
     "mexxDescription": "UX/UI portfolio case study: redesign of Mexx, Argentina's largest tech retailer. Cart persistence & transparent shipping costs validated with Maze and UXTweak.",
     "gymTitle": "GymSmartAccess — Full Stack Case Study",
-    "gymDescription": "Full Stack SaaS portfolio case study. Gym management platform with automated Mercado Pago payments and QR access control, built with Next.js and Supabase."
+    "gymDescription": "Full Stack SaaS portfolio case study. Gym management platform with automated Mercado Pago payments and QR access control, built with Next.js and Supabase.",
+    "jobTitle": "Full Stack Developer & UX/UI Designer"
+  },
+  "Resume": {
+    "title": "Resume",
+    "subtitle": "Full Stack Developer & UX/UI Designer",
+    "intro": "Over 3 years building web applications end to end: from research and interface design through to APIs, databases and production deployment. I work with React, Next.js, TypeScript and Node.js, and lean on AI tooling to iterate faster without trading away code quality.",
+    "downloadEs": "Descargar CV en español (PDF)",
+    "downloadEn": "Download CV in English (PDF)",
+    "highlightsTitle": "At a glance",
+    "highlights": [
+      {
+        "label": "Experience",
+        "value": "3+ years in software development"
+      },
+      {
+        "label": "Core stack",
+        "value": "React, Next.js, TypeScript, Node.js"
+      },
+      {
+        "label": "Design",
+        "value": "UX/UI, Figma, user research"
+      },
+      {
+        "label": "Location",
+        "value": "Corrientes, Argentina · Remote"
+      },
+      {
+        "label": "Languages",
+        "value": "Spanish (native) · English (professional)"
+      }
+    ],
+    "experienceTitle": "Professional experience",
+    "experienceSubtitle": "Full track record, most recent first.",
+    "skillsTitle": "Technical skills",
+    "skillsSubtitle": "Technologies and tools I work with day to day.",
+    "ctaTitle": "Looking to add someone to the team?",
+    "ctaDesc": "I'm open to job offers and freelance projects. Drop me a line and I'll get back to you shortly.",
+    "ctaButton": "Get in touch",
+    "educationTitle": "Education",
+    "educationSubtitle": "Degrees and studies in progress.",
+    "education": [
+      {
+        "degree": "Diploma of UX/UI Design",
+        "status": "In progress · expected 2025"
+      },
+      {
+        "degree": "Diploma of Information Technology (Web Development)",
+        "status": "2024"
+      },
+      {
+        "degree": "Analyst in Information Technology (Bachelor's level)",
+        "status": "2008 – 2015"
+      }
+    ],
+    "certificationsTitle": "Courses & certifications",
+    "certifications": [
+      {
+        "name": "Docker & Kubernetes: The Practical Guide"
+      },
+      {
+        "name": "GitHub Actions (CI/CD)"
+      },
+      {
+        "name": "Understanding TypeScript"
+      }
+    ],
+    "certificationsNote": "Full list of certifications and ongoing learning available on LinkedIn."
+  },
+  "Consent": {
+    "title": "We use anonymous analytics",
+    "description": "I use Google Analytics to understand which parts of the portfolio are useful. No data is shared with advertisers and you are not tracked across sites. You can decline without losing any functionality.",
+    "accept": "Accept",
+    "reject": "Decline"
   }
 }

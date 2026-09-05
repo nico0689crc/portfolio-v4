@@ -3,6 +3,7 @@
 import { Reveal } from "@/components/ui/reveal";
 import { useState } from "react";
 import { sendEmail } from "@/actions/sendEmail";
+import { trackEvent } from "@/lib/analytics";
 import { useTranslations, useLocale } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -59,9 +60,11 @@ export default function ContactForm() {
     if (result?.error) {
       setStatus("error");
       setServerError(result.error === "serverError" ? t("validation.serverError") : result.error);
+      trackEvent({ name: "contact_submit", params: { status: "error" } });
     } else {
       setStatus("success");
       reset();
+      trackEvent({ name: "contact_submit", params: { status: "success" } });
     }
   }
 

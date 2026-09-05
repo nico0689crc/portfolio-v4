@@ -5,6 +5,16 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { buttonVariants } from '@/components/ui/button-variants';
 import { cn } from '@/lib/utils';
+import { TrackedLink } from '@/components/analytics/tracked-link';
+import type { AnalyticsEvent } from '@/lib/analytics';
+
+type SocialNetwork = Extract<AnalyticsEvent, { name: 'social_click' }>['params']['network'];
+
+const SOCIALS: Array<{ icon: typeof Linkedin; href: string; label: string; network: SocialNetwork }> = [
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/nicolas-ariel-fernandez', label: 'LinkedIn', network: 'linkedin' },
+  { icon: Github, href: 'https://github.com/nico0689crc', label: 'GitHub', network: 'github' },
+  { icon: Mail, href: 'mailto:contacto@nicolasarielfernandez.com', label: 'Email', network: 'email' },
+];
 
 export function Footer() {
   const t = useTranslations('Footer');
@@ -30,24 +40,21 @@ export function Footer() {
 
           <div className="flex justify-center gap-6 mb-12">
             {/* Social links */}
-            {[
-              { icon: Linkedin, href: "https://www.linkedin.com/in/nicolas-ariel-fernandez", label: "LinkedIn" },
-              { icon: Github, href: "https://github.com/nico0689crc", label: "GitHub" },
-              { icon: Mail, href: "mailto:contacto@nicolasarielfernandez.com", label: "Email" },
-            ].map((social) => (
-              <a
+            {SOCIALS.map((social) => (
+              <TrackedLink
                 key={social.label}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
+                event={{ name: "social_click", params: { network: social.network } }}
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
                   "[&_svg:not([class*='size-'])]:size-5 px-4 py-2"
                 )}
               >
                 <social.icon />
-              </a>
+              </TrackedLink>
             ))}
 
           </div>

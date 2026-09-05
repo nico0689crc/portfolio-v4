@@ -276,11 +276,26 @@
         "diplomaUrl": "https://www.coderhouse.com/ar/diplomaturas/diseno",
         "diplomaLinkText": "Diplomatura de Diseño UX/UI de Coderhouse",
         "processDesc": "Apliqué la metodología de los Cinco Planos de James Garrett, trabajando desde la estrategia abstracta hacia la superficie visual concreta.",
-        "phase1": { "label": "Plano 1", "title": "Estrategia" },
-        "phase2": { "label": "Plano 2", "title": "Alcance" },
-        "phase3": { "label": "Plano 3", "title": "Estructura" },
-        "phase4": { "label": "Plano 4", "title": "Esqueleto" },
-        "phase5": { "label": "Plano 5", "title": "Superficie" },
+        "phase1": {
+          "label": "Plano 1",
+          "title": "Estrategia"
+        },
+        "phase2": {
+          "label": "Plano 2",
+          "title": "Alcance"
+        },
+        "phase3": {
+          "label": "Plano 3",
+          "title": "Estructura"
+        },
+        "phase4": {
+          "label": "Plano 4",
+          "title": "Esqueleto"
+        },
+        "phase5": {
+          "label": "Plano 5",
+          "title": "Superficie"
+        },
         "role": "UX/UI Designer",
         "duration": "4 semanas",
         "team": "Proyecto Individual",
@@ -374,6 +389,79 @@
     "mexxTitle": "Mexx UX Redesign — Caso de Estudio UX/UI",
     "mexxDescription": "Caso de estudio UX/UI: rediseño de Mexx, el retailer tech más grande de Argentina. Carrito persistente y costos transparentes validados con Maze y UXTweak.",
     "gymTitle": "GymSmartAccess — Caso de Estudio Full Stack",
-    "gymDescription": "Caso de estudio Full Stack. Plataforma de gestión de gimnasios con pagos automáticos vía Mercado Pago y acceso QR, desarrollada con Next.js y Supabase."
+    "gymDescription": "Caso de estudio Full Stack. Plataforma de gestión de gimnasios con pagos automáticos vía Mercado Pago y acceso QR, desarrollada con Next.js y Supabase.",
+    "jobTitle": "Desarrollador Full Stack & Diseñador UX/UI"
+  },
+  "Resume": {
+    "title": "Curriculum Vitae",
+    "subtitle": "Desarrollador Full Stack & Diseñador UX/UI",
+    "intro": "Más de 3 años construyendo aplicaciones web de punta a punta: desde la investigación y el diseño de la interfaz hasta las APIs, la base de datos y el despliegue en producción. Trabajo con React, Next.js, TypeScript y Node.js, y apoyo el proceso en herramientas de IA para iterar más rápido sin resignar calidad de código.",
+    "downloadEs": "Descargar CV en español (PDF)",
+    "downloadEn": "Download CV in English (PDF)",
+    "highlightsTitle": "De un vistazo",
+    "highlights": [
+      {
+        "label": "Experiencia",
+        "value": "+3 años en desarrollo de software"
+      },
+      {
+        "label": "Stack principal",
+        "value": "React, Next.js, TypeScript, Node.js"
+      },
+      {
+        "label": "Diseño",
+        "value": "UX/UI, Figma, investigación con usuarios"
+      },
+      {
+        "label": "Ubicación",
+        "value": "Corrientes, Argentina · Remoto"
+      },
+      {
+        "label": "Idiomas",
+        "value": "Español (nativo) · Inglés (profesional)"
+      }
+    ],
+    "experienceTitle": "Experiencia profesional",
+    "experienceSubtitle": "Trayectoria completa, de lo más reciente a lo más antiguo.",
+    "skillsTitle": "Habilidades técnicas",
+    "skillsSubtitle": "Tecnologías y herramientas con las que trabajo a diario.",
+    "ctaTitle": "¿Buscás sumar a alguien al equipo?",
+    "ctaDesc": "Estoy abierto a propuestas laborales y proyectos freelance. Escribime y te respondo a la brevedad.",
+    "ctaButton": "Ponerse en contacto",
+    "educationTitle": "Formación académica",
+    "educationSubtitle": "Titulaciones y estudios en curso.",
+    "education": [
+      {
+        "degree": "Diplomatura en Diseño UX/UI",
+        "status": "En curso · finalización esperada 2025"
+      },
+      {
+        "degree": "Diploma of Information Technology (Desarrollo Web)",
+        "status": "2024"
+      },
+      {
+        "degree": "Analista en Tecnologías de la Información",
+        "status": "2008 – 2015"
+      }
+    ],
+    "certificationsTitle": "Cursos y certificaciones",
+    "certifications": [
+      {
+        "name": "Docker & Kubernetes: The Practical Guide"
+      },
+      {
+        "name": "GitHub Actions (CI/CD)"
+      },
+      {
+        "name": "Understanding TypeScript"
+      }
+    ],
+    "certificationsNote": "Lista completa de certificaciones y aprendizaje continuo disponible en LinkedIn."
+  },
+  "Consent": {
+    "title": "Usamos analítica anónima",
+    "description": "Uso Google Analytics para entender qué secciones del portafolio resultan útiles. No se comparten datos con anunciantes ni se te rastrea entre sitios. Podés rechazarlo sin perder ninguna funcionalidad.",
+    "accept": "Aceptar",
+    "reject": "Rechazar"
   }
 }

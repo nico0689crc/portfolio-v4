@@ -1,11 +1,26 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { projects } from "@/data/projectsData";
+import {
+  projectByLocalizedSlug,
+  projectHref,
+  projects,
+  projectSlug,
+} from "@/data/projectsData";
+import { routing } from "@/i18n/routing";
 import ProjectCaseClient from "./ProjectCaseClient";
+import { JsonLd } from "@/components/seo/json-ld";
+import {
+  PERSON_ID,
+  SITE_URL,
+  breadcrumbSchema,
+  buildPageMetadata,
+  jsonLdGraph,
+  localizedUrl,
+} from "@/lib/seo";
 
-const BASE_URL = "https://nicolasarielfernandez.com";
-
-const metaKeyBySlug: Record<string, { title: string; description: string }> = {
+/** Keyed by the project's stable id, not by any locale's slug. */
+const metaKeyById: Record<string, { title: string; description: string }> = {
   "mexx-ux-redesign": { title: "mexxTitle", description: "mexxDescription" },
   "gym-smart-access": { title: "gymTitle", description: "gymDescription" },
 };
@@ -17,54 +32,32 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   const t = await getTranslations({ locale, namespace: "Metadata" });
-  const project = projects.find((p) => p.slug === slug);
-  const keys = metaKeyBySlug[slug];
+  const project = projectByLocalizedSlug(slug, locale);
+  const keys = project ? metaKeyById[project.id] : undefined;
 
   const title = keys ? t(keys.title as Parameters<typeof t>[0]) : t("portfolioTitle");
   const description = keys ? t(keys.description as Parameters<typeof t>[0]) : t("portfolioDescription");
-  const ogImage = project?.ogImage ?? "/profile-picture.webp";
-  const url = `${BASE_URL}/${locale}/projects/${slug}`;
 
-  return {
+  return buildPageMetadata({
+    locale,
+    // Slugs are translated, so each locale's URL has to be resolved from the
+    // project itself — the same slug does not exist in the other language.
+    href: (l) => (project ? projectHref(project, l) : { pathname: "/projects/[slug]", params: { slug } }),
     title,
     description,
-    alternates: {
-      canonical: url,
-      languages: {
-        en: `${BASE_URL}/en/projects/${slug}`,
-        es: `${BASE_URL}/es/projects/${slug}`,
-      },
-    },
-    openGraph: {
-      type: "website",
-      locale,
-      url,
-      title,
-      description,
-      siteName: "Nicolás Ariel Fernández",
-      images: [
-        {
-          url: `${BASE_URL}${ogImage}`,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [`${BASE_URL}${ogImage}`],
-    },
-  };
+    image: project?.ogImage ?? "/og/default.png",
+    type: "article",
+  });
 }
 
 export async function generateStaticParams() {
-  return projects.flatMap((p) => [
-    { locale: "en", slug: p.slug },
-    { locale: "es", slug: p.slug },
-  ]);
+  // Each locale is prerendered under its own translated slug.
+  return projects.flatMap((project) =>
+    routing.locales.map((locale) => ({
+      locale,
+      slug: projectSlug(project, locale),
+    }))
+  );
 }
 
 export default async function ProjectCasePage({
@@ -72,7 +65,49 @@ export default async function ProjectCasePage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { locale } = await params;
+  const { locale, slug } = await params;
   setRequestLocale(locale);
-  return <ProjectCaseClient />;
+
+  const project = projectByLocalizedSlug(slug, locale);
+  if (!project) notFound();
+
+  const t = await getTranslations({ locale, namespace: "Metadata" });
+  const tHeader = await getTranslations({ locale, namespace: "Header" });
+  const tPortfolio = await getTranslations({ locale, namespace: "Portfolio" });
+  const keys = metaKeyById[project.id];
+
+  const url = localizedUrl(locale, projectHref(project, locale));
+  const title = keys ? t(keys.title as Parameters<typeof t>[0]) : t("portfolioTitle");
+  const description = keys
+    ? t(keys.description as Parameters<typeof t>[0])
+    : t("portfolioDescription");
+
+  const schema = jsonLdGraph(
+    {
+      "@type": "CreativeWork",
+      "@id": `${url}#project`,
+      url,
+      name: tPortfolio(project.titleKey as Parameters<typeof tPortfolio>[0]),
+      headline: title,
+      description,
+      inLanguage: locale,
+      author: { "@id": PERSON_ID },
+      creator: { "@id": PERSON_ID },
+      keywords: project.techs.join(", "),
+      image: `${SITE_URL}${project.ogImage ?? "/og/default.png"}`,
+      isPartOf: { "@id": `${localizedUrl(locale, "/portfolio")}#collectionpage` },
+    },
+    breadcrumbSchema([
+      { name: tHeader("home"), url: localizedUrl(locale, "/") },
+      { name: tHeader("portfolio"), url: localizedUrl(locale, "/portfolio") },
+      { name: tPortfolio(project.titleKey as Parameters<typeof tPortfolio>[0]), url },
+    ])
+  );
+
+  return (
+    <>
+      <ProjectCaseClient />
+      <JsonLd data={schema} />
+    </>
+  );
 }

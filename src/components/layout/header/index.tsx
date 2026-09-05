@@ -9,6 +9,7 @@ export async function Header() {
     { label: t("home"), to: "/" },
     { label: t("about"), to: "/about" },
     { label: t("portfolio"), to: "/portfolio" },
+    { label: t("resume"), to: "/resume" },
     { label: t("contact"), to: "/contact" },
   ];
 

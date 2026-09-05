@@ -6,8 +6,9 @@ import { ArrowLeft, ExternalLink, Github, Users, Target, Lightbulb, Pencil, Flas
 import { FigmaIcon, CanvaIcon, FigJamIcon } from "@/components/ui/icons";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import { useTranslations } from "next-intl";
-import { projects } from "@/data/projectsData";
+import { useLocale, useTranslations } from "next-intl";
+import { projectByLocalizedSlug } from "@/data/projectsData";
+import { trackEvent } from "@/lib/analytics";
 import { Link } from "@/i18n/routing";
 import { StaticImageData } from "next/image";
 import Image from "next/image";
@@ -21,7 +22,7 @@ const fade = {
   transition: { duration: 0.5 },
 };
 
-const CaseImageGallery = ({ images }: { images: (string | StaticImageData)[] }) => {
+const CaseImageGallery = ({ images, projectName }: { images: (string | StaticImageData)[]; projectName: string }) => {
   const [current, setCurrent] = useState(0);
   return (
     <div className="relative rounded-xl overflow-hidden aspect-video bg-muted group">
@@ -29,7 +30,7 @@ const CaseImageGallery = ({ images }: { images: (string | StaticImageData)[] }) 
         <MotionImage
           key={current}
           src={images[current]}
-          alt="Project screenshot"
+          alt={`${projectName} — ${current + 1}/${images.length}`}
           fill
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -74,8 +75,10 @@ const PhaseCard = ({ icon: Icon, phase, title, children }: { icon: React.Element
 
 const ProjectCaseClient = () => {
   const { slug } = useParams<{ slug: string }>();
+  const locale = useLocale();
   const t = useTranslations("Portfolio");
-  const project = projects.find((p) => p.slug === slug);
+  // The slug in the URL is the one for the active locale.
+  const project = projectByLocalizedSlug(slug, locale);
 
   if (!project) {
     return (
@@ -88,9 +91,11 @@ const ProjectCaseClient = () => {
   const c = (key: string) => t(`${project.casePrefix}.${key}`);
   // Uses project-specific key if it exists, otherwise falls back to global case.*
   const ct = (key: string) => {
-    const projectVal = c(key);
-    // next-intl returns the key path when missing — detect that
-    return projectVal === `${project.casePrefix}.${key}` ? t(`case.${key}`) : projectVal;
+    const projectKey = `${project.casePrefix}.${key}`;
+    // `t.has` is the reliable existence check: on a miss `t` returns the key
+    // prefixed with its namespace ("Portfolio.case…"), so comparing against the
+    // unprefixed path never matched and the fallback silently never fired.
+    return t.has(projectKey) ? t(projectKey) : t(`case.${key}`);
   };
 
   return (
@@ -107,7 +112,7 @@ const ProjectCaseClient = () => {
             <span className="text-xs font-semibold uppercase tracking-widest text-accent mb-3 block">{t("case.study")}</span>
             <h1 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-4">{t(project.titleKey)}</h1>
             <p className="text-lg text-muted-foreground mb-3">{c("overview")}</p>
-            {project.slug === "mexx-ux-redesign" && (() => {
+            {project.id === "mexx-ux-redesign" && (() => {
               const note = c("diplomaNote");
               const url = c("diplomaUrl");
               const linkText = c("diplomaLinkText");
@@ -131,27 +136,27 @@ const ProjectCaseClient = () => {
 
             <div className="flex flex-wrap gap-3">
               {project.github && (
-                <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-foreground text-background text-sm font-medium hover:opacity-90 transition">
+                <a href={project.github} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent({ name: "project_link_click", params: { project: project.id, link_type: "github", source: "case_study" } })} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-foreground text-background text-sm font-medium hover:opacity-90 transition">
                   <Github className="w-4 h-4" /> {t("projects.code")}
                 </a>
               )}
               {project.demo && (
-                <a href={project.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-accent text-accent-foreground text-sm font-medium hover:opacity-90 transition">
+                <a href={project.demo} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent({ name: "project_link_click", params: { project: project.id, link_type: "demo", source: "case_study" } })} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-accent text-accent-foreground text-sm font-medium hover:opacity-90 transition">
                   <ExternalLink className="w-4 h-4" /> {t("projects.demo")}
                 </a>
               )}
               {project.canva && (
-                <a href={project.canva} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-foreground text-sm font-medium hover:bg-muted transition">
+                <a href={project.canva} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent({ name: "project_link_click", params: { project: project.id, link_type: "canva", source: "case_study" } })} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-foreground text-sm font-medium hover:bg-muted transition">
                   <CanvaIcon className="w-4 h-4" /> {t("projects.canva")}
                 </a>
               )}
               {project.figjam && (
-                <a href={project.figjam} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-foreground text-sm font-medium hover:bg-muted transition">
+                <a href={project.figjam} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent({ name: "project_link_click", params: { project: project.id, link_type: "figjam", source: "case_study" } })} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-foreground text-sm font-medium hover:bg-muted transition">
                   <FigJamIcon className="w-4 h-4" /> {t("projects.figjam")}
                 </a>
               )}
               {project.lofi && (
-                <a href={project.lofi} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-foreground text-sm font-medium hover:bg-muted transition">
+                <a href={project.lofi} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent({ name: "project_link_click", params: { project: project.id, link_type: "lofi", source: "case_study" } })} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-foreground text-sm font-medium hover:bg-muted transition">
                   <PenLine className="w-4 h-4" /> {t("projects.lofi")}
                 </a>
               )}
@@ -164,7 +169,7 @@ const ProjectCaseClient = () => {
       <section className="px-6 md:px-12 lg:px-24 pb-16">
         <div className="container mx-auto max-w-4xl">
           <motion.div {...fade}>
-            <CaseImageGallery images={project.images} />
+            <CaseImageGallery images={project.images} projectName={t(project.titleKey)} />
           </motion.div>
         </div>
       </section>

@@ -5,10 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Github, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { StaticImageData } from "next/image";
 import { Link } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
-import { projects, type Category } from "@/data/projectsData";
+import { useLocale, useTranslations } from "next-intl";
+import { projects, projectSlug, type Category } from "@/data/projectsData";
+import { trackEvent } from "@/lib/analytics";
 
-const ImageCarousel = ({ images }: { images: (string | StaticImageData)[] }) => {
+const ImageCarousel = ({ images, projectName }: { images: (string | StaticImageData)[]; projectName: string }) => {
   const [current, setCurrent] = useState(0);
 
   const prev = () => setCurrent((c) => (c === 0 ? images.length - 1 : c - 1));
@@ -23,7 +24,7 @@ const ImageCarousel = ({ images }: { images: (string | StaticImageData)[] }) => 
         <motion.img
           key={current}
           src={src}
-          alt="Project screenshot"
+          alt={`${projectName} — ${current + 1}/${images.length}`}
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -40 }}
@@ -52,6 +53,7 @@ const ImageCarousel = ({ images }: { images: (string | StaticImageData)[] }) => 
 
 const Projects = () => {
   const t = useTranslations("Portfolio");
+  const locale = useLocale();
   const [activeCategory, setActiveCategory] = useState<Category>("all");
 
   const categories: { key: Category; label: string }[] = [
@@ -75,7 +77,7 @@ const Projects = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">{t("projects.title")}</h2>
+          <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">{t("projects.title")}</h1>
           <p className="text-muted-foreground max-w-lg mx-auto">{t("projects.subtitle")}</p>
           <div className="w-12 h-1 bg-accent mx-auto rounded-full mt-4" />
         </motion.div>
@@ -99,7 +101,7 @@ const Projects = () => {
           <AnimatePresence mode="popLayout">
             {filtered.map((project) => (
               <motion.div
-                key={project.slug}
+                key={project.id}
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -107,7 +109,7 @@ const Projects = () => {
                 transition={{ duration: 0.3 }}
                 className="card-portfolio group"
               >
-                <ImageCarousel images={project.images} />
+                <ImageCarousel images={project.images} projectName={t(project.titleKey)} />
                 <div className="p-6">
                   <h3 className="font-display font-bold text-xl text-foreground mb-2 group-hover:text-accent transition-colors duration-200">
                     {t(project.titleKey)}
@@ -121,19 +123,20 @@ const Projects = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex gap-4">
                       {project.github && (
-                        <a href={project.github} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
+                        <a href={project.github} onClick={() => trackEvent({ name: "project_link_click", params: { project: project.id, link_type: "github", source: "portfolio" } })} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
                           <Github className="w-4 h-4" /> {t("projects.code")}
                         </a>
                       )}
-                      <a href={project.demo} target="_blank" className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
+                      <a href={project.demo} target="_blank" onClick={() => trackEvent({ name: "project_link_click", params: { project: project.id, link_type: "demo", source: "portfolio" } })} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
                         <ExternalLink className="w-4 h-4" /> {t("projects.demo")}
                       </a>
                     </div>
                     <Link
                       href={{
                         pathname: "/projects/[slug]",
-                        params: { slug: project.slug }
+                        params: { slug: projectSlug(project, locale) }
                       }}
+                      onClick={() => trackEvent({ name: "case_study_open", params: { project: project.id } })}
                       className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline transition-colors duration-200"
                     >
                       {t("projects.viewCase")} <ArrowRight className="w-3.5 h-3.5" />

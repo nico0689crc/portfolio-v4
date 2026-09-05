@@ -9,6 +9,7 @@ import { Link } from '@/i18n/routing';
 import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 
 interface NavItem {
   label: string;
@@ -55,6 +56,7 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
 
   const toggleLocale = () => {
     const nextLocale = locale === "es" ? "en" : "es";
+    trackEvent({ name: "language_switch", params: { from: locale, to: nextLocale } });
     router.replace(
       // @ts-expect-error -- Using dynamic router.replace with params
       { pathname, params }, 
