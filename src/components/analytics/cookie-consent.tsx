@@ -46,33 +46,35 @@ export function CookieConsent() {
       role="dialog"
       aria-live="polite"
       aria-label={t('title')}
-      className="fixed bottom-0 inset-x-0 z-[100] p-4 sm:p-6 animate-in slide-in-from-bottom duration-500"
+      className="fixed bottom-0 inset-x-0 z-[100] p-4 sm:p-6 animate-in fade-in slide-in-from-bottom-4 duration-500 ease-out"
     >
-      <div className="container mx-auto max-w-3xl rounded-2xl border border-border bg-card shadow-lg p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-5">
-        <div className="hidden sm:flex w-11 h-11 shrink-0 rounded-lg bg-accent/10 items-center justify-center">
-          <Cookie className="w-5 h-5 text-accent" aria-hidden="true" />
-        </div>
+      <div className="container mx-auto max-w-2xl rounded-2xl border border-border/60 bg-card/95 backdrop-blur-md shadow-2xl shadow-black/10 ring-1 ring-black/5 p-5 sm:p-6">
+        <div className="flex gap-4">
+          <div className="hidden sm:flex w-11 h-11 shrink-0 rounded-xl bg-linear-to-br from-accent/20 to-accent/5 ring-1 ring-accent/20 items-center justify-center">
+            <Cookie className="w-5 h-5 text-accent" aria-hidden="true" />
+          </div>
 
-        <div className="flex-1 min-w-0">
-          <h2 className="font-display font-bold text-foreground mb-1">{t('title')}</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">{t('description')}</p>
-        </div>
+          <div className="flex-1 min-w-0">
+            <h2 className="font-display font-bold text-foreground mb-1.5">{t('title')}</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">{t('description')}</p>
 
-        <div className="flex gap-3 shrink-0">
-          <button
-            type="button"
-            onClick={() => decide('denied')}
-            className="px-5 py-2.5 rounded-lg border border-border text-sm font-semibold text-muted-foreground hover:text-foreground hover:border-accent/40 transition-colors duration-200 cursor-pointer"
-          >
-            {t('reject')}
-          </button>
-          <button
-            type="button"
-            onClick={() => decide('granted')}
-            className="px-5 py-2.5 rounded-lg bg-accent text-accent-foreground text-sm font-semibold hover:opacity-90 transition-opacity duration-200 cursor-pointer"
-          >
-            {t('accept')}
-          </button>
+            <div className="flex flex-col-reverse sm:flex-row sm:items-center gap-2.5 sm:gap-3 mt-4">
+              <button
+                type="button"
+                onClick={() => decide('denied')}
+                className="px-4 py-2.5 rounded-lg text-sm font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/10 transition-colors duration-200 cursor-pointer"
+              >
+                {t('reject')}
+              </button>
+              <button
+                type="button"
+                onClick={() => decide('granted')}
+                className="px-5 py-2.5 rounded-lg bg-accent text-accent-foreground text-sm font-semibold shadow-sm hover:bg-amber-hover hover:shadow-md transition-all duration-200 cursor-pointer sm:ml-auto"
+              >
+                {t('accept')}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

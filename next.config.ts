@@ -43,6 +43,11 @@ const supabaseHostname = new URL(
 ).hostname;
 
 const nextConfig: NextConfig = {
+  // Permite buildear sin pelearse con un `next dev` corriendo: los dos escriben
+  // en `.next` y el que pierde la carrera muere con un ENOENT sobre un archivo
+  // temporal que no dice nada. Con NEXT_DIST_DIR el build usa su propia carpeta.
+  distDir: process.env.NEXT_DIST_DIR ?? '.next',
+
   images: {
     // Project screenshots live in Supabase Storage now, and `next/image`
     // refuses any remote host it was not told about. Derived from the env var
