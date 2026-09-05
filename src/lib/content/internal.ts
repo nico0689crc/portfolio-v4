@@ -1,10 +1,10 @@
-import { routing } from '@/i18n/routing';
+import { DEFAULT_LOCALE } from '@/i18n/locales';
 
 /**
  * Shared internals for the content layer. Not part of the public contract.
  */
 
-export const FALLBACK_LOCALE = routing.defaultLocale;
+export const FALLBACK_LOCALE: string = DEFAULT_LOCALE;
 
 /**
  * Locales to fetch for a request. Always includes the default one so a missing

@@ -1,9 +1,10 @@
 import { defineRouting } from 'next-intl/routing';
+import { DEFAULT_LOCALE, LOCALES } from './locales';
 import { createNavigation } from 'next-intl/navigation';
 
 export const routing = defineRouting({
-  locales: ['es', 'en'],
-  defaultLocale: 'en',
+  locales: LOCALES,
+  defaultLocale: DEFAULT_LOCALE,
   localePrefix: 'as-needed',
   // No Accept-Language redirects: every URL always serves its own language.
   // hreflang already tells Google which version to surface per user, and an

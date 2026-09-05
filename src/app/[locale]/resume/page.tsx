@@ -9,19 +9,16 @@ import {
   jsonLdGraph,
   localizedUrl,
 } from '@/lib/seo';
+import { pageMetadata } from '@/lib/page-metadata';
 import { cvPersonNode } from '@/lib/cv-schema';
 import { loadCvData } from '@/lib/cv-data';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'Metadata' });
-
-  const metadata = buildPageMetadata({
+  const metadata = await pageMetadata({
     locale,
+    routeKey: '/resume',
     href: '/resume',
-    title: t('resumeTitle'),
-    description: t('resumeDescription'),
-    image: '/og/default.png',
     type: 'profile',
   });
 

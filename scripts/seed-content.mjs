@@ -551,9 +551,18 @@ async function seedSlugRedirects() {
 // UI strings
 // ---------------------------------------------------------------------------
 
+/**
+ * Entradas numeradas de proyecto: `Portfolio.projects.5.title`.
+ *
+ * Se distinguen por el indice porque sus hermanas —`Portfolio.projects.demo`,
+ * `.viewCase`, `.filter.all`— son etiquetas de UI que los componentes siguen
+ * usando. Excluir el subarbol entero se las llevaba puestas, y la pagina
+ * terminaba mostrando el nombre de la clave en vez del texto.
+ */
+const NUMBERED_PROJECT_KEY = /^Portfolio\.projects\.\d+\./;
+
 /** Paths that became entities and must NOT be duplicated as UI strings. */
 const ENTITY_PATHS = [
-  'Portfolio.projects.',
   'About.experience.jobs',
   'About.faq.questions',
   'Resume.highlights',
@@ -579,8 +588,18 @@ function flatten(obj, prefix = '', out = []) {
 }
 
 async function seedUiMessages() {
+  // El `.` del prefijo es lo que importa: sin el, `Resume.highlights` excluia
+  // tambien a `Resume.highlightsTitle`, que es una etiqueta de UI y no parte de
+  // la entidad. El sintoma era la pagina de CV mostrando el nombre de la clave
+  // en lugar del titulo, y solo despues de que request.ts leyera de la base.
+  // El `.` del prefijo es lo que importa: sin el, `Resume.highlights` excluia
+  // tambien a `Resume.highlightsTitle`, que es una etiqueta de UI y no parte de
+  // la entidad.
+  const isEntityPath = (path) =>
+    ENTITY_PATHS.some((p) => path === p || path.startsWith(`${p}.`));
+
   const leaves = flatten(messages.es).filter(
-    ([path]) => !ENTITY_PATHS.some((p) => path === p || path.startsWith(p)) && !isCaseContent(path)
+    ([path]) => !isEntityPath(path) && !NUMBERED_PROJECT_KEY.test(path) && !isCaseContent(path)
   );
 
   await upsert(

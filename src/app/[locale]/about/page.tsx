@@ -10,18 +10,16 @@ import {
   jsonLdGraph,
   localizedUrl,
 } from '@/lib/seo';
+import { pageMetadata } from '@/lib/page-metadata';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'Metadata' });
 
-  return buildPageMetadata({
+  return pageMetadata({
     locale,
+    routeKey: '/about',
     href: '/about',
-    title: t('aboutTitle'),
-    description: t('aboutDescription'),
-    image: '/og/default.png',
-    type: 'profile',
+    type: 'profile'
   });
 }
 

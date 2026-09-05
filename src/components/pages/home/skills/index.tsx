@@ -1,14 +1,16 @@
 import { Reveal } from "@/components/ui/reveal";
 import { getLocale, getTranslations } from "next-intl/server";
-import { skillCategories, skillsForLocale } from "@/data/skillsData";
+import { getSkillCategories } from "@/lib/content";
 
 const Skills = async () => {
   const t = await getTranslations("Home");
   const locale = await getLocale();
 
-  const categories = skillCategories.map((category) => ({
-    title: t(category.labelKey as Parameters<typeof t>[0]),
-    skills: skillsForLocale(category, locale),
+  // La etiqueta de cada categoría ya viene traducida de la base, así que no hay
+  // clave de mensaje que mantener en sincronía con la fila.
+  const categories = (await getSkillCategories(locale)).map((category) => ({
+    title: category.label,
+    skills: category.skills.map((skill) => skill.name),
   }));
 
   return (
