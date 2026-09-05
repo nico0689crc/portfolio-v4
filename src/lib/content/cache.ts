@@ -21,6 +21,35 @@ export function cached<A extends unknown[], R>(
 }
 
 /**
+ * Same as `cached`, but for reads whose tag depends on the locale.
+ *
+ * `unstable_cache` fixes its tags when the function is wrapped, not when it is
+ * called, so a per-locale tag cannot come from the arguments. One wrapper per
+ * locale is memoised instead.
+ *
+ * This exists because the alternative is worse in a way that fails silently: a
+ * literal tag like `messages:*` looks per-locale, is accepted by
+ * `unstable_cache`, and matches nothing — the read would simply never
+ * invalidate, and the backoffice would appear to save without the site
+ * changing.
+ */
+export function cachedPerLocale<R>(
+  fn: (locale: string) => Promise<R>,
+  keyParts: string[],
+  tagsFor: (locale: string) => string[]
+): (locale: string) => Promise<R> {
+  const wrapped = new Map<string, (locale: string) => Promise<R>>();
+  return (locale: string) => {
+    let f = wrapped.get(locale);
+    if (!f) {
+      f = unstable_cache(fn, [...keyParts, locale], { tags: tagsFor(locale) });
+      wrapped.set(locale, f);
+    }
+    return f(locale);
+  };
+}
+
+/**
  * Invalidate from a Server Action — the backoffice's save path.
  *
  * `updateTag` gives read-your-own-writes: the editor who just saved is

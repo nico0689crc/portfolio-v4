@@ -501,6 +501,7 @@ export type Database = {
       }
       experience_translations: {
         Row: {
+          company: string | null
           date_label: string
           description: string
           experience_id: string
@@ -509,6 +510,7 @@ export type Database = {
           role: string
         }
         Insert: {
+          company?: string | null
           date_label: string
           description: string
           experience_id: string
@@ -517,6 +519,7 @@ export type Database = {
           role: string
         }
         Update: {
+          company?: string | null
           date_label?: string
           description?: string
           experience_id?: string
@@ -562,6 +565,7 @@ export type Database = {
           end_date: string | null
           id: string
           organization: string
+          periods: Json | null
           remote: boolean
           sort_order: number
           start_date: string | null
@@ -574,6 +578,7 @@ export type Database = {
           end_date?: string | null
           id?: string
           organization: string
+          periods?: Json | null
           remote?: boolean
           sort_order?: number
           start_date?: string | null
@@ -586,6 +591,7 @@ export type Database = {
           end_date?: string | null
           id?: string
           organization?: string
+          periods?: Json | null
           remote?: boolean
           sort_order?: number
           start_date?: string | null
@@ -1556,6 +1562,7 @@ export type Database = {
     }
     Functions: {
       is_admin: { Args: never; Returns: boolean }
+      is_valid_periods: { Args: { v: Json }; Returns: boolean }
       project_is_published: { Args: { pid: string }; Returns: boolean }
     }
     Enums: {

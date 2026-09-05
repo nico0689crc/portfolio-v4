@@ -319,6 +319,10 @@ async function seedExperiences() {
         experience_id: row.id,
         locale: l,
         role: jobs[l][i].role,
+        // The visible label is translated prose that does not derive from
+        // organization + location: the ES page says "Autónomo" where the
+        // neutral record says "Self-employed", and one row shows only a region.
+        company: jobs[l][i].company,
         location: CV.positions[i].location,
         date_label: jobs[l][i].date,
         description: jobs[l][i].desc
