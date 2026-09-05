@@ -24,7 +24,7 @@ export {
 } from './resume';
 
 export { getProject, getProjectSlugMap, getProjects, getRedirectedSlug } from './projects';
-export { storageUrl } from './storage';
+export { BUCKETS, storageUrl } from './storage';
 
 export { getPost, getPostSlugMap, getPosts, getTags } from './posts';
 

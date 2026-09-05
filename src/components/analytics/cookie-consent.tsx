@@ -55,7 +55,7 @@ export function CookieConsent() {
           </div>
 
           <div className="flex-1 min-w-0">
-            <h2 className="font-display font-bold text-foreground mb-1.5">{t('title')}</h2>
+            <h2 className="font-display text-base font-bold text-foreground mb-1.5 leading-snug">{t('title')}</h2>
             <p className="text-sm text-muted-foreground leading-relaxed">{t('description')}</p>
 
             <div className="flex flex-col-reverse sm:flex-row sm:items-center gap-2.5 sm:gap-3 mt-4">

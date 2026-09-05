@@ -5,10 +5,10 @@ import { JsonLd } from '@/components/seo/json-ld';
 import {
   SITE_URL,
   breadcrumbSchema,
-  buildPageMetadata,
   jsonLdGraph,
   localizedUrl,
 } from '@/lib/seo';
+import { getPageSeo } from '@/lib/content';
 import { pageMetadata } from '@/lib/page-metadata';
 import { cvPersonNode } from '@/lib/cv-schema';
 import { loadCvData } from '@/lib/cv-data';
@@ -42,6 +42,9 @@ export default async function CurriculumPage({ params }: { params: Promise<{ loc
   const { locale } = await params;
   setRequestLocale(locale);
 
+  // El mismo origen que `generateMetadata`: si el JSON-LD describiera algo
+  // distinto de lo que dice el <head>, Google usa uno de los dos sin avisar.
+  const seo = await getPageSeo('/resume', locale);
   const t = await getTranslations({ locale, namespace: 'Metadata' });
   const tHeader = await getTranslations({ locale, namespace: 'Header' });
   const cv = await loadCvData(locale);
@@ -54,8 +57,8 @@ export default async function CurriculumPage({ params }: { params: Promise<{ loc
       '@type': 'ProfilePage',
       '@id': `${url}#resume`,
       url,
-      name: t('resumeTitle'),
-      description: t('resumeDescription'),
+      name: seo?.title ?? t('defaultTitle'),
+      description: seo?.description ?? t('defaultDescription'),
       inLanguage: locale,
       mainEntity: cvPersonNode(cv),
       significantLink: cvUrl,

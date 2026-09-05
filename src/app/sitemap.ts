@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
 
-import { getCvFiles, getProjectSlugMap } from '@/lib/content';
+import { getCvFiles, getPostSlugMap, getProjectSlugMap } from '@/lib/content';
 import { SITE_URL, localizedUrl, type LocalizedHref } from '@/lib/seo';
 
 type Entry = {
@@ -59,10 +59,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }));
 
+  // El listado del blog entra sólo si hay algo que listar. Un <url> a una página
+  // vacía es una invitación a que Google la indexe como thin content y arrastre
+  // la reputación del resto del dominio.
+  const postMap = await getPostSlugMap();
+  const publishedPosts = postMap.filter((entry) =>
+    routing.locales.every((locale) => entry.slugs[locale])
+  );
+
+  const blogEntries: Entry[] =
+    publishedPosts.length === 0
+      ? []
+      : [
+          { href: '/blog', priority: 0.7, changeFrequency: 'weekly' as const },
+          ...publishedPosts.map((entry) => ({
+            href: (locale: string) => ({
+              pathname: '/blog/[slug]' as const,
+              params: { slug: entry.slugs[locale] },
+            }),
+            priority: 0.6,
+            changeFrequency: 'yearly' as const,
+          })),
+        ];
+
   // One <url> per locale, each carrying the full hreflang set. URLs come from
   // next-intl so localized segments and `as-needed` prefixing can't drift out
   // of sync with the routing config.
-  const pageEntries = [...staticEntries, ...projectEntries].flatMap(
+  const pageEntries = [...staticEntries, ...projectEntries, ...blogEntries].flatMap(
     ({ href, priority, changeFrequency }) => {
       const languages = Object.fromEntries(
         routing.locales.map((locale) => [locale, localizedUrl(locale, href)])

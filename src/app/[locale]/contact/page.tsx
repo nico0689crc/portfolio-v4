@@ -9,6 +9,7 @@ import {
   jsonLdGraph,
   localizedUrl,
 } from '@/lib/seo';
+import { getPageSeo } from '@/lib/content';
 import { pageMetadata } from '@/lib/page-metadata';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -25,6 +26,9 @@ export default async function ContactoPage({ params }: { params: Promise<{ local
   const { locale } = await params;
   setRequestLocale(locale);
 
+  // El mismo origen que `generateMetadata`: si el JSON-LD describiera algo
+  // distinto de lo que dice el <head>, Google usa uno de los dos sin avisar.
+  const seo = await getPageSeo('/contact', locale);
   const t = await getTranslations({ locale, namespace: 'Metadata' });
   const tHeader = await getTranslations({ locale, namespace: 'Header' });
 
@@ -33,8 +37,8 @@ export default async function ContactoPage({ params }: { params: Promise<{ local
       '@type': 'ContactPage',
       '@id': `${localizedUrl(locale, '/contact')}#contactpage`,
       url: localizedUrl(locale, '/contact'),
-      name: t('contactTitle'),
-      description: t('contactDescription'),
+      name: seo?.title ?? t('defaultTitle'),
+      description: seo?.description ?? t('defaultDescription'),
       inLanguage: locale,
       mainEntity: { '@id': PERSON_ID },
     },

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getProject, getProjectSlugMap, getRedirectedSlug } from "@/lib/content";
+import { getPageSeo, getProject, getProjectSlugMap, getRedirectedSlug } from "@/lib/content";
 import { permanentRedirect, routing } from "@/i18n/routing";
 import ProjectCaseClient from "./ProjectCaseClient";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -40,13 +40,19 @@ export async function generateMetadata({
   const project = await getProject(slug, locale);
 
   if (!project) {
-    const t = await getTranslations({ locale, namespace: "Metadata" });
+    // Un slug que no resuelve todavia puede redirigir, asi que la metadata cae
+    // a la del listado en vez de inventar un titulo para una pagina que quiza
+    // ni se llegue a renderizar.
+    const [seo, t] = await Promise.all([
+      getPageSeo("/portfolio", locale),
+      getTranslations({ locale, namespace: "Metadata" }),
+    ]);
 
     return buildPageMetadata({
       locale,
       href: { pathname: "/projects/[slug]", params: { slug } },
-      title: t("portfolioTitle"),
-      description: t("portfolioDescription"),
+      title: seo?.title ?? t("defaultTitle"),
+      description: seo?.description ?? t("defaultDescription"),
       image: "/og/default.png",
       type: "article",
     });

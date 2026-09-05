@@ -151,6 +151,26 @@
   },
   "Portfolio": {
     "projects": {
+      "1": {
+        "title": "E-Commerce Dashboard",
+        "desc": "Panel de administración para tienda online con métricas en tiempo real, gestión de productos y analíticas de ventas."
+      },
+      "2": {
+        "title": "GymSmartAccess",
+        "desc": "Plataforma SaaS B2B2C para la modernización de gimnasios con cobros automatizados y control de acceso por QR."
+      },
+      "3": {
+        "title": "Restaurant Booking System",
+        "desc": "Sistema de reservas online para restaurantes con calendario interactivo, gestión de mesas y confirmaciones automáticas."
+      },
+      "4": {
+        "title": "Portfolio & Blog",
+        "desc": "Sitio personal con blog integrado, sistema de contenido dinámico y optimización SEO avanzada."
+      },
+      "5": {
+        "title": "Mexx UX Redesign",
+        "desc": "Rediseño UX/UI de la tienda tech más grande de Argentina, resolviendo fricciones críticas de persistencia de carrito y costos de envío ocultos."
+      },
       "title": "Proyectos",
       "subtitle": "Una selección de proyectos donde combino desarrollo técnico con diseño centrado en el usuario.",
       "code": "Código",
@@ -161,26 +181,6 @@
       "lofi": "Prototipo Baja Fidelidad",
       "filter": {
         "all": "Todos"
-      },
-      "1": {
-        "title": "E-Commerce Dashboard",
-        "desc": "Panel de administración para tienda online con métricas en tiempo real, gestión de productos y analíticas de ventas."
-      },
-      "2": {
-        "title": "GymSmartAccess",
-        "desc": "Plataforma SaaS B2B2C para la modernización de gimnasios con cobros automatizados y control de acceso por QR."
-      },
-      "5": {
-        "title": "Mexx UX Redesign",
-        "desc": "Rediseño UX/UI de la tienda tech más grande de Argentina, resolviendo fricciones críticas de persistencia de carrito y costos de envío ocultos."
-      },
-      "3": {
-        "title": "Restaurant Booking System",
-        "desc": "Sistema de reservas online para restaurantes con calendario interactivo, gestión de mesas y confirmaciones automáticas."
-      },
-      "4": {
-        "title": "Portfolio & Blog",
-        "desc": "Sitio personal con blog integrado, sistema de contenido dinámico y optimización SEO avanzada."
       }
     },
     "case": {
@@ -463,5 +463,15 @@
     "description": "Uso Google Analytics para entender qué secciones del portafolio resultan útiles. No se comparten datos con anunciantes ni se te rastrea entre sitios. Podés rechazarlo sin perder ninguna funcionalidad.",
     "accept": "Aceptar",
     "reject": "Rechazar"
+  },
+  "Blog": {
+    "title": "Blog",
+    "subtitle": "Notas sobre desarrollo, diseño y las decisiones que hay detrás.",
+    "readMore": "Leer nota",
+    "readingTime": "min de lectura",
+    "empty": "Todavía no hay notas publicadas.",
+    "backToBlog": "Volver al blog",
+    "published": "Publicado el",
+    "updated": "Actualizado el"
   }
 }

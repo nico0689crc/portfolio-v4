@@ -151,6 +151,26 @@
   },
   "Portfolio": {
     "projects": {
+      "1": {
+        "title": "E-Commerce Dashboard",
+        "desc": "Admin panel for an online store with real-time metrics, product management, and sales analytics."
+      },
+      "2": {
+        "title": "GymSmartAccess",
+        "desc": "B2B2C SaaS platform for gym modernization with automated payments and QR-based access control."
+      },
+      "3": {
+        "title": "Restaurant Booking System",
+        "desc": "Online booking system for restaurants with interactive calendar, table management, and automatic confirmations."
+      },
+      "4": {
+        "title": "Portfolio & Blog",
+        "desc": "Personal site with integrated blog, dynamic content system, and advanced SEO optimization."
+      },
+      "5": {
+        "title": "Mexx UX Redesign",
+        "desc": "UX/UI redesign of Argentina's largest tech retailer, solving critical cart persistence and hidden shipping cost frictions."
+      },
       "title": "Projects",
       "subtitle": "A selection of projects where I combine technical development with user-centered design.",
       "code": "Code",
@@ -161,26 +181,6 @@
       "lofi": "Lo-Fi Prototype",
       "filter": {
         "all": "All"
-      },
-      "1": {
-        "title": "E-Commerce Dashboard",
-        "desc": "Admin panel for an online store with real-time metrics, product management, and sales analytics."
-      },
-      "2": {
-        "title": "GymSmartAccess",
-        "desc": "B2B2C SaaS platform for gym modernization with automated payments and QR-based access control."
-      },
-      "5": {
-        "title": "Mexx UX Redesign",
-        "desc": "UX/UI redesign of Argentina's largest tech retailer, solving critical cart persistence and hidden shipping cost frictions."
-      },
-      "3": {
-        "title": "Restaurant Booking System",
-        "desc": "Online booking system for restaurants with interactive calendar, table management, and automatic confirmations."
-      },
-      "4": {
-        "title": "Portfolio & Blog",
-        "desc": "Personal site with integrated blog, dynamic content system, and advanced SEO optimization."
       }
     },
     "case": {
@@ -464,5 +464,15 @@
     "description": "I use Google Analytics to understand which parts of the portfolio are useful. No data is shared with advertisers and you are not tracked across sites. You can decline without losing any functionality.",
     "accept": "Accept",
     "reject": "Decline"
+  },
+  "Blog": {
+    "title": "Blog",
+    "subtitle": "Notes on development, design, and the decisions behind them.",
+    "readMore": "Read note",
+    "readingTime": "min read",
+    "empty": "No posts published yet.",
+    "backToBlog": "Back to the blog",
+    "published": "Published on",
+    "updated": "Updated on"
   }
 }

@@ -10,6 +10,7 @@ import {
   jsonLdGraph,
   localizedUrl,
 } from '@/lib/seo';
+import { getPageSeo } from '@/lib/content';
 import { pageMetadata } from '@/lib/page-metadata';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -27,6 +28,9 @@ export default async function SobreMiPage({ params }: { params: Promise<{ locale
   const { locale } = await params;
   setRequestLocale(locale);
 
+  // El mismo origen que `generateMetadata`: si el JSON-LD describiera algo
+  // distinto de lo que dice el <head>, Google usa uno de los dos sin avisar.
+  const seo = await getPageSeo('/about', locale);
   const t = await getTranslations({ locale, namespace: 'Metadata' });
   const tAbout = await getTranslations({ locale, namespace: 'About' });
   const tHeader = await getTranslations({ locale, namespace: 'Header' });
@@ -40,8 +44,8 @@ export default async function SobreMiPage({ params }: { params: Promise<{ locale
       '@type': 'ProfilePage',
       '@id': `${localizedUrl(locale, '/about')}#profilepage`,
       url: localizedUrl(locale, '/about'),
-      name: t('aboutTitle'),
-      description: t('aboutDescription'),
+      name: seo?.title ?? t('defaultTitle'),
+      description: seo?.description ?? t('defaultDescription'),
       inLanguage: locale,
       mainEntity: { '@id': PERSON_ID },
     },
