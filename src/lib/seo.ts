@@ -82,7 +82,8 @@ export function buildPageMetadata({
   title,
   description,
   image,
-  type = 'website'
+  type = 'website',
+  noindex = false
 }: {
   locale: string;
   href: LocalizedHref;
@@ -90,6 +91,9 @@ export function buildPageMetadata({
   description: string;
   image?: string;
   type?: 'website' | 'profile' | 'article';
+  /** Content the database marks as hidden still resolves at its URL; this is
+   *  what keeps it out of the index. */
+  noindex?: boolean;
 }): Metadata {
   const url = localizedUrl(locale, href);
   const images = image ? [{ url: image, width: 1200, height: 630, alt: title }] : undefined;
@@ -97,6 +101,7 @@ export function buildPageMetadata({
   return {
     title,
     description,
+    ...(noindex ? { robots: { index: false, follow: false } } : {}),
     alternates: buildAlternates(locale, href),
     openGraph: {
       type,

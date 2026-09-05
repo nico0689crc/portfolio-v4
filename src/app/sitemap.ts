@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
-import { projectHref, projects } from '@/data/projectsData';
-import { getCvFiles } from '@/lib/content';
+
+import { getCvFiles, getProjectSlugMap } from '@/lib/content';
 import { SITE_URL, localizedUrl, type LocalizedHref } from '@/lib/seo';
 
 type Entry = {
@@ -26,16 +26,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
   const cvFiles = await getCvFiles();
 
-  // Project slugs deliberately still come from the static file, NOT from
-  // `getProjectSlugMap()`. The project page resolves slugs from the same file
-  // (its case-study client imports images as static assets, so it cannot move
-  // yet), and a sitemap listing a slug the page can't render is a 404 in the
-  // index. Switch both to the content layer in the same change, never one.
-  const projectEntries: Entry[] = projects.map((project) => ({
-    href: (locale: string) => projectHref(project, locale),
-    priority: 0.8,
-    changeFrequency: 'yearly' as const,
-  }));
+  // Both the sitemap and the project page now resolve slugs from the content
+  // layer, which is the only way they cannot drift: a sitemap listing a slug
+  // the page can't render is a 404 in the index.
+  //
+  // Projects missing a slug in any locale are skipped rather than guessed. Each
+  // <url> below carries the full hreflang set, so emitting one for a language
+  // that has no page would advertise a URL that 404s.
+  const slugMap = await getProjectSlugMap();
+  const projectEntries: Entry[] = slugMap
+    .filter((entry) => routing.locales.every((locale) => entry.slugs[locale]))
+    .map((entry) => ({
+      href: (locale: string) => ({
+        pathname: '/projects/[slug]' as const,
+        params: { slug: entry.slugs[locale] },
+      }),
+      priority: 0.8,
+      changeFrequency: 'yearly' as const,
+    }));
 
   // The PDF CVs are indexable documents in their own right, and each is the
   // language alternate of the other.

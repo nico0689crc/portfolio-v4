@@ -3,46 +3,48 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Github, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
-import { StaticImageData } from "next/image";
+import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { useLocale, useTranslations } from "next-intl";
-import { projects, projectSlug, type Category } from "@/data/projectsData";
+import { useTranslations } from "next-intl";
+import { storageUrl } from "@/lib/content/storage";
+import type { ProjectImage, ProjectSummary } from "@/lib/content/types";
 import { trackEvent } from "@/lib/analytics";
 
-const ImageCarousel = ({ images, projectName }: { images: (string | StaticImageData)[]; projectName: string }) => {
+/** Filter buttons are UI, not content: the set is fixed by the design. */
+type Category = "all" | "fullstack" | "ux-ui" | "wordpress";
+
+const ImageCarousel = ({ images, projectName }: { images: ProjectImage[]; projectName: string }) => {
   const [current, setCurrent] = useState(0);
+  const image = images[current];
 
   const prev = () => setCurrent((c) => (c === 0 ? images.length - 1 : c - 1));
   const next = () => setCurrent((c) => (c === images.length - 1 ? 0 : c + 1));
 
-  const currentImage = images[current];
-  const src = typeof currentImage === "string" ? currentImage : currentImage.src;
+  if (!image) return null;
 
   return (
-    <div className="relative h-52 overflow-hidden bg-muted">
-      <AnimatePresence mode="wait">
-        <motion.img
-          key={current}
-          src={src}
-          alt={`${projectName} — ${current + 1}/${images.length}`}
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -40 }}
-          transition={{ duration: 0.25 }}
-          className="w-full h-full object-cover"
-        />
-      </AnimatePresence>
+    <div className="relative aspect-video overflow-hidden bg-muted group/carousel">
+      <Image
+        src={storageUrl(image.storagePath)}
+        alt={image.alt ?? `${projectName} — ${current + 1}/${images.length}`}
+        fill
+        sizes="(max-width: 768px) 100vw, 50vw"
+        {...(image.blurDataUrl
+          ? { placeholder: "blur" as const, blurDataURL: image.blurDataUrl }
+          : {})}
+        className="object-cover transition-transform duration-300 group-hover:scale-105"
+      />
       {images.length > 1 && (
         <>
-          <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-foreground hover:bg-background transition-colors opacity-0 group-hover:opacity-100">
+          <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-foreground hover:bg-background transition opacity-0 group-hover/carousel:opacity-100">
             <ChevronLeft className="w-4 h-4" />
           </button>
-          <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-foreground hover:bg-background transition-colors opacity-0 group-hover:opacity-100">
+          <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-foreground hover:bg-background transition opacity-0 group-hover/carousel:opacity-100">
             <ChevronRight className="w-4 h-4" />
           </button>
           <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
             {images.map((_, i) => (
-              <button key={i} onClick={() => setCurrent(i)} className={`w-2 h-2 rounded-full transition-colors ${i === current ? "bg-accent" : "bg-background/60"}`} />
+              <button key={i} onClick={() => setCurrent(i)} className={`w-2 h-2 rounded-full transition ${i === current ? "bg-accent scale-110" : "bg-background/60"}`} />
             ))}
           </div>
         </>
@@ -51,9 +53,8 @@ const ImageCarousel = ({ images, projectName }: { images: (string | StaticImageD
   );
 };
 
-const Projects = () => {
+const Projects = ({ projects }: { projects: ProjectSummary[] }) => {
   const t = useTranslations("Portfolio");
-  const locale = useLocale();
   const [activeCategory, setActiveCategory] = useState<Category>("all");
 
   const categories: { key: Category; label: string }[] = [
@@ -101,7 +102,7 @@ const Projects = () => {
           <AnimatePresence mode="popLayout">
             {filtered.map((project) => (
               <motion.div
-                key={project.id}
+                key={project.key}
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -109,12 +110,12 @@ const Projects = () => {
                 transition={{ duration: 0.3 }}
                 className="card-portfolio group"
               >
-                <ImageCarousel images={project.images} projectName={t(project.titleKey)} />
+                <ImageCarousel images={project.images} projectName={project.title} />
                 <div className="p-6">
                   <h3 className="font-display font-bold text-xl text-foreground mb-2 group-hover:text-accent transition-colors duration-200">
-                    {t(project.titleKey)}
+                    {project.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{t(project.descKey)}</p>
+                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{project.description}</p>
                   <div className="flex flex-wrap gap-1.5 mb-5">
                     {project.techs.map((tech) => (
                       <span key={tech} className="tech-tag">{tech}</span>
@@ -122,21 +123,23 @@ const Projects = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex gap-4">
-                      {project.github && (
-                        <a href={project.github} onClick={() => trackEvent({ name: "project_link_click", params: { project: project.id, link_type: "github", source: "portfolio" } })} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
+                      {project.links.github && (
+                        <a href={project.links.github} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent({ name: "project_link_click", params: { project: project.key, link_type: "github", source: "portfolio" } })} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
                           <Github className="w-4 h-4" /> {t("projects.code")}
                         </a>
                       )}
-                      <a href={project.demo} target="_blank" onClick={() => trackEvent({ name: "project_link_click", params: { project: project.id, link_type: "demo", source: "portfolio" } })} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
-                        <ExternalLink className="w-4 h-4" /> {t("projects.demo")}
-                      </a>
+                      {/* Guarded: the static version rendered this anchor
+                          unconditionally, so a project without a demo shipped an
+                          <a> with an undefined href. */}
+                      {project.links.demo && (
+                        <a href={project.links.demo} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent({ name: "project_link_click", params: { project: project.key, link_type: "demo", source: "portfolio" } })} className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-accent transition-colors duration-200">
+                          <ExternalLink className="w-4 h-4" /> {t("projects.demo")}
+                        </a>
+                      )}
                     </div>
                     <Link
-                      href={{
-                        pathname: "/projects/[slug]",
-                        params: { slug: projectSlug(project, locale) }
-                      }}
-                      onClick={() => trackEvent({ name: "case_study_open", params: { project: project.id } })}
+                      href={{ pathname: "/projects/[slug]", params: { slug: project.slug } }}
+                      onClick={() => trackEvent({ name: "case_study_open", params: { project: project.key } })}
                       className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline transition-colors duration-200"
                     >
                       {t("projects.viewCase")} <ArrowRight className="w-3.5 h-3.5" />

@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import {
-  projectByLocalizedSlug,
-  projectHref,
-  projects,
-  projectSlug,
-} from "@/data/projectsData";
-import { routing } from "@/i18n/routing";
+import { getProject, getProjectSlugMap, getRedirectedSlug } from "@/lib/content";
+import { permanentRedirect, routing } from "@/i18n/routing";
 import ProjectCaseClient from "./ProjectCaseClient";
 import { JsonLd } from "@/components/seo/json-ld";
 import {
@@ -19,11 +14,22 @@ import {
   localizedUrl,
 } from "@/lib/seo";
 
-/** Keyed by the project's stable id, not by any locale's slug. */
-const metaKeyById: Record<string, { title: string; description: string }> = {
-  "mexx-ux-redesign": { title: "mexxTitle", description: "mexxDescription" },
-  "gym-smart-access": { title: "gymTitle", description: "gymDescription" },
-};
+/**
+ * Each locale's URL for one project, for the canonical + hreflang cluster.
+ *
+ * Slugs are translated, so the other language's URL cannot be derived from this
+ * one — it has to be looked up. Falling back to the requested slug keeps a
+ * project that is published in only one language from breaking the cluster.
+ */
+async function hrefResolver(key: string, fallbackSlug: string) {
+  const map = await getProjectSlugMap();
+  const slugs = map.find((entry) => entry.key === key)?.slugs ?? {};
+
+  return (locale: string) => ({
+    pathname: "/projects/[slug]" as const,
+    params: { slug: slugs[locale] ?? fallbackSlug },
+  });
+}
 
 export async function generateMetadata({
   params,
@@ -31,32 +37,42 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const t = await getTranslations({ locale, namespace: "Metadata" });
-  const project = projectByLocalizedSlug(slug, locale);
-  const keys = project ? metaKeyById[project.id] : undefined;
+  const project = await getProject(slug, locale);
 
-  const title = keys ? t(keys.title as Parameters<typeof t>[0]) : t("portfolioTitle");
-  const description = keys ? t(keys.description as Parameters<typeof t>[0]) : t("portfolioDescription");
+  if (!project) {
+    const t = await getTranslations({ locale, namespace: "Metadata" });
+
+    return buildPageMetadata({
+      locale,
+      href: { pathname: "/projects/[slug]", params: { slug } },
+      title: t("portfolioTitle"),
+      description: t("portfolioDescription"),
+      image: "/og/default.png",
+      type: "article",
+    });
+  }
 
   return buildPageMetadata({
     locale,
-    // Slugs are translated, so each locale's URL has to be resolved from the
-    // project itself — the same slug does not exist in the other language.
-    href: (l) => (project ? projectHref(project, l) : { pathname: "/projects/[slug]", params: { slug } }),
-    title,
-    description,
-    image: project?.ogImage ?? "/og/default.png",
+    href: await hrefResolver(project.key, slug),
+    // The SEO fields are optional overrides; the visible title and description
+    // are the sensible default when the editor has not set them.
+    title: project.seoTitle ?? project.title,
+    description: project.seoDescription ?? project.description,
+    image: project.ogImage ?? "/og/default.png",
     type: "article",
+    noindex: project.noindex,
   });
 }
 
 export async function generateStaticParams() {
+  const map = await getProjectSlugMap();
+
   // Each locale is prerendered under its own translated slug.
-  return projects.flatMap((project) =>
-    routing.locales.map((locale) => ({
-      locale,
-      slug: projectSlug(project, locale),
-    }))
+  return map.flatMap((entry) =>
+    routing.locales.flatMap((locale) =>
+      entry.slugs[locale] ? [{ locale, slug: entry.slugs[locale] }] : []
+    )
   );
 }
 
@@ -68,28 +84,38 @@ export default async function ProjectCasePage({
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const project = projectByLocalizedSlug(slug, locale);
-  if (!project) notFound();
+  const project = await getProject(slug, locale);
 
-  const t = await getTranslations({ locale, namespace: "Metadata" });
+  if (!project) {
+    // A slug that no longer resolves may be one the editor renamed. The
+    // redirect table is what keeps the old URL's ranking instead of 404-ing,
+    // and it is only consulted on the miss so the happy path costs nothing.
+    const current = await getRedirectedSlug("project", locale, slug);
+
+    if (current) {
+      permanentRedirect({
+        href: { pathname: "/projects/[slug]", params: { slug: current } },
+        locale,
+      });
+    }
+
+    notFound();
+  }
+
   const tHeader = await getTranslations({ locale, namespace: "Header" });
-  const tPortfolio = await getTranslations({ locale, namespace: "Portfolio" });
-  const keys = metaKeyById[project.id];
-
-  const url = localizedUrl(locale, projectHref(project, locale));
-  const title = keys ? t(keys.title as Parameters<typeof t>[0]) : t("portfolioTitle");
-  const description = keys
-    ? t(keys.description as Parameters<typeof t>[0])
-    : t("portfolioDescription");
+  const url = localizedUrl(locale, {
+    pathname: "/projects/[slug]",
+    params: { slug: project.slug },
+  });
 
   const schema = jsonLdGraph(
     {
       "@type": "CreativeWork",
       "@id": `${url}#project`,
       url,
-      name: tPortfolio(project.titleKey as Parameters<typeof tPortfolio>[0]),
-      headline: title,
-      description,
+      name: project.title,
+      headline: project.seoTitle ?? project.title,
+      description: project.seoDescription ?? project.description,
       inLanguage: locale,
       author: { "@id": PERSON_ID },
       creator: { "@id": PERSON_ID },
@@ -100,13 +126,13 @@ export default async function ProjectCasePage({
     breadcrumbSchema([
       { name: tHeader("home"), url: localizedUrl(locale, "/") },
       { name: tHeader("portfolio"), url: localizedUrl(locale, "/portfolio") },
-      { name: tPortfolio(project.titleKey as Parameters<typeof tPortfolio>[0]), url },
+      { name: project.title, url },
     ])
   );
 
   return (
     <>
-      <ProjectCaseClient />
+      <ProjectCaseClient project={project} />
       <JsonLd data={schema} />
     </>
   );
