@@ -3,6 +3,7 @@ import {
   certifications,
   education,
   isoDate,
+  positionPeriods,
   positions,
   YEARS_OF_EXPERIENCE
 } from '@/data/cvData';
@@ -24,13 +25,15 @@ export interface CvProse {
  * Google and most LLM extractors actually read a work history from.
  */
 export function occupationNodes(prose: CvProse) {
-  return positions.map((position, i) => {
+  // A role with a career break emits one node per stint: Google requires the
+  // markup to match what the page shows, and the visible date label lists both.
+  return positions.flatMap((position, i) => {
     const job = prose.jobs[i];
-    return {
+    return positionPeriods(position).map((period) => ({
       '@type': 'OrganizationRole',
       roleName: job.role,
-      startDate: isoDate(position.startDate),
-      ...(position.endDate ? { endDate: isoDate(position.endDate) } : {}),
+      startDate: isoDate(period.startDate),
+      ...(period.endDate ? { endDate: isoDate(period.endDate) } : {}),
       description: job.desc,
       namedPosition: job.role,
       memberOf: {
@@ -39,7 +42,7 @@ export function occupationNodes(prose: CvProse) {
         address: position.location
       },
       skills: position.skills.join(', ')
-    };
+    }));
   });
 }
 
@@ -153,15 +156,17 @@ export function toJsonResume(locale: string, prose: CvProse) {
         { network: 'GitHub', username: 'nico0689crc', url: SOCIAL_LINKS[1] }
       ]
     },
-    work: positions.map((position, i) => ({
-      name: position.organization,
-      position: prose.jobs[i].role,
-      location: position.location,
-      startDate: isoDate(position.startDate),
-      ...(position.endDate ? { endDate: isoDate(position.endDate) } : {}),
-      summary: prose.jobs[i].desc,
-      highlights: position.skills
-    })),
+    work: positions.flatMap((position, i) =>
+      positionPeriods(position).map((period) => ({
+        name: position.organization,
+        position: prose.jobs[i].role,
+        location: position.location,
+        startDate: isoDate(period.startDate),
+        ...(period.endDate ? { endDate: isoDate(period.endDate) } : {}),
+        summary: prose.jobs[i].desc,
+        highlights: position.skills
+      }))
+    ),
     education: education.map((entry, i) => ({
       institution: entry.institution,
       ...(entry.url ? { url: entry.url } : {}),

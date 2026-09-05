@@ -1,5 +1,11 @@
 import { getCvProse } from '@/lib/cv-prose';
-import { certifications, education, positions, YEARS_OF_EXPERIENCE } from '@/data/cvData';
+import {
+  certifications,
+  education,
+  positionPeriods,
+  positions,
+  YEARS_OF_EXPERIENCE
+} from '@/data/cvData';
 import { projectHref, projects } from '@/data/projectsData';
 import { allTechnicalSkills } from '@/data/skillsData';
 import { AUTHOR_EMAIL, SITE_NAME, SITE_URL, SOCIAL_LINKS, localizedUrl } from '@/lib/seo';
@@ -31,7 +37,7 @@ export async function GET() {
       const job = prose.jobs[i];
       return [
         `### ${job.role} — ${position.organization}`,
-        `${formatRange(position.startDate, position.endDate)} · ${position.location}${position.remote ? ' · Remote' : ''}`,
+        `${positionPeriods(position).map((p) => formatRange(p.startDate, p.endDate)).join(' | ')} · ${position.location}${position.remote ? ' · Remote' : ''}`,
         '',
         job.desc,
         '',

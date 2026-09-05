@@ -28,6 +28,13 @@ export interface CvPosition {
   employmentType: 'FULL_TIME' | 'PART_TIME' | 'CONTRACTOR' | 'OTHER';
   remote: boolean;
   skills: string[];
+  /**
+   * Discrete stints, for roles that were interrupted. `startDate`/`endDate`
+   * above stay as the outer span for sorting; this is what structured data
+   * uses, so a career break isn't published as continuous tenure.
+   * Omitted when the role ran without interruption.
+   */
+  periods?: Array<{ startDate: string; endDate: string | null }>;
 }
 
 export interface CvEducation {
@@ -72,7 +79,6 @@ export const positions: CvPosition[] = [
     skills: ['AWS', 'Ruby on Rails', 'Python', 'JavaScript', 'Node.js', 'React.js']
   },
   {
-    // Two separate stints; the outer span is what structured data can express.
     id: 'hospitality-2016',
     organization: 'Restaurants and hotels (Oceania & Europe)',
     location: 'Australia, New Zealand, Sweden, Germany',
@@ -80,7 +86,13 @@ export const positions: CvPosition[] = [
     endDate: '2025-01',
     employmentType: 'FULL_TIME',
     remote: false,
-    skills: ['Leadership', 'Time Management', 'Adaptability', 'Working under pressure']
+    skills: ['Leadership', 'Time Management', 'Adaptability', 'Working under pressure'],
+    // Interrupted by a return to software in 2022; the visible date label shows
+    // both stints, so the markup has to as well.
+    periods: [
+      { startDate: '2016-01', endDate: '2022-03' },
+      { startDate: '2023-01', endDate: '2025-01' }
+    ]
   },
   {
     id: 'frontend-2015',
@@ -145,6 +157,19 @@ export const CV_FILES: Record<string, string> = {
 
 /** Years of professional software experience, as claimed on the site. */
 export const YEARS_OF_EXPERIENCE = 3;
+
+/**
+ * The stints a role was actually worked, defaulting to its single outer span.
+ *
+ * An empty array falls back too: the database rejects one, but if a future
+ * source ever returned it the position would vanish from the structured data
+ * without any error — a silent omission is worse than a wrong date.
+ */
+export function positionPeriods(position: CvPosition) {
+  return position.periods?.length
+    ? position.periods
+    : [{ startDate: position.startDate, endDate: position.endDate }];
+}
 
 /** Renders an ISO YYYY-MM range the way schema.org and JSON Resume expect. */
 export function isoDate(value: string | null) {
