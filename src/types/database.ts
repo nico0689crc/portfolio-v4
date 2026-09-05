@@ -79,19 +79,22 @@ export type Database = {
       }
       case_study_metric_translations: {
         Row: {
+          label: string
           locale: string
           metric_id: string
-          text: string
+          value: string
         }
         Insert: {
+          label: string
           locale: string
           metric_id: string
-          text: string
+          value: string
         }
         Update: {
+          label?: string
           locale?: string
           metric_id?: string
-          text?: string
+          value?: string
         }
         Relationships: [
           {

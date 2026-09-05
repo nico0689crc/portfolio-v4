@@ -3,6 +3,8 @@ import { cached } from './cache';
 import { TAGS } from './tags';
 import { localesFor, orThrow, pick } from './internal';
 import type {
+  CaseMetric,
+  ProjectImage,
   CasePhase,
   CaseStudy,
   ProjectDetail,
@@ -24,6 +26,27 @@ function toLinks(value: unknown): ProjectLinks {
   return (value ?? {}) as ProjectLinks;
 }
 
+type ImageRow = {
+  storage_path: string;
+  width: number;
+  height: number;
+  blur_data_url: string | null;
+  sort_order: number;
+  project_image_translations: { locale: string; alt: string | null }[];
+};
+
+function toImages(rows: ImageRow[], locale: string): ProjectImage[] {
+  return [...rows]
+    .sort((a, b) => a.sort_order - b.sort_order)
+    .map((img) => ({
+      storagePath: img.storage_path,
+      width: img.width,
+      height: img.height,
+      blurDataUrl: img.blur_data_url,
+      alt: pick(img.project_image_translations, locale)?.alt ?? null
+    }));
+}
+
 export const getProjects = cached(
   async (locale: string): Promise<ProjectSummary[]> => {
     const rows = orThrow(
@@ -32,7 +55,9 @@ export const getProjects = cached(
         .from('projects')
         .select(
           `key, category, techs, links, og_image,
-           project_translations(locale, slug, title, description, noindex)`
+           project_translations(locale, slug, title, description, noindex),
+           project_images(storage_path, width, height, blur_data_url, sort_order,
+                          project_image_translations(locale, alt))`
         )
         .eq('status', 'published')
         .in('project_translations.locale', localesFor(locale))
@@ -45,6 +70,7 @@ export const getProjects = cached(
       return [
         {
           key: row.key,
+          images: toImages(row.project_images, locale),
           slug: t.slug,
           category: row.category,
           techs: row.techs,
@@ -82,7 +108,7 @@ export const getProject = cached(
                                    process_desc, results, learnings, note_html, note_url, note_link_text),
            case_study_phases(slug, sort_order,
                              case_study_phase_translations(locale, label, title, body)),
-           case_study_metrics(sort_order, case_study_metric_translations(locale, text))
+           case_study_metrics(sort_order, case_study_metric_translations(locale, value, label))
          )`
       )
       .eq('status', 'published')
@@ -96,15 +122,7 @@ export const getProject = cached(
     const t = data.project_translations[0];
     if (!t) return null;
 
-    const images = [...data.project_images]
-      .sort((a, b) => a.sort_order - b.sort_order)
-      .map((img) => ({
-        storagePath: img.storage_path,
-        width: img.width,
-        height: img.height,
-        blurDataUrl: img.blur_data_url,
-        alt: pick(img.project_image_translations, locale)?.alt ?? null
-      }));
+    const images = toImages(data.project_images, locale);
 
     const cs = data.case_studies;
     let caseStudy: CaseStudy | null = null;
@@ -122,11 +140,11 @@ export const getProject = cached(
             body: pt?.body ?? null
           };
         });
-      const metrics = [...cs.case_study_metrics]
+      const metrics: CaseMetric[] = [...cs.case_study_metrics]
         .sort((a, b) => a.sort_order - b.sort_order)
         .flatMap((m) => {
           const mt = pick(m.case_study_metric_translations, locale);
-          return mt ? [mt.text] : [];
+          return mt ? [{ value: mt.value, label: mt.label }] : [];
         });
 
       caseStudy = {

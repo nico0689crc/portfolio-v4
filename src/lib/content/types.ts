@@ -101,6 +101,8 @@ export interface ProjectSummary {
   title: string;
   description: string;
   noindex: boolean;
+  /** Ordered; the portfolio card renders these as a carousel. */
+  images: ProjectImage[];
 }
 
 export interface CasePhase {
@@ -108,6 +110,12 @@ export interface CasePhase {
   label: string | null;
   title: string | null;
   body: string | null;
+}
+
+export interface CaseMetric {
+  /** The headline figure: "+15%", "85.7%", "Zero". */
+  value: string;
+  label: string;
 }
 
 export interface CaseStudy {
@@ -124,7 +132,7 @@ export interface CaseStudy {
   noteUrl: string | null;
   noteLinkText: string | null;
   phases: CasePhase[];
-  metrics: string[];
+  metrics: CaseMetric[];
 }
 
 export interface ProjectImage {

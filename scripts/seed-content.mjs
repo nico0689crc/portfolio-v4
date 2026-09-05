@@ -271,7 +271,14 @@ async function seedCaseStudy(projectId, prefix) {
     if (!metricId) continue;
     await upsert(
       'case_study_metric_translations',
-      LOCALES.map((l) => ({ metric_id: metricId, locale: l, text: path(l, `metric${i + 1}`) })),
+      // The message file stores each metric as a { value, label } object.
+      // Passing it whole used to land in a single text column, which silently
+      // stringified it into JSON; the columns are split now, so spread it.
+      LOCALES.map((l) => {
+        const metric = path(l, `metric${i + 1}`);
+
+        return { metric_id: metricId, locale: l, value: metric.value, label: metric.label };
+      }),
       'metric_id,locale'
     );
   }
