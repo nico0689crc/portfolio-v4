@@ -127,6 +127,30 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
     tags: [TAGS.highlights, TAGS.all]
   },
 
+  tags: {
+    slug: 'tags',
+    title: 'Tags',
+    description: 'Etiquetas del blog. El slug es traducido, así que cada idioma tiene su propia URL.',
+    table: 'tags',
+    translationTable: 'tag_translations',
+    foreignKey: 'tag_id',
+    base: [
+      {
+        name: 'key',
+        label: 'Clave',
+        type: 'text',
+        required: true,
+        help: 'Identificador estable, no es una URL. No lo cambies una vez usado.'
+      }
+    ],
+    translated: [
+      { name: 'slug', label: 'Slug', type: 'text', required: true },
+      { name: 'name', label: 'Nombre', type: 'text', required: true }
+    ],
+    labelField: 'name',
+    tags: [TAGS.tags, TAGS.all]
+  },
+
   faqs: {
     slug: 'faqs',
     title: 'FAQs',

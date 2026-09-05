@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 
 // Component Imports
 import ProjectForm, { type ProjectFormValues } from '@/components/admin/views/projects/ProjectForm'
+import ProjectTabs from '@/components/admin/views/projects/ProjectTabs'
 
 // Lib Imports
 import { createSupabaseServerClient } from '@/lib/supabase/server'
@@ -79,6 +80,7 @@ const AdminProjectEditPage = async ({ params }: { params: Promise<{ key: string 
         <p className='text-muted-foreground font-mono text-xs'>{project.key}</p>
       </div>
 
+      <ProjectTabs projectKey={project.key} />
       <ProjectForm project={values} />
     </div>
   )
