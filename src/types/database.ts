@@ -800,12 +800,16 @@ export type Database = {
         Row: {
           body: string
           content_updated_at: string | null
+          cover_alt: string | null
           excerpt: string
           locale: string
           noindex: boolean
+          og_image: string | null
           post_id: string
           published_at: string | null
           reading_minutes: number | null
+          seo_description: string | null
+          seo_title: string | null
           slug: string
           status: Database["public"]["Enums"]["content_status"]
           title: string
@@ -815,12 +819,16 @@ export type Database = {
         Insert: {
           body: string
           content_updated_at?: string | null
+          cover_alt?: string | null
           excerpt: string
           locale: string
           noindex?: boolean
+          og_image?: string | null
           post_id: string
           published_at?: string | null
           reading_minutes?: number | null
+          seo_description?: string | null
+          seo_title?: string | null
           slug: string
           status?: Database["public"]["Enums"]["content_status"]
           title: string
@@ -830,12 +838,16 @@ export type Database = {
         Update: {
           body?: string
           content_updated_at?: string | null
+          cover_alt?: string | null
           excerpt?: string
           locale?: string
           noindex?: boolean
+          og_image?: string | null
           post_id?: string
           published_at?: string | null
           reading_minutes?: number | null
+          seo_description?: string | null
+          seo_title?: string | null
           slug?: string
           status?: Database["public"]["Enums"]["content_status"]
           title?: string

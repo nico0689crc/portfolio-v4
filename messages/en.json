@@ -473,6 +473,8 @@
     "empty": "No posts published yet.",
     "backToBlog": "Back to the blog",
     "published": "Published on",
-    "updated": "Updated on"
+    "updated": "Updated on",
+    "toc": "In this post",
+    "related": "Keep reading"
   }
 }

@@ -83,7 +83,8 @@ export function buildPageMetadata({
   description,
   image,
   type = 'website',
-  noindex = false
+  noindex = false,
+  article
 }: {
   locale: string;
   href: LocalizedHref;
@@ -94,6 +95,16 @@ export function buildPageMetadata({
   /** Content the database marks as hidden still resolves at its URL; this is
    *  what keeps it out of the index. */
   noindex?: boolean;
+  /**
+   * Metadatos que sólo tienen sentido en un artículo. OpenGraph los define
+   * aparte del resto (`article:published_time` y compañía) y son lo que hace
+   * que una nota compartida muestre fecha y autor en vez de una tarjeta muda.
+   */
+  article?: {
+    publishedTime?: string | null;
+    modifiedTime?: string | null;
+    tags?: string[];
+  };
 }): Metadata {
   const url = localizedUrl(locale, href);
   const images = image ? [{ url: image, width: 1200, height: 630, alt: title }] : undefined;
@@ -111,7 +122,15 @@ export function buildPageMetadata({
       title,
       description,
       siteName: SITE_NAME,
-      ...(images ? { images } : {})
+      ...(images ? { images } : {}),
+      ...(type === 'article' && article
+        ? {
+            authors: [SITE_NAME],
+            ...(article.publishedTime ? { publishedTime: article.publishedTime } : {}),
+            ...(article.modifiedTime ? { modifiedTime: article.modifiedTime } : {}),
+            ...(article.tags?.length ? { tags: article.tags } : {})
+          }
+        : {})
     },
     twitter: {
       card: 'summary_large_image',

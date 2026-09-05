@@ -97,6 +97,12 @@ export async function updatePost(
       locale,
       slug: parsedSlug.data,
       title,
+      // Los campos SEO son overrides: vacío significa "usá el visible", no
+      // "dejá el <title> en blanco".
+      seo_title: String(formData.get(`${locale}.seo_title`) ?? '').trim() || null,
+      seo_description: String(formData.get(`${locale}.seo_description`) ?? '').trim() || null,
+      og_image: String(formData.get(`${locale}.og_image`) ?? '').trim() || null,
+      cover_alt: String(formData.get(`${locale}.cover_alt`) ?? '').trim() || null,
       excerpt: String(formData.get(`${locale}.excerpt`) ?? '').trim() || null,
       body,
       status,
@@ -120,7 +126,22 @@ export async function updatePost(
     }
   }
 
-  updateTags([TAGS.posts, TAGS.post(postKey), TAGS.all])
+  // Los tags son una relación, no una columna: se reemplaza el conjunto entero
+  // en vez de calcular altas y bajas. Con un puñado de filas por post es más
+  // simple y no deja huérfanos si el navegador manda una lista incompleta.
+  const tagIds: string[] = JSON.parse(String(formData.get('tagIds') ?? '[]'))
+
+  await supabase.from('post_tags').delete().eq('post_id', post.id)
+
+  if (tagIds.length > 0) {
+    const { error: tagError } = await supabase
+      .from('post_tags')
+      .insert(tagIds.map(tagId => ({ post_id: post.id, tag_id: tagId })))
+
+    if (tagError) return { error: `No se pudieron guardar los tags: ${tagError.message}`, saved: false }
+  }
+
+  updateTags([TAGS.posts, TAGS.post(postKey), TAGS.tags, TAGS.all])
 
   return { error: null, saved: true }
 }

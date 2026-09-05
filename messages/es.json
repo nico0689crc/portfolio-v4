@@ -472,6 +472,8 @@
     "empty": "Todavía no hay notas publicadas.",
     "backToBlog": "Volver al blog",
     "published": "Publicado el",
-    "updated": "Actualizado el"
+    "updated": "Actualizado el",
+    "toc": "En esta nota",
+    "related": "Seguí leyendo"
   }
 }

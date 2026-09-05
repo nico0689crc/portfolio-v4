@@ -151,6 +151,14 @@ export interface ProjectDetail extends ProjectSummary {
 }
 
 export interface PostSummary {
+  /** Title tag, si difiere del H1. Null cae a `title`. */
+  seoTitle: string | null;
+  /** Meta description, si difiere de la bajada. Null cae a `excerpt`. */
+  seoDescription: string | null;
+  /** Imagen social 1200x630; null cae a la portada. */
+  ogImage: string | null;
+  /** Alt de la portada. Es contenido, no metadato, por eso se traduce. */
+  coverAlt: string | null;
   key: string;
   slug: string;
   title: string;

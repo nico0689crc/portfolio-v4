@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useActionState, useEffect } from 'react'
+import { useActionState, useEffect, useState } from 'react'
 
 // Third-party Imports
 import { toast } from 'sonner'
@@ -27,6 +27,10 @@ import { updatePost, type PostFormState } from '@/lib/admin/posts-actions'
 export type PostTranslationValues = {
   slug: string
   title: string
+  seoTitle: string
+  seoDescription: string
+  ogImage: string
+  coverAlt: string
   excerpt: string
   body: string
   status: string
@@ -38,8 +42,11 @@ export type PostTranslationValues = {
 
 export type PostFormValues = {
   key: string
+  tagIds: string[]
   translations: Record<string, PostTranslationValues>
 }
+
+export type TagOption = { id: string; name: string }
 
 const LOCALES = ['es', 'en'] as const
 const LOCALE_LABELS: Record<string, string> = { es: 'Español', en: 'Inglés' }
@@ -49,7 +56,12 @@ const STATUSES = [
   { value: 'published', label: 'Publicado' }
 ]
 
-const PostForm = ({ post }: { post: PostFormValues }) => {
+const PostForm = ({ post, tags }: { post: PostFormValues; tags: TagOption[] }) => {
+  const [tagIds, setTagIds] = useState<string[]>(post.tagIds)
+
+  const toggleTag = (id: string) =>
+    setTagIds(current => (current.includes(id) ? current.filter(t => t !== id) : [...current, id]))
+
   const [state, formAction, isPending] = useActionState<PostFormState, FormData>(
     updatePost.bind(null, post.key),
     { error: null, saved: false }
@@ -127,6 +139,52 @@ const PostForm = ({ post }: { post: PostFormValues }) => {
               </Field>
 
               <Field>
+                <FieldLabel htmlFor={`${locale}.seoTitle`}>Título SEO</FieldLabel>
+                <Input
+                  id={`${locale}.seoTitle`}
+                  name={`${locale}.seo_title`}
+                  defaultValue={values?.seoTitle ?? ''}
+                />
+                <FieldDescription>
+                  El que ve Google, distinto del H1. Vacío usa el título. ~60 caracteres.
+                </FieldDescription>
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor={`${locale}.seoDescription`}>Descripción SEO</FieldLabel>
+                <Textarea
+                  id={`${locale}.seoDescription`}
+                  name={`${locale}.seo_description`}
+                  rows={2}
+                  defaultValue={values?.seoDescription ?? ''}
+                />
+                <FieldDescription>
+                  Vacía usa la bajada. No posiciona, pero decide el clic. ~155 caracteres.
+                </FieldDescription>
+              </Field>
+
+              <div className='grid gap-4 sm:grid-cols-2'>
+                <Field>
+                  <FieldLabel htmlFor={`${locale}.coverAlt`}>Alt de la portada</FieldLabel>
+                  <Input
+                    id={`${locale}.coverAlt`}
+                    name={`${locale}.cover_alt`}
+                    defaultValue={values?.coverAlt ?? ''}
+                  />
+                </Field>
+                <Field>
+                  <FieldLabel htmlFor={`${locale}.ogImage`}>Imagen social</FieldLabel>
+                  <Input
+                    id={`${locale}.ogImage`}
+                    name={`${locale}.og_image`}
+                    defaultValue={values?.ogImage ?? ''}
+                    placeholder='ruta en el bucket'
+                  />
+                  <FieldDescription>1200×630. Vacía usa la portada.</FieldDescription>
+                </Field>
+              </div>
+
+              <Field>
                 <FieldLabel htmlFor={`${locale}.body`}>Cuerpo</FieldLabel>
                 <Textarea
                   id={`${locale}.body`}
@@ -154,6 +212,36 @@ const PostForm = ({ post }: { post: PostFormValues }) => {
           </Card>
         )
       })}
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Tags</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <input type='hidden' name='tagIds' value={JSON.stringify(tagIds)} />
+          {tags.length === 0 ? (
+            <p className='text-muted-foreground text-sm'>
+              Todavía no hay tags. Se crean en su propia pantalla.
+            </p>
+          ) : (
+            // Los tags son del post, no de la traducción: la relación no tiene
+            // idioma, sólo su nombre lo tiene.
+            <div className='flex flex-wrap gap-2'>
+              {tags.map(tag => (
+                <Button
+                  key={tag.id}
+                  type='button'
+                  size='sm'
+                  variant={tagIds.includes(tag.id) ? 'default' : 'outline'}
+                  onClick={() => toggleTag(tag.id)}
+                >
+                  {tag.name}
+                </Button>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       <div className='flex justify-end'>
         <Button type='submit' disabled={isPending}>

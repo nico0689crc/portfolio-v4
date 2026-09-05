@@ -1,5 +1,10 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { headingId } from "./headings";
+
+/** El texto plano de un encabezado, para derivar su id. */
+const toText = (children: React.ReactNode): string =>
+  Array.isArray(children) ? children.map(toText).join("") : typeof children === "string" ? children : "";
 
 /**
  * El cuerpo se guarda en markdown, así que se renderiza a componentes de React
@@ -18,11 +23,23 @@ const PostBody = ({ body }: { body: string }) => (
   <ReactMarkdown
     remarkPlugins={[remarkGfm]}
     components={{
+      // Los encabezados llevan id para que la tabla de contenidos enlace y para
+      // que Google pueda ofrecer jump links a una sección concreta.
       h2: ({ children }) => (
-        <h2 className="font-display text-2xl font-bold text-foreground mt-10 mb-3">{children}</h2>
+        <h2
+          id={headingId(toText(children))}
+          className="font-display text-2xl font-bold text-foreground mt-10 mb-3 scroll-mt-24"
+        >
+          {children}
+        </h2>
       ),
       h3: ({ children }) => (
-        <h3 className="font-display text-xl font-bold text-foreground mt-8 mb-2">{children}</h3>
+        <h3
+          id={headingId(toText(children))}
+          className="font-display text-xl font-bold text-foreground mt-8 mb-2 scroll-mt-24"
+        >
+          {children}
+        </h3>
       ),
       p: ({ children }) => <p className="text-muted-foreground leading-relaxed mb-4">{children}</p>,
       ul: ({ children }) => (

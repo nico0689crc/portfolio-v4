@@ -5,6 +5,7 @@ import { JsonLd } from '@/components/seo/json-ld';
 import { getPosts } from '@/lib/content';
 import {
   PERSON_ID,
+  SITE_URL,
   breadcrumbSchema,
   buildPageMetadata,
   jsonLdGraph,
@@ -18,13 +19,30 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   // El blog no está en `page_seo`: esa tabla cubre las rutas que ya existían
   // cuando se sembró. Cuando haya una fila, esto pasa a `pageMetadata` como el
   // resto.
-  return buildPageMetadata({
+  const metadata = buildPageMetadata({
     locale,
     href: '/blog',
     title: t('title'),
     description: t('subtitle'),
     image: '/og/default.png',
   });
+
+  return {
+    ...metadata,
+    alternates: {
+      ...metadata.alternates,
+      // Declarar el feed acá es lo que hace que un lector lo descubra solo al
+      // pegar la URL del blog, sin tener que adivinar la ruta.
+      types: {
+        'application/rss+xml': [
+          {
+            url: locale === 'en' ? `${SITE_URL}/rss.xml` : `${SITE_URL}/rss.${locale}.xml`,
+            title: `${t('title')} — RSS`,
+          },
+        ],
+      },
+    },
+  };
 }
 
 export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {

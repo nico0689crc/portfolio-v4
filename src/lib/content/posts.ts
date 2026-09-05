@@ -21,6 +21,7 @@ export const getPosts = cached(
         .from('post_translations')
         .select(
           `slug, title, excerpt, published_at, content_updated_at, reading_minutes, noindex,
+           seo_title, seo_description, og_image, cover_alt,
            posts!inner(key, cover_path, cover_width, cover_height)`
         )
         .eq('locale', locale)
@@ -39,7 +40,11 @@ export const getPosts = cached(
       coverPath: row.posts.cover_path,
       coverWidth: row.posts.cover_width,
       coverHeight: row.posts.cover_height,
-      noindex: row.noindex
+      noindex: row.noindex,
+      seoTitle: row.seo_title,
+      seoDescription: row.seo_description,
+      ogImage: row.og_image,
+      coverAlt: row.cover_alt
     }));
   },
   ['posts'],
@@ -53,6 +58,7 @@ export const getPost = cached(
       .select(
         `slug, title, excerpt, body, published_at, content_updated_at,
          reading_minutes, word_count, noindex,
+         seo_title, seo_description, og_image, cover_alt,
          posts!inner(key, cover_path, cover_width, cover_height, cover_blur_data_url,
                      post_tags(tags(key, tag_translations(locale, slug, name))))`
       )
@@ -84,6 +90,10 @@ export const getPost = cached(
       coverHeight: data.posts.cover_height,
       coverBlurDataUrl: data.posts.cover_blur_data_url,
       noindex: data.noindex,
+      seoTitle: data.seo_title,
+      seoDescription: data.seo_description,
+      ogImage: data.og_image,
+      coverAlt: data.cover_alt,
       tags
     };
   },
