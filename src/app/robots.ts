@@ -29,7 +29,9 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/_next/'],
+        // /admin is the backoffice: authenticated, monolingual and with no
+        // public inbound links. It must never appear in an index.
+        disallow: ['/api/', '/_next/', '/admin'],
       },
       {
         userAgent: AI_CRAWLERS,
