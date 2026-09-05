@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
 import { projectHref, projects } from '@/data/projectsData';
-import { CV_FILES } from '@/data/cvData';
+import { getCvFiles } from '@/lib/content';
 import { SITE_URL, localizedUrl, type LocalizedHref } from '@/lib/seo';
 
 type Entry = {
@@ -18,26 +18,35 @@ const staticEntries: Entry[] = [
   { href: '/contact', priority: 0.6, changeFrequency: 'yearly' },
 ];
 
-const projectEntries: Entry[] = projects.map((project) => ({
-  // Per-locale href: the slug differs by language.
-  href: (locale: string) => projectHref(project, locale),
-  priority: 0.8,
-  changeFrequency: 'yearly',
-}));
-
-export default function sitemap(): MetadataRoute.Sitemap {
+/**
+ * Runs at build time with no request context, so every read here goes through
+ * the content layer's cookieless client.
+ */
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
+  const cvFiles = await getCvFiles();
+
+  // Project slugs deliberately still come from the static file, NOT from
+  // `getProjectSlugMap()`. The project page resolves slugs from the same file
+  // (its case-study client imports images as static assets, so it cannot move
+  // yet), and a sitemap listing a slug the page can't render is a 404 in the
+  // index. Switch both to the content layer in the same change, never one.
+  const projectEntries: Entry[] = projects.map((project) => ({
+    href: (locale: string) => projectHref(project, locale),
+    priority: 0.8,
+    changeFrequency: 'yearly' as const,
+  }));
 
   // The PDF CVs are indexable documents in their own right, and each is the
   // language alternate of the other.
-  const cvEntries: MetadataRoute.Sitemap = Object.values(CV_FILES).map((path) => ({
+  const cvEntries: MetadataRoute.Sitemap = Object.values(cvFiles).map((path) => ({
     url: `${SITE_URL}${path}`,
     lastModified,
     changeFrequency: 'yearly' as const,
     priority: 0.5,
     alternates: {
       languages: Object.fromEntries(
-        Object.entries(CV_FILES).map(([l, p]) => [l, `${SITE_URL}${p}`])
+        Object.entries(cvFiles).map(([l, p]) => [l, `${SITE_URL}${p}`])
       )
     }
   }));

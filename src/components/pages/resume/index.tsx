@@ -3,58 +3,27 @@ import { Download, ArrowRight, Briefcase, GraduationCap, Award } from "lucide-re
 import { Link } from "@/i18n/routing";
 import { Reveal } from "@/components/ui/reveal";
 import { TrackedLink } from "@/components/analytics/tracked-link";
-import { skillCategories, skillsForLocale } from "@/data/skillsData";
-import { certifications, education } from "@/data/cvData";
+import { getResumeHighlights } from "@/lib/content";
+import type { CvData } from "@/lib/cv-schema";
 
-interface Job {
-  role: string;
-  company: string;
-  date: string;
-  desc: string;
-  tech: string;
-}
-
-interface Highlight {
-  label: string;
-  value: string;
-}
-
-interface Degree {
-  degree: string;
-  status: string;
-}
-
-const CV_URLS: Record<string, string> = {
-  es: "/CV_Nicolas_Fernandez_FullStack_UXUI_ES.pdf",
-  en: "/CV_Nicolas_Fernandez_FullStack_UXUI_EN.pdf",
-};
-
-const Resume = async () => {
+/**
+ * Everything rendered here comes from the database via `cv`, so the page and
+ * the JSON-LD it ships with are built from one read and cannot disagree.
+ */
+const Resume = async ({ cv }: { cv: CvData }) => {
   const locale = await getLocale();
   const t = await getTranslations("Resume");
-  const tAbout = await getTranslations("About");
-  const tHome = await getTranslations("Home");
 
-  // The timeline data lives with the About copy; the resume renders a
-  // condensed view of it rather than duplicating the long descriptions.
-  const jobs = tAbout.raw("experience.jobs") as Job[];
-  const highlights = t.raw("highlights") as Highlight[];
+  const highlights = await getResumeHighlights(locale);
 
-  // Prose lives in messages, structure in cvData; they are joined by position.
-  // Failing loudly here beats silently rendering a mismatched pairing.
-  const degrees = t.raw("education") as Degree[];
-  const certNames = t.raw("certifications") as Array<{ name: string }>;
-  if (degrees.length !== education.length || certNames.length !== certifications.length) {
-    throw new Error("Resume messages are out of sync with cvData");
-  }
-
-  const categories = skillCategories.map((category) => ({
-    title: tHome(category.labelKey as Parameters<typeof tHome>[0]),
-    skills: skillsForLocale(category, locale),
+  const categories = cv.skillCategories.map((category) => ({
+    title: category.label,
+    skills: category.skills.map((skill) => skill.name),
   }));
 
-  const primaryCv = CV_URLS[locale] ?? CV_URLS.es;
   const secondaryLocale = locale === "es" ? "en" : "es";
+  const primaryCv = cv.cvFiles[locale] ?? cv.cvFiles.en;
+  const secondaryCv = cv.cvFiles[secondaryLocale] ?? cv.cvFiles.en;
 
   return (
     <section className="section-padding bg-background">
@@ -80,7 +49,7 @@ const Resume = async () => {
               {locale === "es" ? t("downloadEs") : t("downloadEn")}
             </TrackedLink>
             <TrackedLink
-              href={CV_URLS[secondaryLocale]}
+              href={secondaryCv}
               target="_blank"
               rel="noopener noreferrer"
               event={{ name: "cv_download", params: { file_language: secondaryLocale, source: "resume" } }}
@@ -121,9 +90,9 @@ const Resume = async () => {
           </Reveal>
 
           <ol className="space-y-5">
-            {jobs.map((job, i) => (
+            {cv.experiences.map((job, i) => (
               <Reveal
-                key={`${job.role}-${job.date}`}
+                key={job.id}
                 direction="up"
                 distance={20}
                 duration={0.5}
@@ -135,11 +104,11 @@ const Resume = async () => {
                   <Briefcase className="w-5 h-5 text-accent" />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-accent font-medium text-sm">{job.date}</span>
+                  <span className="text-accent font-medium text-sm">{job.dateLabel}</span>
                   <h3 className="font-display font-bold text-lg text-foreground mt-1">{job.role}</h3>
                   <p className="text-muted-foreground text-sm font-medium">{job.company}</p>
                   <div className="mt-4 flex flex-wrap gap-2">
-                    {job.tech.split(", ").map((tech) => (
+                    {job.techs.map((tech) => (
                       <span
                         key={tech}
                         className="text-xs font-medium px-2 py-1 rounded-md bg-secondary text-secondary-foreground"
@@ -201,11 +170,10 @@ const Resume = async () => {
           </Reveal>
 
           <ol className="space-y-5">
-            {degrees.map((item, i) => {
-              const meta = education[i];
+            {cv.education.map((item, i) => {
               return (
                 <Reveal
-                  key={meta.id}
+                  key={item.id}
                   direction="up"
                   distance={20}
                   duration={0.5}
@@ -217,12 +185,12 @@ const Resume = async () => {
                     <GraduationCap className="w-5 h-5 text-accent" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-accent font-medium text-sm">{item.status}</span>
+                    <span className="text-accent font-medium text-sm">{item.dateLabel}</span>
                     <h3 className="font-display font-bold text-lg text-foreground mt-1">
                       {item.degree}
                     </h3>
                     <p className="text-muted-foreground text-sm font-medium">
-                      {meta.institution} · {meta.location}
+                      {item.institution}{item.location ? ` · ${item.location}` : ""}
                     </p>
                   </div>
                 </Reveal>
@@ -241,11 +209,10 @@ const Resume = async () => {
           </Reveal>
 
           <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {certNames.map((cert, i) => {
-              const meta = certifications[i];
+            {cv.certifications.map((cert, i) => {
               return (
                 <Reveal
-                  key={meta.id}
+                  key={cert.id}
                   direction="up"
                   distance={20}
                   duration={0.5}
@@ -257,7 +224,7 @@ const Resume = async () => {
                   <div className="min-w-0">
                     <h3 className="font-medium text-foreground text-sm leading-snug">{cert.name}</h3>
                     <p className="text-xs text-muted-foreground mt-1">
-                      {meta.issuer} · {meta.year}
+                      {cert.issuer} · {cert.year}
                     </p>
                   </div>
                 </Reveal>

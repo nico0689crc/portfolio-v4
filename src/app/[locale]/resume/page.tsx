@@ -9,7 +9,8 @@ import {
   jsonLdGraph,
   localizedUrl,
 } from '@/lib/seo';
-import { cvPersonNode, type CvProse } from '@/lib/cv-schema';
+import { cvPersonNode } from '@/lib/cv-schema';
+import { loadCvData } from '@/lib/cv-data';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -46,23 +47,10 @@ export default async function CurriculumPage({ params }: { params: Promise<{ loc
 
   const t = await getTranslations({ locale, namespace: 'Metadata' });
   const tHeader = await getTranslations({ locale, namespace: 'Header' });
-  const tAbout = await getTranslations({ locale, namespace: 'About' });
-
-  const tResume = await getTranslations({ locale, namespace: 'Resume' });
-
-  const prose: CvProse = {
-    jobs: tAbout.raw('experience.jobs'),
-    degrees: tResume.raw('education'),
-    certNames: tResume.raw('certifications'),
-    jobTitle: t('jobTitle'),
-    summary: tResume('intro'),
-  };
+  const cv = await loadCvData(locale);
 
   const url = localizedUrl(locale, '/resume');
-  const cvUrl =
-    locale === 'es'
-      ? `${SITE_URL}/CV_Nicolas_Fernandez_FullStack_UXUI_ES.pdf`
-      : `${SITE_URL}/CV_Nicolas_Fernandez_FullStack_UXUI_EN.pdf`;
+  const cvUrl = `${SITE_URL}${cv.cvFiles[locale] ?? cv.cvFiles.en}`;
 
   const schema = jsonLdGraph(
     {
@@ -72,7 +60,7 @@ export default async function CurriculumPage({ params }: { params: Promise<{ loc
       name: t('resumeTitle'),
       description: t('resumeDescription'),
       inLanguage: locale,
-      mainEntity: cvPersonNode(locale, prose),
+      mainEntity: cvPersonNode(cv),
       significantLink: cvUrl,
     },
     breadcrumbSchema([
@@ -83,7 +71,7 @@ export default async function CurriculumPage({ params }: { params: Promise<{ loc
 
   return (
     <>
-      <Resume />
+      <Resume cv={cv} />
       <JsonLd data={schema} />
     </>
   );

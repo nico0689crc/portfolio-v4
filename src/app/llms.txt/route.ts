@@ -1,27 +1,9 @@
-import { getCvProse } from '@/lib/cv-prose';
-import {
-  certifications,
-  education,
-  positionPeriods,
-  positions,
-  YEARS_OF_EXPERIENCE
-} from '@/data/cvData';
-import { projectHref, projects } from '@/data/projectsData';
-import { allTechnicalSkills } from '@/data/skillsData';
+import { loadCvData } from '@/lib/cv-data';
+import { getProjects, getProjectSlugMap } from '@/lib/content';
 import { AUTHOR_EMAIL, SITE_NAME, SITE_URL, SOCIAL_LINKS, localizedUrl } from '@/lib/seo';
 
-export const dynamic = 'force-static';
-
-/** Keyed by the project's stable id, not by any locale's slug. */
-const CASE_STUDY_BLURBS: Record<string, string> = {
-  'mexx-ux-redesign':
-    "UX/UI case study redesigning Argentina's largest tech retailer; cart persistence and shipping-cost transparency validated with Maze and UXTweak.",
-  'gym-smart-access':
-    'Full-stack SaaS for gym management with automated Mercado Pago billing and QR access control, built with Next.js and Supabase.',
-};
-
-function formatRange(start: string, end: string | null) {
-  return `${start} — ${end ?? 'present'}`;
+function formatRange(start: string | null, end: string | null) {
+  return `${start ?? '?'} — ${end ?? 'present'}`;
 }
 
 /**
@@ -30,47 +12,60 @@ function formatRange(start: string, end: string | null) {
  * Deliberately contains only information that is already public on the site.
  */
 export async function GET() {
-  const prose = await getCvProse('en');
+  const [cv, projects, slugMap] = await Promise.all([
+    loadCvData('en'),
+    getProjects('en'),
+    getProjectSlugMap()
+  ]);
 
-  const experience = positions
-    .map((position, i) => {
-      const job = prose.jobs[i];
+  const experience = cv.experiences
+    .map((job) => {
+      const stints = (job.periods?.length
+        ? job.periods
+        : [{ startDate: job.startDate, endDate: job.endDate }]
+      )
+        .map((p) => formatRange(p.startDate, p.endDate))
+        .join(' | ');
       return [
-        `### ${job.role} — ${position.organization}`,
-        `${positionPeriods(position).map((p) => formatRange(p.startDate, p.endDate)).join(' | ')} · ${position.location}${position.remote ? ' · Remote' : ''}`,
+        `### ${job.role} — ${job.organization}`,
+        `${stints} · ${job.location}${job.remote ? ' · Remote' : ''}`,
         '',
-        job.desc,
+        job.description,
         '',
-        `Technologies: ${position.skills.join(', ')}`
+        `Technologies: ${job.techs.join(', ')}`
       ].join('\n');
     })
     .join('\n\n');
 
-  const studies = education
-    .map((entry, i) => {
-      const degree = prose.degrees[i];
-      return `- **${degree.degree}** — ${entry.institution}, ${entry.location} (${degree.status})`;
-    })
+  const studies = cv.education
+    .map(
+      (entry) =>
+        `- **${entry.degree}** — ${entry.institution}${entry.location ? `, ${entry.location}` : ''} (${entry.dateLabel})`
+    )
     .join('\n');
 
-  const certs = certifications
-    .map((cert, i) => `- ${prose.certNames[i].name} — ${cert.issuer}, ${cert.year}`)
+  const certs = cv.certifications
+    .map((cert) => `- ${cert.name} — ${cert.issuer}, ${cert.year}`)
     .join('\n');
 
   // Both locales are listed so a model can follow either language's URL.
+  const slugsByKey = new Map(slugMap.map((entry) => [entry.key, entry.slugs]));
   const caseStudies = projects
     .map((project) => {
-      const blurb = CASE_STUDY_BLURBS[project.id] ?? '';
-      const urls = Object.keys(project.slugs)
-        .map((l) => `${l}: ${localizedUrl(l, projectHref(project, l))}`)
+      const slugs = slugsByKey.get(project.key) ?? {};
+      const urls = Object.entries(slugs)
+        .map(
+          ([l, slug]) =>
+            `${l}: ${localizedUrl(l, { pathname: '/projects/[slug]', params: { slug } })}`
+        )
         .join(' · ');
-      return `- **${project.id}** — ${blurb}\n  ${urls}`;
+      return `- **${project.title}** — ${project.description}\n  ${urls}`;
     })
     .join('\n');
 
   const body = `# ${SITE_NAME}
 
-> ${prose.jobTitle} based in Corrientes, Argentina. ${YEARS_OF_EXPERIENCE}+ years building web applications end to end — React, Next.js, TypeScript and Node.js — with a UX/UI design background. Available for remote work and freelance projects.
+> ${cv.jobTitle} based in Corrientes, Argentina. ${cv.yearsOfExperience}+ years building web applications end to end — React, Next.js, TypeScript and Node.js — with a UX/UI design background. Available for remote work and freelance projects.
 
 This file summarises a personal portfolio site for language models. Everything here is public information published by the site owner. The site is bilingual: English pages have no locale prefix, Spanish pages are served under \`/es\`.
 
@@ -92,8 +87,7 @@ This file summarises a personal portfolio site for language models. Everything h
 
 - [JSON Resume, English](${SITE_URL}/resume.json) — jsonresume.org schema
 - [JSON Resume, Spanish](${SITE_URL}/resume.es.json)
-- [PDF CV, English](${SITE_URL}/CV_Nicolas_Fernandez_FullStack_UXUI_EN.pdf)
-- [PDF CV, Spanish](${SITE_URL}/CV_Nicolas_Fernandez_FullStack_UXUI_ES.pdf)
+${Object.entries(cv.cvFiles).map(([l, path]) => `- [PDF CV, ${l.toUpperCase()}](${SITE_URL}${path})`).join('\n')}
 - Structured data: schema.org \`Person\` with \`hasOccupationalExperience\`, \`alumniOf\` and \`hasCredential\` is embedded as JSON-LD on every page.
 
 ## Experience
@@ -110,7 +104,7 @@ ${certs}
 
 ## Technical skills
 
-${allTechnicalSkills().join(', ')}
+${cv.technicalSkills.join(', ')}
 
 ## Languages
 
@@ -125,7 +119,12 @@ ${caseStudies}
   return new Response(body, {
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600, s-maxage=86400'
+      // Short shared cache: the content is now database-backed and invalidated
+      // by tag, so a day-long s-maxage would keep serving a stale document long
+      // after the page itself had updated. Re-running the handler is cheap —
+      // the content layer's reads are cached — and stale-while-revalidate means
+      // the refresh costs no latency.
+      'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=86400'
     }
   });
 }

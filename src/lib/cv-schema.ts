@@ -1,22 +1,40 @@
-import {
-  CV_FILES,
-  certifications,
-  education,
-  isoDate,
-  positionPeriods,
-  positions,
-  YEARS_OF_EXPERIENCE
-} from '@/data/cvData';
-import { allTechnicalSkills, skillCategories, skillsForLocale } from '@/data/skillsData';
+import type {
+  Certification,
+  Education,
+  Experience,
+  SkillCategory
+} from '@/lib/content';
 import { AUTHOR_EMAIL, PERSON_ID, SITE_NAME, SITE_URL, SOCIAL_LINKS } from '@/lib/seo';
 
-/** Translated prose, supplied by the caller from the message catalogue. */
-export interface CvProse {
-  jobs: Array<{ role: string; company: string; date: string; desc: string; tech: string }>;
-  degrees: Array<{ degree: string; status: string }>;
-  certNames: Array<{ name: string }>;
+/**
+ * Everything the CV documents need, already resolved for one locale.
+ *
+ * Passed in rather than fetched here so this module stays pure: the callers
+ * (the resume page, /resume.json, /llms.txt) each own their own caching.
+ */
+export interface CvData {
+  experiences: Experience[];
+  education: Education[];
+  certifications: Certification[];
+  skillCategories: SkillCategory[];
+  /** Locale-independent skills, for the neutral `knowsAbout` field. */
+  technicalSkills: string[];
+  yearsOfExperience: number;
   jobTitle: string;
   summary: string;
+  cvFiles: Record<string, string>;
+}
+
+/** `YYYY-MM` to the `YYYY-MM-DD` schema.org and JSON Resume expect. */
+function isoDate(value: string | null | undefined) {
+  return value ? `${value}-01` : undefined;
+}
+
+/** The stints actually worked, defaulting to the outer span. */
+function periodsOf(experience: Experience) {
+  return experience.periods?.length
+    ? experience.periods
+    : [{ startDate: experience.startDate, endDate: experience.endDate }];
 }
 
 /**
@@ -24,50 +42,52 @@ export interface CvProse {
  * each role is expressed as an `OrganizationRole` too — that is the shape
  * Google and most LLM extractors actually read a work history from.
  */
-export function occupationNodes(prose: CvProse) {
+export function occupationNodes(experiences: Experience[]) {
   // A role with a career break emits one node per stint: Google requires the
-  // markup to match what the page shows, and the visible date label lists both.
-  return positions.flatMap((position, i) => {
-    const job = prose.jobs[i];
-    return positionPeriods(position).map((period) => ({
+  // markup to match what the page shows, and the visible label lists both.
+  return experiences.flatMap((experience) =>
+    periodsOf(experience).map((period) => ({
       '@type': 'OrganizationRole',
-      roleName: job.role,
+      roleName: experience.role,
       startDate: isoDate(period.startDate),
       ...(period.endDate ? { endDate: isoDate(period.endDate) } : {}),
-      description: job.desc,
-      namedPosition: job.role,
+      description: experience.description,
+      namedPosition: experience.role,
       memberOf: {
+        // The neutral proper noun, not the translated `company` label the page
+        // renders — an entity name should not change with the page language.
         '@type': 'Organization',
-        name: position.organization,
-        address: position.location
+        name: experience.organization,
+        address: experience.location
       },
-      skills: position.skills.join(', ')
-    }));
-  });
+      skills: experience.techs.join(', ')
+    }))
+  );
 }
 
-export function alumniOfNodes(prose: CvProse) {
-  return education.map((entry, i) => ({
+export function alumniOfNodes(education: Education[]) {
+  return education.map((entry) => ({
     '@type': 'EducationalOrganization',
     name: entry.institution,
     ...(entry.url ? { url: entry.url } : {}),
-    address: entry.location,
+    ...(entry.location ? { address: entry.location } : {}),
     // The award itself hangs off the organisation so the degree name survives.
     department: {
       '@type': 'EducationalOccupationalProgram',
-      name: prose.degrees[i].degree,
+      name: entry.degree,
       startDate: isoDate(entry.startDate),
       ...(entry.endDate ? { endDate: isoDate(entry.endDate) } : {})
     }
   }));
 }
 
-export function credentialNodes(prose: CvProse) {
-  return certifications.map((cert, i) => ({
+export function credentialNodes(certifications: Certification[]) {
+  return certifications.map((cert) => ({
     '@type': 'EducationalOccupationalCredential',
-    name: prose.certNames[i].name,
+    name: cert.name,
     credentialCategory: 'certificate',
     dateCreated: String(cert.year),
+    ...(cert.url ? { url: cert.url } : {}),
     recognizedBy: { '@type': 'Organization', name: cert.issuer }
   }));
 }
@@ -77,13 +97,13 @@ export function credentialNodes(prose: CvProse) {
  * site-wide one, so search engines merge them into a single entity rather than
  * treating the CV as a second person.
  */
-export function cvPersonNode(locale: string, prose: CvProse) {
+export function cvPersonNode(cv: CvData) {
   return {
     '@type': 'Person',
     '@id': PERSON_ID,
     name: SITE_NAME,
-    jobTitle: prose.jobTitle,
-    description: prose.summary,
+    jobTitle: cv.jobTitle,
+    description: cv.summary,
     email: `mailto:${AUTHOR_EMAIL}`,
     url: SITE_URL,
     image: `${SITE_URL}/profile-picture.webp`,
@@ -92,19 +112,19 @@ export function cvPersonNode(locale: string, prose: CvProse) {
       { '@type': 'Language', name: 'Spanish', alternateName: 'es' },
       { '@type': 'Language', name: 'English', alternateName: 'en' }
     ],
-    knowsAbout: allTechnicalSkills(),
+    knowsAbout: cv.technicalSkills,
     hasOccupation: {
       '@type': 'Occupation',
-      name: prose.jobTitle,
+      name: cv.jobTitle,
       occupationalCategory: '15-1254.00', // O*NET: Web Developers
       experienceRequirements: {
         '@type': 'OccupationalExperienceRequirements',
-        monthsOfExperience: YEARS_OF_EXPERIENCE * 12
+        monthsOfExperience: cv.yearsOfExperience * 12
       }
     },
-    hasOccupationalExperience: occupationNodes(prose),
-    alumniOf: alumniOfNodes(prose),
-    hasCredential: credentialNodes(prose),
+    hasOccupationalExperience: occupationNodes(cv.experiences),
+    alumniOf: alumniOfNodes(cv.education),
+    hasCredential: credentialNodes(cv.certifications),
     workLocation: {
       '@type': 'Place',
       address: {
@@ -113,7 +133,7 @@ export function cvPersonNode(locale: string, prose: CvProse) {
         addressCountry: 'AR'
       }
     },
-    subjectOf: Object.entries(CV_FILES).map(([lang, path]) => ({
+    subjectOf: Object.entries(cv.cvFiles).map(([lang, path]) => ({
       '@type': 'DigitalDocument',
       name: `${SITE_NAME} — CV (${lang.toUpperCase()})`,
       url: `${SITE_URL}${path}`,
@@ -131,17 +151,17 @@ export function cvPersonNode(locale: string, prose: CvProse) {
  * https://jsonresume.org — a widely-supported machine format for CVs. Serving
  * it gives parsers a precise record instead of making them scrape the page.
  */
-export function toJsonResume(locale: string, prose: CvProse) {
+export function toJsonResume(locale: string, cv: CvData) {
   return {
     $schema:
       'https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json',
     basics: {
       name: SITE_NAME,
-      label: prose.jobTitle,
+      label: cv.jobTitle,
       image: `${SITE_URL}/profile-picture.webp`,
       email: AUTHOR_EMAIL,
       url: SITE_URL,
-      summary: prose.summary,
+      summary: cv.summary,
       location: {
         city: 'Corrientes',
         countryCode: 'AR',
@@ -156,33 +176,33 @@ export function toJsonResume(locale: string, prose: CvProse) {
         { network: 'GitHub', username: 'nico0689crc', url: SOCIAL_LINKS[1] }
       ]
     },
-    work: positions.flatMap((position, i) =>
-      positionPeriods(position).map((period) => ({
-        name: position.organization,
-        position: prose.jobs[i].role,
-        location: position.location,
+    work: cv.experiences.flatMap((experience) =>
+      periodsOf(experience).map((period) => ({
+        name: experience.organization,
+        position: experience.role,
+        location: experience.location,
         startDate: isoDate(period.startDate),
         ...(period.endDate ? { endDate: isoDate(period.endDate) } : {}),
-        summary: prose.jobs[i].desc,
-        highlights: position.skills
+        summary: experience.description,
+        highlights: experience.techs
       }))
     ),
-    education: education.map((entry, i) => ({
+    education: cv.education.map((entry) => ({
       institution: entry.institution,
       ...(entry.url ? { url: entry.url } : {}),
-      area: prose.degrees[i].degree,
-      studyType: prose.degrees[i].status,
+      area: entry.degree,
+      studyType: entry.dateLabel,
       startDate: isoDate(entry.startDate),
       ...(entry.endDate ? { endDate: isoDate(entry.endDate) } : {})
     })),
-    certificates: certifications.map((cert, i) => ({
-      name: prose.certNames[i].name,
+    certificates: cv.certifications.map((cert) => ({
+      name: cert.name,
       date: String(cert.year),
       issuer: cert.issuer
     })),
-    skills: skillCategories.map((category) => ({
-      name: category.labelKey.replace('skills.', ''),
-      keywords: skillsForLocale(category, locale)
+    skills: cv.skillCategories.map((category) => ({
+      name: category.label,
+      keywords: category.skills.map((skill) => skill.name)
     })),
     languages: [
       { language: 'Spanish', fluency: 'Native speaker' },

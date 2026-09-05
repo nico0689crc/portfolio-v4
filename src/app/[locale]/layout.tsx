@@ -100,7 +100,17 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export const dynamic = 'force-static';
+// Deliberately NO `export const dynamic = 'force-static'` here.
+//
+// It froze the tree at build time, which was correct while the content lived in
+// JSON files. Now that it comes from Supabase it would make `updateTags` and
+// `revalidateTag` no-ops: the backoffice would save, the query would be
+// invalidated, and the page would keep serving the build-time copy forever —
+// with no error anywhere.
+//
+// Removing it costs nothing: content reads go through `unstable_cache`, so the
+// pages still prerender and still serve from cache, but the cache can be
+// invalidated on demand. Static AND refreshable, instead of frozen.
 
 export default async function RootLayout({
   children,
