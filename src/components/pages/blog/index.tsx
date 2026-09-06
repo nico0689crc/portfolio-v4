@@ -64,7 +64,7 @@ const BlogList = async ({ posts, locale, tags, activeTag, totalPosts, currentPag
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.08, duration: 0.5 }}
-                    className="card-portfolio group flex flex-col"
+                    className="card-portfolio group relative flex flex-col cursor-pointer hover:border-accent"
                     as="article"
                   >
                     <div className="relative aspect-video overflow-hidden bg-muted">
@@ -101,9 +101,12 @@ const BlogList = async ({ posts, locale, tags, activeTag, totalPosts, currentPag
                       </h2>
                       <p className="text-muted-foreground text-sm leading-relaxed mb-5 flex-1">{post.excerpt}</p>
 
+                      {/* El `after` estira el link sobre toda la card: se
+                          clickea en cualquier parte sin anidar el artículo
+                          entero dentro de un <a>. */}
                       <Link
                         href={{ pathname: "/blog/[slug]", params: { slug: post.slug } }}
-                        className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline self-start"
+                        className="inline-flex items-center gap-1.5 text-sm font-medium text-accent group-hover:underline self-start after:absolute after:inset-0 after:content-['']"
                       >
                         {t("readMore")} →
                       </Link>
