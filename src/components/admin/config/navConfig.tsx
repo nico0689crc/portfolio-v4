@@ -114,6 +114,12 @@ export const navItems: NavItem[] = [
         activePath: '/admin/seo'
       },
       {
+        icon: 'TrendingUp',
+        label: 'Métricas de SEO',
+        href: '/admin/metricas',
+        activePath: '/admin/metricas'
+      },
+      {
         icon: 'Languages',
         label: 'Textos de UI',
         href: '/admin/textos',
