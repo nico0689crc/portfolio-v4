@@ -45,7 +45,9 @@ export const getExperiences = cached(
         .select(
           `id, organization, employment_type, remote, techs, start_date, end_date, periods,
            counts_as_experience,
-           experience_translations(locale, role, company, location, date_label, description, techs)`
+           experience_translations(locale, role, company, location, date_label, description, techs),
+           experience_roles(id, organization, location, sort_order,
+                            experience_role_translations(locale, title, date_label, description))`
         )
         .in('experience_translations.locale', localesFor(locale))
         .order('sort_order')
@@ -80,6 +82,24 @@ export const getExperiences = cached(
           company: t.company ?? row.organization,
           dateLabel: t.date_label,
           countsAsExperience: row.counts_as_experience,
+          roles: [...row.experience_roles]
+            .sort((a, b) => a.sort_order - b.sort_order)
+            .flatMap((child) => {
+              const ct = pick(child.experience_role_translations, locale);
+
+              return ct
+                ? [
+                    {
+                      id: child.id,
+                      organization: child.organization,
+                      location: child.location,
+                      title: ct.title,
+                      dateLabel: ct.date_label,
+                      description: ct.description
+                    }
+                  ]
+                : [];
+            }),
           description: t.description
         }
       ];

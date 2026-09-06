@@ -458,7 +458,9 @@
       }
     ],
     "certificationsNote": "Lista completa de certificaciones y aprendizaje continuo disponible en LinkedIn.",
-    "summaryTitle": "Perfil profesional"
+    "summaryTitle": "Perfil profesional",
+    "rolesToggle": "Ver los {count} puestos en detalle",
+    "rolesDownload": "Descargar CV extendido"
   },
   "Consent": {
     "title": "Usamos analítica anónima",

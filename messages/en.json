@@ -459,7 +459,9 @@
       }
     ],
     "certificationsNote": "Full list of certifications and ongoing learning available on LinkedIn.",
-    "summaryTitle": "Professional Summary"
+    "summaryTitle": "Professional Summary",
+    "rolesToggle": "See all {count} positions in detail",
+    "rolesDownload": "Download extended CV"
   },
   "Consent": {
     "title": "We use anonymous analytics",

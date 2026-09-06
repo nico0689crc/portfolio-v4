@@ -14,7 +14,7 @@ import { loadCvData } from '@/lib/cv-data';
  * Los títulos de sección salen de los mismos mensajes que usa la página, así
  * que traducir el sitio traduce el PDF.
  */
-export async function renderCvPdf(locale: string): Promise<Uint8Array> {
+export async function renderCvPdf(locale: string, extended = false): Promise<Uint8Array> {
   const [cv, t] = await Promise.all([
     loadCvData(locale),
     getTranslations({ locale, namespace: 'Resume' })
@@ -24,6 +24,7 @@ export async function renderCvPdf(locale: string): Promise<Uint8Array> {
     <CvDocument
       cv={cv}
       locale={locale}
+      extended={extended}
       labels={{
         summary: t('summaryTitle'),
         experience: t('experienceTitle'),
@@ -42,6 +43,6 @@ export async function renderCvPdf(locale: string): Promise<Uint8Array> {
  * o en una postulación ya enviada. Conservarlas hace que todo eso siga
  * resolviendo, ahora con el CV al día en vez de con la copia congelada.
  */
-export function cvFileName(locale: string) {
-  return `CV_Nicolas_Fernandez_FullStack_UXUI_${locale.toUpperCase()}.pdf`;
+export function cvFileName(locale: string, extended = false) {
+  return `CV_Nicolas_Fernandez_FullStack_UXUI_${locale.toUpperCase()}${extended ? '_Extended' : ''}.pdf`;
 }

@@ -502,6 +502,97 @@ export type Database = {
           },
         ]
       }
+      experience_role_translations: {
+        Row: {
+          date_label: string | null
+          description: string | null
+          locale: string
+          role_id: string
+          title: string
+        }
+        Insert: {
+          date_label?: string | null
+          description?: string | null
+          locale: string
+          role_id: string
+          title: string
+        }
+        Update: {
+          date_label?: string | null
+          description?: string | null
+          locale?: string
+          role_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "experience_role_translations_locale_fkey"
+            columns: ["locale"]
+            isOneToOne: false
+            referencedRelation: "locales"
+            referencedColumns: ["code"]
+          },
+          {
+            foreignKeyName: "experience_role_translations_locale_fkey"
+            columns: ["locale"]
+            isOneToOne: false
+            referencedRelation: "ui_message_coverage"
+            referencedColumns: ["locale"]
+          },
+          {
+            foreignKeyName: "experience_role_translations_locale_fkey"
+            columns: ["locale"]
+            isOneToOne: false
+            referencedRelation: "ui_messages_missing"
+            referencedColumns: ["locale"]
+          },
+          {
+            foreignKeyName: "experience_role_translations_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "experience_roles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      experience_roles: {
+        Row: {
+          end_date: string | null
+          experience_id: string
+          id: string
+          location: string | null
+          organization: string
+          sort_order: number
+          start_date: string | null
+        }
+        Insert: {
+          end_date?: string | null
+          experience_id: string
+          id?: string
+          location?: string | null
+          organization: string
+          sort_order?: number
+          start_date?: string | null
+        }
+        Update: {
+          end_date?: string | null
+          experience_id?: string
+          id?: string
+          location?: string | null
+          organization?: string
+          sort_order?: number
+          start_date?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "experience_roles_experience_id_fkey"
+            columns: ["experience_id"]
+            isOneToOne: false
+            referencedRelation: "experiences"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       experience_translations: {
         Row: {
           company: string | null

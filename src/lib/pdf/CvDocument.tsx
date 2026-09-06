@@ -83,6 +83,13 @@ const styles = StyleSheet.create({
   description: { color: MUTED },
   techs: { fontSize: 7.5, color: FAINT, marginTop: 2.5 },
 
+  // Los puestos hijos van indentados contra una regla: se leen como detalle de
+  // la entrada de arriba y no como experiencias sueltas.
+  childRole: { marginTop: 6, marginLeft: 10, paddingLeft: 8, borderLeftWidth: 0.75, borderLeftColor: '#e4e4e7' },
+  roleTitle: { fontFamily: 'Helvetica-Bold', fontSize: 8.5, flex: 1 },
+  roleOrg: { fontSize: 8, color: FAINT },
+  roleBody: { fontSize: 8, color: MUTED, marginTop: 1 },
+
   // Dos columnas: las categorías son cortas y apiladas desperdician media
   // página que después falta para la experiencia.
   skillGrid: { flexDirection: 'row', flexWrap: 'wrap' },
@@ -137,7 +144,24 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
   </View>
 );
 
-const CvDocument = ({ cv, locale, labels }: { cv: CvData; locale: string; labels: Labels }) => (
+const CvDocument = ({
+  cv,
+  locale,
+  labels,
+  extended = false
+}: {
+  cv: CvData;
+  locale: string;
+  labels: Labels;
+  /**
+   * Despliega los puestos de las experiencias agrupadas.
+   *
+   * Es el mismo documento con más detalle y no otro distinto: un CV extendido
+   * que difiera en algo más que el nivel de detalle son dos documentos que hay
+   * que mantener, y el segundo siempre queda viejo.
+   */
+  extended?: boolean;
+}) => (
   <Document
     // Google Docs no escribía metadatos y muchos ATS los leen antes que el
     // contenido.
@@ -162,8 +186,10 @@ const CvDocument = ({ cv, locale, labels }: { cv: CvData; locale: string; labels
               ].join('   ·   ')}
             </Text>
           </View>
-          {/* Sin `alt`: en un PDF no existe el concepto, y la foto no aporta
-              información que el texto no tenga. */}
+          {/* El `Image` de react-pdf no acepta `alt` —un PDF no tiene ese
+              concepto— así que la regla de accesibilidad, pensada para el DOM,
+              no aplica acá. */}
+          {/* eslint-disable-next-line jsx-a11y/alt-text */}
           <Image src={PHOTO} style={styles.photo} />
         </View>
         <View style={styles.headerRule} />
@@ -194,6 +220,18 @@ const CvDocument = ({ cv, locale, labels }: { cv: CvData; locale: string; labels
             <Text style={styles.org}>{orgLine(job.company, job.location)}</Text>
             <Text style={styles.description}>{job.description}</Text>
             {job.techs.length > 0 && <Text style={styles.techs}>{job.techs.join('  ·  ')}</Text>}
+
+            {extended &&
+              job.roles.map(role => (
+                <View key={role.id} style={styles.childRole} wrap={false}>
+                  <View style={styles.entryTop}>
+                    <Text style={styles.roleTitle}>{role.title}</Text>
+                    <Text style={styles.dates}>{role.dateLabel}</Text>
+                  </View>
+                  <Text style={styles.roleOrg}>{orgLine(role.organization, role.location)}</Text>
+                  {role.description && <Text style={styles.roleBody}>{role.description}</Text>}
+                </View>
+              ))}
           </View>
         ))}
       </Section>

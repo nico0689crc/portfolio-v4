@@ -8,6 +8,16 @@
  * emitting a day would be inventing one.
  */
 
+/** Un puesto dentro de una experiencia agrupada. */
+export interface ExperienceRole {
+  id: string;
+  organization: string;
+  location: string | null;
+  title: string;
+  dateLabel: string | null;
+  description: string | null;
+}
+
 export interface Experience {
   id: string;
   organization: string;
@@ -36,6 +46,13 @@ export interface Experience {
   dateLabel: string;
   /** Si suma a los años de experiencia calculados. False para lo no técnico. */
   countsAsExperience: boolean;
+  /**
+   * Puestos individuales, cuando la entrada agrupa varios.
+   *
+   * El CV corto los omite a propósito; el sitio los despliega bajo demanda y el
+   * CV extendido los incluye.
+   */
+  roles: ExperienceRole[];
   description: string;
 }
 

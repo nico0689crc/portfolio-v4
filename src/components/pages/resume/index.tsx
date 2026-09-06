@@ -23,6 +23,10 @@ const Resume = async ({ cv }: { cv: CvData }) => {
 
   const secondaryLocale = locale === "es" ? "en" : "es";
   const primaryCv = cv.cvFiles[locale] ?? cv.cvFiles.en;
+  // Deriva del corto en lugar de vivir en su propio ajuste: son el mismo
+  // documento con más detalle, y dos rutas configurables por separado
+  // terminarían apuntando a idiomas distintos.
+  const extendedCv = primaryCv.replace(/\.pdf$/, "_Extended.pdf");
   const secondaryCv = cv.cvFiles[secondaryLocale] ?? cv.cvFiles.en;
 
   return (
@@ -121,6 +125,42 @@ const Resume = async ({ cv }: { cv: CvData }) => {
                   </time>
                   <h3 className="font-display font-bold text-lg text-foreground mt-1">{job.role}</h3>
                   <p className="text-muted-foreground text-sm font-medium">{job.company}</p>
+                  {/* `details` nativo y no un componente con estado: no
+                      necesita JavaScript, es navegable con teclado y su
+                      contenido queda en el DOM, así que un buscador lo indexa
+                      aunque esté plegado. */}
+                  {job.roles.length > 0 && (
+                    <details className="mt-4 group/roles">
+                      <summary className="cursor-pointer text-sm font-medium text-accent hover:underline list-none marker:content-['']">
+                        {t("rolesToggle", { count: job.roles.length })}
+                        <span className="ml-1 inline-block transition-transform group-open/roles:rotate-90">›</span>
+                      </summary>
+
+                      <ol className="mt-4 space-y-3 border-l border-border pl-4">
+                        {job.roles.map((role) => (
+                          <li key={role.id}>
+                            <p className="text-xs text-muted-foreground">{role.dateLabel}</p>
+                            <p className="font-medium text-sm text-foreground">{role.title}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {role.organization}
+                              {role.location ? ` · ${role.location}` : ""}
+                            </p>
+                            {role.description && (
+                              <p className="text-sm text-muted-foreground mt-1">{role.description}</p>
+                            )}
+                          </li>
+                        ))}
+                      </ol>
+
+                      <a
+                        href={extendedCv}
+                        className="inline-flex items-center gap-2 mt-4 text-sm font-medium text-accent hover:underline"
+                      >
+                        <Download className="w-4 h-4" /> {t("rolesDownload")}
+                      </a>
+                    </details>
+                  )}
+
                   <div className="mt-4 flex flex-wrap gap-2">
                     {job.techs.map((tech) => (
                       <span
