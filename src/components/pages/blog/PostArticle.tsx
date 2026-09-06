@@ -4,7 +4,7 @@ import { Link } from "@/i18n/routing";
 import PostBody from "./PostBody";
 import TableOfContents from "./TableOfContents";
 import { extractHeadings } from "./headings";
-import { BUCKETS, storageUrl, type PostDetail, type PostSummary } from "@/lib/content";
+import { coverSrc, type PostDetail, type PostSummary } from "@/lib/content";
 
 /**
  * El artículo, compartido por la página pública y por la vista previa del panel.
@@ -71,21 +71,19 @@ const PostArticle = async ({
             </div>
           )}
 
-          {post.coverPath && post.coverWidth && post.coverHeight && (
-            <div className="relative aspect-video rounded-xl overflow-hidden bg-muted mb-10">
-              <Image
-                src={storageUrl(post.coverPath, BUCKETS.postMedia)}
-                alt={post.coverAlt ?? ""}
-                fill
-                sizes="(max-width: 768px) 100vw, 768px"
-                {...(post.coverBlurDataUrl
-                  ? { placeholder: "blur" as const, blurDataURL: post.coverBlurDataUrl }
-                  : {})}
-                className="object-cover"
-                priority
-              />
-            </div>
-          )}
+          <div className="relative aspect-video rounded-xl overflow-hidden bg-muted mb-10">
+            <Image
+              src={coverSrc(post)}
+              alt={post.coverAlt ?? ""}
+              fill
+              sizes="(max-width: 768px) 100vw, 768px"
+              {...(post.coverPath && post.coverBlurDataUrl
+                ? { placeholder: "blur" as const, blurDataURL: post.coverBlurDataUrl }
+                : {})}
+              className="object-cover"
+              priority
+            />
+          </div>
 
           <TableOfContents headings={headings} label={t("toc")} />
 

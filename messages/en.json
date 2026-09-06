@@ -504,6 +504,9 @@
     "published": "Published on",
     "updated": "Updated on",
     "toc": "In this post",
-    "related": "Keep reading"
+    "related": "Keep reading",
+    "filter": {
+      "all": "All"
+    }
   }
 }

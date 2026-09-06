@@ -503,6 +503,9 @@
     "published": "Publicado el",
     "updated": "Actualizado el",
     "toc": "En esta nota",
-    "related": "Seguí leyendo"
+    "related": "Seguí leyendo",
+    "filter": {
+      "all": "Todas"
+    }
   }
 }

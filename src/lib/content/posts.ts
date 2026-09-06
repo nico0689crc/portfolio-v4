@@ -48,7 +48,8 @@ export const getPosts = cached(
       .select(
         `slug, title, excerpt, published_at, content_updated_at, reading_minutes, noindex,
          seo_title, seo_description, og_image, og_title, og_description, cover_alt,
-         posts!inner(key, cover_path, cover_width, cover_height)`
+         posts!inner(key, cover_path, cover_width, cover_height,
+                     post_tags(tags(key, tag_translations(locale, slug, name))))`
       )
       .eq('locale', locale)
       .eq('status', 'published');
@@ -77,7 +78,11 @@ export const getPosts = cached(
       ogImage: row.og_image,
       ogTitle: row.og_title,
       ogDescription: row.og_description,
-      coverAlt: row.cover_alt
+      coverAlt: row.cover_alt,
+      tags: row.posts.post_tags.flatMap((pt) => {
+        const t = pick(pt.tags.tag_translations, locale);
+        return t ? [{ key: pt.tags.key, slug: t.slug, name: t.name }] : [];
+      })
     }));
   },
   ['posts'],
