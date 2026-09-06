@@ -3,8 +3,8 @@ slug: como-escribir-encuestas-sin-sesgo
 title: "Cómo escribir preguntas de encuesta que no te digan lo que querés escuchar"
 excerpt: "Una encuesta mal escrita es peor que no hacer ninguna: te da números que confirman lo que ya pensabas. Los errores más comunes y cómo los evito."
 focusKeyphrase: preguntas de encuesta sin sesgo
-seoTitle: "Preguntas de encuesta sin sesgo: cómo escribirlas para UX research"
-seoDescription: "Cómo escribir preguntas de encuesta que no induzcan la respuesta: preguntas cargadas, dobles, hipotéticas y de memoria, con ejemplos corregidos de un caso real."
+seoTitle: "Preguntas de encuesta sin sesgo: cómo escribirlas en UX"
+seoDescription: "Cómo escribir preguntas de encuesta sin sesgo: cargadas, dobles, hipotéticas y de memoria, con ejemplos corregidos de un caso real."
 ogTitle: "Si tu encuesta te da la razón, probablemente esté mal escrita"
 ogDescription: "Los cuatro errores que convierten una encuesta en un espejo de lo que ya pensabas."
 coverAlt: "Formulario de encuesta con preguntas marcadas y corregidas"
@@ -14,7 +14,7 @@ tags: ux-research
 imagePrompt: "Editorial vector illustration, an abstract questionnaire form where a tilted scale balances back to level, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
 
-Una encuesta mal escrita es peor que no hacer ninguna. Sin encuesta sabés que no sabés. Con una encuesta sesgada tenés números, y los números dan una confianza que no te ganaste.
+Una encuesta mal escrita es peor que no hacer ninguna. Escribir preguntas de encuesta sin sesgo es lo que separa un dato real de una confirmación cómoda. Sin encuesta sabés que no sabés. Con una encuesta sesgada tenés números, y los números dan una confianza que no te ganaste.
 
 El problema es que el sesgo casi nunca es intencional. Nadie escribe preguntas tramposas a propósito. Se escriben preguntas que suenan naturales porque **ya tenés una hipótesis**, y esa hipótesis se filtra en el vocabulario sin que la veas.
 
@@ -69,7 +69,7 @@ Nadie sabe eso. Van a inventar un número, redondeado, y vos lo vas a promediar 
 
 Un caso concreto y reciente vale más que una estadística inventada. Y viene con detalle: el contexto, la marca, qué estaba haciendo. De ahí salen los hallazgos.
 
-## Dos reglas de forma que ayudan
+## Dos reglas de forma para preguntas de encuesta sin sesgo
 
 **Ordená de general a específico.** Si arrancás preguntando por costos de envío, contaminaste todo lo que sigue: ya instalaste el tema. Las preguntas abiertas van primero, las dirigidas al final.
 
@@ -77,7 +77,7 @@ Un caso concreto y reciente vale más que una estadística inventada. Y viene co
 
 ## Cuántas personas alcanzan
 
-Menos de las que creés. Para research cualitativo —entender qué pasa y por qué— entre 8 y 12 personas ya te muestran los patrones que importan. En Mexx fueron 10, con 12 preguntas.
+Menos de las que creés. Para research cualitativo —entender qué pasa y por qué— entre 8 y 12 personas ya te muestran los patrones que importan, en línea con [lo que Nielsen midió sobre tamaños de muestra](https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/). En Mexx fueron 10, con 12 preguntas.
 
 Si lo que querés es **medir** —qué porcentaje de tu base hace algo— eso es otra disciplina y necesita muestras de verdad. Confundir las dos cosas es cómo terminan apareciendo titulares tipo "el 80% de los usuarios prefiere X" apoyados en nueve respuestas.
 

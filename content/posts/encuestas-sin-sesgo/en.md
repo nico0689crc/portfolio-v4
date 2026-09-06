@@ -4,7 +4,7 @@ title: "How to write survey questions that don't tell you what you want to hear"
 excerpt: "A badly written survey is worse than no survey: it hands you numbers that confirm what you already believed. The most common mistakes and how I avoid them."
 focusKeyphrase: unbiased survey questions
 seoTitle: "Unbiased survey questions: how to write them for UX research"
-seoDescription: "How to write survey questions that don't lead the answer: loaded, double-barrelled, hypothetical and memory questions, with corrected examples from a real project."
+seoDescription: "How to write unbiased survey questions: loaded, double-barrelled, hypothetical and memory ones, with corrected examples from a real project."
 ogTitle: "If your survey agrees with you, it's probably badly written"
 ogDescription: "The four mistakes that turn a survey into a mirror of what you already thought."
 coverAlt: "Survey form with questions marked up and corrected"
@@ -13,7 +13,7 @@ publishedAt: 2026-09-28
 tags: ux-research
 ---
 
-A badly written survey is worse than no survey. Without one, you know that you don't know. With a biased one you have numbers, and numbers give you a confidence you haven't earned.
+A badly written survey is worse than no survey. Writing unbiased survey questions is what separates a real signal from a comfortable confirmation. Without one, you know that you don't know. With a biased one you have numbers, and numbers give you a confidence you haven't earned.
 
 The problem is that the bias is almost never intentional. Nobody writes trick questions on purpose. You write questions that sound natural because **you already have a hypothesis**, and that hypothesis leaks into the vocabulary without you seeing it.
 
@@ -68,7 +68,7 @@ Nobody knows that. They'll invent a rounded number, and you'll average it as if 
 
 One concrete, recent case is worth more than an invented statistic. And it comes with detail: the context, the brand, what they were doing. That's where findings come from.
 
-## Two rules of form that help
+## Two rules of form for unbiased survey questions
 
 **Go from general to specific.** If you open by asking about shipping costs, you've contaminated everything that follows: you already planted the topic. Open questions first, directed ones last.
 
@@ -76,7 +76,7 @@ One concrete, recent case is worth more than an invented statistic. And it comes
 
 ## How many people is enough
 
-Fewer than you think. For qualitative research — understanding what happens and why — 8 to 12 people already show you the patterns that matter. At Mexx it was 10 people and 12 questions.
+Fewer than you think. For qualitative research — understanding what happens and why — 8 to 12 people already show you the patterns that matter, in line with [what Nielsen measured about sample sizes](https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/). At Mexx it was 10 people and 12 questions.
 
 If what you want is to **measure** — what percentage of your base does something — that's a different discipline and needs real samples. Confusing the two is how you end up with headlines like "80% of users prefer X" resting on nine responses.
 
