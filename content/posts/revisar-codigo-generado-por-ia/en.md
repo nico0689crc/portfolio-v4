@@ -3,8 +3,8 @@ slug: how-i-review-ai-generated-code-before-accepting-it
 title: "How I review AI-generated code before accepting it"
 excerpt: "AI-generated code looks reasonable ninety percent of the time. That ninety percent is exactly the problem: a superficial review doesn't tell correct code apart from code that only looks correct."
 focusKeyphrase: reviewing AI-generated code
-seoTitle: "How to review AI-generated code before accepting it into a project"
-seoDescription: "The checklist I apply before accepting AI-generated code into a real project, beyond whether it compiles and passes the tests."
+seoTitle: "Reviewing AI-generated code before accepting it"
+seoDescription: "The checklist for reviewing AI-generated code before it enters a real project, well beyond whether it compiles and passes the tests."
 ogTitle: "Code compiling doesn't mean it's the correct code"
 ogDescription: "The process I follow to review AI-generated code before it enters a real project."
 coverAlt: "Code in an editor with manual review annotations on specific lines"
@@ -13,17 +13,17 @@ publishedAt: 2027-06-14
 tags: ia, nextjs
 ---
 
-I wrote in [another article](/en/blog/how-i-use-ai-in-my-workflow-without-losing-judgement) about where I use AI and where I don't. This is the specific thing I do with the code it does generate, before it enters a real project — the concrete checklist, not the general criteria.
+I wrote in [another article](/en/blog/how-i-use-ai-in-my-workflow-without-losing-judgement) about where I use AI and where I don't. This is what reviewing AI-generated code actually looks like for me, before any of it enters a real project: the concrete checklist, not the general criteria.
 
 ## Why "it compiles and passes the tests" isn't enough
 
-Code that compiles and passes tests that already existed only proves it didn't break what was already being checked. It doesn't prove it solves the case I need, that it handles the error that's going to happen in production, or that it didn't introduce a vulnerability no existing test was looking for. The review has to go beyond "didn't visibly break anything".
+Code that compiles and passes existing tests only proves it didn't break what was already being checked. It doesn't prove it solves the case I need, that it handles the error that will happen in production, or that it didn't introduce a vulnerability no test was looking for. The [OWASP Top 10](https://owasp.org/www-project-top-ten/) categories apply just the same, wherever the code came from.
 
 ## The first thing: reading it as if written by someone I've never seen work
 
-I don't read generated code with the confidence I'd read a colleague's whose judgement I already know. I read it with the specific distrust of not knowing whether this particular piece of code has a subtle bug, because I have no track record for that "person" telling me whether they usually get this type of problem right.
+I don't read generated code with the confidence I'd read a colleague's whose judgement I know. I read it with the distrust of not knowing whether this piece has a subtle bug. I have no track record for that "person" telling me whether they usually get this type of problem right.
 
-## The concrete checklist
+## The checklist for reviewing AI-generated code
 
 **Does it handle cases where the data doesn't arrive as expected?** AI tends to write for the happy path — the data exists, has the right format, the network responds on time. I specifically check what happens if the data is null, if the network fails, if the response arrives in an unexpected format. Something's almost always missing there.
 
