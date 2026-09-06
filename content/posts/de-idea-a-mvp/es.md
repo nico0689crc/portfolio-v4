@@ -4,7 +4,7 @@ title: "De idea a MVP: cómo decido qué construir y qué dejar afuera"
 excerpt: "La parte difícil de un MVP no es construirlo, es recortarlo. El método que uso para decidir qué entra en la primera versión, con las decisiones reales del SaaS que sostengo en producción."
 focusKeyphrase: cómo definir un MVP
 seoTitle: "Cómo definir un MVP: qué construir y qué dejar afuera"
-seoDescription: "El método que uso para decidir el alcance de un MVP: una sola pregunta de negocio, la prueba del camino crítico y la lista de lo que se deja afuera a propósito."
+seoDescription: "Cómo definir un MVP con criterio: una sola pregunta de negocio, la prueba del camino crítico y la lista escrita de lo que queda afuera."
 ogTitle: "Un MVP no es tu producto con menos cosas"
 ogDescription: "Cómo decidir qué entra en la primera versión, con las decisiones reales de un SaaS en producción."
 coverAlt: "Diagrama de alcance de producto con funcionalidades dentro y fuera de la primera versión"
@@ -14,17 +14,17 @@ tags: producto, negocio
 imagePrompt: "Editorial vector illustration, an abstract funnel narrowing many geometric shapes down to one solid shape, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
 
-Todos los proyectos que vi fracasar por alcance fracasaron igual: nadie dijo que no a tiempo. No fue una mala decisión grande. Fueron treinta decisiones chicas, cada una razonable por separado, que juntas convirtieron una primera versión de tres meses en una de catorce.
+Todos los proyectos que vi fracasar por alcance fracasaron igual: nadie dijo que no a tiempo. Saber cómo definir un MVP es, sobre todo, saber recortarlo. No fue una mala decisión grande, fueron treinta decisiones chicas, cada una razonable por separado, que convirtieron una primera versión de tres meses en una de catorce.
 
 La parte difícil de un MVP no es construirlo. Es recortarlo. Y recortar es una habilidad incómoda porque cada cosa que sacás tiene a alguien que la quiere.
 
-Este es el método que uso. Lo apliqué construyendo [GymSmartAccess](/es/proyectos/gymsmartaccess-gestion-gimnasios), mi plataforma para gimnasios, que está en producción con clientes que pagan — así que las decisiones de acá tuvieron consecuencias reales, no de ejercicio.
+Este es el método que uso. Lo apliqué construyendo [GymSmartAccess](/es/proyectos/gymsmartaccess-gestion-gimnasios), mi plataforma para gimnasios, que está en producción con clientes que pagan. Las decisiones de acá tuvieron consecuencias reales, no de ejercicio.
 
-## Primero: el MVP no es tu producto con menos cosas
+## Cómo definir un MVP: primero, no es tu producto con menos cosas
 
 La confusión más cara del vocabulario de producto es tratar al MVP como una versión recortada del producto final. No lo es.
 
-Un MVP es **un experimento con forma de software**. Existe para responder una pregunta que todavía no sabés responder, lo más barato posible. Si ya sabés la respuesta, no necesitás un MVP: necesitás construir bien la primera versión.
+Un MVP es **un experimento con forma de software**, en el sentido original que le dio [Eric Ries](http://www.startuplessonslearned.com/2009/08/minimum-viable-product-guide.html). Existe para responder una pregunta que todavía no sabés responder, lo más barato posible. Si ya sabés la respuesta, no necesitás un MVP: necesitás construir bien la primera versión.
 
 La diferencia es práctica. Si es una versión recortada, la pregunta es "¿qué le saco?", y eso no tiene criterio: todo parece necesario. Si es un experimento, la pregunta es "¿qué necesito para contestar esto?", y de golpe la mitad de la lista se cae sola.
 

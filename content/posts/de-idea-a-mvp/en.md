@@ -4,7 +4,7 @@ title: "From idea to MVP: how I decide what to build and what to leave out"
 excerpt: "The hard part of an MVP isn't building it, it's cutting it. The method I use to decide what goes into the first version, with the real decisions behind the SaaS I run in production."
 focusKeyphrase: how to define an MVP
 seoTitle: "How to define an MVP: what to build and what to leave out"
-seoDescription: "The method I use to decide MVP scope: one business question, the critical path test, and a written list of what is deliberately left out."
+seoDescription: "How to define an MVP with judgement: one business question, the critical path test, and a written list of what is deliberately left out."
 ogTitle: "An MVP is not your product with fewer things"
 ogDescription: "How to decide what goes into the first version, with real decisions from a SaaS in production."
 coverAlt: "Product scope diagram showing features inside and outside the first version"
@@ -13,17 +13,17 @@ publishedAt: 2026-09-21
 tags: producto, negocio
 ---
 
-Every project I've seen fail on scope failed the same way: nobody said no in time. It wasn't one big bad decision. It was thirty small ones, each reasonable on its own, that together turned a three-month first version into a fourteen-month one.
+Every project I've seen fail on scope failed the same way: nobody said no in time. Knowing how to define an MVP is, above all, knowing how to cut it. It wasn't one big bad decision, it was thirty small ones, each reasonable on its own, that turned a three-month first version into a fourteen-month one.
 
 The hard part of an MVP isn't building it. It's cutting it. And cutting is an uncomfortable skill, because everything you remove has someone who wants it.
 
-This is the method I use. I applied it building [GymSmartAccess](/en/projects/gym-smart-access), my platform for gyms, which is in production with paying customers — so the decisions here had real consequences, not exercise ones.
+This is the method I use. I applied it building [GymSmartAccess](/en/projects/gym-smart-access), my platform for gyms, which is in production with paying customers. The decisions here had real consequences, not exercise ones.
 
-## First: an MVP is not your product with fewer things
+## How to define an MVP: first, it is not your product with fewer things
 
 The most expensive confusion in product vocabulary is treating the MVP as a trimmed-down version of the final product. It isn't.
 
-An MVP is **an experiment shaped like software**. It exists to answer a question you can't answer yet, as cheaply as possible. If you already know the answer, you don't need an MVP: you need to build the first version properly.
+An MVP is **an experiment shaped like software**, in the original sense [Eric Ries](http://www.startuplessonslearned.com/2009/08/minimum-viable-product-guide.html) gave it. It exists to answer a question you can't answer yet, as cheaply as possible. If you already know the answer, you don't need an MVP: you need to build the first version properly.
 
 The difference is practical. If it's a trimmed version, the question is "what do I remove?", and that has no criteria — everything looks necessary. If it's an experiment, the question is "what do I need to answer this?", and suddenly half the list falls away on its own.
 
