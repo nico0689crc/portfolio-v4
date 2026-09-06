@@ -155,7 +155,19 @@ export function buildPageMetadata({
 export const PERSON_ID = `${SITE_URL}/#person`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
 
-export function personSchema(locale: string, jobTitle: string, description: string) {
+/**
+ * Los rasgos de la persona que no dependen de la página.
+ *
+ * Se exporta aparte para que `cvPersonNode` construya sobre esto en lugar de
+ * repetirlo: los dos emiten un nodo con el mismo `@id`, y un parser que los
+ * fusiona con valores distintos para `url` o `description` no tiene forma de
+ * decidir cuál vale. Extendiendo la misma base, la fusión sólo agrega.
+ *
+ * `knowsLanguage` va como objetos `Language` y no como códigos sueltos porque
+ * para un reclutador del exterior el idioma no es un metadato: es lo primero
+ * que filtra.
+ */
+export function personBase(locale: string) {
   return {
     '@type': 'Person',
     '@id': PERSON_ID,
@@ -163,17 +175,27 @@ export function personSchema(locale: string, jobTitle: string, description: stri
     alternateName: 'Nicolás Fernández',
     url: localizedUrl(locale, '/'),
     image: `${SITE_URL}/profile-picture.webp`,
-    jobTitle,
-    description,
     email: `mailto:${AUTHOR_EMAIL}`,
     sameAs: SOCIAL_LINKS,
     nationality: { '@type': 'Country', name: 'Argentina' },
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Corrientes',
+      addressRegion: 'Corrientes',
       addressCountry: 'AR'
     },
-    knowsLanguage: ['es', 'en'],
+    knowsLanguage: [
+      { '@type': 'Language', name: 'Spanish', alternateName: 'es' },
+      { '@type': 'Language', name: 'English', alternateName: 'en' }
+    ]
+  };
+}
+
+export function personSchema(locale: string, jobTitle: string, description: string) {
+  return {
+    ...personBase(locale),
+    jobTitle,
+    description,
     knowsAbout: [
       'React',
       'Next.js',

@@ -4,7 +4,7 @@ import type {
   Experience,
   SkillCategory
 } from '@/lib/content';
-import { AUTHOR_EMAIL, PERSON_ID, SITE_NAME, SITE_URL, SOCIAL_LINKS } from '@/lib/seo';
+import { AUTHOR_EMAIL, SITE_NAME, SITE_URL, SOCIAL_LINKS, personBase } from '@/lib/seo';
 
 /**
  * Everything the CV documents need, already resolved for one locale.
@@ -97,21 +97,14 @@ export function credentialNodes(certifications: Certification[]) {
  * site-wide one, so search engines merge them into a single entity rather than
  * treating the CV as a second person.
  */
-export function cvPersonNode(cv: CvData) {
+export function cvPersonNode(locale: string, cv: CvData) {
   return {
-    '@type': 'Person',
-    '@id': PERSON_ID,
-    name: SITE_NAME,
+    // Extiende la misma base que emite el layout: los dos nodos comparten
+    // `@id`, así que sus valores tienen que coincidir o la fusión queda
+    // indefinida. Acá sólo se agregan las propiedades que el CV conoce.
+    ...personBase(locale),
     jobTitle: cv.jobTitle,
     description: cv.summary,
-    email: `mailto:${AUTHOR_EMAIL}`,
-    url: SITE_URL,
-    image: `${SITE_URL}/profile-picture.webp`,
-    sameAs: SOCIAL_LINKS,
-    knowsLanguage: [
-      { '@type': 'Language', name: 'Spanish', alternateName: 'es' },
-      { '@type': 'Language', name: 'English', alternateName: 'en' }
-    ],
     knowsAbout: cv.technicalSkills,
     hasOccupation: {
       '@type': 'Occupation',
@@ -130,8 +123,22 @@ export function cvPersonNode(cv: CvData) {
       address: {
         '@type': 'PostalAddress',
         addressLocality: 'Corrientes',
+        addressRegion: 'Corrientes',
         addressCountry: 'AR'
       }
+    },
+    // Para quién puede trabajar, no dónde vive. Es la diferencia entre que un
+    // reclutador de Madrid o de Nueva York lo considere o lo descarte por
+    // ubicación, y no hay otra propiedad de schema.org que lo diga.
+    seeks: {
+      '@type': 'Demand',
+      name: cv.jobTitle,
+      eligibleRegion: [
+        { '@type': 'Country', name: 'Argentina' },
+        { '@type': 'Place', name: 'Europe' },
+        { '@type': 'Country', name: 'United States' },
+        { '@type': 'Place', name: 'Remote' }
+      ]
     },
     subjectOf: Object.entries(cv.cvFiles).map(([lang, path]) => ({
       '@type': 'DigitalDocument',

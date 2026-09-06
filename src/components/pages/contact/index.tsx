@@ -24,8 +24,10 @@ const Contact = async () => {
         </Reveal>
 
         <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-          {/* Contact Information */}
-          <div className="flex flex-col gap-6">
+          {/* `address` es la etiqueta para los datos de contacto de la página,
+              y no la estaba usando ninguna. `not-italic` porque los navegadores
+              la muestran en cursiva por defecto. */}
+          <address className="flex flex-col gap-6 not-italic">
             {[
               {
                 icon: Mail,
@@ -66,7 +68,7 @@ const Contact = async () => {
                 </div>
               </Reveal>
             ))}
-          </div>
+          </address>
 
           <ContactForm />
         </div>

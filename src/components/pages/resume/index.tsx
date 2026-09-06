@@ -104,7 +104,16 @@ const Resume = async ({ cv }: { cv: CvData }) => {
                   <Briefcase className="w-5 h-5 text-accent" />
                 </div>
                 <div className="min-w-0">
-                  <span className="text-accent font-medium text-sm">{job.dateLabel}</span>
+                  {/* `dateLabel` es prosa editorial —"Marzo 2025 - Actualidad"—
+                      así que la fecha legible por máquina va en el atributo. Sin
+                      esto un parser tiene que interpretar el texto, y lo hace
+                      distinto en cada idioma. */}
+                  <time
+                    dateTime={job.startDate ?? undefined}
+                    className="text-accent font-medium text-sm"
+                  >
+                    {job.dateLabel}
+                  </time>
                   <h3 className="font-display font-bold text-lg text-foreground mt-1">{job.role}</h3>
                   <p className="text-muted-foreground text-sm font-medium">{job.company}</p>
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -185,7 +194,12 @@ const Resume = async ({ cv }: { cv: CvData }) => {
                     <GraduationCap className="w-5 h-5 text-accent" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-accent font-medium text-sm">{item.dateLabel}</span>
+                    <time
+                      dateTime={item.startDate ?? undefined}
+                      className="text-accent font-medium text-sm"
+                    >
+                      {item.dateLabel}
+                    </time>
                     <h3 className="font-display font-bold text-lg text-foreground mt-1">
                       {item.degree}
                     </h3>

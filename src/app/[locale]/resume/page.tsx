@@ -60,7 +60,7 @@ export default async function CurriculumPage({ params }: { params: Promise<{ loc
       name: seo?.title ?? t('defaultTitle'),
       description: seo?.description ?? t('defaultDescription'),
       inLanguage: locale,
-      mainEntity: cvPersonNode(cv),
+      mainEntity: cvPersonNode(locale, cv),
       significantLink: cvUrl,
     },
     breadcrumbSchema([
