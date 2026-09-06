@@ -48,6 +48,15 @@ const nextConfig: NextConfig = {
   // temporal que no dice nada. Con NEXT_DIST_DIR el build usa su propia carpeta.
   distDir: process.env.NEXT_DIST_DIR ?? '.next',
 
+  experimental: {
+    // Toda subida del panel viaja por un server action, y el default de Next
+    // es 1 MB: una portada de 1,4 MB muere ahí, antes de llegar a la
+    // validación propia, con un error de framework que no menciona el archivo.
+    // 2 MB deja pasar cualquier JPEG razonable de 1200×630 sin convertir esto
+    // en un canal para subir cosas grandes.
+    serverActions: { bodySizeLimit: '2mb' }
+  },
+
   images: {
     // Project screenshots live in Supabase Storage now, and `next/image`
     // refuses any remote host it was not told about. Derived from the env var
