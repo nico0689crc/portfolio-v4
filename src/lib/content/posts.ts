@@ -13,6 +13,19 @@ import type { PostDetail, PostSummary, SlugMapEntry, Tag } from './types';
  * here filters on the translation's own `status`.
  */
 
+/**
+ * Un post publicado con fecha futura está programado, no publicado.
+ *
+ * Sin este corte, `status = 'published'` alcanzaba para que la nota apareciera
+ * en el listado el día que se carga, ordenada primera y mostrando una fecha que
+ * todavía no llegó. Con el corte, cargar la agenda entera de antemano es
+ * seguro: cada nota se publica sola cuando le toca.
+ *
+ * No hace falta cron. Las lecturas vencen a los `MAX_AGE_SECONDS` de
+ * `cache.ts`, así que la nota aparece dentro del minuto de su fecha.
+ */
+const nowIso = () => new Date().toISOString();
+
 export const getPosts = cached(
   async (locale: string): Promise<PostSummary[]> => {
     const rows = orThrow(
@@ -26,6 +39,7 @@ export const getPosts = cached(
         )
         .eq('locale', locale)
         .eq('status', 'published')
+        .lte('published_at', nowIso())
         .order('published_at', { ascending: false })
     );
 
@@ -67,6 +81,7 @@ export const getPost = cached(
       .eq('slug', slug)
       .eq('locale', locale)
       .eq('status', 'published')
+      .lte('published_at', nowIso())
       .maybeSingle();
 
     if (error) throw new Error(`content/getPost: ${error.message}`);
@@ -119,15 +134,17 @@ export const getPostSlugMap = cached(
       'getPostSlugMap',
       await supabasePublic
         .from('posts')
-        .select('key, post_translations(locale, slug, status)')
+        .select('key, post_translations(locale, slug, status, published_at)')
     );
+
+    const now = nowIso();
 
     return rows
       .map((row) => ({
         key: row.key,
         slugs: Object.fromEntries(
           row.post_translations
-            .filter((t) => t.status === 'published')
+            .filter((t) => t.status === 'published' && t.published_at !== null && t.published_at <= now)
             .map((t) => [t.locale, t.slug])
         )
       }))

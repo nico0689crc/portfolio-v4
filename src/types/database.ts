@@ -1006,6 +1006,7 @@ export type Database = {
           cover_width: number | null
           created_at: string
           id: string
+          image_prompt: string | null
           key: string
           updated_at: string
         }
@@ -1017,6 +1018,7 @@ export type Database = {
           cover_width?: number | null
           created_at?: string
           id?: string
+          image_prompt?: string | null
           key: string
           updated_at?: string
         }
@@ -1028,6 +1030,7 @@ export type Database = {
           cover_width?: number | null
           created_at?: string
           id?: string
+          image_prompt?: string | null
           key?: string
           updated_at?: string
         }

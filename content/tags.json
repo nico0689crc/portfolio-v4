@@ -1,0 +1,54 @@
+{
+  "ux-research": {
+    "es": { "slug": "ux-research", "name": "UX Research" },
+    "en": { "slug": "ux-research", "name": "UX Research" }
+  },
+  "diseno-ui": {
+    "es": { "slug": "diseno-ui", "name": "Diseño UI" },
+    "en": { "slug": "ui-design", "name": "UI Design" }
+  },
+  "producto": {
+    "es": { "slug": "producto", "name": "Producto" },
+    "en": { "slug": "product", "name": "Product" }
+  },
+  "design-systems": {
+    "es": { "slug": "design-systems", "name": "Design Systems" },
+    "en": { "slug": "design-systems", "name": "Design Systems" }
+  },
+  "nextjs": {
+    "es": { "slug": "nextjs", "name": "Next.js" },
+    "en": { "slug": "nextjs", "name": "Next.js" }
+  },
+  "react": {
+    "es": { "slug": "react", "name": "React" },
+    "en": { "slug": "react", "name": "React" }
+  },
+  "accesibilidad": {
+    "es": { "slug": "accesibilidad", "name": "Accesibilidad" },
+    "en": { "slug": "accessibility", "name": "Accessibility" }
+  },
+  "rendimiento": {
+    "es": { "slug": "rendimiento", "name": "Rendimiento" },
+    "en": { "slug": "performance", "name": "Performance" }
+  },
+  "negocio": {
+    "es": { "slug": "negocio", "name": "Negocio" },
+    "en": { "slug": "business", "name": "Business" }
+  },
+  "casos": {
+    "es": { "slug": "casos-de-estudio", "name": "Casos de estudio" },
+    "en": { "slug": "case-studies", "name": "Case studies" }
+  },
+  "ia": {
+    "es": { "slug": "ia", "name": "IA" },
+    "en": { "slug": "ai", "name": "AI" }
+  },
+  "seo": {
+    "es": { "slug": "seo", "name": "SEO" },
+    "en": { "slug": "seo", "name": "SEO" }
+  },
+  "carrera": {
+    "es": { "slug": "carrera", "name": "Carrera" },
+    "en": { "slug": "career", "name": "Career" }
+  }
+}
