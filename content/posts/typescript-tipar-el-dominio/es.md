@@ -3,8 +3,8 @@ slug: tipar-el-dominio-ahorra-mas-bugs-que-cualquier-test
 title: "Tipar bien el dominio de negocio ahorra más bugs que cualquier test"
 excerpt: "TypeScript se usa casi siempre para atrapar errores de sintaxis. Su valor más grande está en otro lado: hacer que un estado inválido de negocio directamente no se pueda representar en el código."
 focusKeyphrase: tipar el dominio con TypeScript
-seoTitle: "TypeScript: tipar el dominio de negocio en vez de solo atrapar errores de sintaxis"
-seoDescription: "Por qué el mayor valor de TypeScript no es atrapar errores tipográficos sino hacer que un estado de negocio inválido no se pueda representar, con ejemplos concretos."
+seoTitle: "Tipar el dominio con TypeScript, no solo los typos"
+seoDescription: "Tipar el dominio con TypeScript hace que un estado de negocio inválido no se pueda ni escribir, y eso previene más bugs que cualquier test."
 ogTitle: "El mejor bug es el que ni siquiera se puede escribir"
 ogDescription: "Por qué tipar el dominio de negocio con TypeScript previene más errores que cualquier suite de tests."
 coverAlt: "Diagrama de tipos de TypeScript modelando estados válidos de un dominio de negocio"
@@ -14,11 +14,11 @@ tags: react, nextjs
 imagePrompt: "Editorial vector illustration, an abstract set of interlocking geometric shapes where only valid combinations physically fit together, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
 
-La forma más común de explicar el valor de TypeScript es "atrapa errores antes de que lleguen a producción" — típicamente ejemplificado con un typo en el nombre de una propiedad. Eso es real, pero es la parte menos interesante de lo que un buen sistema de tipos puede hacer. El valor más grande está en modelar el dominio de negocio de forma que un estado inválido no se pueda ni siquiera escribir.
+La forma más común de explicar el valor de TypeScript es que atrapa errores antes de producción, con el ejemplo del typo en el nombre de una propiedad. Es real, y es la parte menos interesante. Tipar el dominio con TypeScript apunta a otra cosa: modelar el negocio de forma que un estado inválido no se pueda ni escribir.
 
-## La diferencia entre atrapar un error y prevenir que exista
+## Tipar el dominio con TypeScript previene, no atrapa
 
-Un test atrapa un error después de que el código ya lo permite escribir — corre, falla, avisa. Un tipo bien diseñado hace que ese código directamente no compile, lo cual es una garantía más fuerte: no depende de que alguien haya escrito el test correcto para ese caso específico, ni de que ese test se ejecute antes de llegar a producción.
+Un test atrapa un error después de que el código ya lo permite escribir: corre, falla, avisa. Un tipo bien diseñado hace que ese código no compile. Es una garantía más fuerte, porque no depende de que alguien haya escrito el test correcto ni de que ese test se ejecute a tiempo. Las [uniones discriminadas](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions) son la herramienta principal para eso.
 
 ## Un ejemplo concreto: el estado de un pedido
 
@@ -47,16 +47,22 @@ Con esta unión discriminada, un pedido en estado `"shipped"` **tiene que** tene
 
 ## Por qué esto ahorra más bugs que los tests
 
-Un test que verifica "un pedido pendiente no debería tener tracking number" solo protege ese caso específico, y solo si alguien pensó en escribirlo. El tipo protege ese caso y todos los casos futuros que nadie anticipó todavía, porque la restricción vive en la estructura de datos, no en una verificación que corre después.
+Un test que verifica "un pedido pendiente no debería tener tracking number" solo protege ese caso, y solo si alguien pensó en escribirlo. El tipo protege ese caso y todos los que nadie anticipó todavía. La restricción vive en la estructura de datos, no en una verificación que corre después.
 
-Esto no reemplaza los tests — sigo necesitando tests para verificar comportamiento, no solo estructura de datos. Pero elimina una categoría entera de bugs de la responsabilidad de los tests, porque esos bugs específicos ya no pueden existir en el código para empezar.
+Esto no reemplaza los tests: sigo necesitándolos para verificar comportamiento. Pero saca una categoría entera de bugs de su responsabilidad, porque esos bugs ya no pueden existir en el código.
 
 ## Dónde aplico esto con más cuidado
 
-**En los límites del sistema.** Los datos que vienen de una API externa o de un formulario llegan sin tipo real, como `any` disfrazado de `unknown`. Ahí valido y transformo explícitamente hacia el tipo interno bien modelado, en vez de confiar en que el dato externo ya viene con la forma correcta.
+**En los límites del sistema.** Los datos de una API externa o de un formulario llegan sin tipo real. Ahí valido y transformo explícitamente hacia el tipo interno, en vez de confiar en que el dato externo viene con la forma correcta. Es el mismo criterio con el que trato la [validación de formularios](/es/blog/validacion-en-tiempo-real-puede-ser-peor-que-al-enviar).
 
-**En los estados que el negocio realmente distingue.** No todo necesita una unión discriminada — para datos simples, un tipo plano alcanza. Reservo este nivel de modelado para los conceptos donde el negocio realmente tiene reglas sobre qué combinaciones son válidas, como el estado de un pedido, de un pago, o de una publicación de este mismo blog (`draft` vs `published`, donde solo un post publicado tiene sentido con una fecha de publicación real).
+**En los estados que el negocio realmente distingue.** No todo necesita una unión discriminada: para datos simples, un tipo plano alcanza. Reservo este modelado para los conceptos donde el negocio tiene reglas sobre qué combinaciones son válidas. El estado de un pedido, de un pago, o de una publicación de este blog: `draft` contra `published`, donde solo un post publicado tiene sentido con fecha real.
 
 ## El costo real de hacerlo así
 
-Modelar el dominio con este nivel de precisión toma más tiempo al principio que usar un string suelto y confiar en la disciplina del equipo para no escribir combinaciones inválidas. Ese tiempo extra se paga una sola vez, al definir el tipo. El costo de no hacerlo se paga cada vez que alguien —incluido yo mismo, meses después— escribe sin querer una combinación que no debería existir, y ese costo recurrente casi siempre termina siendo mayor que la inversión inicial.
+Modelar el dominio con esta precisión toma más tiempo al principio que usar un string suelto y confiar en la disciplina del equipo. Ese tiempo extra se paga una sola vez, al definir el tipo. El costo de no hacerlo se paga cada vez que alguien, incluido yo meses después, escribe una combinación que no debería existir. Ese costo recurrente casi siempre supera la inversión inicial.
+
+## La señal de que un tipo está mal modelado
+
+Hay una pista que aparece rápido: si el código tiene que preguntar "¿pero esto puede ser null acá?" cada vez que se usa un valor, el tipo no está describiendo el dominio. Está describiendo la forma del JSON que llegó.
+
+Un tipo bien modelado no necesita comentarios que expliquen qué combinaciones son válidas. Si hace falta escribirlo, es porque el tipo permite representar algo que no debería existir.
