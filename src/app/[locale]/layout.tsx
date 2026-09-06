@@ -80,7 +80,7 @@ export async function generateMetadata({
       siteName: SITE_NAME,
       images: [
         {
-          url: '/og/default.png',
+          url: `/og/default-${locale}.png`,
           width: 1200,
           height: 630,
           alt: t('defaultTitle'),
@@ -91,7 +91,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: t('defaultTitle'),
       description: t('defaultDescription'),
-      images: ['/og/default.png'],
+      images: [`/og/default-${locale}.png`],
     },
   };
 }

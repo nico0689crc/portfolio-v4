@@ -3,8 +3,8 @@ slug: el-primer-minuto-que-decide-si-alguien-vuelve
 title: "El primer minuto que decide si alguien vuelve a tu producto"
 excerpt: "Nadie abandona un producto por una funcionalidad que falta. Abandona porque el primer minuto no le mostró por qué valía la pena quedarse. El onboarding no es una guía, es la primera prueba de valor."
 focusKeyphrase: diseño de onboarding
-seoTitle: "Diseño de onboarding: el primer minuto que decide si alguien vuelve"
-seoDescription: "Por qué el onboarding no es un tutorial sino la primera prueba de valor de un producto, con el criterio para diseñar ese primer minuto y ejemplos concretos de qué sacar."
+seoTitle: "Diseño de onboarding: el primer minuto lo decide todo"
+seoDescription: "Diseño de onboarding como prueba de valor y no como tutorial: el criterio para el primer minuto y qué conviene sacar de esas pantallas."
 ogTitle: "Un onboarding no enseña a usar el producto, demuestra por qué usarlo"
 ogDescription: "El criterio que uso para diseñar el primer minuto de un producto, que es el que decide si alguien vuelve."
 coverAlt: "Pantalla de bienvenida de un producto mostrando su primer valor concreto"
@@ -14,7 +14,7 @@ tags: producto, diseno-ui
 imagePrompt: "Editorial vector illustration, an abstract open door with a single glowing path leading directly to a value marker, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
 
-La mayoría de los onboardings que veo están diseñados para enseñar cómo funciona el producto. Ese es el error de origen, porque nadie que recién llega quiere aprender cómo funciona algo — quiere saber si le va a servir, y quiere saberlo rápido.
+La mayoría de los onboardings que veo están diseñados para enseñar cómo funciona el producto. Ese es el error de origen del diseño de onboarding. Nadie que recién llega quiere aprender cómo funciona algo: quiere saber si le va a servir, y rápido.
 
 ## La confusión que hay que resolver primero
 
@@ -22,19 +22,19 @@ Un tutorial explica funcionalidad. Un onboarding bien diseñado demuestra valor.
 
 La diferencia se nota en la primera pregunta que cada uno contesta. Un tutorial contesta "¿cómo se usa esto?". Un onboarding debería contestar "¿por qué me importaría usar esto?" — y esa segunda pregunta se contesta con una demostración concreta, no con una explicación.
 
-## El criterio: la ruta más corta a un "ajá"
+## El criterio de diseño de onboarding: la ruta más corta al "ajá"
 
-Antes de diseñar cualquier pantalla de bienvenida, identifico cuál es el momento específico donde alguien entiende, de forma visceral, el valor del producto. No una lista de funcionalidades — un momento puntual y concreto.
+Antes de diseñar cualquier pantalla de bienvenida, identifico el momento exacto donde alguien entiende, de forma visceral, el valor del producto. Es lo que en producto se llama [aha moment](https://www.productplan.com/glossary/aha-moment/). No una lista de funcionalidades — un momento puntual y concreto.
 
-Para un producto de gestión de tareas, ese momento no es "creaste tu primera tarea". Es "viste tu día organizado en una sola pantalla, por primera vez". Para GymSmartAccess, no es "cargaste tu primer socio" — es el momento donde el dueño del gimnasio ve, en el monitor de recepción, que el sistema efectivamente valida un pago sin que él tenga que hacer nada.
+Para un producto de gestión de tareas, ese momento no es "creaste tu primera tarea". Es "viste tu día organizado en una sola pantalla, por primera vez". Para GymSmartAccess no es "cargaste tu primer socio". Es el momento donde el dueño ve, en el monitor de recepción, que el sistema valida un pago sin que él haga nada.
 
 Diseñar el onboarding es diseñar el camino más corto y más guiado hacia ese momento específico, sacando todo lo que no ayude a llegar ahí.
 
 ## Lo que casi siempre sobra
 
-**Explicar funcionalidades que todavía no van a usar.** Un tour que muestra las quince secciones del producto en el primer minuto no genera confianza, genera ansiedad — es información que nadie puede retener sin contexto, y que compite directamente con el único mensaje que importa en ese momento.
+**Explicar funcionalidades que todavía no van a usar.** Un tour que muestra las quince secciones del producto en el primer minuto no genera confianza, genera ansiedad. Es información que nadie retiene sin contexto y que compite con el único mensaje que importa en ese momento.
 
-**Pedir configuración antes de mostrar valor.** Preguntar por preferencias, integraciones o datos de perfil antes de que la persona haya visto por qué le importa el producto es pedir un compromiso antes de haber dado nada a cambio. El orden correcto es al revés: mostrar valor primero, pedir configuración después, cuando la persona ya decidió que quiere invertir tiempo en configurarlo bien.
+**Pedir configuración antes de mostrar valor.** Preguntar por preferencias, integraciones o datos de perfil antes de que la persona vea por qué le importa el producto es pedir compromiso sin haber dado nada a cambio. El orden correcto es al revés: mostrar valor primero, pedir configuración después, cuando la persona ya decidió que quiere invertir tiempo en configurarlo bien.
 
 **Un estado vacío sin dirección.** Una pantalla en blanco que dice "no tenés nada todavía" es el peor momento posible para no dar una acción clara. Ese vacío tiene que apuntar directamente a la acción que lleva al momento de valor, no dejar que la persona lo descubra sola.
 
@@ -44,7 +44,7 @@ Cuando diseñé el flujo de un socio nuevo en GymSmartAccess, el camino no empie
 
 ## Cómo sé si el onboarding está funcionando
 
-No lo mido por cuánta gente completa el tutorial — esa métrica mide si el tutorial es fácil de terminar, no si generó valor. Lo mido por cuánta gente vuelve al producto sin que nadie se lo recuerde. Si alguien completa cada paso del onboarding y no vuelve al día siguiente, el onboarding falló en lo único que tenía que lograr, aunque técnicamente "funcionara" de principio a fin.
+No lo mido por cuánta gente completa el tutorial: esa es una de las [métricas de vanidad](/es/blog/metricas-de-vanidad-vs-metricas-que-importan) más clásicas. Lo mido por cuánta gente vuelve sin que nadie se lo recuerde. Si alguien completa cada paso y no vuelve al día siguiente, el onboarding falló en lo único que tenía que lograr.
 
 ## La regla que resume esto
 

@@ -3,8 +3,8 @@ slug: disenar-para-cuando-algo-sale-mal
 title: "Diseñar para cuando algo sale mal, no solo para cuando todo sale bien"
 excerpt: "La mayoría de los mockups muestran el estado perfecto: datos completos, conexión estable, todo funciona. El estado de error casi nunca se diseña, se improvisa en el código, y se nota."
 focusKeyphrase: diseñar estados de error
-seoTitle: "Diseñar estados de error: por qué no pueden ser una idea de último momento"
-seoDescription: "Por qué los estados de error de una interfaz necesitan diseñarse con la misma atención que el estado ideal, con el criterio para que un error no se sienta como un callejón sin salida."
+seoTitle: "Diseñar estados de error: por qué no pueden ir al final"
+seoDescription: "Por qué diseñar estados de error merece la misma atención que el estado ideal, y el criterio para que un error no sea un callejón sin salida."
 ogTitle: "El estado que menos se diseña es el que más frustra cuando aparece"
 ogDescription: "El criterio para diseñar estados de error que no dejen a nadie sin salida."
 coverAlt: "Interfaz mostrando un estado de error con una acción clara para continuar"
@@ -14,15 +14,15 @@ tags: diseno-ui, producto
 imagePrompt: "Editorial vector illustration, an abstract interface panel showing a broken path that reconnects to a clear alternate route, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
 
-Si mirás los mockups de cualquier proyecto en su etapa de diseño, casi todos muestran el mismo escenario: datos completos, conexión perfecta, todo funcionando. Es el estado más fácil de diseñar y el menos representativo de cómo se usa un producto de verdad, porque en producción los errores no son la excepción rara — son una parte constante del uso real.
+Si mirás los mockups de cualquier proyecto en su etapa de diseño, casi todos muestran el mismo escenario: datos completos, conexión perfecta, todo funcionando. Es el estado más fácil de diseñar y el menos representativo de cómo se usa un producto de verdad. En producción los errores no son la excepción rara: son una parte constante del uso. Por eso diseñar estados de error no es un detalle final, es parte del trabajo.
 
-## Por qué el estado de error se improvisa
+## Por qué se improvisa en vez de diseñar estados de error
 
-Cuando el diseño no contempla qué pasa si algo falla, el desarrollador tiene que decidirlo en el momento, sin el tiempo ni el contexto que tiene un diseñador para pensarlo con calma. El resultado casi siempre es un mensaje genérico, sin acción clara, escrito apurado antes de un deploy — es exactamente el mismo problema que documenté sobre [microcopy](/es/blog/microcopy-es-una-decision-de-producto): lo que no se diseña con intención, se resuelve con lo primero que se le ocurre a quien está programando esa pantalla.
+Cuando el diseño no contempla qué pasa si algo falla, el desarrollador tiene que decidirlo en el momento. No tiene el tiempo ni el contexto que tiene un diseñador para pensarlo con calma. El resultado casi siempre es un mensaje genérico, sin acción clara, escrito apurado antes de un deploy. Es el mismo problema que documenté sobre [microcopy](/es/blog/microcopy-es-una-decision-de-producto): lo que no se diseña con intención se resuelve con lo primero que se le ocurre a quien programa esa pantalla.
 
 ## Las tres categorías de error que diseño distinto
 
-**Error del usuario, recuperable.** Un campo mal completado, un formato inválido. Acá el diseño tiene que señalar exactamente qué está mal y cómo corregirlo, en el lugar donde está el error, no en un mensaje genérico arriba de todo el formulario que obliga a buscar cuál de los diez campos es el problemático.
+**Error del usuario, recuperable.** Un campo mal completado, un formato inválido. Acá el diseño tiene que señalar exactamente qué está mal y cómo corregirlo, en el lugar donde está el error. No en un mensaje genérico arriba del formulario, algo que las [pautas de mensajes de error de Nielsen Norman](https://www.nngroup.com/articles/error-message-guidelines/) desaconsejan hace años.
 
 **Error del sistema, temporal.** La conexión se cortó, un servicio externo no respondió a tiempo. Acá el diseño tiene que comunicar que el problema no es culpa del usuario y ofrecer un reintento claro. "Algo salió mal" no dice ninguna de las dos cosas — no dice si fue su culpa, y no dice qué puede hacer.
 
@@ -34,7 +34,7 @@ Cada estado de error tiene que contestar dos preguntas específicas, o no está 
 
 ## Un ejemplo concreto de este mismo sitio
 
-Cuando alguien envía el formulario de contacto y el servidor no puede procesar el mensaje, el estado de error no dice "hubo un error". Dice específicamente que hubo un problema al enviar el mensaje y que puede intentar nuevamente más tarde — la persona sabe que no fue su culpa y sabe qué hacer con esa información, en vez de quedarse mirando un mensaje genérico sin ninguna dirección.
+Cuando alguien envía el formulario de contacto y el servidor no puede procesar el mensaje, el estado de error no dice "hubo un error". Dice específicamente que hubo un problema al enviar el mensaje y que puede intentar nuevamente más tarde. La persona sabe que no fue su culpa y sabe qué hacer, en vez de quedarse mirando un mensaje genérico sin dirección.
 
 ## Por qué esto es una decisión de diseño, no solo de contenido
 

@@ -14,11 +14,11 @@ tags: negocio, producto
 imagePrompt: "Editorial vector illustration, an abstract dashboard where one large flashy number sits dimmed and a smaller quiet number glows with real significance, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
 
-Cualquier métrica que solo puede subir, nunca puede bajar de forma que revele un problema, es sospechosa de ser una métrica de vanidad. Usuarios registrados totales es el ejemplo clásico: ese número nunca baja, ni siquiera cuando el producto está fallando, porque nadie se "desregistra" activamente la mayoría de las veces. Un número que no puede reflejar un problema real no puede ayudar a detectarlo.
+Cualquier número que solo puede subir, y nunca bajar de forma que revele un problema, entra en la familia de las métricas de vanidad. Usuarios registrados totales es el ejemplo clásico. Ese número nunca baja, ni siquiera cuando el producto está fallando, porque casi nadie se "desregistra" activamente. Y un número que no puede reflejar un problema real tampoco puede ayudar a detectarlo.
 
 ## Por qué las métricas de vanidad son tentadoras igual
 
-Se ven bien en una diapositiva, crecen con el tiempo casi sin esfuerzo, y dan la sensación de progreso incluso cuando el negocio real no está mejorando. Ese es exactamente el peligro: dan una falsa sensación de que todo va bien mientras el problema real —gente que se registra y nunca vuelve, por ejemplo— queda invisible detrás del número que sí crece.
+Se ven bien en una diapositiva, crecen casi sin esfuerzo y dan sensación de progreso incluso cuando el negocio no mejora. Ese es el peligro. La distinción entre métricas de vanidad y [métricas accionables](http://www.startuplessonslearned.com/2009/08/vanity-metrics-vs-actionable-metrics.html) es vieja y se sigue ignorando por la misma razón: el problema real, gente que se registra y nunca vuelve, queda invisible detrás del número que sí crece.
 
 ## Las que sigo en un SaaS chico como GymSmartAccess
 
@@ -38,8 +38,10 @@ Se ven bien en una diapositiva, crecen con el tiempo casi sin esfuerzo, y dan la
 
 ## Por qué las métricas reales duelen más de mirar
 
-Las métricas de vanidad casi siempre suben. Las métricas reales a veces bajan, y bajan justo cuando algo anda mal — que es exactamente cuando más incómodo es mirarlas, y exactamente cuando más falta hace hacerlo. Elegir seguir un número que puede darte una mala noticia, en vez de uno que solo confirma lo que ya querías creer, es la decisión de fondo detrás de todo esto.
+Las métricas de vanidad casi siempre suben. Las reales a veces bajan, y bajan justo cuando algo anda mal. Es cuando más incómodo resulta mirarlas y cuando más falta hace hacerlo. Elegir un número que puede darte una mala noticia, en vez de uno que solo confirma lo que querías creer, es la decisión de fondo detrás de todo esto.
 
 ## La pregunta que aplico a cualquier métrica nueva antes de empezar a seguirla
 
-**¿Esta métrica podría bajar de una forma que me diga algo que necesito saber?** Si la respuesta es no —si el número solo puede subir o quedarse igual, pase lo que pase con el negocio real— es una métrica de vanidad, sin importar cuán impresionante se vea en un reporte.
+**¿Esta métrica podría bajar de una forma que me diga algo que necesito saber?** Si la respuesta es no, si el número solo puede subir o quedarse igual pase lo que pase con el negocio, es una de las métricas de vanidad. No importa cuán impresionante se vea en un reporte.
+
+Ese filtro es el mismo que aplico cuando armo un panel: si un número no cambia mi próxima decisión, no merece lugar en la pantalla. Un tablero corto que mira la gente vale más que uno completo que nadie abre después de la primera semana.

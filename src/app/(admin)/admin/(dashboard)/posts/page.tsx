@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 // Third-party Imports
-import { Plus } from 'lucide-react'
+import { ArrowDown, ArrowUp, ArrowUpDown, Plus } from 'lucide-react'
 
 // Component Imports
 import { Badge } from '@/components/admin/ui/badge'
@@ -12,6 +12,7 @@ import PostRowActions from '@/components/admin/views/posts/PostRowActions'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/admin/ui/table'
 
 // Lib Imports
+import { DEFAULT_LOCALE } from '@/i18n/locales'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { BUCKETS, storageUrl } from '@/lib/content/storage'
 
@@ -26,15 +27,73 @@ const FILTERS = [
 
 type Filter = (typeof FILTERS)[number]['key']
 
+/** `creado` es el orden por defecto y el que ya trae la consulta. */
+type Sort = 'creado' | 'fecha-asc' | 'fecha-desc'
+
 const LOCALES = ['es', 'en'] as const
+
+/** Fecha corta con hora: en los programados importa a qué hora sale. */
+const formatDate = (value: string) =>
+  new Date(value).toLocaleString('es-AR', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+
+/**
+ * La publicación se agenda con `published_at` a futuro, así que la fecha sola no
+ * alcanza: hay que compararla contra ahora para saber si ya salió o falta.
+ */
+const publishState = (dates: (string | null)[]) => {
+  const scheduled = dates.filter((d): d is string => d !== null).sort()
+
+  if (scheduled.length === 0) return { date: null, published: false }
+
+  return { date: scheduled[0], published: scheduled[0] <= new Date().toISOString() }
+}
+
+/**
+ * Adónde apunta el slug de cada idioma.
+ *
+ * Lo ya publicado va a la URL real; lo que sigue en borrador o está agendado a
+ * futuro todavía no existe en el sitio, así que va a la vista previa. Un link
+ * que da 404 la mitad de las veces no sirve para revisar nada.
+ */
+const translationUrl = (
+  postKey: string,
+  locale: string,
+  slug: string,
+  live: boolean
+) => {
+  const prefix = locale === DEFAULT_LOCALE ? '' : `/${locale}`
+
+  return live ? `${prefix}/blog/${slug}` : `/${locale}/preview/blog/${postKey}`
+}
 
 const AdminPostsPage = async ({
   searchParams
 }: {
-  searchParams: Promise<{ estado?: string }>
+  searchParams: Promise<{ estado?: string; orden?: string }>
 }) => {
-  const { estado } = await searchParams
+  const { estado, orden } = await searchParams
   const filter: Filter = FILTERS.some(f => f.key === estado) ? (estado as Filter) : 'todos'
+  const sort: Sort = orden === 'fecha-asc' || orden === 'fecha-desc' ? orden : 'creado'
+
+  /** Conserva el filtro activo al cambiar el orden y viceversa. */
+  const listHref = (next: { estado?: Filter; orden?: Sort }) => {
+    const params = new URLSearchParams()
+    const nextFilter = next.estado ?? filter
+    const nextSort = next.orden ?? sort
+
+    if (nextFilter !== 'todos') params.set('estado', nextFilter)
+    if (nextSort !== 'creado') params.set('orden', nextSort)
+
+    const qs = params.toString()
+
+    return qs ? `/admin/posts?${qs}` : '/admin/posts'
+  }
 
   const supabase = await createSupabaseServerClient()
 
@@ -63,6 +122,24 @@ const AdminPostsPage = async ({
 
     return true
   })
+
+  // El orden por fecha se resuelve acá y no en SQL por lo mismo que el filtro:
+  // `published_at` vive en las traducciones, y ordenar por una tabla embebida
+  // reordenaría las traducciones dentro de cada post, no los posts entre sí.
+  if (sort !== 'creado') {
+    const direction = sort === 'fecha-asc' ? 1 : -1
+
+    posts.sort((a, b) => {
+      const dateA = publishState(a.post_translations.map(t => t.published_at)).date
+      const dateB = publishState(b.post_translations.map(t => t.published_at)).date
+
+      // Sin fecha siempre al final, ordene como ordene: son los que todavía no
+      // tienen nada agendado y no compiten con los que sí.
+      if (dateA === null || dateB === null) return dateA === dateB ? 0 : dateA === null ? 1 : -1
+
+      return dateA < dateB ? -direction : dateA > dateB ? direction : 0
+    })
+  }
 
   const counts = {
     todos: data.filter(p => !p.archived_at).length,
@@ -97,7 +174,7 @@ const AdminPostsPage = async ({
             key={item.key}
             size='sm'
             variant={filter === item.key ? 'default' : 'outline'}
-            render={<Link href={item.key === 'todos' ? '/admin/posts' : `/admin/posts?estado=${item.key}`} />}
+            render={<Link href={listHref({ estado: item.key })} />}
           >
             {item.label} ({counts[item.key]})
           </Button>
@@ -112,20 +189,49 @@ const AdminPostsPage = async ({
         </p>
       ) : (
         <div className='border-border rounded-lg border'>
-          <Table>
+          <Table className='table-fixed'>
             <TableHeader>
               <TableRow>
-                <TableHead className='w-0' />
+                <TableHead className='w-16' />
                 <TableHead>Título</TableHead>
-                <TableHead>Estado</TableHead>
-                <TableHead>Slugs</TableHead>
-                <TableHead className='w-0 text-right'>Acciones</TableHead>
+                <TableHead className='w-48'>Estado</TableHead>
+                <TableHead className='w-52'>
+                  {/* La cabecera es el control de orden: alterna asc/desc y
+                      arranca por descendente, que es lo que se mira primero. */}
+                  <Link
+                    href={listHref({ orden: sort === 'fecha-desc' ? 'fecha-asc' : 'fecha-desc' })}
+                    className='hover:text-accent inline-flex items-center gap-1'
+                  >
+                    Publicación
+                    {sort === 'fecha-desc' ? (
+                      <ArrowDown className='size-3.5' />
+                    ) : sort === 'fecha-asc' ? (
+                      <ArrowUp className='size-3.5' />
+                    ) : (
+                      <ArrowUpDown className='size-3.5 opacity-50' />
+                    )}
+                  </Link>
+                </TableHead>
+                <TableHead className='w-44 text-right'>Acciones</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {posts.map(post => {
                 const es = post.post_translations.find(t => t.locale === 'es')
                 const title = es?.title ?? post.key
+                const publish = publishState(post.post_translations.map(t => t.published_at))
+                const now = new Date().toISOString()
+                const slugs = LOCALES.map(locale => {
+                  const t = post.post_translations.find(row => row.locale === locale)
+                  const live = t?.status === 'published' && t.published_at !== null && t.published_at <= now
+
+                  return {
+                    locale,
+                    value: `${locale} /${t?.slug ?? '—'}`,
+                    href: t ? translationUrl(post.key, locale, t.slug, live) : null,
+                    live
+                  }
+                })
 
                 return (
                   <TableRow key={post.key} className={post.archived_at ? 'opacity-60' : undefined}>
@@ -144,8 +250,30 @@ const AdminPostsPage = async ({
                     </TableCell>
 
                     <TableCell className='font-medium'>
-                      {title}
-                      <span className='text-muted-foreground block text-xs font-normal'>{post.key}</span>
+                      <span className='block truncate' title={title}>
+                        {title}
+                      </span>
+                      {slugs.map(slug =>
+                        slug.href ? (
+                          <Link
+                            key={slug.locale}
+                            href={slug.href}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='text-muted-foreground hover:text-foreground block truncate font-mono text-xs font-normal hover:underline'
+                            title={slug.live ? slug.value : `${slug.value} (vista previa)`}
+                          >
+                            {slug.value}
+                          </Link>
+                        ) : (
+                          <span
+                            key={slug.locale}
+                            className='text-muted-foreground block truncate font-mono text-xs font-normal'
+                          >
+                            {slug.value}
+                          </span>
+                        )
+                      )}
                     </TableCell>
 
                     <TableCell>
@@ -170,16 +298,19 @@ const AdminPostsPage = async ({
                       </div>
                     </TableCell>
 
-                    <TableCell className='text-muted-foreground font-mono text-xs'>
-                      {LOCALES.map(locale => {
-                        const t = post.post_translations.find(row => row.locale === locale)
-
-                        return (
-                          <span key={locale} className='block'>
-                            {locale} / {t?.slug ?? '—'}
-                          </span>
-                        )
-                      })}
+                    <TableCell>
+                      <Badge
+                        className={
+                          publish.published
+                            ? 'bg-emerald-600/10 text-emerald-600 dark:text-emerald-500'
+                            : 'bg-amber-600/10 text-amber-600 dark:text-amber-500'
+                        }
+                      >
+                        {publish.published ? 'Publicado' : 'Pendiente'}
+                      </Badge>
+                      <span className='text-muted-foreground mt-1 block truncate text-xs'>
+                        {publish.date ? formatDate(publish.date) : 'Sin programar'}
+                      </span>
                     </TableCell>
 
                     <TableCell>

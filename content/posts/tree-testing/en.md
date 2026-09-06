@@ -13,19 +13,19 @@ publishedAt: 2026-10-05
 tags: ux-research
 ---
 
-There's a kind of design problem that design can't fix: when the issue isn't how the menu looks, but what the things inside it are called.
+There's a kind of design problem that design can't fix, and tree testing exists to find it: when the issue isn't how the menu looks, but what the things inside it are called.
 
 That problem is expensive because you find it late. You redesign the navigation, it looks great, and people still can't find what they're after. So you blame the visuals, change them again, and it still doesn't work.
 
 Tree testing exists to catch it earlier. And it's one of the cheapest research techniques there is.
 
-## What it is
+## What tree testing is
 
-You show someone **only the structure** — the tree of categories and subcategories, in plain text, no colour, no design, no search box — and ask them to find something.
+You show someone **only the structure** — the tree of categories and subcategories, in plain text, no colour, no design, no search box — and ask them to find something. It is the counterpart to [card sorting](https://www.nngroup.com/articles/card-sorting-definition/): one proposes the structure, the other puts it to the test.
 
 The "no design" part is what matters. If you show the real interface, you don't know whether they found the product because the structure makes sense or because an orange banner put it in front of them. Strip the visuals away and the only thing under test is whether the names mean what you think they mean.
 
-## How I set it up
+## How I set up a tree testing session
 
 **I write tasks, not questions.** Not "where would you put licenses?" — that asks for their opinion as an architect — but "you need to buy a Windows 11 license: where do you look?". The task imitates a real intention.
 

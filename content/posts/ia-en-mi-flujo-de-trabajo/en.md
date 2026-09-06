@@ -3,8 +3,8 @@ slug: how-i-use-ai-in-my-workflow-without-losing-judgement
 title: "How I use AI in my workflow without losing judgement"
 excerpt: "AI doesn't replace technical judgement, it tests it more often. Where I use it, where I don't, and why the right question isn't how much it speeds things up but which decisions a person still has to make."
 focusKeyphrase: AI in software development
-seoTitle: "How to integrate AI into a development workflow without losing judgement"
-seoDescription: "Where I use AI in my day-to-day as a developer and designer — and where I don't — with the criteria I apply so it accelerates without replacing the decisions that matter."
+seoTitle: "AI in software development, without losing judgement"
+seoDescription: "Where I use AI in software development and where I don't, with the criteria I apply so it accelerates without replacing the decisions that matter."
 ogTitle: "The AI that writes code fastest is the one you should trust least unsupervised"
 ogDescription: "Where I fold AI into my workflow, and the three questions I ask before accepting anything it generates."
 coverAlt: "Code editor with an AI suggestion next to a manual review"
@@ -13,15 +13,15 @@ publishedAt: 2027-01-18
 tags: ia, producto
 ---
 
-The question I get asked most about AI in development isn't whether I use it — that's already assumed — it's whether I trust what it generates. The short answer is no, and that specific distrust is exactly what makes AI useful instead of risky.
+The question I get asked most about AI in software development isn't whether I use it: that's already assumed. It's whether I trust what it generates. The short answer is no, and that specific distrust is exactly what makes it useful instead of risky.
 
-## Where I use it every day
+## Where I use AI in software development every day
 
-**To speed up the mechanical parts.** Boilerplate, repetitive component structure, migrating a pattern I've already defined to a new case. There AI does in seconds what would take me minutes by hand, and the risk of it getting something wrong is low because the pattern is already decided — it's only applying it.
+**To speed up the mechanical parts.** Boilerplate, repetitive component structure, migrating a pattern I've already defined to a new case. There AI does in seconds what would take me minutes by hand. The risk of it getting something wrong is low because the pattern is already decided: it's only applying it.
 
 **To explore architectures before committing.** When I'm evaluating a new approach, I ask AI to generate a quick version of two or three alternatives. Not to use the code it produces, but to see the trade-offs of each path faster, before investing real hours in one.
 
-**To debug with another perspective.** Pasting an error and asking for hypotheses is faster than searching forums, especially for configuration or dependency errors where the answer already exists somewhere, you just have to find it.
+**To debug with another perspective.** Pasting an error and asking for hypotheses is faster than searching forums. It helps most with configuration or dependency errors, where the answer already exists somewhere and you just have to find it.
 
 **To prototype interfaces fast.** Going from a design idea to a first navigable HTML in minutes, so I can discuss it with something concrete instead of an abstract description.
 
@@ -43,7 +43,7 @@ The question I get asked most about AI in development isn't whether I use it —
 
 ## The effect nobody talks about enough
 
-What changed my work the most wasn't the speed of writing code. It's that, by delegating the mechanical writing, I have more energy left for the two things that actually matter: the user experience and the structural quality of what I'm building. Writing code faster is worth nothing if the thinking behind it is wrong — AI doesn't fix that, it just produces it faster.
+According to [Stack Overflow's survey](https://survey.stackoverflow.co/2024/ai), most developers already use these tools daily, so the advantage isn't in using them. What changed my work the most wasn't the speed of writing code. It's that, by delegating the mechanical writing, I have more energy left for the two things that actually matter: the user experience and the structural quality of what I'm building. Writing code faster is worth nothing if the thinking behind it is wrong — AI doesn't fix that, it just produces it faster.
 
 ## The rule that sums this all up
 

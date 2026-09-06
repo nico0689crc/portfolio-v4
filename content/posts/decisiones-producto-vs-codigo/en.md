@@ -3,8 +3,8 @@ slug: saas-decisions-that-have-nothing-to-do-with-code
 title: "The decisions behind a SaaS that have nothing to do with code"
 excerpt: "The framework you pick matters less than you think. The decisions that actually determine whether a product survives happen earlier, and they're business decisions, not architecture ones."
 focusKeyphrase: product decisions
-seoTitle: "Product decisions that define a SaaS before you write any code"
-seoDescription: "The business decisions that defined GymSmartAccess before any framework was chosen: who not to sell to, how to charge, and what to automate first."
+seoTitle: "Product decisions that define a SaaS before any code"
+seoDescription: "The product decisions that defined GymSmartAccess before any framework was chosen: who not to sell to, how to charge, and what to automate first."
 ogTitle: "I chose who not to sell to before I chose the framework"
 ogDescription: "The decisions that determine whether a SaaS works, and none of them are about code."
 coverAlt: "Diagram of business decisions preceding a product's technical architecture"
@@ -41,7 +41,7 @@ With limited budget and time, I didn't automate a gym member's entire lifecycle.
 
 I could have started with workout plans, or a class-booking system, which are flashier features to show in a demo. I chose billing because it directly affects the client's revenue, and a client who sees their delinquency drop to zero in the first month doesn't need me to explain the product's value. They see it in their bank account.
 
-Automating what looks best in a demo and automating what first convinces someone to pay are almost always two different things. Choosing the second one is a product decision, not an engineering one.
+Automating what looks best in a demo and automating what first convinces someone to pay are almost always two different things. It is what Clayton Christensen called [the job the customer hires the product to do](https://hbr.org/2016/09/know-your-customers-jobs-to-be-done): here the job was billing, not training. Choosing the second one is a product decision, not an engineering one.
 
 ## Decision 4: the hardware I decided not to sell
 
@@ -51,7 +51,7 @@ This wasn't a technical limitation dressed up as a choice. It was the reverse: I
 
 Had I picked the technology first — "let's do biometric access control, that's what the big gyms do" — I'd have built a product my actual client can't afford.
 
-## Why this matters if you're about to commission a build
+## Which product decisions to discuss before you hire
 
 If you're evaluating building something custom, the most valuable conversation you can have with whoever is going to build it isn't about the stack. It's about these four questions: who you don't sell to, who pays and when, what you automate first, and what business constraint the technical solution has to satisfy before you pick the technical solution.
 

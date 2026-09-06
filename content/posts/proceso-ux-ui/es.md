@@ -4,7 +4,7 @@ title: "Cómo diseño una interfaz desde cero: mi proceso completo de UX/UI"
 excerpt: "Las cinco etapas que recorro antes de dar por terminada una interfaz, con los números reales del rediseño que hice para el retailer de tecnología más grande de Argentina."
 focusKeyphrase: proceso de diseño UX/UI
 seoTitle: "Proceso de diseño UX/UI: cómo diseño una interfaz desde cero"
-seoDescription: "Mi proceso de diseño UX/UI en cinco etapas, con datos reales de un rediseño de e-commerce: auditoría heurística, research, arquitectura de información, prototipo y testing."
+seoDescription: "Mi proceso de diseño UX/UI en cinco etapas, con datos reales de un rediseño de e-commerce: auditoría, research, arquitectura, prototipo y testing."
 ogTitle: "Abrir Figma es el paso cuatro, no el uno"
 ogDescription: "El proceso completo que sigo para diseñar una interfaz, con los números del rediseño de Mexx."
 coverAlt: "Diagrama de las cinco etapas de un proceso de diseño UX/UI"
@@ -14,13 +14,13 @@ tags: ux-research, diseno-ui, producto
 imagePrompt: "Editorial vector illustration, five abstract geometric stages connected left to right like a process diagram, muted ochre and deep teal on warm off-white background, flat design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
 
-Cuando alguien me pide una interfaz nueva, la primera reacción casi siempre es la misma: mandame el Figma. Y es entendible, porque el Figma es lo único del proceso que se puede mirar. Pero abrir Figma primero es como empezar a cocinar sin saber cuánta gente viene a comer.
+Cuando alguien me pide una interfaz nueva, la primera reacción casi siempre es la misma: mandame el Figma. Y es entendible, porque en todo proceso de diseño UX/UI el Figma es lo único que se puede mirar. Pero abrirlo primero es como empezar a cocinar sin saber cuánta gente viene a comer.
 
 Abrir Figma es el paso cuatro. Antes hay tres etapas que no se ven pero que deciden si lo que dibujás sirve o es decoración cara.
 
-Este es el proceso que sigo. No lo inventé yo —está construido sobre los Cinco Planos de James Garrett y sobre metodologías de research que existen hace décadas— pero sí está afinado a fuerza de aplicarlo en proyectos reales. Los números que aparecen acá salen del rediseño que hice para Mexx, el retailer de tecnología más grande de Argentina, con 34 años en el mercado.
+Este es el proceso de diseño UX/UI que sigo. No lo inventé yo: está construido sobre los [Cinco Planos de James Garrett](https://www.jjg.net/elements/) y sobre metodologías de research que existen hace décadas. Pero está afinado a fuerza de aplicarlo en proyectos reales. Los números que aparecen acá salen del rediseño que hice para Mexx, el retailer de tecnología más grande de Argentina, con 34 años en el mercado.
 
-## Etapa 1: entender antes de opinar
+## Etapa 1 del proceso de diseño UX/UI: entender antes de opinar
 
 La primera etapa no produce ni un píxel. Produce evidencia.
 

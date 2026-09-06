@@ -3,8 +3,8 @@ slug: como-reviso-codigo-generado-por-ia-antes-de-aceptarlo
 title: "Cómo reviso código generado por IA antes de aceptarlo"
 excerpt: "El código que genera una IA se ve razonable el noventa por ciento de las veces. Ese noventa por ciento es exactamente el problema: la revisión superficial no distingue el código correcto del que solo parece correcto."
 focusKeyphrase: revisar código generado por IA
-seoTitle: "Cómo revisar código generado por IA antes de aceptarlo en un proyecto"
-seoDescription: "El checklist que aplico antes de aceptar código generado por IA en un proyecto real, más allá de si compila y pasa los tests."
+seoTitle: "Cómo revisar código generado por IA antes de aceptarlo"
+seoDescription: "El checklist para revisar código generado por IA antes de que entre a un proyecto real, mucho más allá de si compila y pasa los tests."
 ogTitle: "Que el código compile no significa que sea el código correcto"
 ogDescription: "El proceso que sigo para revisar código generado por IA antes de que entre a un proyecto real."
 coverAlt: "Código en un editor con anotaciones de revisión manual sobre líneas específicas"
@@ -14,17 +14,17 @@ tags: ia, nextjs
 imagePrompt: "Editorial vector illustration, an abstract magnifying glass hovering over lines of code with a few flagged sections, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
 
-Escribí en [otro artículo](/es/blog/como-uso-ia-en-mi-flujo-sin-perder-el-criterio) sobre dónde uso IA y dónde no. Esto es lo específico que hago con el código que sí genera, antes de que entre a un proyecto real — el checklist concreto, no el criterio general.
+Escribí en [otro artículo](/es/blog/como-uso-ia-en-mi-flujo-sin-perder-el-criterio) sobre dónde uso IA y dónde no. Esto es lo que significa revisar código generado por IA en la práctica, antes de que entre a un proyecto real: el checklist concreto, no el criterio general.
 
 ## Por qué "compila y pasa los tests" no es suficiente
 
-Código que compila y pasa los tests que ya existían solo demuestra que no rompió lo que ya se estaba verificando. No demuestra que resuelve el caso que necesito, que maneja el error que va a pasar en producción, o que no introdujo una vulnerabilidad que ningún test existente estaba buscando. La revisión tiene que ir más allá de "no rompió nada visible".
+Código que compila y pasa los tests existentes solo demuestra que no rompió lo que ya se verificaba. No demuestra que resuelve el caso que necesito, que maneja el error que va a pasar en producción, ni que no introdujo una vulnerabilidad que ningún test buscaba. Las categorías del [OWASP Top 10](https://owasp.org/www-project-top-ten/) siguen aplicando igual, venga el código de donde venga.
 
 ## Lo primero: leerlo como si lo hubiera escrito alguien que nunca vi trabajar
 
-No leo código generado con la confianza con la que leería el de un colega cuyo criterio ya conozco. Lo leo con la desconfianza específica de no saber si esta pieza de código particular tiene un error sutil, porque no tengo ningún historial de esa "persona" que me diga si suele acertar en este tipo de problema.
+No leo código generado con la confianza con la que leería el de un colega cuyo criterio conozco. Lo leo con la desconfianza de no saber si esta pieza tiene un error sutil. No tengo historial de esa "persona" que me diga si suele acertar en este tipo de problema.
 
-## El checklist concreto
+## El checklist para revisar código generado por IA
 
 **¿Maneja los casos donde el dato no llega como se espera?** La IA tiende a escribir para el camino feliz —el dato existe, tiene el formato correcto, la red responde a tiempo. Reviso específicamente qué pasa si el dato es null, si la red falla, si la respuesta llega en un formato inesperado. Casi siempre falta algo ahí.
 
@@ -38,8 +38,8 @@ No leo código generado con la confianza con la que leería el de un colega cuyo
 
 ## Un ejemplo concreto de algo que rechacé
 
-Al generar una función para verificar el estado de un webhook de Mercado Pago, el código generado revisaba correctamente la firma de la petición, pero no contemplaba qué pasaba si la misma notificación llegaba dos veces —algo que Mercado Pago hace explícitamente por diseño, para garantizar que el evento se reciba aunque falle la primera entrega. El código generado, sin ese chequeo, hubiera procesado el mismo pago dos veces. No era un error visible en una prueba simple — solo aparecía si la notificación efectivamente se duplicaba, que es exactamente el escenario real que ese código tenía que manejar.
+Al generar una función para verificar un webhook de Mercado Pago, el código revisaba bien la firma de la petición. Pero no contemplaba qué pasaba si la misma notificación llegaba dos veces, algo que Mercado Pago hace por diseño para garantizar la entrega. Sin ese chequeo hubiera procesado el mismo pago dos veces. No era un error visible en una prueba simple: solo aparecía si la notificación se duplicaba, que era el escenario real que ese código tenía que manejar.
 
 ## Por qué este proceso no hace que la IA sea menos útil
 
-Revisar con este nivel de detalle no elimina el valor de generar el código rápido. El ahorro real de tiempo no está en saltarse la revisión — está en no tener que escribir la estructura básica desde cero. La revisión rigurosa sigue haciendo falta, exactamente igual que le haría falta a código escrito por un desarrollador junior talentoso pero sin el contexto completo del proyecto. La diferencia con un junior es que la IA nunca aprende del contexto de la revisión anterior, así que el mismo tipo de error puede repetirse la próxima vez, y hay que volver a revisarlo con el mismo rigor cada vez.
+Revisar con este detalle no elimina el valor de generar el código rápido. El ahorro real no está en saltarse la revisión: está en no escribir la estructura básica desde cero. La revisión rigurosa sigue haciendo falta, igual que con código de un junior talentoso sin el contexto completo del proyecto. La diferencia es que la IA nunca aprende de la revisión anterior. El mismo error puede repetirse la próxima vez, y hay que buscarlo con el mismo rigor cada vez.

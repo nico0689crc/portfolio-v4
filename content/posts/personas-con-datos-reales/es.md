@@ -3,7 +3,7 @@ slug: personas-de-ux-con-datos-reales
 title: "Mis personas de UX no tienen foto de stock (y por eso sirven)"
 excerpt: "Una persona con nombre inventado y una sonrisa de banco de imágenes es decoración de informe. Cómo construyo personas que en realidad cambian una decisión de diseño."
 focusKeyphrase: personas de UX
-seoTitle: "Personas de UX que sirven: cómo construirlas con datos reales"
+seoTitle: "Personas de UX con datos reales, no con fotos de stock"
 seoDescription: "Por qué la mayoría de las personas de UX son decoración y cómo construir una que realmente cambie una decisión de diseño, con ejemplos de un caso real."
 ogTitle: "Si tu persona de UX no te hizo cambiar de opinión, no hizo su trabajo"
 ogDescription: "Cómo construyo personas que se usan de verdad en vez de terminar pegadas en una pared."
@@ -24,15 +24,15 @@ Antes de armar una persona, me hago una pregunta: **¿qué decisión de diseño 
 
 Si no tengo respuesta, no la hago. Una persona que no cambia nada es un ejercicio de diseño gráfico, no una herramienta de research.
 
-## Cómo las construyo
+## Cómo construyo personas de UX con datos
 
 En el rediseño de Mexx armé dos personas, Lucas y Sofía, y ninguna de las dos empezó por "imaginemos un usuario". Empezaron por los patrones que aparecieron en la encuesta y en la auditoría.
 
-**Lucas, 26 años, developer.** No es un dato inventado que "sería lindo" tener. Salió de que varios encuestados mencionaban comprar licencias de software específico y tener conocimiento técnico de lo que compraban — sabían la diferencia entre versiones, comparaban precios en otros sitios primero. Ese patrón importa para el diseño porque significa que la interfaz no necesita explicarle qué es un producto digital, pero sí necesita ser rápida y sin fricción, porque él ya decidió qué comprar antes de llegar.
+**Lucas, 26 años, developer.** No es un dato inventado que "sería lindo" tener. Salió de que varios encuestados mencionaban comprar licencias de software específico y conocer bien lo que compraban. Sabían la diferencia entre versiones y comparaban precios en otros sitios primero. Ese patrón importa porque la interfaz no necesita explicarle qué es un producto digital. Necesita ser rápida y sin fricción: él ya decidió qué comprar antes de llegar.
 
-**Sofía, 32 años, freelancer.** Salió del patrón opuesto: gente que investigaba en el celular durante la semana y recién compraba el fin de semana en la computadora, comparando entre pestañas abiertas. Ese patrón es directamente el que explica por qué el carrito perdido entre dispositivos era un problema real y no una hipótesis mía.
+**Sofía, 32 años, freelancer.** Salió del patrón opuesto: gente que investigaba en el celular durante la semana y compraba el fin de semana en la computadora, comparando entre pestañas. Ese patrón explica por qué el carrito perdido entre dispositivos era un problema real y no una hipótesis mía.
 
-Ninguna de las dos tiene foto. Tienen comportamiento documentado, con la fuente de cada dato marcada.
+Ninguna de las dos tiene foto. Tienen comportamiento documentado, con la fuente de cada dato marcada. Es la diferencia entre una persona y [lo que Nielsen Norman llama una persona basada en evidencia](https://www.nngroup.com/articles/persona/): la primera describe a alguien, la segunda explica por qué hace lo que hace.
 
 ## La prueba de que sirvió
 
@@ -48,8 +48,10 @@ Cuantos menos datos decorativos, más fácil es ver cuáles importan.
 
 ## Cuándo NO hacer personas
 
-Si tenés menos de cinco o seis entrevistas o respuestas, no hay patrón todavía — hay anécdotas sueltas. Construir una persona con eso es inventar un promedio de una muestra que no alcanza. Es mejor decir "todavía no sé qué patrones existen" que fabricar una persona que se siente rigurosa sin serlo.
+Si tenés menos de cinco o seis entrevistas o respuestas, no hay patrón todavía: hay anécdotas sueltas. Construir una persona con eso es inventar un promedio de una muestra que no alcanza. Es mejor decir "todavía no sé qué patrones existen" que fabricar una persona que se siente rigurosa sin serlo.
 
 Las personas son un resumen de evidencia, no un sustituto de ella. Si nunca volviste a la evidencia original después de crearlas, probablemente hiciste el ejercicio equivocado.
+
+Y conviene revisarlas cuando cambia el producto. Una persona escrita para una etapa temprana deja de describir a nadie cuando el público real se corre, y sostenerla por costumbre es peor que no tenerla: le da autoridad de dato a un recuerdo viejo.
 
 El proceso completo donde entran las personas —después de la encuesta, antes de definir el problema— está en [cómo diseño una interfaz desde cero](/es/blog/como-diseno-una-interfaz-desde-cero).

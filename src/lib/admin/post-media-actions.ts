@@ -17,7 +17,8 @@ export type MediaFormState = {
   saved: boolean
 }
 
-const MAX_BYTES = 10 * 1024 * 1024
+/** Tiene que coincidir con `serverActions.bodySizeLimit`: Next rechaza antes que esto. */
+const MAX_BYTES = 2 * 1024 * 1024
 const ACCEPTED = ['image/png', 'image/jpeg', 'image/webp', 'image/avif']
 
 /** Mismo placeholder que el resto del sitio: un JPEG de 16px como data URL. */
@@ -35,7 +36,7 @@ async function readImage(formData: FormData): Promise<ReadResult> {
   const file = formData.get('file')
 
   if (!(file instanceof File) || file.size === 0) return { ok: false, error: 'Elegí un archivo.' }
-  if (file.size > MAX_BYTES) return { ok: false, error: 'El archivo supera los 10 MB.' }
+  if (file.size > MAX_BYTES) return { ok: false, error: 'El archivo supera los 2 MB.' }
   if (file.type && !ACCEPTED.includes(file.type)) return { ok: false, error: 'Formato no soportado.' }
 
   const buffer = Buffer.from(await file.arrayBuffer())

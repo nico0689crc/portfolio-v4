@@ -3,8 +3,8 @@ slug: componentes-atomicos-que-realmente-se-reutilizan
 title: "Componentes atómicos que se reutilizan de verdad (no solo en la teoría)"
 excerpt: "El atomic design se explica fácil y se aplica mal seguido: componentes que técnicamente son atómicos pero que nadie reutiliza porque nacieron acoplados a una sola pantalla."
 focusKeyphrase: componentes atómicos
-seoTitle: "Componentes atómicos que se reutilizan: cómo evitar el atomic design de mentira"
-seoDescription: "Por qué muchos sistemas de componentes 'atómicos' no se reutilizan en la práctica, y el criterio que uso para diseñar componentes que sí sobreviven a la segunda pantalla."
+seoTitle: "Componentes atómicos que se reutilizan de verdad"
+seoDescription: "Por qué muchos componentes atómicos no se reutilizan en la práctica, y el criterio para diseñar los que sí sobreviven a la segunda pantalla."
 ogTitle: "Un componente reutilizable no sabe en qué pantalla está"
 ogDescription: "El criterio real detrás del atomic design, más allá de la nomenclatura de átomos y moléculas."
 coverAlt: "Componentes de interfaz organizados de piezas pequeñas a pantallas completas"
@@ -14,9 +14,9 @@ tags: design-systems, react, diseno-ui
 imagePrompt: "Editorial vector illustration, small abstract geometric pieces assembling upward into larger composite shapes, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
 
-El atomic design tiene un problema de marketing: la metáfora de átomos, moléculas y organismos es tan pegadiza que la gente memoriza los nombres y se olvida de la pregunta que la metodología en realidad viene a contestar. Y sin esa pregunta, terminás con una carpeta de "átomos" que técnicamente cumple la nomenclatura y que en la práctica nadie reutiliza.
+El [atomic design](https://bradfrost.com/blog/post/atomic-web-design/) tiene un problema de marketing. La metáfora de átomos, moléculas y organismos es tan pegadiza que la gente memoriza los nombres y se olvida de la pregunta que viene a contestar. Sin esa pregunta terminás con una carpeta de componentes atómicos que cumple la nomenclatura y que nadie reutiliza.
 
-## La pregunta que importa, no la metáfora
+## Qué hace que un componente atómico se reutilice
 
 **¿Este componente sabe en qué pantalla está?**
 
@@ -26,13 +26,13 @@ La prueba real de un componente atómico es: **¿podría usarse en una pantalla 
 
 ## Dónde se filtra el acoplamiento, en la práctica
 
-**Texto hardcodeado en vez de props.** Un componente `Badge` que dice `<span>Disponible</span>` en vez de recibir el texto como prop está atado a un solo caso de uso. El día que necesitás el mismo badge para decir "Agotado", terminás copiando el componente entero en vez de reutilizarlo, porque copiarlo es más rápido que refactorizarlo bajo presión de entrega.
+**Texto hardcodeado en vez de props.** Un componente `Badge` que dice `<span>Disponible</span>` en vez de recibir el texto como prop está atado a un solo caso de uso. El día que necesitás el mismo badge para decir "Agotado" terminás copiando el componente entero. Copiarlo es más rápido que refactorizarlo bajo presión de entrega.
 
-**Estilos que asumen su contenedor.** Un componente con `margin-top: 40px` fijo asume que siempre va a estar debajo de algo específico. El margen es responsabilidad del padre, que sabe qué hay alrededor — el componente en sí no debería saber si tiene algo arriba o no. Esto es exactamente lo que describí en [de Figma a producción](/es/blog/de-figma-a-produccion-sin-perder-nada) sobre diseñar con espaciado consistente vía [tokens](/es/blog/design-tokens-figma-a-tailwind): el espaciado externo vive en quien lo usa, no en el componente.
+**Estilos que asumen su contenedor.** Un componente con `margin-top: 40px` fijo asume que siempre va a estar debajo de algo específico. El margen es responsabilidad del padre, que sabe qué hay alrededor. El componente no debería saber si tiene algo arriba. Es lo que describí en [de Figma a producción](/es/blog/de-figma-a-produccion-sin-perder-nada) sobre el espaciado consistente vía [tokens](/es/blog/design-tokens-figma-a-tailwind): el espaciado externo vive en quien lo usa.
 
-**Lógica de negocio adentro de un componente visual.** Un componente `PriceTag` que calcula el descuento adentro suyo deja de ser un componente de presentación y pasa a ser una regla de negocio disfrazada de UI. El día que la regla de descuento cambia, hay que tocar un archivo que se supone que solo debía dibujar un número.
+**Lógica de negocio adentro de un componente visual.** Un componente `PriceTag` que calcula el descuento adentro deja de ser presentación. Pasa a ser una regla de negocio disfrazada de UI. El día que la regla de descuento cambia, hay que tocar un archivo que se supone que solo debía dibujar un número.
 
-## El criterio que uso para saber si algo es realmente un átomo
+## El criterio para reconocer componentes atómicos de verdad
 
 Un componente pasa la prueba si cumple tres cosas:
 

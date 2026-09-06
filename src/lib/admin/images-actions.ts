@@ -16,7 +16,8 @@ export type ImagesFormState = {
 
 const LOCALES = ['es', 'en'] as const
 const BUCKET = 'project-images'
-const MAX_BYTES = 10 * 1024 * 1024
+/** Tiene que coincidir con `serverActions.bodySizeLimit`: Next rechaza antes que esto. */
+const MAX_BYTES = 2 * 1024 * 1024
 
 /**
  * Mismo placeholder que genera el script de carga: un JPEG de 16px de ancho
@@ -103,7 +104,7 @@ export async function uploadImage(
   const file = formData.get('file')
 
   if (!(file instanceof File) || file.size === 0) return { error: 'Elegí un archivo.', saved: false }
-  if (file.size > MAX_BYTES) return { error: 'El archivo supera los 10 MB.', saved: false }
+  if (file.size > MAX_BYTES) return { error: 'El archivo supera los 2 MB.', saved: false }
 
   const supabase = await createSupabaseServerClient()
 

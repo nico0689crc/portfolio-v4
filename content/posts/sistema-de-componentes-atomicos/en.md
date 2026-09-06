@@ -3,7 +3,7 @@ slug: atomic-components-that-actually-get-reused
 title: "Atomic components that actually get reused (not just in theory)"
 excerpt: "Atomic design is easy to explain and often applied badly: components that are technically atomic but that nobody reuses because they were born coupled to a single screen."
 focusKeyphrase: atomic components
-seoTitle: "Atomic components that get reused: how to avoid fake atomic design"
+seoTitle: "Atomic components that actually get reused"
 seoDescription: "Why so many 'atomic' component systems don't get reused in practice, and the criteria I use to design components that survive past the second screen."
 ogTitle: "A reusable component doesn't know which screen it's on"
 ogDescription: "The real criteria behind atomic design, beyond the atoms-and-molecules naming."
@@ -13,9 +13,9 @@ publishedAt: 2026-11-23
 tags: design-systems, react, diseno-ui
 ---
 
-Atomic design has a marketing problem: the atoms-molecules-organisms metaphor is so catchy that people memorize the names and forget the question the methodology actually exists to answer. And without that question, you end up with a folder of "atoms" that technically fits the naming and that nobody reuses in practice.
+[Atomic design](https://bradfrost.com/blog/post/atomic-web-design/) has a marketing problem. The atoms-molecules-organisms metaphor is so catchy that people memorize the names and forget the question it exists to answer. Without that question you end up with a folder of atomic components that fits the naming and that nobody reuses.
 
-## The question that matters, not the metaphor
+## What makes atomic components actually reusable
 
 **Does this component know which screen it's on?**
 

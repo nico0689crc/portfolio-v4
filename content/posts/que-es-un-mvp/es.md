@@ -3,8 +3,8 @@ slug: que-es-un-mvp-y-que-no
 title: "Qué es un MVP y qué no (casi todos lo definen mal)"
 excerpt: "La sigla se usa para justificar dos cosas opuestas: entregar poco y entregar mal. La diferencia importa, sobre todo si estás pagando por el desarrollo."
 focusKeyphrase: qué es un MVP
-seoTitle: "Qué es un MVP y qué no: la definición que importa si vas a pagarlo"
-seoDescription: "Qué significa realmente Producto Mínimo Viable, en qué se diferencia de un prototipo y de una versión recortada, y cómo saber si lo que te ofrecen es un MVP de verdad."
+seoTitle: "Qué es un MVP y qué no: la definición que importa"
+seoDescription: "Qué es un MVP en serio: en qué se diferencia de un prototipo y de una versión recortada, y cómo saber si lo que te ofrecen es uno de verdad."
 ogTitle: "\"Es un MVP\" no es excusa para entregar algo roto"
 ogDescription: "Mínimo y viable son dos palabras, y casi siempre se ignora la segunda."
 coverAlt: "Comparación entre un producto mínimo funcional y una versión incompleta"
@@ -42,7 +42,7 @@ La analogía que se usa siempre es buena: un monopatín es un MVP de un auto, po
 
 ## Entonces, ¿para qué sirve?
 
-Para **contestar una pregunta de negocio que todavía no sabés contestar**, gastando lo menos posible.
+Para **contestar una pregunta de negocio que todavía no sabés contestar**, gastando lo menos posible. Es el sentido original que le dio [Eric Ries](http://www.startuplessonslearned.com/2009/08/minimum-viable-product-guide.html), y el que más se pierde en el camino.
 
 Cuando construí [GymSmartAccess](/es/proyectos/gymsmartaccess-gestion-gimnasios), la pregunta era si un dueño de gimnasio de barrio pagaría una cuota mensual por dejar de perseguir socios para cobrarles. Todo lo que ayudaba a contestar eso entró. Todo lo demás quedó afuera: reportes avanzados, multi-sede, app nativa, rutinas de entrenamiento.
 

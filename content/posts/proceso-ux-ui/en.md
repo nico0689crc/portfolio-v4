@@ -4,7 +4,7 @@ title: "How I design an interface from scratch: my complete UX/UI process"
 excerpt: "The five stages I work through before calling an interface finished, with real numbers from the redesign I did for Argentina's largest tech retailer."
 focusKeyphrase: UX/UI design process
 seoTitle: "UX/UI design process: how I design an interface from scratch"
-seoDescription: "My UX/UI design process in five stages, with real data from an e-commerce redesign: heuristic audit, research, information architecture, prototype and usability testing."
+seoDescription: "My UX/UI design process in five stages, with real data from an e-commerce redesign: audit, research, information architecture, prototype and testing."
 ogTitle: "Opening Figma is step four, not step one"
 ogDescription: "The complete process I follow to design an interface, with the numbers from the Mexx redesign."
 coverAlt: "Diagram of the five stages of a UX/UI design process"
@@ -13,13 +13,13 @@ publishedAt: 2026-09-06
 tags: ux-research, diseno-ui, producto
 ---
 
-When someone asks me for a new interface, the first reaction is almost always the same: send me the Figma. And it makes sense, because the Figma file is the only part of the process you can actually look at. But opening Figma first is like starting to cook without knowing how many people are coming to dinner.
+When someone asks me for a new interface, the first reaction is almost always the same: send me the Figma. It makes sense, because in any UX/UI design process the Figma file is the only part you can actually look at. But opening it first is like starting to cook without knowing how many people are coming to dinner.
 
 Opening Figma is step four. Before it there are three stages nobody sees, and they decide whether what you draw is useful or just expensive decoration.
 
-This is the process I follow. I didn't invent it — it sits on top of James Garrett's Five Planes and on research methods that have existed for decades — but it has been sharpened by applying it to real projects. The numbers here come from the redesign I did for Mexx, Argentina's largest tech retailer, 34 years in the market.
+This is the UX/UI design process I follow. I didn't invent it: it sits on top of [James Garrett's Five Planes](https://www.jjg.net/elements/) and on research methods that have existed for decades. But it has been sharpened by applying it to real projects. The numbers here come from the redesign I did for Mexx, Argentina's largest tech retailer, 34 years in the market.
 
-## Stage 1: understand before you have opinions
+## Stage 1 of the UX/UI design process: understand first
 
 The first stage produces zero pixels. It produces evidence.
 

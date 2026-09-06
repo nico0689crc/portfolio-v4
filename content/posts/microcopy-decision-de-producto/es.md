@@ -3,8 +3,8 @@ slug: microcopy-es-una-decision-de-producto
 title: "El texto de un botón es una decisión de producto, no un detalle de último momento"
 excerpt: "\"Enviar\" y \"Confirmar pedido\" no son sinónimos, aunque hagan lo mismo. El microcopy que se escribe al final del proyecto se nota, y casi siempre cuesta conversión."
 focusKeyphrase: microcopy
-seoTitle: "Microcopy en UX/UI: por qué el texto de la interfaz es una decisión de producto"
-seoDescription: "Por qué el texto de botones, errores y estados vacíos no puede ser lo último que se escribe en un proyecto, con ejemplos de decisiones concretas y su impacto."
+seoTitle: "Microcopy: el texto decide tanto como el diseño"
+seoDescription: "Por qué el microcopy de botones, errores y estados vacíos no puede ser lo último que se escribe, con ejemplos concretos y su impacto real."
 ogTitle: "\"Algo salió mal\" no es un mensaje de error, es una forma de lavarse las manos"
 ogDescription: "Por qué el texto de la interfaz decide tanto como el diseño visual, y por qué se suele escribir de último."
 coverAlt: "Botón de interfaz con múltiples variantes de texto probadas"
@@ -14,13 +14,13 @@ tags: diseno-ui, producto
 imagePrompt: "Editorial vector illustration, an abstract button shape with speech-bubble fragments emerging from it in different directions, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
 
-Hay una prueba rápida para saber si un equipo trata al microcopy como una decisión de producto o como un relleno de último momento: fijate quién escribe los mensajes de error. Si la respuesta es "el que estaba programando esa pantalla, apurado, cinco minutos antes de subir a producción", ya sabés el resultado: "Algo salió mal. Intentá de nuevo."
+Hay una prueba rápida para saber si un equipo trata al microcopy como decisión de producto o como relleno final: fijate quién escribe los mensajes de error. Si la respuesta es "el que estaba programando esa pantalla, cinco minutos antes de subir a producción", ya sabés el resultado: "Algo salió mal. Intentá de nuevo."
 
 Ese mensaje no dice qué salió mal, no dice qué hacer, y no asume ninguna responsabilidad. Es la versión textual de encogerse de hombros.
 
-## Por qué esto es diseño de producto y no redacción
+## Por qué el microcopy es diseño de producto y no redacción
 
-El texto de una interfaz no describe la interfaz. **Es** la interfaz, en el momento exacto en que alguien necesita decidir algo. Un botón que dice "Enviar" y uno que dice "Confirmar pedido" activan la misma función en el código y producen experiencias completamente distintas: uno suena reversible, el otro suena a que ya no hay vuelta atrás. En un checkout, esa diferencia cambia si alguien duda un segundo antes de tocarlo.
+El texto de una interfaz no describe la interfaz. **Es** la interfaz, en el momento exacto en que alguien necesita decidir algo. Un botón que dice "Enviar" y uno que dice "Confirmar pedido" activan la misma función en el código y producen experiencias distintas. Uno suena reversible, el otro suena a que ya no hay vuelta atrás. En un checkout, esa diferencia cambia si alguien duda un segundo antes de tocarlo. Las [pautas de escritura para interfaces de Nielsen Norman](https://www.nngroup.com/articles/ux-writing-study-guide/) llevan años insistiendo con eso.
 
 Y a diferencia de un color o una animación, el texto no se puede "aproximar". Un botón dice exactamente una cosa. Si esa cosa está mal elegida, no hay margen de interpretación que lo salve.
 
@@ -34,9 +34,9 @@ Y a diferencia de un color o una animación, el texto no se puede "aproximar". U
 
 ## Por qué escribirlo al final sale caro
 
-Cuando el microcopy se escribe al final, hereda los espacios que el diseño visual dejó libres, no los que el mensaje necesita. Un botón diseñado para tres palabras no tiene espacio para la frase que realmente explica la acción, así que el texto se acorta hasta perder claridad — no porque esa fuera la mejor versión, sino porque fue la única que entraba.
+Cuando el microcopy se escribe al final, hereda los espacios que el diseño visual dejó libres, no los que el mensaje necesita. Un botón diseñado para tres palabras no tiene lugar para la frase que explica la acción. El texto se acorta hasta perder claridad, no porque fuera la mejor versión, sino porque fue la única que entraba.
 
-Escribir el copy en paralelo al diseño, no después, evita ese problema: si un mensaje necesita más espacio para ser claro, el layout se ajusta al mensaje, y no al revés.
+Escribir el copy en paralelo al diseño evita ese problema. Si un mensaje necesita más espacio para ser claro, el layout se ajusta al mensaje y no al revés.
 
 ## Un ejemplo de cómo esto cambia una decisión real
 
@@ -48,4 +48,4 @@ Esa etiqueta es dos palabras y un guion. Y forma parte de la razón por la que l
 
 Escribo el copy de cada pantalla en el mismo momento en que diseño el flujo, no en una pasada final antes de entregar. Para los mensajes que importan de verdad —errores, confirmaciones irreversibles, estados vacíos— escribo dos o tres versiones y elijo contestando una pregunta: **¿esta frase le dice a la persona qué pasó y qué puede hacer?** Si no contesta las dos, no está terminada, sin importar cuán prolija se vea.
 
-Es la misma lógica que aplico al resto de la interfaz: nada se considera terminado hasta que se puede usar sin que alguien tenga que adivinar.
+Es la misma lógica que aplico al resto de la interfaz: nada se considera terminado hasta que se puede usar sin adivinar. Por eso el copy entra en el mismo momento que los [estados de error](/es/blog/disenar-para-cuando-algo-sale-mal), y no en una pasada aparte.

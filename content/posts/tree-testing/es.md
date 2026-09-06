@@ -3,7 +3,7 @@ slug: tree-testing-arquitectura-informacion
 title: "Tree testing: cómo descubrí que una categoría entera no se entendía"
 excerpt: "Probar la estructura antes de diseñar sobre ella cuesta una tarde y evita rediseñar un menú dos veces. Cómo se hace y qué significan los números que devuelve."
 focusKeyphrase: tree testing
-seoTitle: "Tree testing: cómo probar la arquitectura de información de un sitio"
+seoTitle: "Tree testing: cómo probar la arquitectura de un sitio"
 seoDescription: "Qué es el tree testing, cómo armarlo y cómo leer la tasa de éxito y el directness, con un caso real donde una categoría tenía 40% de directness."
 ogTitle: "Renombrar una categoría subió su hallazgo de 40% a casi el doble"
 ogDescription: "Cómo probar si tu menú se entiende, antes de diseñar sobre él."
@@ -14,19 +14,19 @@ tags: ux-research
 imagePrompt: "Editorial vector illustration, an abstract branching tree diagram of nested nodes with one path highlighted, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
 
-Hay un tipo de error de diseño que no se arregla con diseño: cuando el problema no es cómo se ve el menú, sino cómo se llaman las cosas que hay adentro.
+Hay un tipo de error de diseño que no se arregla con diseño, y el tree testing existe para encontrarlo: cuando el problema no es cómo se ve el menú, sino cómo se llaman las cosas que hay adentro.
 
 Ese error es caro porque se descubre tarde. Rediseñás la navegación, queda preciosa, y la gente sigue sin encontrar lo que busca. Entonces culpás al diseño visual, lo cambiás otra vez, y tampoco.
 
 El tree testing existe para descubrirlo antes. Y es de las técnicas de research más baratas que hay.
 
-## Qué es
+## Qué es el tree testing
 
-Le mostrás a alguien **solamente la estructura** —el árbol de categorías y subcategorías, en texto plano, sin colores, sin diseño, sin buscador— y le pedís que encuentre algo.
+Le mostrás a alguien **solamente la estructura** —el árbol de categorías y subcategorías, en texto plano, sin colores, sin diseño, sin buscador— y le pedís que encuentre algo. Es la contraparte del [card sorting](https://www.nngroup.com/articles/card-sorting-definition/): uno propone la estructura, el otro la pone a prueba.
 
 Sin diseño es la parte importante. Si mostrás la interfaz real, no sabés si encontró el producto porque la estructura tiene sentido o porque un banner naranja se lo puso adelante. Al sacar todo lo visual, lo único que queda a prueba es si los nombres significan lo que vos creés que significan.
 
-## Cómo lo armo
+## Cómo armo un tree testing
 
 **Escribo tareas, no preguntas.** No es "¿dónde pondrías las licencias?" —eso pregunta por su opinión de arquitecto—, sino "necesitás comprar una licencia de Windows 11: ¿dónde la buscás?". La tarea imita una intención real.
 

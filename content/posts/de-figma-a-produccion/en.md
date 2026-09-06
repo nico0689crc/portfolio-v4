@@ -3,8 +3,8 @@ slug: from-figma-to-production-without-losing-anything
 title: "From Figma to production: my process for not losing anything in translation"
 excerpt: "Designing and coding the same product changes the order of decisions. How I organize the path from a Figma file to real components, without the friction of two people passing a file back and forth."
 focusKeyphrase: from Figma to code
-seoTitle: "From Figma to code: how to ship a design without losing fidelity"
-seoDescription: "The process I use to take a Figma design to production React components: what gets decided in design, what gets decided in code, and why the order matters."
+seoTitle: "From Figma to code without losing fidelity"
+seoDescription: "The process I use to go from Figma to code in production: what gets decided in design, what gets decided in code, and why the order matters."
 ogTitle: "A design that can't be implemented is a design that isn't finished"
 ogDescription: "How I take a Figma file to real components, being the same person on both sides."
 coverAlt: "Figma panel next to a code editor showing the same component"
@@ -13,9 +13,7 @@ publishedAt: 2026-10-19
 tags: diseno-ui, react, producto
 ---
 
-When the designer and the developer are the same person, one classic problem disappears — the broken-telephone fight between two roles — and a quieter one takes its place: the temptation to skip steps because "I already know what I want", only to discover in the code that you didn't know it as well as you thought.
-
-This is the process I use so that the path from Figma to production doesn't lose fidelity, even when nobody else is reviewing it.
+When the designer and the developer are the same person, one classic problem disappears: the broken-telephone fight between two roles. But a quieter one takes its place. It's the temptation to skip steps because "I already know what I want", only to discover in the code that you didn't know it as well as you thought. This is the process I use to go from Figma to code without losing fidelity, even when nobody else is reviewing it.
 
 ## The rule that orders everything
 
@@ -23,23 +21,23 @@ This is the process I use so that the path from Figma to production doesn't lose
 
 A pretty Figma file isn't a design system. It's an illustration of what a design system would look like if it existed. The difference shows up in exactly one place: how easily a developer — in my case, myself three days later — can make a decision without having to open the original file to guess a value.
 
-## Step 1: tokens before screens
+## Step 1 to go from Figma to code: tokens before screens
 
 Before designing a single screen, I define the tokens: colour, spacing, typography, border radii. In the Mexx redesign that was the brand red (#E73E3E), a 4-pixel spacing system, and two typefaces with fixed roles — Inter for interface, Merriweather for editorial content.
 
-This reverses the natural order. The temptation is to design the screen and "extract" the tokens afterwards, looking at what's left. Doing it backwards forces you to decide the system before you have a screen that justifies it, and that system is exactly what turns into Tailwind variables with no translation step in between.
+This reverses the natural order. The temptation is to design the screen and "extract" the tokens afterwards, looking at what's left. Doing it backwards forces you to decide the system before you have a screen that justifies it. That system is exactly what turns into [Tailwind variables](https://tailwindcss.com/docs/theme) with no translation step in between.
 
 ## Step 2: components with states, not screens with cases
 
-I design a button, not forty screens each with a slightly different button. And the button is designed with its states: default, hover, disabled, loading. It isn't a tidiness quirk — it's the difference between a React component with clear props and a developer who has to invent the `disabled` state because nobody designed it and "something has to go there".
+I design a button, not forty screens each with a slightly different button. And the button is designed with its states: default, hover, disabled, loading. It isn't a tidiness quirk. It's the difference between a React component with clear props and a developer who has to invent the `disabled` state because nobody designed it.
 
-When the design already carries the four states, the component in code ships with four planned variants. When it doesn't, the developer improvises, and that improvisation is exactly the point where the final interface stops resembling the design.
+When the design already carries the four states, the component in code ships with four planned variants. When it doesn't, the developer improvises. That improvisation is exactly the point where the final interface stops resembling the design.
 
 ## Step 3: the interactive prototype, not the static sheet
 
 I use Figma to build the whole navigable flow, not loose screenshots. A navigable flow exposes problems a static sheet doesn't: a transition that makes no sense, a loading state nobody drew, a way back that doesn't exist.
 
-For Mexx, six interface animations were explicitly documented — the hero slider, the auth modal, the cost breakdown, the save indicator, loading states, checkout transitions. None got improvised in the code, because none reached the code without first being decided in the design.
+For Mexx, six interface animations were explicitly documented: the hero slider, the auth modal, the cost breakdown, the save indicator, loading states and checkout transitions. None got improvised in the code, because none reached the code without first being decided in the design.
 
 ## Step 4: implementing is where the design gets tested, not where it gets executed
 
