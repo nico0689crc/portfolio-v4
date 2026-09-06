@@ -18,28 +18,27 @@
  *   node scripts/seo-report.mjs [--days 28] [--json]
  */
 
-import { readFileSync } from 'node:fs';
-import { createSign } from 'node:crypto';
-import { join } from 'node:path';
+import {
+  loadEnv,
+  accessToken,
+  request,
+  credentials,
+  heading,
+  table,
+  BOLD,
+  DIM,
+  GREEN,
+  RED,
+  OFF,
+} from './lib/google.mjs';
 
-const ROOT = process.cwd();
+loadEnv();
 
-// ---------------------------------------------------------------------------
-// Environment
-// ---------------------------------------------------------------------------
-
-for (const line of readFileSync(join(ROOT, '.env'), 'utf8').split('\n')) {
-  // Los nombres llevan dígitos (GA4_PROPERTY_ID), de ahí el 0-9 en la clase.
-  const m = line.match(/^([A-Z0-9_]+)=(.*)$/);
-  if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim();
-}
-
-const RAW_CREDS = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
 const GA4_PROPERTY = (process.env.GA4_PROPERTY_ID ?? '').replace(/^properties\//, '');
 const SC_SITE = process.env.SEARCH_CONSOLE_SITE_URL;
 
 const missing = [
-  !RAW_CREDS && 'GOOGLE_SERVICE_ACCOUNT_JSON',
+  !process.env.GOOGLE_SERVICE_ACCOUNT_JSON && 'GOOGLE_SERVICE_ACCOUNT_JSON',
   !GA4_PROPERTY && 'GA4_PROPERTY_ID',
   !SC_SITE && 'SEARCH_CONSOLE_SITE_URL',
 ].filter(Boolean);
@@ -48,11 +47,6 @@ if (missing.length) {
   console.error(`Faltan variables en .env: ${missing.join(', ')}`);
   process.exit(1);
 }
-
-/** Acepta el JSON pegado entero o la ruta a un archivo, lo que sea más cómodo. */
-const creds = JSON.parse(
-  RAW_CREDS.trimStart().startsWith('{') ? RAW_CREDS : readFileSync(RAW_CREDS, 'utf8'),
-);
 
 // ---------------------------------------------------------------------------
 // Argumentos
@@ -73,43 +67,15 @@ const period = { start: day(DAYS), end: day(1) };
 const previous = { start: day(DAYS * 2), end: day(DAYS + 1) };
 
 // ---------------------------------------------------------------------------
-// Autenticación
+// Alcances
 // ---------------------------------------------------------------------------
 
+/** Solo lectura: este script nunca escribe. La configuración de GA4 que sí
+ *  necesita escribir vive aparte, en ga4-setup.mjs. */
 const SCOPES = [
   'https://www.googleapis.com/auth/webmasters.readonly',
   'https://www.googleapis.com/auth/analytics.readonly',
 ];
-
-async function accessToken() {
-  const now = Math.floor(Date.now() / 1000);
-  const b64 = (value) => Buffer.from(JSON.stringify(value)).toString('base64url');
-  const unsigned = `${b64({ alg: 'RS256', typ: 'JWT' })}.${b64({
-    iss: creds.client_email,
-    scope: SCOPES.join(' '),
-    aud: 'https://oauth2.googleapis.com/token',
-    iat: now,
-    exp: now + 3600,
-  })}`;
-
-  const signature = createSign('RSA-SHA256')
-    .update(unsigned)
-    .sign(creds.private_key)
-    .toString('base64url');
-
-  const res = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-      assertion: `${unsigned}.${signature}`,
-    }),
-  });
-
-  const body = await res.json();
-  if (!res.ok) throw new Error(`No se pudo autenticar: ${body.error_description ?? res.status}`);
-  return body.access_token;
-}
 
 // ---------------------------------------------------------------------------
 // Clientes
@@ -117,21 +83,7 @@ async function accessToken() {
 
 let TOKEN;
 
-async function call(url, payload) {
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { authorization: `Bearer ${TOKEN}`, 'content-type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
-  const body = await res.json();
-  if (!res.ok) {
-    const detail = body?.error?.message ?? `HTTP ${res.status}`;
-    const err = new Error(detail);
-    err.status = res.status;
-    throw err;
-  }
-  return body;
-}
+const call = (url, payload) => request(TOKEN, url, payload);
 
 /** Una consulta a Search Console. `dimensions` vacío devuelve solo los totales. */
 async function searchConsole(dimensions, range, rowLimit = 25) {
@@ -168,10 +120,6 @@ async function ga4(dimensions, metrics, range, limit = 25) {
 // Salida
 // ---------------------------------------------------------------------------
 
-const BOLD = '\x1b[1m';
-const DIM = '\x1b[2m';
-const OFF = '\x1b[0m';
-
 const pct = (n) => `${(n * 100).toFixed(1)}%`;
 const pos = (n) => n.toFixed(1);
 
@@ -181,35 +129,7 @@ function delta(now, before, { lowerIsBetter = false } = {}) {
   if (Math.abs(change) < 0.5) return `${DIM}sin cambio${OFF}`;
   const better = lowerIsBetter ? change < 0 : change > 0;
   const arrow = change > 0 ? '▲' : '▼';
-  return `${better ? '\x1b[32m' : '\x1b[31m'}${arrow} ${Math.abs(change).toFixed(0)}%${OFF}`;
-}
-
-function heading(text) {
-  console.log(`\n${BOLD}${text}${OFF}`);
-  console.log(DIM + '─'.repeat(text.length) + OFF);
-}
-
-/** Ancho visible: descuenta los códigos de color para que las columnas cierren. */
-const width = (s) => String(s).replace(/\x1b\[[0-9;]*m/g, '').length;
-
-function table(headers, rows) {
-  if (!rows.length) {
-    console.log(`${DIM}(sin datos todavía)${OFF}`);
-    return;
-  }
-  const widths = headers.map((h, i) =>
-    Math.max(width(h), ...rows.map((r) => width(r[i] ?? ''))),
-  );
-  const line = (cells) =>
-    cells
-      .map((c, i) => {
-        const padding = ' '.repeat(widths[i] - width(c ?? ''));
-        return i === 0 ? `${c ?? ''}${padding}` : `${padding}${c ?? ''}`;
-      })
-      .join('  ');
-
-  console.log(DIM + line(headers) + OFF);
-  for (const row of rows) console.log(line(row));
+  return `${better ? GREEN : RED}${arrow} ${Math.abs(change).toFixed(0)}%${OFF}`;
 }
 
 /** Recorta rutas largas por el medio: el final de la URL es lo que identifica. */
@@ -224,7 +144,7 @@ function shorten(value, max = 52) {
 // ---------------------------------------------------------------------------
 
 async function main() {
-  TOKEN = await accessToken();
+  TOKEN = await accessToken(SCOPES);
 
   if (LIST_SITES) {
     const res = await fetch('https://searchconsole.googleapis.com/webmasters/v3/sites', {
@@ -389,7 +309,7 @@ main().catch((err) => {
   if (err.status === 403) {
     console.error(
       'Un 403 casi siempre es acceso, no credenciales: revisá que\n' +
-        `${creds.client_email}\nesté agregada en GA4 (Lector) y en Search Console (Restringido).\n`,
+        `${credentials().client_email}\nesté agregada en GA4 (Lector) y en Search Console (Restringido).\n`,
     );
   }
   process.exit(1);
