@@ -4,7 +4,7 @@ title: "The metrics that actually matter for a small SaaS (and the ones that are
 excerpt: "Registered users and total visits look great on a slide and say nothing about whether the business works. The metrics I actually track, and why they're less flashy."
 focusKeyphrase: vanity metrics
 seoTitle: "Vanity metrics vs real metrics for a small SaaS"
-seoDescription: "Which metrics for a small SaaS are just vanity and which genuinely indicate whether the business works, with concrete examples of what I track at GymSmartAccess."
+seoDescription: "Which vanity metrics a small SaaS should ignore and which numbers genuinely show whether the business works, with examples from GymSmartAccess."
 ogTitle: "Ten thousand registered users don't pay a single bill"
 ogDescription: "The metrics I actually track in a small SaaS, and why the most impressive ones aren't the most useful."
 coverAlt: "Metrics dashboard showing real retention indicators instead of just totals"
@@ -13,11 +13,11 @@ publishedAt: 2027-08-09
 tags: negocio, producto
 ---
 
-Any metric that can only go up, that can never drop in a way that reveals a problem, is suspect as a vanity metric. Total registered users is the classic example: that number never goes down, not even when the product is failing, because almost nobody actively "unregisters". A number that can't reflect a real problem can't help you detect one.
+Any number that can only go up, and can never drop in a way that reveals a problem, belongs to the family of vanity metrics. Total registered users is the classic example. That number never goes down, not even when the product is failing, because almost nobody actively "unregisters". And a number that can't reflect a real problem can't help you detect one either.
 
 ## Why vanity metrics are tempting anyway
 
-They look great on a slide, grow over time almost effortlessly, and give a sense of progress even when the real business isn't improving. That's exactly the danger: they give a false sense that everything's fine while the real problem — people who sign up and never come back, for instance — stays invisible behind the number that keeps growing.
+They look great on a slide, grow almost effortlessly, and give a sense of progress even when the business isn't improving. That's the danger. The distinction between vanity metrics and [actionable metrics](http://www.startuplessonslearned.com/2009/08/vanity-metrics-vs-actionable-metrics.html) is old and still ignored for the same reason: the real problem, people who sign up and never come back, stays invisible behind the number that keeps growing.
 
 ## The ones I track on a small SaaS like GymSmartAccess
 
@@ -37,8 +37,10 @@ They look great on a slide, grow over time almost effortlessly, and give a sense
 
 ## Why real metrics hurt more to look at
 
-Vanity metrics almost always go up. Real metrics sometimes go down, and they go down exactly when something's wrong — which is exactly when it's most uncomfortable to look at them, and exactly when it's most necessary to. Choosing to track a number that could give you bad news, instead of one that only confirms what you already wanted to believe, is the underlying decision behind all of this.
+Vanity metrics almost always go up. Real ones sometimes go down, and they go down exactly when something's wrong. That's when it's most uncomfortable to look at them and when it's most necessary to. Choosing a number that could give you bad news, instead of one that only confirms what you wanted to believe, is the decision behind all of this.
 
 ## The question I apply to any new metric before I start tracking it
 
-**Could this metric go down in a way that tells me something I need to know?** If the answer is no — if the number can only go up or stay flat, regardless of what's happening in the real business — it's a vanity metric, no matter how impressive it looks in a report.
+**Could this metric go down in a way that tells me something I need to know?** If the answer is no, if the number can only go up or stay flat regardless of what's happening in the business, it belongs with the vanity metrics. No matter how impressive it looks in a report.
+
+That filter is the same one I apply when building a dashboard: if a number doesn't change my next decision, it doesn't earn space on the screen. A short board people actually read beats a complete one nobody opens after the first week.
