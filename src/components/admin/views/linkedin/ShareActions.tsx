@@ -5,14 +5,14 @@ import { useTransition } from 'react'
 
 // Third-party Imports
 import { toast } from 'sonner'
-import { RotateCcw, X } from 'lucide-react'
+import { RotateCcw, Send, X } from 'lucide-react'
 
 // Component Imports
 import { Button } from '@/components/admin/ui/button'
 import ScheduleDialog from './ScheduleDialog'
 
 // Lib Imports
-import { cancelShare, retryShare } from '@/lib/admin/social-actions'
+import { cancelShare, publishNow, retryShare } from '@/lib/admin/social-actions'
 
 /**
  * Lo que se puede hacer con un envío según en qué estado esté.
@@ -41,7 +41,7 @@ const ShareActions = ({
   scheduledAtLocal: string
   message: string
   autoMessage: string
-  media: 'auto' | 'document' | 'none'
+  media: 'auto' | 'article' | 'document' | 'none'
   linkInFirstComment: boolean
   currentDocument: string | null
   hasCover: boolean
@@ -58,8 +58,36 @@ const ShareActions = ({
       else toast.success(ok)
     })
 
+  /**
+   * Publicar salteando la agenda.
+   *
+   * El aviso se muestra aparte del éxito porque son cosas distintas: el posteo
+   * salió, y además algo secundario —el primer comentario, casi siempre— no
+   * pudo hacerse. Meterlo en un `toast.error` haría pensar que no se publicó.
+   */
+  const publish = () =>
+    startTransition(async () => {
+      const { error, warning } = await publishNow(shareId)
+
+      if (error) {
+        toast.error(error)
+
+        return
+      }
+
+      toast.success('Publicado')
+
+      if (warning) toast.warning(warning)
+    })
+
   return (
     <div className='flex items-center gap-1'>
+      {status !== 'sending' && (
+        <Button variant='outline' size='sm' disabled={isPending} onClick={publish}>
+          <Send className='size-4' /> {isPending ? 'Publicando…' : 'Publicar ahora'}
+        </Button>
+      )}
+
       {status !== 'sending' && (
         <ScheduleDialog
           shareId={shareId}

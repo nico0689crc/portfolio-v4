@@ -9,6 +9,7 @@ import { z } from 'zod'
 // Lib Imports
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { BUCKETS, storageUrl } from '@/lib/content/storage'
+import { deliverShare, getDeliveryConfig } from '@/lib/social/deliver'
 import { SHARE_LOCALE, type ShareAsset } from '@/lib/social/shares'
 import { requireAdmin } from './auth'
 
@@ -28,8 +29,11 @@ type SupabaseClient = Awaited<ReturnType<typeof createSupabaseServerClient>>
  * Resuelve la media del envío a partir de lo que eligió el editor.
  *
  * `null` es "automático": el cron adjunta la portada vigente del artículo al
- * entregar. Es el default porque no cuesta nada y convierte cada posteo de
- * texto plano en uno con imagen, que es la diferencia que más rinde.
+ * entregar, en vez de congelar la que había el día que se programó.
+ *
+ * El default del panel es `article` —la tarjeta de enlace—, que es lo único que
+ * hace clickeable el link: la Posts API no scrapea la URL, así que sin tarjeta
+ * el link queda como texto suelto.
  *
  * El carrusel es un PDF y no varias imágenes: LinkedIn eliminó el carrusel
  * multi-imagen nativo, y hoy lo que se ve deslizable es un documento paginado.
@@ -44,6 +48,9 @@ async function resolveFormAssets(
 
   if (media === 'auto') return { assets: null }
   if (media === 'none') return { assets: [] }
+  // Se guarda como marca sin datos: el título, la bajada y la miniatura los
+  // completa `deliverShare` al publicar, con lo vigente en ese momento.
+  if (media === 'article') return { assets: [{ kind: 'article' }] }
 
   const file = formData.get('document')
   const hasFile = file instanceof File && file.size > 0
@@ -242,6 +249,37 @@ export async function cancelShare(id: string): Promise<{ error: string | null }>
   return { error: null }
 }
 
+/**
+ * Borra un envío del historial.
+ *
+ * Sólo toca la agenda local: el posteo ya está en LinkedIn y desde acá no se
+ * puede bajar —la API de borrado pide otro scope y, por Buffer, ni siquiera es
+ * nuestro el post—. Lo que se pierde es el registro, y con él la marca «ya
+ * salió el …» que aparece junto al artículo en la columna de la derecha.
+ *
+ * Se limita a lo terminal: un envío programado se cancela, que deja rastro de
+ * que se decidió no publicarlo.
+ */
+export async function deleteShare(id: string): Promise<{ error: string | null }> {
+  await requireAdmin()
+
+  const supabase = await createSupabaseServerClient()
+
+  const { data, error } = await supabase
+    .from('post_social_shares')
+    .delete()
+    .eq('id', id)
+    .in('status', ['queued', 'canceled'])
+    .select('id')
+
+  if (error) return { error: error.message }
+  if (data.length === 0) return { error: 'Sólo se pueden borrar envíos ya publicados o cancelados' }
+
+  revalidatePath('/admin/linkedin')
+
+  return { error: null }
+}
+
 /** Devuelve un envío fallido a la agenda para que el cron lo reintente. */
 export async function retryShare(id: string): Promise<{ error: string | null }> {
   await requireAdmin()
@@ -259,4 +297,32 @@ export async function retryShare(id: string): Promise<{ error: string | null }> 
   revalidatePath('/admin/linkedin')
 
   return { error: null }
+}
+
+/**
+ * Publica un envío en el momento, sin esperar al cron.
+ *
+ * Comparte toda la lógica con la corrida automática —`deliverShare` es el
+ * mismo código— así que un posteo publicado a mano sale idéntico al que
+ * hubiera salido solo: mismo texto, misma media, mismo primer comentario.
+ *
+ * Acepta también los fallidos: es el caso más común para este botón, mirar el
+ * error, arreglar lo que sea y publicar sin esperar al día siguiente.
+ */
+export async function publishNow(id: string): Promise<{ error: string | null; warning: string | null }> {
+  await requireAdmin()
+
+  const supabase = await createSupabaseServerClient()
+  const config = await getDeliveryConfig(supabase)
+
+  const result = await deliverShare(supabase, id, config, {
+    allowedFrom: ['scheduled', 'failed'],
+    immediate: true
+  })
+
+  revalidatePath('/admin/linkedin')
+
+  return result.ok
+    ? { error: null, warning: result.warning }
+    : { error: result.error, warning: null }
 }

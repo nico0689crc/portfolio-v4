@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { ThemeProvider } from "@/components/layout/theme-provider";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -142,19 +143,26 @@ export default async function RootLayout({
   );
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background flex flex-col font-sans`}
       >
         <ConsentInit />
-        <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
-          <CookieConsent />
-        </NextIntlClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider messages={messages}>
+            <Header />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
+            <CookieConsent />
+          </NextIntlClientProvider>
+        </ThemeProvider>
         <JsonLd data={siteSchema} />
         {GA_ID ? (
           <>

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "next-themes";
 import { Menu, X, Moon, Sun, Globe } from "lucide-react";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { Link } from '@/i18n/routing';
@@ -10,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
+import { alternateLocaleRoute } from "@/actions/locale-route";
 
 interface NavItem {
   label: string;
@@ -24,12 +26,18 @@ interface HeaderClientProps {
 export function HeaderClient({ navItems, locale }: HeaderClientProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  // Default to dark theme as base
-  const [theme, setTheme] = useState("dark");
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
+
+  // On the server there is no way to know the resolved theme, so render the
+  // dark variant (the SSR default) until the provider has read the stored /
+  // system preference on the client.
+  const theme = mounted ? resolvedTheme : "dark";
 
   const pathname = usePathname();
   const router = useRouter();
   const params = useParams();
+  const [switchingLocale, startSwitching] = useTransition();
 
   // Detect scroll for the blurred background effect
   useEffect(() => {
@@ -38,30 +46,50 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Initialize theme based on user's system/saved preference
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains("dark");
-    setTheme(isDark ? "dark" : "light");
+    setMounted(true);
   }, []);
 
+  // Picking a theme explicitly overrides the system preference and next-themes
+  // stores it, so the choice survives a reload.
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    setTheme(theme === "light" ? "dark" : "light");
   };
 
   const toggleLocale = () => {
     const nextLocale = locale === "es" ? "en" : "es";
     trackEvent({ name: "language_switch", params: { from: locale, to: nextLocale } });
-    router.replace(
-      // @ts-expect-error -- Using dynamic router.replace with params
-      { pathname, params }, 
-      { locale: nextLocale }
-    );
+
+    const go = (href: { pathname: string; params?: Record<string, unknown> }) =>
+      router.replace(
+        // @ts-expect-error -- Using dynamic router.replace with params
+        href,
+        { locale: nextLocale }
+      );
+
+    // `usePathname` devuelve la plantilla interna (`/blog/[slug]`), no la URL.
+    // En las rutas con slug traducido el valor actual no existe en el otro
+    // idioma —reusarlo era exactamente el 404 al cambiar de idioma en un
+    // artículo—, así que el equivalente se pide al servidor, que es donde está
+    // el mapa de slugs.
+    const slug = typeof params.slug === "string" ? params.slug : undefined;
+
+    if (slug && pathname.includes("[slug]")) {
+      startSwitching(async () => {
+        const alternate = await alternateLocaleRoute({
+          route: pathname,
+          slug,
+          fromLocale: locale,
+          toLocale: nextLocale,
+        });
+
+        go(alternate ?? { pathname, params });
+      });
+
+      return;
+    }
+
+    go({ pathname, params });
   };
 
   const isActive = (to: string) => pathname === to;
@@ -109,6 +137,7 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
           {/* Lang toggle */}
           <Button
             onClick={toggleLocale}
+            disabled={switchingLocale}
             variant="ghost"
             size="sm"
             aria-label="Toggle language"
@@ -134,6 +163,7 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
         <div className="flex lg:hidden items-center gap-2 shrink-0">
           <Button
             onClick={toggleLocale}
+            disabled={switchingLocale}
             aria-label="Toggle language"
             variant="ghost"
             className={`hover:text-accent transition-all duration-200 ${((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-muted-foreground"}`}

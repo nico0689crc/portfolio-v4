@@ -10,11 +10,17 @@ import { CalendarPlus, Search } from 'lucide-react'
 import { Input } from '@/components/admin/ui/input'
 import ScheduleDialog from './ScheduleDialog'
 
+/** Fecha corta, en el formato que usa el resto del panel. */
+const shortDate = (value: string) =>
+  new Date(value).toLocaleDateString('es-AR', { day: 'numeric', month: 'short', year: 'numeric' })
+
 export type Candidate = {
   postId: string
   key: string
   title: string
   publishedAt: string | null
+  /** Cuándo salió por última vez, si ya salió. Evita repetirla sin querer. */
+  lastSharedAt: string | null
   autoMessage: string
   /** Sin portada no hay miniatura para el PDF, que Buffer exige. */
   hasCover: boolean
@@ -74,13 +80,16 @@ const UnscheduledPosts = ({
                   {candidate.title}
                 </p>
                 <p className='text-muted-foreground text-xs'>
-                  {candidate.publishedAt
-                    ? `publicado ${new Date(candidate.publishedAt).toLocaleDateString('es-AR', {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric'
-                      })}`
-                    : 'sin fecha'}
+                  {candidate.publishedAt ? `publicado ${shortDate(candidate.publishedAt)}` : 'sin fecha'}
+                  {/* Una nota ya compartida vuelve a la lista a propósito
+                      —recircular es el caso más valioso del archivo— pero sin
+                      decirlo se repetiría sin querer. */}
+                  {candidate.lastSharedAt && (
+                    <span className='text-amber-600 dark:text-amber-500'>
+                      {' '}
+                      · ya salió el {shortDate(candidate.lastSharedAt)}
+                    </span>
+                  )}
                 </p>
               </div>
 
@@ -93,8 +102,8 @@ const UnscheduledPosts = ({
                 defaultScheduledAt={nextSlotLocal}
                 defaultMessage=''
                 autoMessage={candidate.autoMessage}
-                defaultMedia='auto'
-                defaultLinkInFirstComment
+                defaultMedia='article'
+                defaultLinkInFirstComment={false}
                 currentDocument={null}
                 hasCover={candidate.hasCover}
                 triggerLabel={

@@ -21,7 +21,11 @@ const API = 'https://api.linkedin.com';
  * headers para que subirla sea una línea, y en una env var para poder subirla
  * sin deploy el día que LinkedIn corte.
  */
-const VERSION = process.env.LINKEDIN_API_VERSION ?? '202608';
+// `||` y no `??`: una variable declarada y vacía —lo normal al copiar un
+// bloque de `.env.example`— tiene que caer al default igual que una ausente.
+// Con `??` el header salía presente y sin valor, y LinkedIn respondía «A
+// version must be present».
+const VERSION = process.env.LINKEDIN_API_VERSION || '202608';
 
 export type LinkedInConfig = { accessToken: string; authorUrn: string };
 
@@ -119,6 +123,27 @@ async function buildContent(config: LinkedInConfig, assets: ShareAsset[]) {
     const id = await upload(config, 'documents', asset.url);
 
     return { content: { media: { id, title: asset.title } } };
+  }
+
+  if (asset.kind === 'article') {
+    // Sin `url` es la marca sin resolver: `deliverShare` la completa antes de
+    // llegar acá, así que esto sólo protege de un dato viejo en la base.
+    if (!('url' in asset)) throw new Error('La tarjeta de enlace llegó sin resolver');
+
+    // La miniatura es opcional: sin portada LinkedIn muestra la tarjeta igual,
+    // sólo que sin imagen.
+    const thumbnail = asset.thumbnailUrl ? await upload(config, 'images', asset.thumbnailUrl) : null;
+
+    return {
+      content: {
+        article: {
+          source: asset.url,
+          title: asset.title,
+          description: asset.description,
+          ...(thumbnail ? { thumbnail } : {}),
+        },
+      },
+    };
   }
 
   const id = await upload(config, 'images', asset.url);

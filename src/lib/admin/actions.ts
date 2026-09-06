@@ -69,7 +69,7 @@ export async function requestPasswordReset(
   const supabase = await createSupabaseServerClient();
 
   await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'}/admin/restablecer-clave`
+    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/admin/restablecer-clave`
   });
 
   // Respuesta idéntica exista o no la cuenta, por la misma razón que arriba.

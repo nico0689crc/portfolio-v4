@@ -24,7 +24,8 @@ const USERINFO_URL = 'https://api.linkedin.com/v2/userinfo';
  */
 const DEFAULT_SCOPES = 'openid profile w_member_social';
 
-export const LINKEDIN_SCOPES = process.env.LINKEDIN_SCOPES ?? DEFAULT_SCOPES;
+/** `||` y no `??`: declarada y vacía tiene que valer lo mismo que ausente. */
+export const LINKEDIN_SCOPES = process.env.LINKEDIN_SCOPES || DEFAULT_SCOPES;
 
 /** El nombre de la cookie con el `state`, que es lo que ata el callback a esta sesión. */
 export const STATE_COOKIE = 'li_oauth_state';
@@ -47,7 +48,7 @@ export function getOAuthConfig() {
 
 /** Tiene que coincidir carácter por carácter con la registrada en el portal de LinkedIn. */
 export function redirectUri(origin: string) {
-  return process.env.LINKEDIN_REDIRECT_URI ?? `${origin}/api/admin/linkedin/callback`;
+  return process.env.LINKEDIN_REDIRECT_URI || `${origin}/api/admin/linkedin/callback`;
 }
 
 export function authorizeUrl(clientId: string, origin: string, state: string) {
