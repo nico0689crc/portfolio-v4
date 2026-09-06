@@ -3,8 +3,8 @@ slug: server-vs-client-components-nextjs
 title: "Server Components vs Client Components en Next.js: cuándo uso cada uno"
 excerpt: "La pregunta no es cuál es mejor. Es qué necesita interactividad y qué no, y esa distinción cambia cuánto JavaScript le mandás al navegador de cada visitante."
 focusKeyphrase: server components vs client components
-seoTitle: "Server Components vs Client Components en Next.js: criterio real"
-seoDescription: "Cuándo usar Server Components y cuándo Client Components en Next.js App Router, con ejemplos reales de un portafolio en producción y el criterio detrás de cada elección."
+seoTitle: "Server Components vs Client Components: criterio real"
+seoDescription: "Server Components vs Client Components en Next.js: cuándo usar cada uno, con ejemplos reales de un portafolio en producción."
 ogTitle: "El 90% de un sitio no necesita JavaScript en el navegador"
 ogDescription: "El criterio que uso para elegir entre Server y Client Components en cada componente de un proyecto real."
 coverAlt: "Diagrama de árbol de componentes con nodos marcados como servidor o cliente"
@@ -14,15 +14,15 @@ tags: nextjs, react, rendimiento
 imagePrompt: "Editorial vector illustration, an abstract component tree split into two zones, solid nodes on one side and outlined interactive nodes on the other, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
 
-La pregunta que más me hacen sobre Next.js App Router no es "cómo funciona" — la documentación explica eso razonablemente bien. Es "¿cómo decido, componente por componente, cuál es cuál?". Esa es la pregunta que la documentación contesta peor, porque la respuesta depende del proyecto y no de la tecnología.
+La pregunta que más me hacen sobre Next.js App Router no es cómo funciona: la documentación explica eso bien. Es cómo decidir, componente por componente, entre Server Components vs Client Components. Esa es la pregunta que la documentación contesta peor, porque la respuesta depende del proyecto y no de la tecnología.
 
 Este es el criterio que uso, con ejemplos de código real de este mismo portafolio y de [GymSmartAccess](/es/proyectos/gymsmartaccess-gestion-gimnasios).
 
-## La distinción real no es "servidor vs cliente"
+## Server Components vs Client Components: la distinción real
 
 Es **interactividad vs contenido**.
 
-Un Server Component se ejecuta en el servidor, arma su HTML, y ese HTML es todo lo que le llega al navegador. Cero JavaScript de ese componente viaja al cliente. No tiene `useState`, no tiene `onClick`, no puede reaccionar a nada porque para cuando el usuario lo ve, ya terminó de existir como código — solo queda el HTML que produjo.
+Un Server Component se ejecuta en el servidor, arma su HTML, y ese HTML es todo lo que le llega al navegador. Cero JavaScript de ese componente viaja al cliente. No tiene `useState` ni `onClick`. No puede reaccionar a nada porque, para cuando el usuario lo ve, ya terminó de existir como código: solo queda el HTML que produjo.
 
 Un Client Component sí viaja como JavaScript, se hidrata en el navegador, y puede tener estado, efectos, y responder a eventos.
 
@@ -40,7 +40,7 @@ export default async function Hero() {
 }
 ```
 
-El listado del blog, en cambio, **sí** es Client, porque tiene un filtro por etiqueta que necesita estado (`useState`) y responder a clics sin recargar la página.
+El listado del blog, en cambio, **sí** es Client. Tiene un filtro por etiqueta que necesita estado y responder a clics sin recargar la página.
 
 ```tsx
 "use client";
@@ -94,7 +94,7 @@ En este sitio, la página de contacto es Server; solo el componente `ContactForm
 
 ## Por qué esto importa más de lo que parece
 
-Cada componente Client agrega JavaScript que el navegador tiene que descargar, parsear y ejecutar antes de que la página responda a un clic. En un celular con conexión mala, eso es la diferencia entre una página que se siente instantánea y una que se siente pegada durante dos segundos mientras "carga por dentro" aunque ya se vea completa.
+Cada componente Client agrega JavaScript que el navegador descarga, parsea y ejecuta antes de que la página responda a un clic. En un celular con mala conexión, esa es la diferencia entre una página instantánea y una que se siente pegada dos segundos aunque ya se vea completa. [La documentación de Next.js](https://nextjs.org/docs/app/getting-started/server-and-client-components) lo plantea igual.
 
 Y hay un efecto compuesto: en Next.js, si un componente padre es Client, **todo lo que renderiza adentro sin pasar por `children`** también se vuelve parte del bundle del cliente, aunque ese hijo no tenga ningún `"use client"` propio. La frontera cliente/servidor no es por archivo, es por árbol de renderizado.
 
