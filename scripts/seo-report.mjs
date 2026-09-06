@@ -102,13 +102,22 @@ async function searchConsole(dimensions, range, rowLimit = 25) {
   return body.rows ?? [];
 }
 
-async function ga4(dimensions, metrics, range, limit = 25) {
+async function ga4(dimensions, metrics, range, limit = 25, eventName) {
   const url = `https://analyticsdata.googleapis.com/v1beta/properties/${GA4_PROPERTY}:runReport`;
   const body = await call(url, {
     dateRanges: [{ startDate: range.start, endDate: range.end }],
     dimensions: dimensions.map((name) => ({ name })),
     metrics: metrics.map((name) => ({ name })),
     limit,
+    // Sin este filtro la consulta suma todos los eventos de la propiedad, no
+    // los del evento que se está mirando.
+    ...(eventName
+      ? {
+          dimensionFilter: {
+            filter: { fieldName: 'eventName', stringFilter: { value: eventName } },
+          },
+        }
+      : {}),
   });
   return (body.rows ?? []).map((row) => ({
     keys: (row.dimensionValues ?? []).map((d) => d.value),
@@ -242,7 +251,7 @@ async function main() {
   let cvBySource = null;
   let cvHint = null;
   try {
-    cvBySource = await ga4(['customEvent:source'], ['eventCount'], period, 10);
+    cvBySource = await ga4(['customEvent:source'], ['eventCount'], period, 10, 'cv_download');
   } catch (err) {
     cvHint = err.message;
   }
