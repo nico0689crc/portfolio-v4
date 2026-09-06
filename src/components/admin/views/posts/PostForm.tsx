@@ -19,10 +19,15 @@ import {
   SelectValue
 } from '@/components/admin/ui/select'
 import { Switch } from '@/components/admin/ui/switch'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/admin/ui/tabs'
 import { Textarea } from '@/components/admin/ui/textarea'
+import BodyEditor from './BodyEditor'
+import CharCounter from './CharCounter'
+import SerpPreview, { DESCRIPTION_LIMIT, TITLE_LIMIT } from './SerpPreview'
 
 // Lib Imports
 import { updatePost, type PostFormState } from '@/lib/admin/posts-actions'
+import { SITE_URL } from '@/lib/seo'
 
 export type PostTranslationValues = {
   slug: string
@@ -56,6 +61,194 @@ const STATUSES = [
   { value: 'published', label: 'Publicado' }
 ]
 
+/** Los campos que alimentan la vista previa de Google, en vivo. */
+type LivePreview = { title: string; seoTitle: string; excerpt: string; seoDescription: string; slug: string }
+
+const LocalePanel = ({
+  locale,
+  postKey,
+  values
+}: {
+  locale: string
+  postKey: string
+  values: PostTranslationValues
+}) => {
+  const [live, setLive] = useState<LivePreview>({
+    title: values.title,
+    seoTitle: values.seoTitle,
+    excerpt: values.excerpt,
+    seoDescription: values.seoDescription,
+    slug: values.slug
+  })
+
+  const set = (key: keyof LivePreview) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setLive(current => ({ ...current, [key]: event.target.value }))
+
+  // El fallback replica el del servidor: lo que se previsualiza es lo que se
+  // va a servir cuando el override está vacío.
+  const serpTitle = live.seoTitle || live.title
+  const serpDescription = live.seoDescription || live.excerpt
+
+  return (
+    <div className='flex flex-col gap-6'>
+      <Card>
+        <CardHeader>
+          <CardTitle>Contenido</CardTitle>
+        </CardHeader>
+        <CardContent className='flex flex-col gap-4'>
+          <Field>
+            <FieldLabel htmlFor={`${locale}.title`}>Título</FieldLabel>
+            <Input
+              id={`${locale}.title`}
+              name={`${locale}.title`}
+              defaultValue={values.title}
+              onChange={set('title')}
+            />
+          </Field>
+
+          <Field>
+            <FieldLabel htmlFor={`${locale}.slug`}>Slug</FieldLabel>
+            <Input
+              id={`${locale}.slug`}
+              name={`${locale}.slug`}
+              defaultValue={values.slug}
+              onChange={set('slug')}
+            />
+            <FieldDescription>Cambiarlo deja una redirección desde el anterior.</FieldDescription>
+          </Field>
+
+          <Field>
+            <FieldLabel htmlFor={`${locale}.excerpt`}>Bajada</FieldLabel>
+            <Textarea
+              id={`${locale}.excerpt`}
+              name={`${locale}.excerpt`}
+              rows={2}
+              defaultValue={values.excerpt}
+              onChange={set('excerpt')}
+            />
+            <FieldDescription>Se usa en el listado y como descripción si no ponés una propia.</FieldDescription>
+          </Field>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Cuerpo</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <BodyEditor postKey={postKey} name={`${locale}.body`} defaultValue={values.body} />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>SEO y redes</CardTitle>
+        </CardHeader>
+        <CardContent className='flex flex-col gap-4'>
+          <SerpPreview
+            title={serpTitle}
+            description={serpDescription}
+            url={`${SITE_URL}${locale === 'es' ? '/es' : ''}/blog/${live.slug || '…'}`}
+          />
+
+          <Field>
+            <FieldLabel htmlFor={`${locale}.seoTitle`}>Título SEO</FieldLabel>
+            <Input
+              id={`${locale}.seoTitle`}
+              name={`${locale}.seo_title`}
+              defaultValue={values.seoTitle}
+              onChange={set('seoTitle')}
+            />
+            <FieldDescription>
+              Vacío usa el título. <CharCounter value={serpTitle} limit={TITLE_LIMIT} />
+            </FieldDescription>
+          </Field>
+
+          <Field>
+            <FieldLabel htmlFor={`${locale}.seoDescription`}>Descripción SEO</FieldLabel>
+            <Textarea
+              id={`${locale}.seoDescription`}
+              name={`${locale}.seo_description`}
+              rows={2}
+              defaultValue={values.seoDescription}
+              onChange={set('seoDescription')}
+            />
+            <FieldDescription>
+              Vacía usa la bajada. <CharCounter value={serpDescription} limit={DESCRIPTION_LIMIT} />
+            </FieldDescription>
+          </Field>
+
+          <div className='grid gap-4 sm:grid-cols-2'>
+            <Field>
+              <FieldLabel htmlFor={`${locale}.coverAlt`}>Alt de la portada</FieldLabel>
+              <Input
+                id={`${locale}.coverAlt`}
+                name={`${locale}.cover_alt`}
+                defaultValue={values.coverAlt}
+              />
+            </Field>
+            <Field>
+              <FieldLabel htmlFor={`${locale}.ogImage`}>Imagen social</FieldLabel>
+              <Input
+                id={`${locale}.ogImage`}
+                name={`${locale}.og_image`}
+                defaultValue={values.ogImage}
+                placeholder='ruta en el bucket'
+              />
+              <FieldDescription>1200×630. Vacía usa la portada.</FieldDescription>
+            </Field>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Publicación</CardTitle>
+        </CardHeader>
+        <CardContent className='grid gap-4 sm:grid-cols-3'>
+          <Field>
+            <FieldLabel htmlFor={`${locale}.status`}>Estado</FieldLabel>
+            {/* Por idioma: la traducción puede seguir en borrador mientras el
+                original ya salió. */}
+            <Select name={`${locale}.status`} defaultValue={values.status} items={STATUSES}>
+              <SelectTrigger id={`${locale}.status`} className='w-full'>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {STATUSES.map(status => (
+                  <SelectItem key={status.value} value={status.value}>
+                    {status.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </Field>
+
+          <Field>
+            <FieldLabel htmlFor={`${locale}.published_at`}>Publicado el</FieldLabel>
+            <Input
+              id={`${locale}.published_at`}
+              name={`${locale}.published_at`}
+              type='date'
+              defaultValue={values.publishedAt}
+            />
+            <FieldDescription>Vacío y publicado usa hoy.</FieldDescription>
+          </Field>
+
+          <Field orientation='horizontal' className='self-end'>
+            <Switch
+              id={`${locale}.noindex`}
+              name={`${locale}.noindex`}
+              defaultChecked={values.noindex}
+            />
+            <FieldLabel htmlFor={`${locale}.noindex`}>No indexar</FieldLabel>
+          </Field>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
+
 const PostForm = ({ post, tags }: { post: PostFormValues; tags: TagOption[] }) => {
   const [tagIds, setTagIds] = useState<string[]>(post.tagIds)
 
@@ -74,144 +267,24 @@ const PostForm = ({ post, tags }: { post: PostFormValues; tags: TagOption[] }) =
 
   return (
     <form action={formAction} className='flex flex-col gap-6'>
-      {LOCALES.map(locale => {
-        const values = post.translations[locale]
+      <Tabs defaultValue='es'>
+        <TabsList>
+          {LOCALES.map(locale => (
+            <TabsTrigger key={locale} value={locale}>
+              {LOCALE_LABELS[locale]}
+            </TabsTrigger>
+          ))}
+        </TabsList>
 
-        return (
-          <Card key={locale}>
-            <CardHeader>
-              <CardTitle>{LOCALE_LABELS[locale]}</CardTitle>
-            </CardHeader>
-            <CardContent className='flex flex-col gap-4'>
-              <div className='grid gap-4 sm:grid-cols-2'>
-                <Field>
-                  <FieldLabel htmlFor={`${locale}.title`}>Título</FieldLabel>
-                  <Input id={`${locale}.title`} name={`${locale}.title`} defaultValue={values?.title ?? ''} />
-                </Field>
-
-                <Field>
-                  <FieldLabel htmlFor={`${locale}.slug`}>Slug</FieldLabel>
-                  <Input id={`${locale}.slug`} name={`${locale}.slug`} defaultValue={values?.slug ?? ''} />
-                </Field>
-
-                <Field>
-                  <FieldLabel htmlFor={`${locale}.status`}>Estado</FieldLabel>
-                  {/* Por idioma, no por post: la traducción puede seguir siendo
-                      borrador mientras el original ya está publicado. */}
-                  <Select
-                    name={`${locale}.status`}
-                    defaultValue={values?.status ?? 'draft'}
-                    items={STATUSES}
-                  >
-                    <SelectTrigger id={`${locale}.status`} className='w-full'>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {STATUSES.map(status => (
-                        <SelectItem key={status.value} value={status.value}>
-                          {status.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </Field>
-
-                <Field>
-                  <FieldLabel htmlFor={`${locale}.published_at`}>Publicado el</FieldLabel>
-                  <Input
-                    id={`${locale}.published_at`}
-                    name={`${locale}.published_at`}
-                    type='date'
-                    defaultValue={values?.publishedAt ?? ''}
-                  />
-                  <FieldDescription>Si lo dejás vacío y publicás, se usa hoy.</FieldDescription>
-                </Field>
-              </div>
-
-              <Field>
-                <FieldLabel htmlFor={`${locale}.excerpt`}>Bajada</FieldLabel>
-                <Textarea
-                  id={`${locale}.excerpt`}
-                  name={`${locale}.excerpt`}
-                  rows={2}
-                  defaultValue={values?.excerpt ?? ''}
-                />
-              </Field>
-
-              <Field>
-                <FieldLabel htmlFor={`${locale}.seoTitle`}>Título SEO</FieldLabel>
-                <Input
-                  id={`${locale}.seoTitle`}
-                  name={`${locale}.seo_title`}
-                  defaultValue={values?.seoTitle ?? ''}
-                />
-                <FieldDescription>
-                  El que ve Google, distinto del H1. Vacío usa el título. ~60 caracteres.
-                </FieldDescription>
-              </Field>
-
-              <Field>
-                <FieldLabel htmlFor={`${locale}.seoDescription`}>Descripción SEO</FieldLabel>
-                <Textarea
-                  id={`${locale}.seoDescription`}
-                  name={`${locale}.seo_description`}
-                  rows={2}
-                  defaultValue={values?.seoDescription ?? ''}
-                />
-                <FieldDescription>
-                  Vacía usa la bajada. No posiciona, pero decide el clic. ~155 caracteres.
-                </FieldDescription>
-              </Field>
-
-              <div className='grid gap-4 sm:grid-cols-2'>
-                <Field>
-                  <FieldLabel htmlFor={`${locale}.coverAlt`}>Alt de la portada</FieldLabel>
-                  <Input
-                    id={`${locale}.coverAlt`}
-                    name={`${locale}.cover_alt`}
-                    defaultValue={values?.coverAlt ?? ''}
-                  />
-                </Field>
-                <Field>
-                  <FieldLabel htmlFor={`${locale}.ogImage`}>Imagen social</FieldLabel>
-                  <Input
-                    id={`${locale}.ogImage`}
-                    name={`${locale}.og_image`}
-                    defaultValue={values?.ogImage ?? ''}
-                    placeholder='ruta en el bucket'
-                  />
-                  <FieldDescription>1200×630. Vacía usa la portada.</FieldDescription>
-                </Field>
-              </div>
-
-              <Field>
-                <FieldLabel htmlFor={`${locale}.body`}>Cuerpo</FieldLabel>
-                <Textarea
-                  id={`${locale}.body`}
-                  name={`${locale}.body`}
-                  rows={16}
-                  defaultValue={values?.body ?? ''}
-                  className='font-mono text-sm'
-                />
-                <FieldDescription>
-                  {values?.wordCount
-                    ? `${values.wordCount} palabras · ${values.readingMinutes} min de lectura. Se recalcula al guardar.`
-                    : 'Las palabras y el tiempo de lectura se calculan al guardar.'}
-                </FieldDescription>
-              </Field>
-
-              <Field orientation='horizontal'>
-                <Switch
-                  id={`${locale}.noindex`}
-                  name={`${locale}.noindex`}
-                  defaultChecked={values?.noindex ?? false}
-                />
-                <FieldLabel htmlFor={`${locale}.noindex`}>No indexar</FieldLabel>
-              </Field>
-            </CardContent>
-          </Card>
-        )
-      })}
+        {LOCALES.map(locale => (
+          // `keepMounted` es obligatorio: sin él el panel inactivo sale del DOM
+          // y sus campos no viajan en el FormData, así que guardar desde una
+          // pestaña borraría el otro idioma entero.
+          <TabsContent key={locale} value={locale} keepMounted className='pt-6'>
+            <LocalePanel locale={locale} postKey={post.key} values={post.translations[locale]} />
+          </TabsContent>
+        ))}
+      </Tabs>
 
       <Card>
         <CardHeader>
@@ -224,8 +297,6 @@ const PostForm = ({ post, tags }: { post: PostFormValues; tags: TagOption[] }) =
               Todavía no hay tags. Se crean en su propia pantalla.
             </p>
           ) : (
-            // Los tags son del post, no de la traducción: la relación no tiene
-            // idioma, sólo su nombre lo tiene.
             <div className='flex flex-wrap gap-2'>
               {tags.map(tag => (
                 <Button
@@ -243,7 +314,9 @@ const PostForm = ({ post, tags }: { post: PostFormValues; tags: TagOption[] }) =
         </CardContent>
       </Card>
 
-      <div className='flex justify-end'>
+      {/* Pegado abajo: el formulario es largo y el botón no puede quedar a
+          quince scrolls del campo que se acaba de tocar. */}
+      <div className='bg-background/80 border-border sticky bottom-0 -mx-2 flex justify-end border-t px-2 py-3 backdrop-blur'>
         <Button type='submit' disabled={isPending}>
           {isPending ? 'Guardando…' : 'Guardar cambios'}
         </Button>
