@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { Download, ArrowRight, Briefcase, GraduationCap, Award } from "lucide-react";
+import { Download, ArrowRight, Briefcase, GraduationCap, Award, ChevronRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { Reveal } from "@/components/ui/reveal";
 import { TrackedLink } from "@/components/analytics/tracked-link";
@@ -131,9 +131,13 @@ const Resume = async ({ cv }: { cv: CvData }) => {
                       aunque esté plegado. */}
                   {job.roles.length > 0 && (
                     <details className="mt-4 group/roles">
-                      <summary className="cursor-pointer text-sm font-medium text-accent hover:underline list-none marker:content-['']">
+                      {/* Con aspecto de botón y no de enlace: un control que se
+                          despliega tiene que verse como algo en lo que se hace
+                          clic. Estilado como texto suelto pasaba desapercibido
+                          entre el resto de la tarjeta. */}
+                      <summary className="inline-flex items-center gap-2 cursor-pointer select-none rounded-lg border border-accent/30 bg-accent/5 px-3 py-2 text-sm font-medium text-accent transition-colors hover:bg-accent/10 list-none marker:content-['']">
+                        <ChevronRight className="w-4 h-4 shrink-0 transition-transform group-open/roles:rotate-90" />
                         {t("rolesToggle", { count: job.roles.length })}
-                        <span className="ml-1 inline-block transition-transform group-open/roles:rotate-90">›</span>
                       </summary>
 
                       <ol className="mt-4 space-y-3 border-l border-border pl-4">
