@@ -603,6 +603,7 @@ export type Database = {
           location: string
           role: string
           techs: string[] | null
+          updated_at: string
         }
         Insert: {
           company?: string | null
@@ -613,6 +614,7 @@ export type Database = {
           location: string
           role: string
           techs?: string[] | null
+          updated_at?: string
         }
         Update: {
           company?: string | null
@@ -623,6 +625,7 @@ export type Database = {
           location?: string
           role?: string
           techs?: string[] | null
+          updated_at?: string
         }
         Relationships: [
           {
@@ -815,6 +818,7 @@ export type Database = {
           og_image: string | null
           route_key: string
           title: string
+          updated_at: string
         }
         Insert: {
           description: string
@@ -823,6 +827,7 @@ export type Database = {
           og_image?: string | null
           route_key: string
           title: string
+          updated_at?: string
         }
         Update: {
           description?: string
@@ -831,6 +836,7 @@ export type Database = {
           og_image?: string | null
           route_key?: string
           title?: string
+          updated_at?: string
         }
         Relationships: [
           {
@@ -1122,6 +1128,7 @@ export type Database = {
           seo_title: string | null
           slug: string
           title: string
+          updated_at: string
         }
         Insert: {
           description: string
@@ -1132,6 +1139,7 @@ export type Database = {
           seo_title?: string | null
           slug: string
           title: string
+          updated_at?: string
         }
         Update: {
           description?: string
@@ -1142,6 +1150,7 @@ export type Database = {
           seo_title?: string | null
           slug?: string
           title?: string
+          updated_at?: string
         }
         Relationships: [
           {
