@@ -2,30 +2,26 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import BlogList from '@/components/pages/blog';
-import { POSTS_PER_PAGE, getBlogListing, blogListingUrl } from '@/components/pages/blog/listing';
+import { getBlogListing, blogListingUrl } from '@/components/pages/blog/listing';
 import { JsonLd } from '@/components/seo/json-ld';
-import { getPosts } from '@/lib/content';
-import { permanentRedirect, routing } from '@/i18n/routing';
+import { permanentRedirect } from '@/i18n/routing';
 import { pageMetadata } from '@/lib/page-metadata';
 import { PERSON_ID, breadcrumbSchema, jsonLdGraph, localizedUrl } from '@/lib/seo';
 
 type RouteParams = { locale: string; page: string };
 
-export async function generateStaticParams() {
-  const params: RouteParams[] = [];
-
-  for (const locale of routing.locales) {
-    const posts = await getPosts(locale);
-    const totalPages = Math.max(1, Math.ceil(posts.length / POSTS_PER_PAGE));
-
-    // La página 1 vive en `/blog`, no acá: generarla también duplicaría la ruta.
-    for (let page = 2; page <= totalPages; page++) {
-      params.push({ locale, page: String(page) });
-    }
-  }
-
-  return params;
-}
+/**
+ * Sin `generateStaticParams`, y no es un olvido.
+ *
+ * Declararlo marca la ruta como estática, y esta lee `searchParams` para el
+ * filtro por tag: esa combinación tira `DYNAMIC_SERVER_USAGE` y devuelve 500
+ * al generar la página on-demand. Verificado en producción con next@16.1.6.
+ *
+ * Tampoco serviría de nada: las notas se publican por fecha programada, así
+ * que cuántas páginas hay cambia cada semana sin que haya un deploy nuevo. Un
+ * set de páginas congelado en el build nace desactualizado. `/blog` ya es
+ * dinámica por lo mismo, y las lecturas van cacheadas 60s en `cache.ts`.
+ */
 
 export async function generateMetadata({
   params,
