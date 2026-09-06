@@ -3,8 +3,8 @@ slug: nielsen-heuristic-audit
 title: "How I audit an interface with Nielsen's 10 heuristics"
 excerpt: "A heuristic audit is the cheapest way to find real problems before touching a single pixel. Here's how I run one, and what it surfaced on an e-commerce platform with 34 years in the market."
 focusKeyphrase: heuristic audit
-seoTitle: "Heuristic audit: how to evaluate an interface with Nielsen's principles"
-seoDescription: "How to run a heuristic audit step by step with Nielsen's 10 usability heuristics, with real examples from an e-commerce site where 7 out of 10 were failing."
+seoTitle: "Heuristic audit: how to evaluate an interface"
+seoDescription: "How to run a heuristic audit step by step with Nielsen's 10 principles, with a real case where 7 out of 10 heuristics were failing."
 ogTitle: "7 out of 10 usability heuristics were failing. Nobody had noticed"
 ogDescription: "How to run a heuristic audit that finds real problems instead of design opinions."
 coverAlt: "Usability heuristics checklist over an interface"
@@ -13,13 +13,13 @@ publishedAt: 2026-09-14
 tags: ux-research, casos
 ---
 
-Heuristic audits have a bad reputation because they sound bureaucratic: a checklist, a report, nobody reads it. But it's the tool with the best ratio between what it costs and what it finds. You don't need users, you don't need budget and you don't need permission. You need an afternoon and a method.
+A heuristic audit has a bad reputation because it sounds bureaucratic: a checklist, a report, nobody reads it. But it's the tool with the best ratio between what it costs and what it finds. You don't need users, you don't need budget and you don't need permission. You need an afternoon and a method.
 
 It's also the only way I know to turn "this interface is bad" into a list people can discuss without fighting.
 
 ## What it actually is
 
-Walking the interface and evaluating it against the 10 usability heuristics Jakob Nielsen published in 1994, which aged surprisingly well. It isn't an opinion about whether something looks nice. It's a check against criteria that existed before you joined the project.
+Walking the interface and evaluating it against the [10 usability heuristics](https://www.nngroup.com/articles/ten-usability-heuristics/) Jakob Nielsen published in 1994, which aged surprisingly well. It isn't an opinion about whether something looks nice. It's a check against criteria that existed before you joined the project.
 
 All ten, one line each:
 
@@ -54,7 +54,7 @@ I applied this to the Mexx platform, Argentina's largest tech retailer. **7 of t
 
 Neither finding had anything to do with how the interface looked. Both were costing sales.
 
-## What an audit cannot do
+## What a heuristic audit cannot do
 
 Here's the limit, and saying it matters more than selling the technique.
 
