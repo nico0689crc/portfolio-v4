@@ -4,7 +4,6 @@
 import { useEffect, useState, useTransition } from 'react'
 
 // Next Imports
-import Image from 'next/image'
 import Link from 'next/link'
 
 // Third-party Imports
@@ -15,7 +14,6 @@ import {
   CircleCheck,
   CircleSlash,
   ExternalLink,
-  ImageOff,
   MoreHorizontal,
   Pencil,
   Search
@@ -40,9 +38,11 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/admin/ui/select'
+import CoverThumb from './CoverThumb'
 import ScheduleDialog from './ScheduleDialog'
 
 // Lib Imports
+import { formatPanelDate } from '@/lib/admin/dates'
 import { cn } from '@/lib/utils'
 import { listUnscheduled, setShareDecision } from '@/lib/admin/social-actions'
 import type {
@@ -55,7 +55,7 @@ import type {
 
 /** Fecha corta, en el formato que usa el resto del panel. */
 const shortDate = (value: string) =>
-  new Date(value).toLocaleDateString('es-AR', { day: 'numeric', month: 'short', year: 'numeric' })
+  formatPanelDate(value, { day: 'numeric', month: 'short', year: 'numeric' })
 
 /**
  * Dos controles y no tres.
@@ -303,25 +303,7 @@ const UnscheduledPosts = ({
                 candidate.decision === 'discarded' && 'opacity-60'
               )}
             >
-              {/* Sin portada no hay miniatura para el carrusel, que Buffer
-                  exige: el hueco tachado es también ese aviso, y por eso no es
-                  un cuadrado gris cualquiera. */}
-              <div className='bg-muted relative size-11 shrink-0 overflow-hidden rounded-md'>
-                {candidate.coverUrl ? (
-                  <Image
-                    src={candidate.coverUrl}
-                    alt=''
-                    fill
-                    sizes='44px'
-                    className='object-cover'
-                  />
-                ) : (
-                  <ImageOff
-                    className='text-muted-foreground/60 absolute top-1/2 left-1/2 size-4 -translate-x-1/2 -translate-y-1/2'
-                    aria-label='Sin portada'
-                  />
-                )}
-              </div>
+              <CoverThumb url={candidate.coverUrl} />
 
               <div className='min-w-0 flex-1'>
                 <div className='flex items-center gap-2'>

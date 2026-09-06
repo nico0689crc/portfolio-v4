@@ -60,17 +60,25 @@ const PostMedia = ({
             </p>
           )}
 
-          <form action={coverAction} className='flex flex-wrap items-end gap-3'>
-            <Field className='flex-1'>
+          <form action={coverAction}>
+            <Field>
               <FieldLabel htmlFor='cover'>Reemplazar</FieldLabel>
-              <Input id='cover' name='file' type='file' accept='image/png,image/jpeg,image/webp,image/avif' />
+              <div className='flex flex-wrap items-center gap-3'>
+                <Input
+                  id='cover'
+                  name='file'
+                  type='file'
+                  accept='image/png,image/jpeg,image/webp,image/avif'
+                  className='min-w-0 flex-1'
+                />
+                <Button type='submit' disabled={isUploadingCover}>
+                  <Upload className='size-4' /> {isUploadingCover ? 'Subiendo…' : 'Subir'}
+                </Button>
+              </div>
               <FieldDescription>
                 {cover ? `${cover.width}×${cover.height} actual. ` : ''}Ideal 1200×630 para redes.
               </FieldDescription>
             </Field>
-            <Button type='submit' disabled={isUploadingCover}>
-              <Upload className='size-4' /> {isUploadingCover ? 'Subiendo…' : 'Subir'}
-            </Button>
           </form>
 
           {imagePrompt ? (

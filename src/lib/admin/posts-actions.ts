@@ -12,6 +12,12 @@ import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { updateTags } from '@/lib/content/cache'
 import { TAGS } from '@/lib/content/tags'
 import { requireAdmin } from './auth'
+import {
+  listPosts,
+  type PostFilter,
+  type PostSort,
+  type PostsPage
+} from './posts-list'
 
 export type PostFormState = {
   error: string | null
@@ -297,4 +303,33 @@ export async function deletePost(postKey: string): Promise<{ error: string | nul
   // navegador vuelve a mostrar la fila que ya no existe.
   revalidatePath('/admin/posts')
   redirect('/admin/posts')
+}
+
+
+/** Los valores que acepta el listado. El cliente manda strings sueltos. */
+const POST_FILTERS: PostFilter[] = ['todos', 'publicados', 'borradores', 'archivados']
+const POST_SORTS: PostSort[] = ['creado', 'fecha-asc', 'fecha-desc']
+
+/**
+ * Una página del listado de posts.
+ *
+ * La primera la arma la propia página llamando a `listPosts` directo; este
+ * wrapper existe para el resto, que llega desde el cliente al cambiar de
+ * página, de filtro o de orden, y por lo tanto tiene que pasar por
+ * `requireAdmin` y por el saneo de los parámetros.
+ */
+export async function listPostsPage(params: {
+  page?: number
+  filter?: string
+  sort?: string
+}): Promise<PostsPage> {
+  await requireAdmin()
+
+  return listPosts({
+    page: Number.isFinite(params.page) ? params.page : 1,
+    filter: POST_FILTERS.includes(params.filter as PostFilter)
+      ? (params.filter as PostFilter)
+      : undefined,
+    sort: POST_SORTS.includes(params.sort as PostSort) ? (params.sort as PostSort) : undefined
+  })
 }

@@ -29,7 +29,11 @@ export const SHARE_LOCALE = 'es';
 export const CADENCE_DAYS = 3;
 export const SLOT_WEEKDAY = 2; // 0 = domingo
 export const SLOT_HOUR = 11;
-export const SLOT_TIMEZONE_OFFSET = '-03:00'; // America/Argentina/Buenos_Aires
+// America/Argentina/Buenos_Aires. Tiene que coincidir con `PANEL_TIMEZONE` de
+// `@/lib/admin/dates`, que es con la que el panel muestra estas mismas fechas:
+// acá el offset es para aritmética con strings ISO, allá el nombre IANA es lo
+// que pide `Intl`. Argentina no tiene horario de verano, así que no divergen.
+export const SLOT_TIMEZONE_OFFSET = '-03:00';
 
 /**
  * El mismo offset en horas, para aritmética.
