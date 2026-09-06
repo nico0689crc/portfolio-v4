@@ -45,7 +45,7 @@ export const getExperiences = cached(
         .select(
           `id, organization, employment_type, remote, techs, start_date, end_date, periods,
            counts_as_experience,
-           experience_translations(locale, role, company, location, date_label, description)`
+           experience_translations(locale, role, company, location, date_label, description, techs)`
         )
         .in('experience_translations.locale', localesFor(locale))
         .order('sort_order')
@@ -68,7 +68,9 @@ export const getExperiences = cached(
           location: t.location,
           employmentType: row.employment_type,
           remote: row.remote,
-          techs: row.techs,
+          // El override por idioma gana: la entrada de gastronomía lista
+          // competencias, no tecnologías, y esas sí se traducen.
+          techs: t.techs ?? row.techs,
           startDate: toYearMonth(row.start_date),
           endDate: toYearMonth(row.end_date),
           ...(periods ? { periods } : {}),

@@ -76,10 +76,10 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
         : "bg-transparent py-5"
         }`}
     >
-      <div className="container mx-auto flex items-center justify-between px-6 md:px-12 lg:px-24">
+      <div className="container mx-auto flex items-center justify-between gap-4 px-6 md:px-12 lg:px-24">
         <Link
           href="/"
-          className={`font-display font-bold text-xl hover:scale-105 transition-all duration-200 ${
+          className={`shrink-0 font-display font-bold text-xl hover:scale-105 transition-all duration-200 ${
             ((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-white"
           }`}
         >
@@ -87,13 +87,14 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
         </Link>
 
         {/* Desktop */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden lg:flex items-center gap-3 xl:gap-6 min-w-0">
           {navItems.map((item) => (
             <Link
               key={item.to}
               href={item.to as any}
               className={cn(
                 buttonVariants({ variant: "link" }),
+                "whitespace-nowrap",
                 isActive(item.to)
                   ? "text-accent"
                   : ((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-muted-foreground"
@@ -103,14 +104,15 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
             </Link>
           ))}
 
-          <div className="w-px h-5 bg-border mx-2" />
+          <div className="w-px h-5 bg-border mx-1 xl:mx-2 shrink-0" />
 
           {/* Lang toggle */}
           <Button
             onClick={toggleLocale}
             variant="ghost"
+            size="sm"
             aria-label="Toggle language"
-            className={`hover:text-accent transition-all duration-200 ${((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-muted-foreground"}`}
+            className={`shrink-0 hover:text-accent transition-all duration-200 ${((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-muted-foreground"}`}
           >
             <Globe className="w-4 h-4" />
             {locale === "es" ? "EN" : "ES"}
@@ -120,15 +122,16 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
           <Button
             onClick={toggleTheme}
             variant="ghost"
+            size="sm"
             aria-label="Toggle theme"
-            className={`hover:text-accent transition-all duration-200 ${((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-muted-foreground"}`}
+            className={`shrink-0 hover:text-accent transition-all duration-200 ${((scrolled || pathname !== "/") && theme === "light") ? "text-foreground" : "text-muted-foreground"}`}
           >
             {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
           </Button>
         </div>
 
         {/* Mobile controls */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex lg:hidden items-center gap-2 shrink-0">
           <Button
             onClick={toggleLocale}
             aria-label="Toggle language"
@@ -163,7 +166,7 @@ export function HeaderClient({ navItems, locale }: HeaderClientProps) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-card/95 backdrop-blur-md border-b border-border overflow-hidden"
+            className="lg:hidden bg-card/95 backdrop-blur-md border-b border-border overflow-hidden"
           >
             <div className="flex flex-col gap-4 px-6 py-6">
               {navItems.map((item) => (

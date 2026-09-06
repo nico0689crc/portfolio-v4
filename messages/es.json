@@ -4,6 +4,7 @@
     "about": "Sobre mi",
     "portfolio": "Portafolio",
     "resume": "Curriculum",
+    "blog": "Blog",
     "contact": "Contacto"
   },
   "Footer": {
@@ -395,7 +396,7 @@
   "Resume": {
     "title": "Curriculum Vitae",
     "subtitle": "Desarrollador Full Stack & Diseñador UX/UI",
-    "intro": "Más de {years} años construyendo aplicaciones web de punta a punta: desde la investigación y el diseño de la interfaz hasta las APIs, la base de datos y el despliegue en producción. Trabajo con React, Next.js, TypeScript y Node.js, y apoyo el proceso en herramientas de IA para iterar más rápido sin resignar calidad de código.",
+    "intro": "Más de {years} años construyendo aplicaciones web de punta a punta: investigación, diseño de interfaz, APIs, base de datos y despliegue. Trabajo con React, Next.js, TypeScript y Node.js. Construí y sostengo en producción un SaaS propio con clientes que pagan, lo que me obliga a pensar cada funcionalidad como una decisión de producto y no sólo como código.",
     "downloadEs": "Descargar CV en español (PDF)",
     "downloadEn": "Download CV in English (PDF)",
     "highlightsTitle": "De un vistazo",

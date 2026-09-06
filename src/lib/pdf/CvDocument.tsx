@@ -1,4 +1,6 @@
-import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import { Document, Image, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 import type { CvData } from '@/lib/cv-schema';
 import { AUTHOR_EMAIL, SITE_NAME, SITE_URL, SOCIAL_LINKS } from '@/lib/seo';
 
@@ -16,6 +18,20 @@ import { AUTHOR_EMAIL, SITE_NAME, SITE_URL, SOCIAL_LINKS } from '@/lib/seo';
  * Sin fuentes externas: las estándar de PDF no se descargan, no rompen un build
  * sin red y pesan cero.
  */
+
+/**
+ * La foto, leída del disco y no por URL.
+ *
+ * react-pdf no entiende WebP —el formato del sitio— así que se sirve un JPEG
+ * generado aparte. Por ruta local y no por HTTP para que el render no dependa
+ * de que el propio servidor esté respondiendo mientras se genera el documento.
+ */
+const PHOTO = {
+  // Buffer y no ruta: pasarle un string, react-pdf lo resolvía en silencio a
+  // nada y el documento salía sin foto, sin error en ningún lado.
+  data: readFileSync(path.join(process.cwd(), 'public', 'profile-cv.jpg')),
+  format: 'jpg' as const
+};
 
 const ACCENT = '#B45309'; // Ámbar de la marca, oscurecido para contraste sobre papel.
 const INK = '#18181b';
@@ -35,6 +51,10 @@ const styles = StyleSheet.create({
 
   // `lineHeight` explícito y sin letterSpacing: react-pdf calculaba mal el alto
   // de la línea y el titular terminaba dibujado encima del nombre.
+  // El encabezado pasa a dos columnas para dejar lugar a la foto.
+  header: { flexDirection: 'row', alignItems: 'flex-start' },
+  headerText: { flex: 1, paddingRight: 14 },
+  photo: { width: 74, height: 74, borderRadius: 37, objectFit: 'cover' },
   name: { fontSize: 22, lineHeight: 1.3, fontFamily: 'Helvetica-Bold' },
   headline: { fontSize: 10.5, lineHeight: 1.3, color: ACCENT, fontFamily: 'Helvetica-Bold' },
   contact: { fontSize: 8, color: MUTED, marginTop: 5 },
@@ -49,7 +69,9 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
 
-  summary: { color: MUTED, lineHeight: 1.55 },
+  // 1.7 sobre 9pt: un resumen es lo primero que se lee y lo que más se
+  // abandona si viene apretado.
+  summary: { color: MUTED, lineHeight: 1.7 },
 
   // `wrap={false}` en cada entrada evita que un puesto quede partido entre dos
   // páginas, que es lo que más ensucia un CV impreso.
@@ -128,15 +150,22 @@ const CvDocument = ({ cv, locale, labels }: { cv: CvData; locale: string; labels
   >
     <Page size="A4" style={styles.page}>
       <View>
-        <Text style={styles.name}>{SITE_NAME}</Text>
-        <Text style={styles.headline}>{cv.jobTitle}</Text>
-        <Text style={styles.contact}>
-          {[
-            AUTHOR_EMAIL,
-            SITE_URL.replace('https://', ''),
-            ...SOCIAL_LINKS.map(link => link.replace(/^https:\/\/(www\.)?/, ''))
-          ].join('   ·   ')}
-        </Text>
+        <View style={styles.header}>
+          <View style={styles.headerText}>
+            <Text style={styles.name}>{SITE_NAME}</Text>
+            <Text style={styles.headline}>{cv.jobTitle}</Text>
+            <Text style={styles.contact}>
+              {[
+                AUTHOR_EMAIL,
+                SITE_URL.replace('https://', ''),
+                ...SOCIAL_LINKS.map(link => link.replace(/^https:\/\/(www\.)?/, ''))
+              ].join('   ·   ')}
+            </Text>
+          </View>
+          {/* Sin `alt`: en un PDF no existe el concepto, y la foto no aporta
+              información que el texto no tenga. */}
+          <Image src={PHOTO} style={styles.photo} />
+        </View>
         <View style={styles.headerRule} />
       </View>
 

@@ -10,6 +10,7 @@ export async function Header() {
     { label: t("about"), to: "/about" },
     { label: t("portfolio"), to: "/portfolio" },
     { label: t("resume"), to: "/resume" },
+    { label: t("blog"), to: "/blog" },
     { label: t("contact"), to: "/contact" },
   ];
 

@@ -4,6 +4,7 @@
     "about": "About",
     "portfolio": "Portfolio",
     "resume": "Resume",
+    "blog": "Blog",
     "contact": "Contact"
   },
   "Footer": {
@@ -396,7 +397,7 @@
   "Resume": {
     "title": "Resume",
     "subtitle": "Full Stack Developer & UX/UI Designer",
-    "intro": "Over {years} years building web applications end to end: from research and interface design through to APIs, databases and production deployment. I work with React, Next.js, TypeScript and Node.js, and lean on AI tooling to iterate faster without trading away code quality.",
+    "intro": "Over {years} years building web applications end to end: research, interface design, APIs, databases and deployment. I work with React, Next.js, TypeScript and Node.js. I built and run my own SaaS in production with paying customers, which forces me to treat every feature as a product decision rather than just code.",
     "downloadEs": "Descargar CV en español (PDF)",
     "downloadEn": "Download CV in English (PDF)",
     "highlightsTitle": "At a glance",

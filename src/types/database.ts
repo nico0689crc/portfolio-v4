@@ -511,6 +511,7 @@ export type Database = {
           locale: string
           location: string
           role: string
+          techs: string[] | null
         }
         Insert: {
           company?: string | null
@@ -520,6 +521,7 @@ export type Database = {
           locale: string
           location: string
           role: string
+          techs?: string[] | null
         }
         Update: {
           company?: string | null
@@ -529,6 +531,7 @@ export type Database = {
           locale?: string
           location?: string
           role?: string
+          techs?: string[] | null
         }
         Relationships: [
           {
