@@ -33,8 +33,10 @@ const styles = StyleSheet.create({
     color: INK
   },
 
-  name: { fontSize: 22, fontFamily: 'Helvetica-Bold', letterSpacing: -0.3 },
-  headline: { fontSize: 10.5, color: ACCENT, fontFamily: 'Helvetica-Bold', marginTop: 1 },
+  // `lineHeight` explícito y sin letterSpacing: react-pdf calculaba mal el alto
+  // de la línea y el titular terminaba dibujado encima del nombre.
+  name: { fontSize: 22, lineHeight: 1.3, fontFamily: 'Helvetica-Bold' },
+  headline: { fontSize: 10.5, lineHeight: 1.3, color: ACCENT, fontFamily: 'Helvetica-Bold' },
   contact: { fontSize: 8, color: MUTED, marginTop: 5 },
   headerRule: { borderBottomWidth: 2, borderBottomColor: ACCENT, marginTop: 10, marginBottom: 4 },
 
@@ -88,6 +90,22 @@ type Labels = {
   education: string;
   skills: string;
   certifications: string;
+};
+
+/**
+ * Empresa y ubicación en una sola cadena.
+ *
+ * Dos motivos. Con varios hijos dentro de un `Text`, react-pdf ubica el segundo
+ * en un offset que no corresponde al ancho real del primero y los superpone.
+ * Y algunas entradas ya traen la ubicación dentro del nombre visible de la
+ * empresa —"Freelance - Corrientes, Argentina"— así que repetirla la duplicaba.
+ */
+const orgLine = (org: string, location: string | null) => {
+  if (!location) return org;
+
+  const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+  return normalize(org).includes(normalize(location)) ? org : `${org}  ·  ${location}`;
 };
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
@@ -144,10 +162,7 @@ const CvDocument = ({ cv, locale, labels }: { cv: CvData; locale: string; labels
               <Text style={styles.role}>{job.role}</Text>
               <Text style={styles.dates}>{job.dateLabel}</Text>
             </View>
-            <Text style={styles.org}>
-              {job.company}
-              {job.location ? `  ·  ${job.location}` : ''}
-            </Text>
+            <Text style={styles.org}>{orgLine(job.company, job.location)}</Text>
             <Text style={styles.description}>{job.description}</Text>
             {job.techs.length > 0 && <Text style={styles.techs}>{job.techs.join('  ·  ')}</Text>}
           </View>
@@ -161,10 +176,7 @@ const CvDocument = ({ cv, locale, labels }: { cv: CvData; locale: string; labels
               <Text style={styles.role}>{item.degree}</Text>
               <Text style={styles.dates}>{item.dateLabel}</Text>
             </View>
-            <Text style={styles.org}>
-              {item.institution}
-              {item.location ? `  ·  ${item.location}` : ''}
-            </Text>
+            <Text style={styles.org}>{orgLine(item.institution, item.location)}</Text>
           </View>
         ))}
       </Section>
@@ -174,8 +186,7 @@ const CvDocument = ({ cv, locale, labels }: { cv: CvData; locale: string; labels
           <View key={cert.id} style={styles.certRow} wrap={false}>
             <Text style={styles.certBullet}>•</Text>
             <Text style={styles.certText}>
-              {cert.name} — {cert.issuer}
-              {cert.year ? ` (${cert.year})` : ''}
+              {`${cert.name} — ${cert.issuer}${cert.year ? ` (${cert.year})` : ''}`}
             </Text>
           </View>
         ))}
