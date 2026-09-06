@@ -202,9 +202,76 @@ export function webSiteSchema(locale: string, description: string) {
   };
 }
 
-export function breadcrumbSchema(items: Array<{ name: string; url: string }>) {
+/**
+ * Una imagen como nodo con sus dimensiones, no como URL suelta.
+ *
+ * Google acepta el string, pero con `width` y `height` puede decidir si sirve
+ * para un resultado enriquecido sin descargarla primero — y esas dimensiones ya
+ * están en la base, calculadas al subir el archivo. Devolver el string cuando
+ * no las hay evita inventar un nodo incompleto.
+ */
+export function imageObject(
+  url: string,
+  dimensions?: { width: number | null; height: number | null; caption?: string | null }
+) {
+  if (!dimensions?.width || !dimensions.height) return url;
+
+  return {
+    '@type': 'ImageObject',
+    url,
+    width: dimensions.width,
+    height: dimensions.height,
+    ...(dimensions.caption ? { caption: dimensions.caption } : {})
+  };
+}
+
+/**
+ * El nodo que representa la página en sí, distinto del contenido que muestra.
+ *
+ * `mainEntityOfPage` de un artículo apunta acá, y sin este nodo esa referencia
+ * queda colgando: el grafo dice "el contenido principal de esta página" y no
+ * hay ninguna página declarada. Es también donde cuelgan el breadcrumb y la
+ * imagen principal, que describen la página y no el artículo.
+ */
+export function webPageSchema({
+  url,
+  name,
+  description,
+  locale,
+  primaryImage,
+  breadcrumbId,
+  datePublished,
+  dateModified
+}: {
+  url: string;
+  name: string;
+  description: string;
+  locale: string;
+  primaryImage?: ReturnType<typeof imageObject>;
+  breadcrumbId?: string;
+  datePublished?: string | null;
+  dateModified?: string | null;
+}) {
+  return {
+    '@type': 'WebPage',
+    '@id': url,
+    url,
+    name,
+    description,
+    inLanguage: locale,
+    isPartOf: { '@id': WEBSITE_ID },
+    about: { '@id': PERSON_ID },
+    ...(primaryImage ? { primaryImageOfPage: primaryImage } : {}),
+    ...(breadcrumbId ? { breadcrumb: { '@id': breadcrumbId } } : {}),
+    ...(datePublished ? { datePublished } : {}),
+    ...(dateModified ? { dateModified } : {})
+  };
+}
+
+export function breadcrumbSchema(items: Array<{ name: string; url: string }>, id?: string) {
   return {
     '@type': 'BreadcrumbList',
+    ...(id ? { '@id': id } : {}),
     itemListElement: items.map((item, i) => ({
       '@type': 'ListItem',
       position: i + 1,

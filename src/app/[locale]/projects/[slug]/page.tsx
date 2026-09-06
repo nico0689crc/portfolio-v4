@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getPageSeo, getProject, getProjectSlugMap, getRedirectedSlug } from "@/lib/content";
+import { getPageSeo, getProject, getProjectSlugMap, getRedirectedSlug, storageUrl } from "@/lib/content";
 import { permanentRedirect, routing } from "@/i18n/routing";
 import ProjectCaseClient from "./ProjectCaseClient";
 import { JsonLd } from "@/components/seo/json-ld";
 import {
   PERSON_ID,
   SITE_URL,
+  WEBSITE_ID,
   breadcrumbSchema,
   buildPageMetadata,
+  imageObject,
   jsonLdGraph,
   localizedUrl,
+  webPageSchema,
 } from "@/lib/seo";
 
 /**
@@ -114,7 +117,28 @@ export default async function ProjectCasePage({
     params: { slug: project.slug },
   });
 
+  const breadcrumbId = `${url}#breadcrumb`;
+
+  // La primera captura del proyecto describe la página mejor que el OG por
+  // defecto, y viene con sus dimensiones ya calculadas.
+  const cover = project.images[0];
+  const primaryImage = cover
+    ? imageObject(storageUrl(cover.storagePath), {
+        width: cover.width,
+        height: cover.height,
+        caption: cover.alt,
+      })
+    : `${SITE_URL}${project.ogImage ?? "/og/default.png"}`;
+
   const schema = jsonLdGraph(
+    webPageSchema({
+      url,
+      name: project.title,
+      description: project.seoDescription ?? project.description,
+      locale,
+      primaryImage,
+      breadcrumbId,
+    }),
     {
       "@type": "CreativeWork",
       "@id": `${url}#project`,
@@ -126,14 +150,20 @@ export default async function ProjectCasePage({
       author: { "@id": PERSON_ID },
       creator: { "@id": PERSON_ID },
       keywords: project.techs.join(", "),
-      image: `${SITE_URL}${project.ogImage ?? "/og/default.png"}`,
-      isPartOf: { "@id": `${localizedUrl(locale, "/portfolio")}#collectionpage` },
+      image: primaryImage,
+      mainEntityOfPage: { "@id": url },
+      // El nodo CollectionPage sólo existe en el listado; desde acá el proyecto
+      // se ancla al sitio, que está declarado en todas las páginas.
+      isPartOf: { "@id": WEBSITE_ID },
     },
-    breadcrumbSchema([
-      { name: tHeader("home"), url: localizedUrl(locale, "/") },
-      { name: tHeader("portfolio"), url: localizedUrl(locale, "/portfolio") },
-      { name: project.title, url },
-    ])
+    breadcrumbSchema(
+      [
+        { name: tHeader("home"), url: localizedUrl(locale, "/") },
+        { name: tHeader("portfolio"), url: localizedUrl(locale, "/portfolio") },
+        { name: project.title, url },
+      ],
+      breadcrumbId
+    )
   );
 
   return (

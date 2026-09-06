@@ -8,10 +8,13 @@ import { BUCKETS, getPost, getPostSlugMap, getPosts, getRedirectedSlug, storageU
 import {
   PERSON_ID,
   SITE_URL,
+  WEBSITE_ID,
   breadcrumbSchema,
   buildPageMetadata,
+  imageObject,
   jsonLdGraph,
   localizedUrl,
+  webPageSchema,
 } from '@/lib/seo';
 
 /** Cada idioma tiene su slug, así que la URL del otro hay que buscarla. */
@@ -112,7 +115,29 @@ export default async function PostPage({
   const url = localizedUrl(locale, { pathname: '/blog/[slug]', params: { slug: post.slug } });
 
 
+  const breadcrumbId = `${url}#breadcrumb`;
+
+  // La portada como nodo con dimensiones cuando las hay; si no, la imagen por
+  // defecto como URL suelta, que es todo lo que se sabe de ella.
+  const primaryImage = post.coverPath
+    ? imageObject(storageUrl(post.coverPath, BUCKETS.postMedia), {
+        width: post.coverWidth,
+        height: post.coverHeight,
+        caption: post.coverAlt,
+      })
+    : `${SITE_URL}/og/default.png`;
+
   const schema = jsonLdGraph(
+    webPageSchema({
+      url,
+      name: post.title,
+      description: post.seoDescription ?? post.excerpt,
+      locale,
+      primaryImage,
+      breadcrumbId,
+      datePublished: post.publishedAt,
+      dateModified: post.contentUpdatedAt ?? post.publishedAt,
+    }),
     {
       '@type': 'BlogPosting',
       '@id': `${url}#post`,
@@ -128,25 +153,34 @@ export default async function PostPage({
       wordCount: post.wordCount,
       // Duración ISO 8601: lo que espera schema.org, no "5 min".
       ...(post.readingMinutes ? { timeRequired: `PT${post.readingMinutes}M` } : {}),
-      keywords: post.tags.map((tag) => tag.name).join(', '),
-      ...(post.tags.length > 0 ? { articleSection: post.tags[0].name } : {}),
+      // Sin tags se omite: `keywords: ""` le dice a Google que el artículo no
+      // trata de nada, que es peor que no decirle nada.
+      ...(post.tags.length > 0
+        ? {
+            keywords: post.tags.map((tag) => tag.name).join(', '),
+            articleSection: post.tags[0].name,
+          }
+        : {}),
       author: { '@id': PERSON_ID },
       // En un blog personal el autor es también el editor; declararlo evita
       // que Search Console lo marque como campo recomendado ausente.
       publisher: { '@id': PERSON_ID },
-      // Ancla el artículo a la página que lo contiene, que es lo que distingue
-      // "este contenido" de "esta URL".
-      mainEntityOfPage: { '@type': 'WebPage', '@id': url },
-      image: post.coverPath
-        ? storageUrl(post.coverPath, BUCKETS.postMedia)
-        : `${SITE_URL}/og/default.png`,
-      isPartOf: { '@id': `${localizedUrl(locale, '/blog')}#blog` },
+      // Referencia al nodo WebPage que se emite arriba, no una declaración
+      // suelta: así el grafo queda cerrado y no apunta a algo inexistente.
+      mainEntityOfPage: { '@id': url },
+      image: primaryImage,
+      // El nodo Blog sólo existe en el listado, así que desde acá el artículo
+      // se ancla al sitio, que sí está declarado en todas las páginas.
+      isPartOf: { '@id': WEBSITE_ID },
     },
-    breadcrumbSchema([
-      { name: tHeader('home'), url: localizedUrl(locale, '/') },
-      { name: t('title'), url: localizedUrl(locale, '/blog') },
-      { name: post.title, url },
-    ])
+    breadcrumbSchema(
+      [
+        { name: tHeader('home'), url: localizedUrl(locale, '/') },
+        { name: t('title'), url: localizedUrl(locale, '/blog') },
+        { name: post.title, url },
+      ],
+      breadcrumbId
+    )
   );
 
   return (
