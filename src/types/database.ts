@@ -899,6 +899,38 @@ export type Database = {
           },
         ]
       }
+      post_social_decisions: {
+        Row: {
+          channel: Database["public"]["Enums"]["social_channel"]
+          decided_at: string
+          decision: Database["public"]["Enums"]["social_share_decision"]
+          post_id: string
+          updated_at: string
+        }
+        Insert: {
+          channel?: Database["public"]["Enums"]["social_channel"]
+          decided_at?: string
+          decision: Database["public"]["Enums"]["social_share_decision"]
+          post_id: string
+          updated_at?: string
+        }
+        Update: {
+          channel?: Database["public"]["Enums"]["social_channel"]
+          decided_at?: string
+          decision?: Database["public"]["Enums"]["social_share_decision"]
+          post_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_social_decisions_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       post_social_shares: {
         Row: {
           assets: Json | null
@@ -1807,6 +1839,7 @@ export type Database = {
       message_status: "new" | "read" | "replied" | "spam"
       social_channel: "linkedin"
       social_provider: "linkedin" | "buffer"
+      social_share_decision: "approved" | "discarded"
       social_share_status:
         | "scheduled"
         | "sending"
