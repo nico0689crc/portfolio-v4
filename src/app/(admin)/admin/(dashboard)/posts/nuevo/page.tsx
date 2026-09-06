@@ -16,6 +16,9 @@ const LOCALES = ['es', 'en'] as const
 const EMPTY_TRANSLATION = {
   slug: '',
   title: '',
+  focusKeyphrase: '',
+  ogTitle: '',
+  ogDescription: '',
   seoTitle: '',
   seoDescription: '',
   ogImage: '',

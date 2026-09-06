@@ -21,7 +21,7 @@ export const getPosts = cached(
         .from('post_translations')
         .select(
           `slug, title, excerpt, published_at, content_updated_at, reading_minutes, noindex,
-           seo_title, seo_description, og_image, cover_alt,
+           seo_title, seo_description, og_image, og_title, og_description, cover_alt,
            posts!inner(key, cover_path, cover_width, cover_height)`
         )
         .eq('locale', locale)
@@ -44,6 +44,8 @@ export const getPosts = cached(
       seoTitle: row.seo_title,
       seoDescription: row.seo_description,
       ogImage: row.og_image,
+      ogTitle: row.og_title,
+      ogDescription: row.og_description,
       coverAlt: row.cover_alt
     }));
   },
@@ -58,7 +60,7 @@ export const getPost = cached(
       .select(
         `slug, title, excerpt, body, published_at, content_updated_at,
          reading_minutes, word_count, noindex,
-         seo_title, seo_description, og_image, cover_alt,
+         seo_title, seo_description, og_image, og_title, og_description, cover_alt,
          posts!inner(key, cover_path, cover_width, cover_height, cover_blur_data_url,
                      post_tags(tags(key, tag_translations(locale, slug, name))))`
       )
@@ -93,6 +95,8 @@ export const getPost = cached(
       seoTitle: data.seo_title,
       seoDescription: data.seo_description,
       ogImage: data.og_image,
+      ogTitle: data.og_title,
+      ogDescription: data.og_description,
       coverAlt: data.cover_alt,
       tags
     };

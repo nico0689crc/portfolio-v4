@@ -24,7 +24,7 @@ export async function getPostPreview(key: string, locale: string): Promise<PostD
        post_tags(tags(key, tag_translations(locale, slug, name))),
        post_translations(locale, slug, title, excerpt, body, published_at, content_updated_at,
                          reading_minutes, word_count, noindex, seo_title, seo_description,
-                         og_image, cover_alt)`
+                         og_image, og_title, og_description, cover_alt)`
     )
     .eq('key', key)
     .maybeSingle()
@@ -59,6 +59,8 @@ export async function getPostPreview(key: string, locale: string): Promise<PostD
     seoTitle: t.seo_title,
     seoDescription: t.seo_description,
     ogImage: t.og_image,
+    ogTitle: t.og_title,
+    ogDescription: t.og_description,
     coverAlt: t.cover_alt,
     tags
   }

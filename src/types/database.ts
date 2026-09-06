@@ -802,9 +802,12 @@ export type Database = {
           content_updated_at: string | null
           cover_alt: string | null
           excerpt: string
+          focus_keyphrase: string | null
           locale: string
           noindex: boolean
+          og_description: string | null
           og_image: string | null
+          og_title: string | null
           post_id: string
           published_at: string | null
           reading_minutes: number | null
@@ -821,9 +824,12 @@ export type Database = {
           content_updated_at?: string | null
           cover_alt?: string | null
           excerpt: string
+          focus_keyphrase?: string | null
           locale: string
           noindex?: boolean
+          og_description?: string | null
           og_image?: string | null
+          og_title?: string | null
           post_id: string
           published_at?: string | null
           reading_minutes?: number | null
@@ -840,9 +846,12 @@ export type Database = {
           content_updated_at?: string | null
           cover_alt?: string | null
           excerpt?: string
+          focus_keyphrase?: string | null
           locale?: string
           noindex?: boolean
+          og_description?: string | null
           og_image?: string | null
+          og_title?: string | null
           post_id?: string
           published_at?: string | null
           reading_minutes?: number | null

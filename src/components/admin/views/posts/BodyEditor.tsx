@@ -48,15 +48,27 @@ const EMPTY: MediaFormState = { error: null, snippet: null, saved: false }
 const BodyEditor = ({
   postKey,
   name,
-  defaultValue
+  defaultValue,
+  onChange
 }: {
   /** Null mientras el artículo no existe: no hay dónde guardar el archivo. */
   postKey: string | null
   name: string
   defaultValue: string
+  /** El análisis de SEO vive arriba y necesita el cuerpo mientras se escribe. */
+  onChange?: (body: string) => void
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const [value, setValue] = useState(defaultValue)
+  const [value, setRawValue] = useState(defaultValue)
+
+  const setValue = (next: string | ((current: string) => string)) =>
+    setRawValue(current => {
+      const resolved = typeof next === 'function' ? next(current) : next
+
+      onChange?.(resolved)
+
+      return resolved
+    })
   const [preview, setPreview] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
 

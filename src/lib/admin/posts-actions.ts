@@ -199,6 +199,9 @@ function parseTranslations(
       title,
       // Los campos SEO son overrides: vacío significa "usá el visible", no
       // "dejá el <title> en blanco".
+      focus_keyphrase: String(formData.get(`${locale}.focus_keyphrase`) ?? '').trim() || null,
+      og_title: String(formData.get(`${locale}.og_title`) ?? '').trim() || null,
+      og_description: String(formData.get(`${locale}.og_description`) ?? '').trim() || null,
       seo_title: String(formData.get(`${locale}.seo_title`) ?? '').trim() || null,
       seo_description: String(formData.get(`${locale}.seo_description`) ?? '').trim() || null,
       og_image: String(formData.get(`${locale}.og_image`) ?? '').trim() || null,

@@ -84,7 +84,8 @@ export function buildPageMetadata({
   image,
   type = 'website',
   noindex = false,
-  article
+  article,
+  social
 }: {
   locale: string;
   href: LocalizedHref;
@@ -105,6 +106,12 @@ export function buildPageMetadata({
     modifiedTime?: string | null;
     tags?: string[];
   };
+  /**
+   * Titular y descripción para redes, cuando difieren de los de buscador.
+   * Existe porque optimizan cosas distintas: la SERP premia la precisión, el
+   * feed la curiosidad, y forzar un solo texto sacrifica uno de los dos.
+   */
+  social?: { title?: string | null; description?: string | null };
 }): Metadata {
   const url = localizedUrl(locale, href);
   const images = image ? [{ url: image, width: 1200, height: 630, alt: title }] : undefined;
@@ -119,8 +126,8 @@ export function buildPageMetadata({
       locale: ogLocale(locale),
       alternateLocale: ogAlternateLocales(locale),
       url,
-      title,
-      description,
+      title: social?.title || title,
+      description: social?.description || description,
       siteName: SITE_NAME,
       ...(images ? { images } : {}),
       ...(type === 'article' && article
@@ -134,8 +141,8 @@ export function buildPageMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: social?.title || title,
+      description: social?.description || description,
       ...(image ? { images: [image] } : {})
     }
   };

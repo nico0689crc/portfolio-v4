@@ -23,6 +23,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/admin/ui/
 import { Textarea } from '@/components/admin/ui/textarea'
 import BodyEditor from './BodyEditor'
 import CharCounter from './CharCounter'
+import SeoAnalysis from './SeoAnalysis'
 import SerpPreview, { DESCRIPTION_LIMIT, TITLE_LIMIT } from './SerpPreview'
 
 // Lib Imports
@@ -33,6 +34,9 @@ import { slugify } from '@/lib/slug'
 export type PostTranslationValues = {
   slug: string
   title: string
+  focusKeyphrase: string
+  ogTitle: string
+  ogDescription: string
   seoTitle: string
   seoDescription: string
   ogImage: string
@@ -63,7 +67,15 @@ const STATUSES = [
 ]
 
 /** Los campos que alimentan la vista previa de Google, en vivo. */
-type LivePreview = { title: string; seoTitle: string; excerpt: string; seoDescription: string; slug: string }
+type LivePreview = {
+  title: string
+  seoTitle: string
+  excerpt: string
+  seoDescription: string
+  slug: string
+  keyphrase: string
+  body: string
+}
 
 const LocalePanel = ({
   locale,
@@ -87,7 +99,9 @@ const LocalePanel = ({
     seoTitle: values.seoTitle,
     excerpt: values.excerpt,
     seoDescription: values.seoDescription,
-    slug: values.slug
+    slug: values.slug,
+    keyphrase: values.focusKeyphrase,
+    body: values.body
   })
 
   const set = (key: keyof LivePreview) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
@@ -162,7 +176,12 @@ const LocalePanel = ({
           <CardTitle>Cuerpo</CardTitle>
         </CardHeader>
         <CardContent>
-          <BodyEditor postKey={postKey} name={`${locale}.body`} defaultValue={values.body} />
+          <BodyEditor
+            postKey={postKey}
+            name={`${locale}.body`}
+            defaultValue={values.body}
+            onChange={body => setLive(current => ({ ...current, body }))}
+          />
         </CardContent>
       </Card>
 
@@ -171,6 +190,29 @@ const LocalePanel = ({
           <CardTitle>SEO y redes</CardTitle>
         </CardHeader>
         <CardContent className='flex flex-col gap-4'>
+          <Field>
+            <FieldLabel htmlFor={`${locale}.focus_keyphrase`}>Frase clave</FieldLabel>
+            <Input
+              id={`${locale}.focus_keyphrase`}
+              name={`${locale}.focus_keyphrase`}
+              defaultValue={values.focusKeyphrase}
+              onChange={set('keyphrase')}
+              placeholder='desarrollador web corrientes'
+            />
+            <FieldDescription>
+              Lo que alguien escribiría en Google para llegar acá. Todo el análisis se mide contra esto.
+            </FieldDescription>
+          </Field>
+
+          <SeoAnalysis
+            keyphrase={live.keyphrase}
+            title={live.title}
+            seoTitle={live.seoTitle}
+            description={serpDescription}
+            slug={live.slug}
+            body={live.body}
+          />
+
           <SerpPreview
             title={serpTitle}
             description={serpDescription}
@@ -206,6 +248,30 @@ const LocalePanel = ({
 
           <div className='grid gap-4 sm:grid-cols-2'>
             <Field>
+              <FieldLabel htmlFor={`${locale}.ogTitle`}>Titular para redes</FieldLabel>
+              <Input
+                id={`${locale}.ogTitle`}
+                name={`${locale}.og_title`}
+                defaultValue={values.ogTitle}
+              />
+              <FieldDescription>
+                Vacío usa el de SEO. Un titular que funciona en Google suele ser malo en un feed, donde
+                compite por curiosidad y no por precisión.
+              </FieldDescription>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor={`${locale}.ogDescription`}>Descripción para redes</FieldLabel>
+              <Textarea
+                id={`${locale}.ogDescription`}
+                name={`${locale}.og_description`}
+                rows={2}
+                defaultValue={values.ogDescription}
+              />
+            </Field>
+          </div>
+
+          <div className='grid gap-4 sm:grid-cols-2'>
+            <Field>
               <FieldLabel htmlFor={`${locale}.coverAlt`}>Alt de la portada</FieldLabel>
               <Input
                 id={`${locale}.coverAlt`}
@@ -231,7 +297,8 @@ const LocalePanel = ({
         <CardHeader>
           <CardTitle>Publicación</CardTitle>
         </CardHeader>
-        <CardContent className='grid gap-4 sm:grid-cols-3'>
+        <CardContent className='flex flex-col gap-4'>
+          <div className='grid gap-4 sm:grid-cols-2'>
           <Field>
             <FieldLabel htmlFor={`${locale}.status`}>Estado</FieldLabel>
             {/* Por idioma: la traducción puede seguir en borrador mientras el
@@ -260,14 +327,24 @@ const LocalePanel = ({
             />
             <FieldDescription>Vacío y publicado usa hoy.</FieldDescription>
           </Field>
+          </div>
 
-          <Field orientation='horizontal' className='self-end'>
+          {/* Fuera de la grilla: es un interruptor con su explicación, no un
+              campo más, y forzarlo en una columna lo dejaba flotando sin
+              alinearse con nada. */}
+          <Field orientation='horizontal'>
             <Switch
               id={`${locale}.noindex`}
               name={`${locale}.noindex`}
               defaultChecked={values.noindex}
             />
-            <FieldLabel htmlFor={`${locale}.noindex`}>No indexar</FieldLabel>
+            <div className='flex flex-col'>
+              <FieldLabel htmlFor={`${locale}.noindex`}>No indexar</FieldLabel>
+              <FieldDescription>
+                El artículo sigue online y accesible por su URL, pero se le pide a Google que no lo
+                muestre en resultados.
+              </FieldDescription>
+            </div>
           </Field>
         </CardContent>
       </Card>

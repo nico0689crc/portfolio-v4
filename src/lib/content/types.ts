@@ -157,6 +157,10 @@ export interface PostSummary {
   seoDescription: string | null;
   /** Imagen social 1200x630; null cae a la portada. */
   ogImage: string | null;
+  /** Titular para redes; null cae al de SEO y después al visible. */
+  ogTitle: string | null;
+  /** Descripción para redes; null cae a la de SEO y después a la bajada. */
+  ogDescription: string | null;
   /** Alt de la portada. Es contenido, no metadato, por eso se traduce. */
   coverAlt: string | null;
   key: string;

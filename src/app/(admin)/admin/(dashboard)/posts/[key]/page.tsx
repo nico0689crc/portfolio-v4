@@ -32,7 +32,7 @@ const AdminPostEditPage = async ({ params }: { params: Promise<{ key: string }> 
          post_tags(tag_id),
          post_translations(locale, slug, title, excerpt, body, status, published_at, noindex,
                            reading_minutes, word_count, seo_title, seo_description, og_image,
-                           cover_alt)`
+                           cover_alt, focus_keyphrase, og_title, og_description)`
       )
       .eq('key', key)
       .maybeSingle(),
@@ -64,6 +64,9 @@ const AdminPostEditPage = async ({ params }: { params: Promise<{ key: string }> 
             status: row?.status ?? 'draft',
             // El input date quiere YYYY-MM-DD, no un timestamp completo.
             publishedAt: row?.published_at ? row.published_at.slice(0, 10) : '',
+            focusKeyphrase: row?.focus_keyphrase ?? '',
+            ogTitle: row?.og_title ?? '',
+            ogDescription: row?.og_description ?? '',
             seoTitle: row?.seo_title ?? '',
             seoDescription: row?.seo_description ?? '',
             ogImage: row?.og_image ?? '',

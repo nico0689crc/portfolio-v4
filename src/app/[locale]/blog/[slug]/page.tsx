@@ -62,6 +62,7 @@ export async function generateMetadata({
       modifiedTime: post.contentUpdatedAt ?? post.publishedAt,
       tags: post.tags.map((tag) => tag.name),
     },
+    social: { title: post.ogTitle, description: post.ogDescription },
   });
 }
 
