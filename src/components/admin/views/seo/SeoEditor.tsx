@@ -94,7 +94,7 @@ const RouteColumn = ({
           id={`${prefix}.og_image`}
           name={`${prefix}.og_image`}
           defaultValue={values?.ogImage ?? ''}
-          placeholder='/og/default.png'
+          placeholder='/og/default-en.png'
         />
         <FieldDescription>Ruta dentro del sitio.</FieldDescription>
       </Field>

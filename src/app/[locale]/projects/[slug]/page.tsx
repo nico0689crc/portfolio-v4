@@ -56,7 +56,7 @@ export async function generateMetadata({
       href: { pathname: "/projects/[slug]", params: { slug } },
       title: seo?.title ?? t("defaultTitle"),
       description: seo?.description ?? t("defaultDescription"),
-      image: "/og/default.png",
+      image: `/og/portfolio-${locale}.png`,
       type: "article",
     });
   }
@@ -68,7 +68,7 @@ export async function generateMetadata({
     // are the sensible default when the editor has not set them.
     title: project.seoTitle ?? project.title,
     description: project.seoDescription ?? project.description,
-    image: project.ogImage ?? "/og/default.png",
+    image: project.ogImage ?? `/og/portfolio-${locale}.png`,
     type: "article",
     noindex: project.noindex,
   });
@@ -128,7 +128,7 @@ export default async function ProjectCasePage({
         height: cover.height,
         caption: cover.alt,
       })
-    : `${SITE_URL}${project.ogImage ?? "/og/default.png"}`;
+    : `${SITE_URL}${project.ogImage ?? `/og/portfolio-${locale}.png`}`;
 
   const schema = jsonLdGraph(
     webPageSchema({

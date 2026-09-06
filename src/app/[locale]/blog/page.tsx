@@ -21,7 +21,7 @@ export async function generateMetadata({
   // Igual que el resto de las rutas fijas: el título y la descripción salen de
   // `page_seo`, así que se editan desde el panel en vez de vivir en una clave
   // de mensajes que nadie asocia con SEO.
-  const metadata = await pageMetadata({ locale, routeKey: '/blog', href: '/blog' });
+  const metadata = await pageMetadata({ locale, routeKey: '/blog', href: '/blog', fallbackImage: `/og/blog-${locale}.png` });
 
   // Un tag filtrado no tiene hreflang propio (el slug del tag difiere por
   // idioma), así que sólo se ajusta el canonical y se descarta el resto.

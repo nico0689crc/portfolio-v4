@@ -17,7 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return pageMetadata({
     locale,
     routeKey: '/contact',
-    href: '/contact'
+    href: '/contact',
+    fallbackImage: `/og/contact-${locale}.png`
   });
 }
 

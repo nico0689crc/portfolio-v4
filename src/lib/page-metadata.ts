@@ -21,7 +21,7 @@ export async function pageMetadata({
   routeKey,
   href,
   type = 'website',
-  fallbackImage = '/og/default.png',
+  fallbackImage = `/og/default-${locale}.png`,
   absoluteTitle = false
 }: {
   locale: string;

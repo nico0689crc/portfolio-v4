@@ -19,7 +19,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     locale,
     routeKey: '/about',
     href: '/about',
-    type: 'profile'
+    type: 'profile',
+    fallbackImage: `/og/about-${locale}.png`
   });
 }
 

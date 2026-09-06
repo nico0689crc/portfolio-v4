@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     routeKey: '/resume',
     href: '/resume',
     type: 'profile',
+    fallbackImage: `/og/resume-${locale}.png`
   });
 
   return {

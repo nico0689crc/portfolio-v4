@@ -57,7 +57,7 @@ export async function generateMetadata({
     href: await hrefResolver(post.key, slug),
     title: post.seoTitle ?? post.title,
     description: post.seoDescription ?? post.excerpt,
-    image: social ? storageUrl(social, BUCKETS.postMedia) : '/og/default.png',
+    image: social ? storageUrl(social, BUCKETS.postMedia) : `/og/blog-${locale}.png`,
     type: 'article',
     noindex: post.noindex,
     article: {
@@ -125,7 +125,7 @@ export default async function PostPage({
         height: post.coverHeight,
         caption: post.coverAlt,
       })
-    : `${SITE_URL}/og/default.png`;
+    : `${SITE_URL}/og/blog-${locale}.png`;
 
   const schema = jsonLdGraph(
     webPageSchema({
