@@ -1,9 +1,11 @@
 import { Reveal } from "@/components/ui/reveal";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { TrackedLink } from "@/components/analytics/tracked-link";
 import { Download } from "lucide-react";
 
 const ShortAbout = async () => {
   const t = await getTranslations("Home.shortAbout");
+  const locale = await getLocale();
 
   return (
     <section className="py-20 bg-background overflow-hidden relative">
@@ -23,15 +25,16 @@ const ShortAbout = async () => {
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8">
             {t("desc")}
           </p>
-          <a
+          <TrackedLink
             href={t("cvUrl")}
             target="_blank"
             rel="noopener noreferrer"
+            event={{ name: "cv_download", params: { file_language: locale, source: "home" } }}
             className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-accent-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity duration-200 text-nowrap"
           >
             <Download className="w-5 h-5" />
             {t("cv")}
-          </a>
+          </TrackedLink>
         </Reveal>
       </div>
     </section>

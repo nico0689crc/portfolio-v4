@@ -1,19 +1,17 @@
 import { Reveal } from "@/components/ui/reveal";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { getSkillCategories } from "@/lib/content";
 
 const Skills = async () => {
   const t = await getTranslations("Home");
-  const locale = await getTranslations("Metadata"); // To check current active locale
-  const isEnglish = locale("defaultDescription").includes("developer");
+  const locale = await getLocale();
 
-  const categories = [
-    { title: t("skills.frontend"), skills: ["React.js", "Next.js", "JavaScript", "TypeScript", "HTML", "CSS", "Tailwind CSS", "Material UI"] },
-    { title: t("skills.backend"), skills: ["Node.js", "Express.js", "NestJS", "GraphQL", "REST APIs", "Laravel", "Ruby on Rails"] },
-    { title: t("skills.databases"), skills: ["MongoDB", "PostgreSQL", "MySQL"] },
-    { title: t("skills.devops"), skills: ["Docker", "Git", "CI/CD", "GitHub Actions", "AWS", "Linux", "WordPress", "Bricks Builder", "Automaticss"] },
-    { title: t("skills.ai"), skills: ["GitHub Copilot", "ChatGPT", "Claude", "Cursor", "Prompt Engineering"] },
-    { title: t("skills.soft"), skills: isEnglish ? ["Leadership", "Teamwork", "Problem Solving", "Assertive Communication", "Time Management", "Adaptability", "Proactivity"] : ["Liderazgo", "Trabajo en equipo", "Resolución de problemas", "Comunicación asertiva", "Gestión del tiempo", "Adaptabilidad", "Proactividad"] },
-  ];
+  // La etiqueta de cada categoría ya viene traducida de la base, así que no hay
+  // clave de mensaje que mantener en sincronía con la fila.
+  const categories = (await getSkillCategories(locale)).map((category) => ({
+    title: category.label,
+    skills: category.skills.map((skill) => skill.name),
+  }));
 
   return (
     <section className="section-padding section-dark">

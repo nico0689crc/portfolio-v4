@@ -23,11 +23,23 @@ import gym9 from "@/assets/projects/gymsmartaccess/9.png";
 // import portfolio2 from "@/assets/projects/portfolio-2.jpg";
 
 import { StaticImageData } from "next/image";
+import type { SeoHref } from "@/lib/seo";
+import { routing } from "@/i18n/routing";
 
 export type Category = "all" | "fullstack" | "ux-ui" | "wordpress";
 
 export interface ProjectData {
-  slug: string;
+  /**
+   * Stable, locale-independent identifier. Used for React keys, analytics,
+   * OG image lookup and translation-key mapping — never for URLs.
+   */
+  id: string;
+  /**
+   * URL slug per locale. Slugs are translated, so the same project lives at
+   * different paths in each language and `id` is the only thing that joins
+   * them. Product names stay untranslated on purpose.
+   */
+  slugs: Record<string, string>;
   titleKey: string;
   descKey: string;
   techs: string[];
@@ -57,7 +69,8 @@ export const projects: ProjectData[] = [
   //   casePrefix: "case.ecommerce",
   // },
   {
-    slug: "mexx-ux-redesign",
+    id: "mexx-ux-redesign",
+    slugs: { en: "mexx-ux-redesign", es: "rediseno-ux-ui-ecommerce-mexx" },
     titleKey: "projects.5.title",
     descKey: "projects.5.desc",
     techs: ["Figma", "UX Research", "Maze", "UXTweak", "Google Forms", "Coderhouse", "Garrett"],
@@ -79,7 +92,10 @@ export const projects: ProjectData[] = [
     ogImage: "/og/mexx-ux-redesign.png",
   },
   {
-    slug: "gym-smart-access",
+    id: "gym-smart-access",
+    // Brand name kept as one token; the ES slug adds the category, which is
+    // what a Spanish-speaking reader would actually search for.
+    slugs: { en: "gym-smart-access", es: "gymsmartaccess-gestion-gimnasios" },
     titleKey: "projects.2.title",
     descKey: "projects.2.desc",
     techs: ["Next.js", "Supabase", "Tailwind CSS", "Mercado Pago", "Mercadopago"],
@@ -91,3 +107,27 @@ export const projects: ProjectData[] = [
     ogImage: "/og/gym-smart-access.png",
   }
 ];
+
+/** The slug this project is served under in `locale`, falling back to the default locale. */
+export function projectSlug(project: ProjectData, locale: string) {
+  return project.slugs[locale] ?? project.slugs[routing.defaultLocale];
+}
+
+/** Route href for a project in a given locale, for `localizedUrl`/`buildAlternates`. */
+export function projectHref(project: ProjectData, locale: string): SeoHref {
+  return { pathname: "/projects/[slug]", params: { slug: projectSlug(project, locale) } };
+}
+
+/** Resolves a project from a slug as it appears in that locale's URL. */
+export function projectByLocalizedSlug(slug: string, locale: string) {
+  return projects.find((p) => projectSlug(p, locale) === slug);
+}
+
+/**
+ * Every project's slugs keyed by locale. Mirrors the shape the Supabase content
+ * layer will expose as `getProjectSlugMap()`, so swapping the source is an
+ * import change.
+ */
+export function projectSlugMap(): Array<{ key: string; slugs: Record<string, string> }> {
+  return projects.map((p) => ({ key: p.id, slugs: { ...p.slugs } }));
+}

@@ -4,6 +4,7 @@
     "about": "About",
     "portfolio": "Portfolio",
     "resume": "Resume",
+    "blog": "Blog",
     "contact": "Contact"
   },
   "Footer": {
@@ -65,12 +66,12 @@
     "cv": "Download CV",
     "cvUrl": "/CV_Nicolas_Fernandez_FullStack_UXUI_EN.pdf",
     "about": {
-      "p1": "I'm <strong>Nicolás Ariel Fernández</strong>, a Full Stack Developer and UX/UI Design Student, with over 3 years of software development experience.",
+      "p1": "I'm <strong>Nicolás Ariel Fernández</strong>, a Full Stack Developer and UX/UI Design Student, with over {years} years of software development experience.",
       "p2": "My main focus is developing efficient web applications using modern technologies like <strong class='text-accent'>React, Next.js, Node.js, and TypeScript</strong>. In parallel, my training in UX/UI Design gives me a user-centered vision, allowing me to design interfaces that not only look amazing but are highly functional, intuitive, and accessible.",
       "p3": "I consider myself a proactive professional, detail-oriented, and always ready to learn new industry tools. I enjoy working in teams and being involved in the entire product lifecycle: from visual conceptualization to the final code in production."
     },
     "card1": {
-      "title": "3+ years of experience",
+      "title": "{years}+ years of experience",
       "desc": "React, Next.js, TypeScript, Node.js, and modern architectures."
     },
     "card2": {
@@ -151,6 +152,26 @@
   },
   "Portfolio": {
     "projects": {
+      "1": {
+        "title": "E-Commerce Dashboard",
+        "desc": "Admin panel for an online store with real-time metrics, product management, and sales analytics."
+      },
+      "2": {
+        "title": "GymSmartAccess",
+        "desc": "B2B2C SaaS platform for gym modernization with automated payments and QR-based access control."
+      },
+      "3": {
+        "title": "Restaurant Booking System",
+        "desc": "Online booking system for restaurants with interactive calendar, table management, and automatic confirmations."
+      },
+      "4": {
+        "title": "Portfolio & Blog",
+        "desc": "Personal site with integrated blog, dynamic content system, and advanced SEO optimization."
+      },
+      "5": {
+        "title": "Mexx UX Redesign",
+        "desc": "UX/UI redesign of Argentina's largest tech retailer, solving critical cart persistence and hidden shipping cost frictions."
+      },
       "title": "Projects",
       "subtitle": "A selection of projects where I combine technical development with user-centered design.",
       "code": "Code",
@@ -161,26 +182,6 @@
       "lofi": "Lo-Fi Prototype",
       "filter": {
         "all": "All"
-      },
-      "1": {
-        "title": "E-Commerce Dashboard",
-        "desc": "Admin panel for an online store with real-time metrics, product management, and sales analytics."
-      },
-      "2": {
-        "title": "GymSmartAccess",
-        "desc": "B2B2C SaaS platform for gym modernization with automated payments and QR-based access control."
-      },
-      "5": {
-        "title": "Mexx UX Redesign",
-        "desc": "UX/UI redesign of Argentina's largest tech retailer, solving critical cart persistence and hidden shipping cost frictions."
-      },
-      "3": {
-        "title": "Restaurant Booking System",
-        "desc": "Online booking system for restaurants with interactive calendar, table management, and automatic confirmations."
-      },
-      "4": {
-        "title": "Portfolio & Blog",
-        "desc": "Personal site with integrated blog, dynamic content system, and advanced SEO optimization."
       }
     },
     "case": {
@@ -276,11 +277,26 @@
         "diplomaUrl": "https://www.coderhouse.com/ar/diplomaturas/diseno",
         "diplomaLinkText": "UX/UI Design Diploma at Coderhouse",
         "processDesc": "I applied James Garrett's Five Planes methodology, working from abstract strategy down to concrete visual surface.",
-        "phase1": { "label": "Plane 1", "title": "Strategy" },
-        "phase2": { "label": "Plane 2", "title": "Scope" },
-        "phase3": { "label": "Plane 3", "title": "Structure" },
-        "phase4": { "label": "Plane 4", "title": "Skeleton" },
-        "phase5": { "label": "Plane 5", "title": "Surface" },
+        "phase1": {
+          "label": "Plane 1",
+          "title": "Strategy"
+        },
+        "phase2": {
+          "label": "Plane 2",
+          "title": "Scope"
+        },
+        "phase3": {
+          "label": "Plane 3",
+          "title": "Structure"
+        },
+        "phase4": {
+          "label": "Plane 4",
+          "title": "Skeleton"
+        },
+        "phase5": {
+          "label": "Plane 5",
+          "title": "Surface"
+        },
         "role": "UX/UI Designer",
         "duration": "4 weeks",
         "team": "Solo Project",
@@ -375,6 +391,98 @@
     "mexxTitle": "Mexx UX Redesign — UX/UI Case Study",
     "mexxDescription": "UX/UI portfolio case study: redesign of Mexx, Argentina's largest tech retailer. Cart persistence & transparent shipping costs validated with Maze and UXTweak.",
     "gymTitle": "GymSmartAccess — Full Stack Case Study",
-    "gymDescription": "Full Stack SaaS portfolio case study. Gym management platform with automated Mercado Pago payments and QR access control, built with Next.js and Supabase."
+    "gymDescription": "Full Stack SaaS portfolio case study. Gym management platform with automated Mercado Pago payments and QR access control, built with Next.js and Supabase.",
+    "jobTitle": "Full Stack Developer & UX/UI Designer"
+  },
+  "Resume": {
+    "title": "Resume",
+    "subtitle": "Full Stack Developer & UX/UI Designer",
+    "intro": "Over {years} years building web applications end to end: research, interface design, APIs, databases and deployment. I work with React, Next.js, TypeScript and Node.js. I built and run my own SaaS in production with paying customers, which forces me to treat every feature as a product decision rather than just code.",
+    "downloadEs": "Descargar CV en español (PDF)",
+    "downloadEn": "Download CV in English (PDF)",
+    "highlightsTitle": "At a glance",
+    "highlights": [
+      {
+        "label": "Experience",
+        "value": "3+ years in software development"
+      },
+      {
+        "label": "Core stack",
+        "value": "React, Next.js, TypeScript, Node.js"
+      },
+      {
+        "label": "Design",
+        "value": "UX/UI, Figma, user research"
+      },
+      {
+        "label": "Location",
+        "value": "Corrientes, Argentina · Remote"
+      },
+      {
+        "label": "Languages",
+        "value": "Spanish (native) · English (professional)"
+      }
+    ],
+    "experienceTitle": "Professional experience",
+    "experienceSubtitle": "Full track record, most recent first.",
+    "skillsTitle": "Technical skills",
+    "skillsSubtitle": "Technologies and tools I work with day to day.",
+    "ctaTitle": "Looking to add someone to the team?",
+    "ctaDesc": "I'm open to job offers and freelance projects. Drop me a line and I'll get back to you shortly.",
+    "ctaButton": "Get in touch",
+    "educationTitle": "Education",
+    "educationSubtitle": "Degrees and studies in progress.",
+    "education": [
+      {
+        "degree": "Diploma of UX/UI Design",
+        "status": "In progress · expected 2025"
+      },
+      {
+        "degree": "Diploma of Information Technology (Web Development)",
+        "status": "2024"
+      },
+      {
+        "degree": "Analyst in Information Technology (Bachelor's level)",
+        "status": "2008 – 2015"
+      }
+    ],
+    "certificationsTitle": "Courses & certifications",
+    "certifications": [
+      {
+        "name": "Docker & Kubernetes: The Practical Guide"
+      },
+      {
+        "name": "GitHub Actions (CI/CD)"
+      },
+      {
+        "name": "Understanding TypeScript"
+      }
+    ],
+    "certificationsNote": "Full list of certifications and ongoing learning available on LinkedIn.",
+    "summaryTitle": "Professional Summary",
+    "rolesToggle": "See all {count} positions in detail",
+    "rolesDownload": "Download extended CV",
+    "downloadExtended": "Also available: extended version, with all {count} hospitality positions in detail",
+    "versionShort": "Short",
+    "versionExtended": "Extended",
+    "versionPick": "Choose version"
+  },
+  "Consent": {
+    "title": "We use anonymous analytics",
+    "description": "I use Google Analytics to understand which parts of the portfolio are useful. No data is shared with advertisers and you are not tracked across sites. You can decline without losing any functionality.",
+    "accept": "Accept",
+    "reject": "Decline"
+  },
+  "Blog": {
+    "title": "Blog",
+    "subtitle": "Notes on development, design, and the decisions behind them.",
+    "readMore": "Read note",
+    "readingTime": "min read",
+    "empty": "No posts published yet.",
+    "backToBlog": "Back to the blog",
+    "published": "Published on",
+    "updated": "Updated on",
+    "toc": "In this post",
+    "related": "Keep reading"
   }
 }

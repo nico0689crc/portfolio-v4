@@ -1,14 +1,38 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { projects } from "@/data/projectsData";
+import { getPageSeo, getProject, getProjectSlugMap, getRedirectedSlug, storageUrl } from "@/lib/content";
+import { permanentRedirect, routing } from "@/i18n/routing";
 import ProjectCaseClient from "./ProjectCaseClient";
+import { JsonLd } from "@/components/seo/json-ld";
+import {
+  PERSON_ID,
+  SITE_URL,
+  WEBSITE_ID,
+  breadcrumbSchema,
+  buildPageMetadata,
+  imageObject,
+  jsonLdGraph,
+  localizedUrl,
+  webPageSchema,
+} from "@/lib/seo";
 
-const BASE_URL = "https://nicolasarielfernandez.com";
+/**
+ * Each locale's URL for one project, for the canonical + hreflang cluster.
+ *
+ * Slugs are translated, so the other language's URL cannot be derived from this
+ * one — it has to be looked up. Falling back to the requested slug keeps a
+ * project that is published in only one language from breaking the cluster.
+ */
+async function hrefResolver(key: string, fallbackSlug: string) {
+  const map = await getProjectSlugMap();
+  const slugs = map.find((entry) => entry.key === key)?.slugs ?? {};
 
-const metaKeyBySlug: Record<string, { title: string; description: string }> = {
-  "mexx-ux-redesign": { title: "mexxTitle", description: "mexxDescription" },
-  "gym-smart-access": { title: "gymTitle", description: "gymDescription" },
-};
+  return (locale: string) => ({
+    pathname: "/projects/[slug]" as const,
+    params: { slug: slugs[locale] ?? fallbackSlug },
+  });
+}
 
 export async function generateMetadata({
   params,
@@ -16,55 +40,49 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const t = await getTranslations({ locale, namespace: "Metadata" });
-  const project = projects.find((p) => p.slug === slug);
-  const keys = metaKeyBySlug[slug];
+  const project = await getProject(slug, locale);
 
-  const title = keys ? t(keys.title as Parameters<typeof t>[0]) : t("portfolioTitle");
-  const description = keys ? t(keys.description as Parameters<typeof t>[0]) : t("portfolioDescription");
-  const ogImage = project?.ogImage ?? "/profile-picture.webp";
-  const url = `${BASE_URL}/${locale}/projects/${slug}`;
+  if (!project) {
+    // Un slug que no resuelve todavia puede redirigir, asi que la metadata cae
+    // a la del listado en vez de inventar un titulo para una pagina que quiza
+    // ni se llegue a renderizar.
+    const [seo, t] = await Promise.all([
+      getPageSeo("/portfolio", locale),
+      getTranslations({ locale, namespace: "Metadata" }),
+    ]);
 
-  return {
-    title,
-    description,
-    alternates: {
-      canonical: url,
-      languages: {
-        en: `${BASE_URL}/en/projects/${slug}`,
-        es: `${BASE_URL}/es/projects/${slug}`,
-      },
-    },
-    openGraph: {
-      type: "website",
+    return buildPageMetadata({
       locale,
-      url,
-      title,
-      description,
-      siteName: "Nicolás Ariel Fernández",
-      images: [
-        {
-          url: `${BASE_URL}${ogImage}`,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [`${BASE_URL}${ogImage}`],
-    },
-  };
+      href: { pathname: "/projects/[slug]", params: { slug } },
+      title: seo?.title ?? t("defaultTitle"),
+      description: seo?.description ?? t("defaultDescription"),
+      image: "/og/default.png",
+      type: "article",
+    });
+  }
+
+  return buildPageMetadata({
+    locale,
+    href: await hrefResolver(project.key, slug),
+    // The SEO fields are optional overrides; the visible title and description
+    // are the sensible default when the editor has not set them.
+    title: project.seoTitle ?? project.title,
+    description: project.seoDescription ?? project.description,
+    image: project.ogImage ?? "/og/default.png",
+    type: "article",
+    noindex: project.noindex,
+  });
 }
 
 export async function generateStaticParams() {
-  return projects.flatMap((p) => [
-    { locale: "en", slug: p.slug },
-    { locale: "es", slug: p.slug },
-  ]);
+  const map = await getProjectSlugMap();
+
+  // Each locale is prerendered under its own translated slug.
+  return map.flatMap((entry) =>
+    routing.locales.flatMap((locale) =>
+      entry.slugs[locale] ? [{ locale, slug: entry.slugs[locale] }] : []
+    )
+  );
 }
 
 export default async function ProjectCasePage({
@@ -72,7 +90,86 @@ export default async function ProjectCasePage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { locale } = await params;
+  const { locale, slug } = await params;
   setRequestLocale(locale);
-  return <ProjectCaseClient />;
+
+  const project = await getProject(slug, locale);
+
+  if (!project) {
+    // A slug that no longer resolves may be one the editor renamed. The
+    // redirect table is what keeps the old URL's ranking instead of 404-ing,
+    // and it is only consulted on the miss so the happy path costs nothing.
+    const current = await getRedirectedSlug("project", locale, slug);
+
+    if (current) {
+      permanentRedirect({
+        href: { pathname: "/projects/[slug]", params: { slug: current } },
+        locale,
+      });
+    }
+
+    notFound();
+  }
+
+  const tHeader = await getTranslations({ locale, namespace: "Header" });
+  const url = localizedUrl(locale, {
+    pathname: "/projects/[slug]",
+    params: { slug: project.slug },
+  });
+
+  const breadcrumbId = `${url}#breadcrumb`;
+
+  // La primera captura del proyecto describe la página mejor que el OG por
+  // defecto, y viene con sus dimensiones ya calculadas.
+  const cover = project.images[0];
+  const primaryImage = cover
+    ? imageObject(storageUrl(cover.storagePath), {
+        width: cover.width,
+        height: cover.height,
+        caption: cover.alt,
+      })
+    : `${SITE_URL}${project.ogImage ?? "/og/default.png"}`;
+
+  const schema = jsonLdGraph(
+    webPageSchema({
+      url,
+      name: project.title,
+      description: project.seoDescription ?? project.description,
+      locale,
+      primaryImage,
+      breadcrumbId,
+    }),
+    {
+      "@type": "CreativeWork",
+      "@id": `${url}#project`,
+      url,
+      name: project.title,
+      headline: project.seoTitle ?? project.title,
+      description: project.seoDescription ?? project.description,
+      inLanguage: locale,
+      author: { "@id": PERSON_ID },
+      creator: { "@id": PERSON_ID },
+      keywords: project.techs.join(", "),
+      image: primaryImage,
+      mainEntityOfPage: { "@id": url },
+      // El nodo CollectionPage sólo existe en el listado; desde acá el proyecto
+      // se ancla al sitio, que está declarado en todas las páginas.
+      isPartOf: { "@id": WEBSITE_ID },
+    },
+    breadcrumbSchema(
+      [
+        { name: tHeader("home"), url: localizedUrl(locale, "/") },
+        { name: tHeader("portfolio"), url: localizedUrl(locale, "/portfolio") },
+        { name: project.title, url },
+      ],
+      breadcrumbId
+    )
+  );
+
+  return (
+    <>
+      <ProjectCaseClient project={project} />
+      <JsonLd data={schema} />
+    </>
+  );
 }

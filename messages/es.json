@@ -4,6 +4,7 @@
     "about": "Sobre mi",
     "portfolio": "Portafolio",
     "resume": "Curriculum",
+    "blog": "Blog",
     "contact": "Contacto"
   },
   "Footer": {
@@ -65,12 +66,12 @@
     "cv": "Descargar CV",
     "cvUrl": "/CV_Nicolas_Fernandez_FullStack_UXUI_ES.pdf",
     "about": {
-      "p1": "Soy <strong>Nicolás Ariel Fernández</strong>, Desarrollador Full Stack y Estudiante Diseñador UX/UI, con más de 3 años de experiencia en desarrollo de software.",
+      "p1": "Soy <strong>Nicolás Ariel Fernández</strong>, Desarrollador Full Stack y Estudiante Diseñador UX/UI, con más de {years} años de experiencia en desarrollo de software.",
       "p2": "Mi enfoque principal es desarrollar aplicaciones web eficientes mediante tecnologías modernas como <strong class=\"text-accent\">React, Next.js, Node.js y TypeScript</strong>. Paralelamente, mi formación en Diseño UX/UI me aporta una visión centrada en el usuario, permitiéndome diseñar interfaces que no solo lucen increíbles, sino que son altamente funcionales, intuitivas y accesibles.",
       "p3": "Me considero un profesional proactivo, meticuloso con los detalles y siempre dispuesto a aprender nuevas herramientas de la industria. Disfruto trabajar en equipo e involucrarme en todo el ciclo de vida del producto: desde su conceptualización visual hasta el código final en producción."
     },
     "card1": {
-      "title": "+3 años de experiencia",
+      "title": "+{years} años de experiencia",
       "desc": "React, Next.js, TypeScript, Node.js y arquitecturas modernas."
     },
     "card2": {
@@ -151,6 +152,26 @@
   },
   "Portfolio": {
     "projects": {
+      "1": {
+        "title": "E-Commerce Dashboard",
+        "desc": "Panel de administración para tienda online con métricas en tiempo real, gestión de productos y analíticas de ventas."
+      },
+      "2": {
+        "title": "GymSmartAccess",
+        "desc": "Plataforma SaaS B2B2C para la modernización de gimnasios con cobros automatizados y control de acceso por QR."
+      },
+      "3": {
+        "title": "Restaurant Booking System",
+        "desc": "Sistema de reservas online para restaurantes con calendario interactivo, gestión de mesas y confirmaciones automáticas."
+      },
+      "4": {
+        "title": "Portfolio & Blog",
+        "desc": "Sitio personal con blog integrado, sistema de contenido dinámico y optimización SEO avanzada."
+      },
+      "5": {
+        "title": "Mexx UX Redesign",
+        "desc": "Rediseño UX/UI de la tienda tech más grande de Argentina, resolviendo fricciones críticas de persistencia de carrito y costos de envío ocultos."
+      },
       "title": "Proyectos",
       "subtitle": "Una selección de proyectos donde combino desarrollo técnico con diseño centrado en el usuario.",
       "code": "Código",
@@ -161,26 +182,6 @@
       "lofi": "Prototipo Baja Fidelidad",
       "filter": {
         "all": "Todos"
-      },
-      "1": {
-        "title": "E-Commerce Dashboard",
-        "desc": "Panel de administración para tienda online con métricas en tiempo real, gestión de productos y analíticas de ventas."
-      },
-      "2": {
-        "title": "GymSmartAccess",
-        "desc": "Plataforma SaaS B2B2C para la modernización de gimnasios con cobros automatizados y control de acceso por QR."
-      },
-      "5": {
-        "title": "Mexx UX Redesign",
-        "desc": "Rediseño UX/UI de la tienda tech más grande de Argentina, resolviendo fricciones críticas de persistencia de carrito y costos de envío ocultos."
-      },
-      "3": {
-        "title": "Restaurant Booking System",
-        "desc": "Sistema de reservas online para restaurantes con calendario interactivo, gestión de mesas y confirmaciones automáticas."
-      },
-      "4": {
-        "title": "Portfolio & Blog",
-        "desc": "Sitio personal con blog integrado, sistema de contenido dinámico y optimización SEO avanzada."
       }
     },
     "case": {
@@ -276,11 +277,26 @@
         "diplomaUrl": "https://www.coderhouse.com/ar/diplomaturas/diseno",
         "diplomaLinkText": "Diplomatura de Diseño UX/UI de Coderhouse",
         "processDesc": "Apliqué la metodología de los Cinco Planos de James Garrett, trabajando desde la estrategia abstracta hacia la superficie visual concreta.",
-        "phase1": { "label": "Plano 1", "title": "Estrategia" },
-        "phase2": { "label": "Plano 2", "title": "Alcance" },
-        "phase3": { "label": "Plano 3", "title": "Estructura" },
-        "phase4": { "label": "Plano 4", "title": "Esqueleto" },
-        "phase5": { "label": "Plano 5", "title": "Superficie" },
+        "phase1": {
+          "label": "Plano 1",
+          "title": "Estrategia"
+        },
+        "phase2": {
+          "label": "Plano 2",
+          "title": "Alcance"
+        },
+        "phase3": {
+          "label": "Plano 3",
+          "title": "Estructura"
+        },
+        "phase4": {
+          "label": "Plano 4",
+          "title": "Esqueleto"
+        },
+        "phase5": {
+          "label": "Plano 5",
+          "title": "Superficie"
+        },
         "role": "UX/UI Designer",
         "duration": "4 semanas",
         "team": "Proyecto Individual",
@@ -374,6 +390,98 @@
     "mexxTitle": "Mexx UX Redesign — Caso de Estudio UX/UI",
     "mexxDescription": "Caso de estudio UX/UI: rediseño de Mexx, el retailer tech más grande de Argentina. Carrito persistente y costos transparentes validados con Maze y UXTweak.",
     "gymTitle": "GymSmartAccess — Caso de Estudio Full Stack",
-    "gymDescription": "Caso de estudio Full Stack. Plataforma de gestión de gimnasios con pagos automáticos vía Mercado Pago y acceso QR, desarrollada con Next.js y Supabase."
+    "gymDescription": "Caso de estudio Full Stack. Plataforma de gestión de gimnasios con pagos automáticos vía Mercado Pago y acceso QR, desarrollada con Next.js y Supabase.",
+    "jobTitle": "Desarrollador Full Stack & Diseñador UX/UI"
+  },
+  "Resume": {
+    "title": "Curriculum Vitae",
+    "subtitle": "Desarrollador Full Stack & Diseñador UX/UI",
+    "intro": "Más de {years} años construyendo aplicaciones web de punta a punta: investigación, diseño de interfaz, APIs, base de datos y despliegue. Trabajo con React, Next.js, TypeScript y Node.js. Construí y sostengo en producción un SaaS propio con clientes que pagan, lo que me obliga a pensar cada funcionalidad como una decisión de producto y no sólo como código.",
+    "downloadEs": "Descargar CV en español (PDF)",
+    "downloadEn": "Download CV in English (PDF)",
+    "highlightsTitle": "De un vistazo",
+    "highlights": [
+      {
+        "label": "Experiencia",
+        "value": "+3 años en desarrollo de software"
+      },
+      {
+        "label": "Stack principal",
+        "value": "React, Next.js, TypeScript, Node.js"
+      },
+      {
+        "label": "Diseño",
+        "value": "UX/UI, Figma, investigación con usuarios"
+      },
+      {
+        "label": "Ubicación",
+        "value": "Corrientes, Argentina · Remoto"
+      },
+      {
+        "label": "Idiomas",
+        "value": "Español (nativo) · Inglés (profesional)"
+      }
+    ],
+    "experienceTitle": "Experiencia profesional",
+    "experienceSubtitle": "Trayectoria completa, de lo más reciente a lo más antiguo.",
+    "skillsTitle": "Habilidades técnicas",
+    "skillsSubtitle": "Tecnologías y herramientas con las que trabajo a diario.",
+    "ctaTitle": "¿Buscás sumar a alguien al equipo?",
+    "ctaDesc": "Estoy abierto a propuestas laborales y proyectos freelance. Escribime y te respondo a la brevedad.",
+    "ctaButton": "Ponerse en contacto",
+    "educationTitle": "Formación académica",
+    "educationSubtitle": "Titulaciones y estudios en curso.",
+    "education": [
+      {
+        "degree": "Diplomatura en Diseño UX/UI",
+        "status": "En curso · finalización esperada 2025"
+      },
+      {
+        "degree": "Diploma of Information Technology (Desarrollo Web)",
+        "status": "2024"
+      },
+      {
+        "degree": "Analista en Tecnologías de la Información",
+        "status": "2008 – 2015"
+      }
+    ],
+    "certificationsTitle": "Cursos y certificaciones",
+    "certifications": [
+      {
+        "name": "Docker & Kubernetes: The Practical Guide"
+      },
+      {
+        "name": "GitHub Actions (CI/CD)"
+      },
+      {
+        "name": "Understanding TypeScript"
+      }
+    ],
+    "certificationsNote": "Lista completa de certificaciones y aprendizaje continuo disponible en LinkedIn.",
+    "summaryTitle": "Perfil profesional",
+    "rolesToggle": "Ver los {count} puestos en detalle",
+    "rolesDownload": "Descargar CV extendido",
+    "downloadExtended": "También disponible: versión extendida, con los {count} puestos de la carrera gastronómica en detalle",
+    "versionShort": "Resumida",
+    "versionExtended": "Extendida",
+    "versionPick": "Elegir versión"
+  },
+  "Consent": {
+    "title": "Usamos analítica anónima",
+    "description": "Uso Google Analytics para entender qué secciones del portafolio resultan útiles. No se comparten datos con anunciantes ni se te rastrea entre sitios. Podés rechazarlo sin perder ninguna funcionalidad.",
+    "accept": "Aceptar",
+    "reject": "Rechazar"
+  },
+  "Blog": {
+    "title": "Blog",
+    "subtitle": "Notas sobre desarrollo, diseño y las decisiones que hay detrás.",
+    "readMore": "Leer nota",
+    "readingTime": "min de lectura",
+    "empty": "Todavía no hay notas publicadas.",
+    "backToBlog": "Volver al blog",
+    "published": "Publicado el",
+    "updated": "Actualizado el",
+    "toc": "En esta nota",
+    "related": "Seguí leyendo"
   }
 }
