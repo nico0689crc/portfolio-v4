@@ -4,7 +4,7 @@ title: "Designing for when something goes wrong, not only for when everything wo
 excerpt: "Most mockups show the perfect state: complete data, stable connection, everything working. The error state almost never gets designed, it gets improvised in the code, and it shows."
 focusKeyphrase: designing error states
 seoTitle: "Designing error states: why they can't be a last-minute idea"
-seoDescription: "Why an interface's error states need the same design attention as the ideal state, with the criteria for making sure an error never feels like a dead end."
+seoDescription: "Why designing error states deserves the same attention as the ideal state, and the criteria that keep an error from ever feeling like a dead end."
 ogTitle: "The state that gets designed the least is the one that frustrates the most"
 ogDescription: "The criteria for designing error states that never leave anyone stranded."
 coverAlt: "Interface showing an error state with a clear action to continue"
@@ -13,19 +13,19 @@ publishedAt: 2027-06-21
 tags: diseno-ui, producto
 ---
 
-If you look at the mockups of any project at its design stage, almost all of them show the same scenario: complete data, a perfect connection, everything working. It's the easiest state to design and the least representative of how a product actually gets used, because in production errors aren't the rare exception — they're a constant part of real use.
+If you look at the mockups of any project at its design stage, almost all of them show the same scenario: complete data, a perfect connection, everything working. It's the easiest state to design and the least representative of how a product actually gets used. In production, errors aren't the rare exception: they're a constant part of use. That's why designing error states isn't a finishing touch, it's part of the job.
 
-## Why the error state gets improvised
+## Why designing error states gets replaced by improvising
 
-When the design doesn't account for what happens if something fails, the developer has to decide it on the spot, without the time or context a designer has to think it through calmly. The result is almost always a generic message, with no clear action, written in a hurry before a deploy — it's exactly the same problem I documented about [microcopy](/en/blog/microcopy-is-a-product-decision): whatever doesn't get designed with intention gets solved with whatever occurs first to whoever is coding that screen.
+When the design doesn't account for what happens if something fails, the developer has to decide it on the spot. They don't have the time or context a designer has to think it through calmly. The result is almost always a generic message, with no clear action, written in a hurry before a deploy. It's the same problem I documented about [microcopy](/en/blog/microcopy-is-a-product-decision): whatever isn't designed with intention gets solved with whatever occurs first to whoever is coding that screen.
 
 ## The three error categories I design differently
 
-**Recoverable user error.** A badly filled-out field, an invalid format. Here the design has to point exactly at what's wrong and how to fix it, right where the error is, not in a generic message above the entire form that forces you to hunt down which of ten fields is the problem.
+**Recoverable user error.** A badly filled-out field, an invalid format. Here the design has to point exactly at what's wrong and how to fix it, right where the error is. Not in a generic message above the whole form, something [Nielsen Norman's error message guidelines](https://www.nngroup.com/articles/error-message-guidelines/) have advised against for years.
 
 **Temporary system error.** The connection dropped, an external service didn't respond in time. Here the design has to communicate that the problem isn't the user's fault and offer a clear retry. "Something went wrong" says neither thing — it doesn't say whether it was their fault, and it doesn't say what they can do.
 
-**Empty state, which isn't technically an error but feels similar.** No search results, no content loaded yet. I design this with the same attention as a real error, because for the user the feeling is the same: they arrived somewhere with no clear way out.
+**Empty state, which isn't technically an error but feels similar.** No search results, no content loaded yet. I design this with the same attention as a real error. For the user the feeling is the same: they arrived somewhere with no clear way out.
 
 ## The criteria I apply to every error message
 
