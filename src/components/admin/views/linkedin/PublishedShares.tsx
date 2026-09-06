@@ -5,7 +5,7 @@ import { useState, useTransition } from 'react'
 
 // Third-party Imports
 import { toast } from 'sonner'
-import { ExternalLink, Trash2 } from 'lucide-react'
+import { ExternalLink, MoreHorizontal, ScrollText, Trash2 } from 'lucide-react'
 
 // Component Imports
 import { Button } from '@/components/admin/ui/button'
@@ -18,8 +18,17 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/admin/ui/dialog'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components/admin/ui/dropdown-menu'
+import CoverThumb from './CoverThumb'
 
 // Lib Imports
+import { formatPanelDate } from '@/lib/admin/dates'
 import { deleteShare } from '@/lib/admin/social-actions'
 
 /** Cuántos se listan antes de esconder el resto detrás del botón. */
@@ -45,6 +54,8 @@ export type PublishedShare = {
   postUrl: string | null
   /** Un aviso —casi siempre el primer comentario que no salió—, no un fallo. */
   warning: string | null
+  /** La portada del artículo, para la miniatura de la fila. */
+  coverUrl: string | null
 }
 
 const MEDIA_LABEL: Record<PublishedShare['media'], string> = {
@@ -55,7 +66,7 @@ const MEDIA_LABEL: Record<PublishedShare['media'], string> = {
 }
 
 const formatFull = (value: string) =>
-  new Date(value).toLocaleString('es-AR', {
+  formatPanelDate(value, {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
@@ -65,7 +76,7 @@ const formatFull = (value: string) =>
   })
 
 const formatShort = (value: string) =>
-  new Date(value).toLocaleString('es-AR', {
+  formatPanelDate(value, {
     weekday: 'short',
     day: 'numeric',
     month: 'short',
@@ -118,7 +129,11 @@ const PublishedShares = ({ shares }: { shares: PublishedShare[] }) => {
     <>
       <ul className='divide-border border-border divide-y rounded-lg border'>
         {visible.map(share => (
-          <li key={share.id} className='flex items-center gap-2 p-3'>
+          <li key={share.id} className='flex items-center gap-3 p-3'>
+            <CoverThumb url={share.coverUrl} />
+
+            {/* La fila entera sigue abriendo el detalle: es lo que se hace el
+                99% de las veces y no vale hacerlo pasar por el menú. */}
             <button
               type='button'
               onClick={() => setDetail(share)}
@@ -133,26 +148,46 @@ const PublishedShares = ({ shares }: { shares: PublishedShare[] }) => {
               </p>
             </button>
 
-            {share.postUrl && (
-              <Button
-                variant='ghost'
-                size='icon'
-                aria-label='Ver en LinkedIn'
-                render={<a href={share.postUrl} target='_blank' rel='noopener noreferrer' />}
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                render={
+                  <Button
+                    variant='ghost'
+                    size='icon'
+                    className='shrink-0'
+                    aria-label={`Acciones de «${share.title}»`}
+                  />
+                }
               >
-                <ExternalLink className='size-4' />
-              </Button>
-            )}
+                <MoreHorizontal className='size-4' />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align='end' className='w-56'>
+                <DropdownMenuItem onClick={() => setDetail(share)}>
+                  <ScrollText />
+                  <span>Ver el texto que salió</span>
+                </DropdownMenuItem>
 
-            <Button
-              variant='ghost'
-              size='icon'
-              aria-label='Borrar del historial'
-              disabled={isPending}
-              onClick={() => setConfirming(share)}
-            >
-              <Trash2 className='text-destructive size-4' />
-            </Button>
+                {share.postUrl && (
+                  <DropdownMenuItem
+                    render={<a href={share.postUrl} target='_blank' rel='noopener noreferrer' />}
+                  >
+                    <ExternalLink />
+                    <span>Ver en LinkedIn</span>
+                  </DropdownMenuItem>
+                )}
+
+                <DropdownMenuSeparator />
+
+                <DropdownMenuItem
+                  variant='destructive'
+                  disabled={isPending}
+                  onClick={() => setConfirming(share)}
+                >
+                  <Trash2 />
+                  <span>Borrar del historial</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </li>
         ))}
       </ul>

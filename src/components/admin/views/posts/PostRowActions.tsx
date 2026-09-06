@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 // Third-party Imports
 import { toast } from 'sonner'
-import { Archive, ArchiveRestore, Eye, Pencil, Trash2 } from 'lucide-react'
+import { Archive, ArchiveRestore, ExternalLink, Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
 
 // Component Imports
 import { Button } from '@/components/admin/ui/button'
@@ -21,18 +21,38 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/admin/ui/dialog'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components/admin/ui/dropdown-menu'
 
 // Lib Imports
 import { deletePost, setPostArchived } from '@/lib/admin/posts-actions'
 
+/**
+ * Lo que se puede hacer con un artículo desde el listado.
+ *
+ * Va en un menú y no en una fila de cuatro botones: con la columna de acciones
+ * ocupando un cuarto del ancho, el título —que es lo que se lee— quedaba
+ * apretado, y «Eliminar» estaba a un clic distraído de «Archivar».
+ */
 const PostRowActions = ({
   postKey,
   title,
-  archived
+  archived,
+  liveUrl,
+  onChanged
 }: {
   postKey: string
   title: string
   archived: boolean
+  /** El artículo en el sitio, sólo si ya salió. Si todavía no, queda la vista previa. */
+  liveUrl: string | null
+  /** Avisa que la lista cambió. Archivar saca la fila del filtro en el que se la está mirando. */
+  onChanged?: () => void
 }) => {
   const [isPending, startTransition] = useTransition()
   const [confirmOpen, setConfirmOpen] = useState(false)
@@ -41,8 +61,14 @@ const PostRowActions = ({
     startTransition(async () => {
       const { error } = await setPostArchived(postKey, !archived)
 
-      if (error) toast.error(error)
-      else toast.success(archived ? 'Restaurado' : 'Archivado')
+      if (error) {
+        toast.error(error)
+
+        return
+      }
+
+      toast.success(archived ? 'Restaurado' : 'Archivado')
+      onChanged?.()
     })
 
   const remove = () =>
@@ -55,36 +81,63 @@ const PostRowActions = ({
     })
 
   return (
-    <div className='flex items-center justify-end gap-1'>
-      <Button variant='ghost' size='icon' aria-label='Vista previa' render={<Link href={`/es/preview/blog/${postKey}`} target='_blank' />}>
-        <Eye className='size-4' />
-      </Button>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <Button
+              variant='ghost'
+              size='icon'
+              className='shrink-0'
+              aria-label={`Acciones de «${title}»`}
+            />
+          }
+        >
+          <MoreHorizontal className='size-4' />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align='end' className='w-56'>
+          <DropdownMenuItem render={<Link href={`/admin/posts/${postKey}`} />}>
+            <Pencil />
+            <span>Editar</span>
+          </DropdownMenuItem>
 
-      <Button variant='ghost' size='icon' aria-label='Editar' render={<Link href={`/admin/posts/${postKey}`} />}>
-        <Pencil className='size-4' />
-      </Button>
+          <DropdownMenuItem
+            render={<Link href={`/es/preview/blog/${postKey}`} target='_blank' />}
+          >
+            <Eye />
+            <span>Vista previa</span>
+          </DropdownMenuItem>
 
-      <Button
-        variant='ghost'
-        size='icon'
-        aria-label={archived ? 'Restaurar' : 'Archivar'}
-        disabled={isPending}
-        onClick={toggleArchive}
-      >
-        {archived ? <ArchiveRestore className='size-4' /> : <Archive className='size-4' />}
-      </Button>
+          {/* Sólo cuando el artículo ya salió: mientras la fecha sea futura la
+              URL pública no resuelve y el ítem llevaría a un 404. */}
+          {liveUrl && (
+            <DropdownMenuItem
+              render={<Link href={liveUrl} target='_blank' rel='noopener noreferrer' />}
+            >
+              <ExternalLink />
+              <span>Ver en el sitio</span>
+            </DropdownMenuItem>
+          )}
 
-      {/* Sólo el borrado pide confirmación: archivar se deshace con un clic y
-          preguntar por todo entrena a la gente a decir que sí sin leer. */}
-      <Button
-        variant='ghost'
-        size='icon'
-        aria-label='Eliminar'
-        disabled={isPending}
-        onClick={() => setConfirmOpen(true)}
-      >
-        <Trash2 className='text-destructive size-4' />
-      </Button>
+          <DropdownMenuSeparator />
+
+          <DropdownMenuItem disabled={isPending} onClick={toggleArchive}>
+            {archived ? <ArchiveRestore /> : <Archive />}
+            <span>{archived ? 'Restaurar' : 'Archivar'}</span>
+          </DropdownMenuItem>
+
+          {/* Sólo el borrado pide confirmación: archivar se deshace con un clic
+              y preguntar por todo entrena a la gente a decir que sí sin leer. */}
+          <DropdownMenuItem
+            variant='destructive'
+            disabled={isPending}
+            onClick={() => setConfirmOpen(true)}
+          >
+            <Trash2 />
+            <span>Eliminar</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <DialogContent>
@@ -103,7 +156,7 @@ const PostRowActions = ({
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+    </>
   )
 }
 

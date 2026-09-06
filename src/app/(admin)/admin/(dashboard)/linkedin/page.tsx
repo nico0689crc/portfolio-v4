@@ -7,12 +7,15 @@ import { AlertTriangle, CheckCircle2, Clock, Plug, Send } from 'lucide-react'
 // Component Imports
 import { Badge } from '@/components/admin/ui/badge'
 import { Button } from '@/components/admin/ui/button'
+import CoverThumb from '@/components/admin/views/linkedin/CoverThumb'
 import PublishedShares, { type PublishedShare } from '@/components/admin/views/linkedin/PublishedShares'
 import ShareActions from '@/components/admin/views/linkedin/ShareActions'
 import UnscheduledPosts from '@/components/admin/views/linkedin/UnscheduledPosts'
 
 // Lib Imports
+import { formatPanelDate } from '@/lib/admin/dates'
 import { listCandidates } from '@/lib/admin/linkedin-candidates'
+import { BUCKETS, storageUrl } from '@/lib/content/storage'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import {
   AGENDA_OFFSET_HOURS,
@@ -43,7 +46,7 @@ const toAgendaInput = (date: Date) =>
   new Date(date.getTime() + AGENDA_OFFSET_HOURS * 3_600_000).toISOString().slice(0, 16)
 
 const formatSlot = (value: string | Date) =>
-  new Date(value).toLocaleString('es-AR', {
+  formatPanelDate(value, {
     weekday: 'short',
     day: 'numeric',
     month: 'short',
@@ -161,7 +164,7 @@ const AdminLinkedInPage = async ({
             ? 'none'
             : 'auto') as 'auto' | 'article' | 'document' | 'none',
       documentName: document ? decodeURIComponent(document.url.split('/').pop() ?? '') : null,
-      hasCover: post.posts.cover_path !== null,
+      coverUrl: post.posts.cover_path ? storageUrl(post.posts.cover_path, BUCKETS.postMedia) : null,
       // El mismo texto que armaría la entrega, para que el placeholder del
       // diálogo prometa exactamente lo que va a salir.
       autoMessage: buildMessage({
@@ -197,6 +200,7 @@ const AdminLinkedInPage = async ({
       provider: s.provider,
       media: s.media,
       linkInFirstComment: s.link_in_first_comment,
+      coverUrl: s.coverUrl,
       // Con `message` vacío el texto no se guarda en ningún lado: se arma al
       // entregar y se pierde. Se reconstruye con la misma regla que usó la
       // entrega —el link en el cuerpo sólo si fue con tarjeta— para que el
@@ -294,42 +298,42 @@ const AdminLinkedInPage = async ({
                 const Icon = share.style?.icon ?? Clock
 
                 return (
-                  <li key={share.id} className='flex flex-col gap-2 p-3'>
-                    <div className='flex items-start justify-between gap-3'>
-                      <div className='min-w-0'>
+                  <li key={share.id} className='flex items-center gap-3 p-3'>
+                    <CoverThumb url={share.coverUrl} />
+
+                    <div className='min-w-0 flex-1'>
+                      <div className='flex items-center gap-2'>
                         <p className='truncate text-sm font-medium' title={share.title}>
                           {share.title}
                         </p>
-                        <p className='text-muted-foreground text-xs'>
-                          {formatSlot(share.scheduled_at)}
-                          {share.media === 'document' && ' · carrusel'}
-                          {share.media === 'article' && ' · tarjeta'}
-                          {share.media === 'none' && ' · sin imagen'}
-                        </p>
+                        <Badge className={`shrink-0 ${share.style?.className ?? ''}`}>
+                          <Icon className='size-3' /> {share.label}
+                        </Badge>
                       </div>
 
-                      <Badge className={share.style?.className}>
-                        <Icon className='size-3' /> {share.label}
-                      </Badge>
+                      <p className='text-muted-foreground text-xs'>
+                        {formatSlot(share.scheduled_at)}
+                        {share.media === 'document' && ' · carrusel'}
+                        {share.media === 'article' && ' · tarjeta'}
+                        {share.media === 'none' && ' · sin imagen'}
+                      </p>
+
+                      {share.error && <p className='text-destructive text-xs'>{share.error}</p>}
                     </div>
 
-                    {share.error && <p className='text-destructive text-xs'>{share.error}</p>}
-
-                    <div className='flex justify-end'>
-                      <ShareActions
-                        shareId={share.id}
-                        postId={share.post_id}
-                        title={share.title}
-                        status={share.status}
-                        scheduledAtLocal={toAgendaInput(new Date(share.scheduled_at))}
-                        message={share.message ?? ''}
-                        autoMessage={share.autoMessage}
-                        media={share.media}
-                        linkInFirstComment={share.link_in_first_comment}
-                        currentDocument={share.documentName}
-                        hasCover={share.hasCover}
-                      />
-                    </div>
+                    <ShareActions
+                      shareId={share.id}
+                      postId={share.post_id}
+                      title={share.title}
+                      status={share.status}
+                      scheduledAtLocal={toAgendaInput(new Date(share.scheduled_at))}
+                      message={share.message ?? ''}
+                      autoMessage={share.autoMessage}
+                      media={share.media}
+                      linkInFirstComment={share.link_in_first_comment}
+                      currentDocument={share.documentName}
+                      hasCover={share.coverUrl !== null}
+                    />
                   </li>
                 )
               })}

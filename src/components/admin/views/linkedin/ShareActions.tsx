@@ -1,14 +1,21 @@
 'use client'
 
 // React Imports
-import { useTransition } from 'react'
+import { useState, useTransition } from 'react'
 
 // Third-party Imports
 import { toast } from 'sonner'
-import { RotateCcw, Send, X } from 'lucide-react'
+import { MoreHorizontal, Pencil, RotateCcw, Send, X } from 'lucide-react'
 
 // Component Imports
 import { Button } from '@/components/admin/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components/admin/ui/dropdown-menu'
 import ScheduleDialog from './ScheduleDialog'
 
 // Lib Imports
@@ -20,6 +27,11 @@ import { cancelShare, publishNow, retryShare } from '@/lib/admin/social-actions'
  * Un envío ya entregado a Buffer no muestra ninguna acción: editarlo acá no
  * cambiaría lo que Buffer tiene agendado, y un botón que miente es peor que no
  * tener botón. Para eso se entra a Buffer.
+ *
+ * Va todo en un menú y no en una fila de botones para que la agenda tenga la
+ * misma anatomía que la lista de al lado —miniatura, texto, un solo disparador—
+ * y para que «Publicar ahora» y «Cancelar» dejen de estar a un clic distraído
+ * de distancia: los dos son irreversibles.
  */
 const ShareActions = ({
   shareId,
@@ -47,6 +59,10 @@ const ShareActions = ({
   hasCover: boolean
 }) => {
   const [isPending, startTransition] = useTransition()
+
+  // El diálogo lo abre el menú, que se cierra al hacer clic, así que la
+  // apertura se maneja acá y no adentro de `ScheduleDialog`.
+  const [editing, setEditing] = useState(false)
 
   if (status !== 'scheduled' && status !== 'failed' && status !== 'sending') return null
 
@@ -81,15 +97,67 @@ const ShareActions = ({
     })
 
   return (
-    <div className='flex items-center gap-1'>
-      {status !== 'sending' && (
-        <Button variant='outline' size='sm' disabled={isPending} onClick={publish}>
-          <Send className='size-4' /> {isPending ? 'Publicando…' : 'Publicar ahora'}
-        </Button>
-      )}
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <Button
+              variant='ghost'
+              size='icon'
+              className='shrink-0'
+              aria-label={`Acciones de «${title}»`}
+            />
+          }
+        >
+          <MoreHorizontal className='size-4' />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align='end' className='w-56'>
+          {status !== 'sending' && (
+            <DropdownMenuItem disabled={isPending} onClick={publish}>
+              <Send />
+              <span>{isPending ? 'Publicando…' : 'Publicar ahora'}</span>
+            </DropdownMenuItem>
+          )}
 
-      {status !== 'sending' && (
+          {status !== 'sending' && (
+            <DropdownMenuItem onClick={() => setEditing(true)}>
+              <Pencil />
+              <span>Editar envío</span>
+            </DropdownMenuItem>
+          )}
+
+          {/* `sending` es una entrega que quedó a mitad de camino: se destraba
+              volviéndola a la agenda, no editándola. */}
+          {(status === 'failed' || status === 'sending') && (
+            <DropdownMenuItem
+              disabled={isPending}
+              onClick={() => run(() => retryShare(shareId), 'Vuelve a la agenda')}
+            >
+              <RotateCcw />
+              <span>Reintentar</span>
+            </DropdownMenuItem>
+          )}
+
+          {status !== 'sending' && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                variant='destructive'
+                disabled={isPending}
+                onClick={() => run(() => cancelShare(shareId), 'Envío cancelado')}
+              >
+                <X />
+                <span>Cancelar envío</span>
+              </DropdownMenuItem>
+            </>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {editing && (
         <ScheduleDialog
+          open
+          onOpenChange={() => setEditing(false)}
           shareId={shareId}
           postId={postId}
           title={title}
@@ -100,36 +168,9 @@ const ShareActions = ({
           defaultLinkInFirstComment={linkInFirstComment}
           currentDocument={currentDocument}
           hasCover={hasCover}
-          triggerLabel='Editar'
-          triggerVariant='ghost'
         />
       )}
-
-      {/* `sending` es una entrega que quedó a mitad de camino: se destraba
-          volviéndola a la agenda, no editándola. */}
-      {(status === 'failed' || status === 'sending') && (
-        <Button
-          variant='ghost'
-          size='sm'
-          disabled={isPending}
-          onClick={() => run(() => retryShare(shareId), 'Vuelve a la agenda')}
-        >
-          <RotateCcw className='size-4' /> Reintentar
-        </Button>
-      )}
-
-      {status !== 'sending' && (
-        <Button
-          variant='ghost'
-          size='icon'
-          aria-label='Cancelar envío'
-          disabled={isPending}
-          onClick={() => run(() => cancelShare(shareId), 'Envío cancelado')}
-        >
-          <X className='size-4' />
-        </Button>
-      )}
-    </div>
+    </>
   )
 }
 
