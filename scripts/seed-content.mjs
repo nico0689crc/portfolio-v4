@@ -524,7 +524,8 @@ const PAGE_SEO = {
   '/about': ['aboutTitle', 'aboutDescription'],
   '/portfolio': ['portfolioTitle', 'portfolioDescription'],
   '/resume': ['resumeTitle', 'resumeDescription'],
-  '/contact': ['contactTitle', 'contactDescription']
+  '/contact': ['contactTitle', 'contactDescription'],
+  '/privacy': ['privacyTitle', 'privacyDescription']
 };
 
 async function seedPageSeo() {

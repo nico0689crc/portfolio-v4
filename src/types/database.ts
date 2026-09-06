@@ -913,6 +913,7 @@ export type Database = {
           locale: string
           message: string | null
           post_id: string
+          provider: Database["public"]["Enums"]["social_provider"]
           scheduled_at: string
           status: Database["public"]["Enums"]["social_share_status"]
           updated_at: string
@@ -930,6 +931,7 @@ export type Database = {
           locale: string
           message?: string | null
           post_id: string
+          provider?: Database["public"]["Enums"]["social_provider"]
           scheduled_at: string
           status?: Database["public"]["Enums"]["social_share_status"]
           updated_at?: string
@@ -947,6 +949,7 @@ export type Database = {
           locale?: string
           message?: string | null
           post_id?: string
+          provider?: Database["public"]["Enums"]["social_provider"]
           scheduled_at?: string
           status?: Database["public"]["Enums"]["social_share_status"]
           updated_at?: string
@@ -1637,6 +1640,42 @@ export type Database = {
           },
         ]
       }
+      social_accounts: {
+        Row: {
+          access_token: string
+          account_name: string | null
+          account_urn: string
+          connected_at: string
+          expires_at: string
+          provider: Database["public"]["Enums"]["social_provider"]
+          refresh_token: string | null
+          scopes: string
+          updated_at: string
+        }
+        Insert: {
+          access_token: string
+          account_name?: string | null
+          account_urn: string
+          connected_at?: string
+          expires_at: string
+          provider: Database["public"]["Enums"]["social_provider"]
+          refresh_token?: string | null
+          scopes: string
+          updated_at?: string
+        }
+        Update: {
+          access_token?: string
+          account_name?: string | null
+          account_urn?: string
+          connected_at?: string
+          expires_at?: string
+          provider?: Database["public"]["Enums"]["social_provider"]
+          refresh_token?: string | null
+          scopes?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       tags: {
         Row: {
           id: string
@@ -1767,6 +1806,7 @@ export type Database = {
       content_status: "draft" | "published"
       message_status: "new" | "read" | "replied" | "spam"
       social_channel: "linkedin"
+      social_provider: "linkedin" | "buffer"
       social_share_status:
         | "scheduled"
         | "sending"

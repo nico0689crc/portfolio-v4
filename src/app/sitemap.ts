@@ -20,6 +20,7 @@ const STATIC_ROUTES = [
   { href: '/about', priority: 0.8, changeFrequency: 'monthly' },
   { href: '/resume', priority: 0.8, changeFrequency: 'monthly' },
   { href: '/contact', priority: 0.6, changeFrequency: 'yearly' },
+  { href: '/privacy', priority: 0.2, changeFrequency: 'yearly' },
 ] as const;
 
 /**

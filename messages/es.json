@@ -12,7 +12,8 @@
     "desc": "Siempre estoy aprendiendo, explorando nuevas tecnologías y buscando proyectos donde pueda aportar valor real. Si tienes una idea, un equipo o un desafío, me encantaría escucharte.",
     "email": "Enviar un correo",
     "made": "Hecho con",
-    "by": "por Nicolás Fernández"
+    "by": "por Nicolás Fernández",
+    "privacy": "Privacidad"
   },
   "Home": {
     "title": "Inicio",
@@ -412,7 +413,9 @@
     "mexxDescription": "Caso de estudio UX/UI: rediseño de Mexx, el retailer tech más grande de Argentina. Carrito persistente y costos transparentes validados con Maze y UXTweak.",
     "gymTitle": "GymSmartAccess — Caso de Estudio Full Stack",
     "gymDescription": "Caso de estudio Full Stack. Plataforma de gestión de gimnasios con pagos automáticos vía Mercado Pago y acceso QR, desarrollada con Next.js y Supabase.",
-    "jobTitle": "Desarrollador Full Stack & Diseñador UX/UI"
+    "jobTitle": "Desarrollador Full Stack & Diseñador UX/UI",
+    "privacyTitle": "Política de privacidad",
+    "privacyDescription": "Qué datos recoge este portafolio, para qué se usan y cómo pedir que los borre. Sin publicidad, sin perfilado y sin seguimiento entre sitios."
   },
   "Resume": {
     "title": "Curriculum Vitae",
@@ -515,5 +518,27 @@
       "goToPage": "Ir a la página {page}",
       "titleSuffix": "Página {page}"
     }
+  },
+  "Privacy": {
+    "title": "Política de privacidad",
+    "updated": "Última actualización: 6 de septiembre de 2026",
+    "intro": "Este es mi portafolio personal. No vendo nada, no hay cuentas de usuario y no vivo de tus datos. Aun así, un sitio que recibe mensajes y mide visitas recoge alguna información, y esta página cuenta exactamente cuál y para qué.",
+    "dataTitle": "Qué datos se recogen",
+    "dataIntro": "Sólo tres cosas, y ninguna se activa sin que hagas algo primero.",
+    "dataContact": "Formulario de contacto. Guardo el nombre, el correo y el mensaje que escribís, porque sin eso no puedo responderte. Junto a cada mensaje quedan también tu dirección IP, el navegador y el idioma del sitio: eso no lo uso para identificarte, sino para distinguir una persona de un bot cuando llega spam.",
+    "dataAnalytics": "Analítica. Uso Google Analytics para saber qué secciones resultan útiles y cuáles no lee nadie. Está desactivado hasta que lo aceptás en el aviso de cookies: si no aceptás, no se carga ninguna cookie de medición y el sitio funciona igual. No hay publicidad, ni perfilado, ni seguimiento entre sitios.",
+    "dataPreferences": "Preferencias del navegador. Tu decisión sobre las cookies y el tema claro u oscuro se guardan en tu propio navegador. Esos valores no viajan a ningún servidor: viven en tu equipo y los borrás limpiando los datos del sitio.",
+    "useTitle": "Para qué se usan",
+    "useBody": "Los mensajes, para responderte. La analítica, para decidir qué escribir y qué mejorar. Nada más. No vendo datos, no los cedo a anunciantes y no armo perfiles de nadie.",
+    "sharingTitle": "Quién más los toca",
+    "sharingBody": "Los servicios que hacen funcionar el sitio, y sólo en lo que les toca: Vercel lo aloja, Supabase guarda la base de datos y los archivos, un proveedor de correo me avisa cuando llega un mensaje, y Google Analytics recibe la medición si diste tu consentimiento. Ninguno recibe tus datos para usarlos por su cuenta.",
+    "retentionTitle": "Cuánto tiempo se guardan",
+    "retentionBody": "Los mensajes quedan mientras la conversación tenga sentido, y los borro cuando dejan de tenerlo. La analítica se conserva agregada, según los plazos de Google Analytics. Si querés que borre tu mensaje antes, pedímelo y listo.",
+    "rightsTitle": "Tus derechos",
+    "rightsBody": "Podés pedirme acceso a lo que tengo tuyo, que lo corrija o que lo elimine, y no hace falta que expliques por qué. En Argentina esto lo ampara la Ley 25.326 de Protección de los Datos Personales; si escribís desde la Unión Europea, el RGPD te da los mismos derechos y algunos más. Escribime y lo resuelvo.",
+    "contactTitle": "Cómo contactarme",
+    "contactBody": "Por correo a contacto@nicolasarielfernandez.com o desde el formulario de contacto del sitio.",
+    "changesTitle": "Cambios",
+    "changesBody": "Si esto cambia, actualizo la fecha del encabezado. No hay letra chica ni versiones anteriores escondidas: lo que leés acá es lo que hace el sitio hoy."
   }
 }

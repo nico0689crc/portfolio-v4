@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl';
 import { Github, Linkedin, Mail, Heart } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
 import Link from 'next/link';
+import { Link as LocalizedLink } from '@/i18n/routing';
 import { Button } from '@/components/ui/button';
 import { buttonVariants } from '@/components/ui/button-variants';
 import { cn } from '@/lib/utils';
@@ -70,8 +71,14 @@ export function Footer() {
       </div>
 
       <div className="border-t border-primary-foreground/10 py-6">
-        <p className="text-center text-primary-foreground/40 flex items-center justify-center gap-1">
+        <p className="text-center text-primary-foreground/40 flex flex-wrap items-center justify-center gap-1">
           {t("made")} <Heart className="w-3.5 h-3.5 text-accent" /> {t("by")} · {new Date().getFullYear()}
+          <span aria-hidden>·</span>
+          {/* `LocalizedLink` y no `next/link`: la ruta está traducida
+              (/privacidad en español) y el href se resuelve por locale. */}
+          <LocalizedLink href="/privacy" className="hover:text-primary-foreground transition-colors underline-offset-4 hover:underline">
+            {t("privacy")}
+          </LocalizedLink>
         </p>
       </div>
     </footer>
