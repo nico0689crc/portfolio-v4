@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Reveal } from "@/components/ui/reveal";
+import DefaultCover from "./DefaultCover";
 // Directo al módulo y no al barrel de `@/lib/content`: ese reexporta `cache.ts`,
 // que importa `revalidateTag`, y desde un componente cliente eso arrastra código
 // de servidor al bundle y rompe la compilación.
@@ -97,13 +98,19 @@ const BlogList = ({ posts, locale }: { posts: PostSummary[]; locale: string }) =
                 as="article"
               >
                 <div className="relative aspect-video overflow-hidden bg-muted">
-                  <Image
-                    src={coverSrc(post)}
-                    alt={post.coverAlt ?? ""}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
+                  <div className="absolute inset-0 transition-transform duration-300 group-hover:scale-105">
+                    {coverSrc(post) ? (
+                      <Image
+                        src={coverSrc(post)!}
+                        alt={post.coverAlt ?? ""}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <DefaultCover />
+                    )}
+                  </div>
                 </div>
 
                 <div className="p-6 flex flex-col flex-1">
