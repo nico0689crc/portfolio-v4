@@ -9,7 +9,7 @@ ogTitle: "Cada vez que mejoro el SEO de una página, también mejora su UX"
 ogDescription: "Por qué SEO y experiencia de usuario dejaron de ser objetivos en tensión, con ejemplos concretos."
 coverAlt: "Interfaz con superposición de señales de SEO y de accesibilidad coincidiendo"
 status: published
-publishedAt: 2027-02-08
+publishedAt: 2026-12-14
 tags: seo, diseno-ui, rendimiento
 imagePrompt: "Editorial vector illustration, two abstract overlapping circles perfectly aligned, one made of search-ranking marks and one made of interface elements, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

@@ -9,7 +9,7 @@ ogTitle: "A field marked red while you're still typing isn't help, it's harassme
 ogDescription: "The criteria for deciding when to validate a form in real time and when to wait for submission."
 coverAlt: "Form field showing validation at the right moment, not too early"
 status: published
-publishedAt: 2027-07-26
+publishedAt: 2027-05-24
 tags: diseno-ui, react
 ---
 

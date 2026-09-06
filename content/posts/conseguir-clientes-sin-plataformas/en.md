@@ -9,7 +9,7 @@ ogTitle: "A platform solves today and charges you to solve it again tomorrow"
 ogDescription: "What to build instead of depending exclusively on platforms to find your next client."
 coverAlt: "A personal network directly connected, bypassing a central intermediary"
 status: published
-publishedAt: 2027-07-12
+publishedAt: 2027-05-10
 tags: carrera, negocio
 ---
 

@@ -9,7 +9,7 @@ ogTitle: "Diez proyectos mediocres comunican menos que tres bien contados"
 ogDescription: "El criterio que uso para curar qué entra a mi portafolio, más allá de cuánto trabajo llevó cada proyecto."
 coverAlt: "Selección curada de proyectos de portafolio, con algunos descartados conscientemente"
 status: published
-publishedAt: 2027-08-23
+publishedAt: 2027-06-21
 tags: carrera, producto
 imagePrompt: "Editorial vector illustration, an abstract gallery wall with a few carefully framed pieces and empty space deliberately left around them, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

@@ -9,7 +9,7 @@ ogTitle: "La pregunta que más dice no es sobre tecnología"
 ogDescription: "Diez preguntas para la primera llamada con un freelancer, y qué revela cada una."
 coverAlt: "Lista de preguntas para una entrevista con un desarrollador freelance"
 status: published
-publishedAt: 2027-03-15
+publishedAt: 2027-01-11
 tags: negocio, producto
 imagePrompt: "Editorial vector illustration, an abstract interview checklist with a magnifying glass hovering over one key question, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

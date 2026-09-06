@@ -9,7 +9,7 @@ ogTitle: "A three-minute AI-generated sketch beats a description in a meeting"
 ogDescription: "How I fold AI into interface prototyping, and where I draw the line between exploring and deciding."
 coverAlt: "Quickly generated interface sketch next to a refined final version"
 status: published
-publishedAt: 2027-03-08
+publishedAt: 2027-01-04
 tags: ia, diseno-ui
 ---
 

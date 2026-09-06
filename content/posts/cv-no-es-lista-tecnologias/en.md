@@ -9,7 +9,7 @@ ogTitle: "\"Worked with React and Node.js\" tells nobody anything"
 ogDescription: "The change I made in how I describe my experience, from technologies used to decisions made."
 coverAlt: "Résumé comparing a generic description with a specific decision description"
 status: published
-publishedAt: 2027-02-15
+publishedAt: 2026-07-06
 tags: carrera, negocio
 ---
 

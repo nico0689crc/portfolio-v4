@@ -9,7 +9,7 @@ ogTitle: "Si tu encuesta te da la razón, probablemente esté mal escrita"
 ogDescription: "Los cuatro errores que convierten una encuesta en un espejo de lo que ya pensabas."
 coverAlt: "Formulario de encuesta con preguntas marcadas y corregidas"
 status: published
-publishedAt: 2026-09-28
+publishedAt: 2026-09-14
 tags: ux-research
 imagePrompt: "Editorial vector illustration, an abstract questionnaire form where a tilted scale balances back to level, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

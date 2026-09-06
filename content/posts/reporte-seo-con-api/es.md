@@ -9,7 +9,7 @@ ogTitle: "Un dashboard que revisás una vez al mes es un dashboard que casi no s
 ogDescription: "Cómo conecté Search Console y GA4 por API para que el SEO deje de ser una revisión mensual."
 coverAlt: "Panel de métricas de SEO con datos de Search Console y Google Analytics integrados"
 status: published
-publishedAt: 2027-06-28
+publishedAt: 2027-04-26
 tags: seo, negocio
 imagePrompt: "Editorial vector illustration, an abstract data stream flowing from two separate sources merging into one unified readable panel, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

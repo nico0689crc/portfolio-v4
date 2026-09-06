@@ -9,7 +9,7 @@ ogTitle: "I chose who not to sell to before I chose the framework"
 ogDescription: "The decisions that determine whether a SaaS works, and none of them are about code."
 coverAlt: "Diagram of business decisions preceding a product's technical architecture"
 status: published
-publishedAt: 2026-11-02
+publishedAt: 2026-09-28
 tags: producto, negocio, casos
 ---
 

@@ -9,7 +9,7 @@ ogTitle: "Una plataforma resuelve hoy y cobra por resolverlo mañana también"
 ogDescription: "Qué construir en vez de depender exclusivamente de plataformas para conseguir el próximo cliente."
 coverAlt: "Red de contactos propia conectada directamente, sin intermediario central"
 status: published
-publishedAt: 2027-07-12
+publishedAt: 2027-05-10
 tags: carrera, negocio
 imagePrompt: "Editorial vector illustration, an abstract direct network of connected nodes bypassing a central hub, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

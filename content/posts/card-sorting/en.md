@@ -9,7 +9,7 @@ ogTitle: "I asked ten people to group 40 cards, and none grouped them the way I 
 ogDescription: "How I use card sorting to discover how people group information, before deciding a site's structure."
 coverAlt: "Content cards grouped into different categories on a table"
 status: published
-publishedAt: 2027-02-22
+publishedAt: 2026-12-21
 tags: ux-research
 ---
 

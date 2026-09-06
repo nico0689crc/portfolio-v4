@@ -9,7 +9,7 @@ ogTitle: "Dentro de un año, nadie va a recordar por qué elegimos esto — ni s
 ogDescription: "Por qué documento el razonamiento detrás de una decisión técnica, no solo la decisión misma."
 coverAlt: "Documento de arquitectura explicando el razonamiento detrás de una decisión técnica"
 status: published
-publishedAt: 2027-08-16
+publishedAt: 2027-06-14
 tags: casos, producto
 imagePrompt: "Editorial vector illustration, an abstract branching decision path with one branch highlighted and annotated, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

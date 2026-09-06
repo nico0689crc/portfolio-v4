@@ -9,7 +9,7 @@ ogTitle: "90% of a site doesn't need JavaScript in the browser"
 ogDescription: "The criteria I use to choose between Server and Client Components in every component of a real project."
 coverAlt: "Component tree diagram with nodes marked as server or client"
 status: published
-publishedAt: 2026-11-09
+publishedAt: 2026-10-05
 tags: nextjs, react, rendimiento
 ---
 

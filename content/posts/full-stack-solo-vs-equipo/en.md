@@ -9,7 +9,7 @@ ogTitle: "The right question isn't which is better, it's which one you need"
 ogDescription: "An objective criteria for deciding between a full stack developer and a team, based on the project."
 coverAlt: "Comparison between a full stack developer and a distributed team on a project"
 status: published
-publishedAt: 2027-03-22
+publishedAt: 2027-01-18
 tags: negocio, producto
 ---
 

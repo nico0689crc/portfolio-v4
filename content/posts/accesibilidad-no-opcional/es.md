@@ -9,7 +9,7 @@ ogTitle: "Lo que se diseña sin accesibilidad, se rehace con accesibilidad"
 ogDescription: "Los tres chequeos que integro desde el primer componente, porque agregarlos después cuesta el doble."
 coverAlt: "Interfaz con indicadores de foco de teclado y contraste de color marcados"
 status: published
-publishedAt: 2026-11-16
+publishedAt: 2026-07-20
 tags: accesibilidad, diseno-ui
 imagePrompt: "Editorial vector illustration, an abstract interface component with a visible focus ring and contrast indicator, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

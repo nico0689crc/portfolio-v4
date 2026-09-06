@@ -9,7 +9,7 @@ ogTitle: "A design system nobody reuses is a component library with a fancier na
 ogDescription: "When a design system is worth the investment, and when it's work spent on flexibility nobody will use."
 coverAlt: "Library of interface components organized hierarchically"
 status: published
-publishedAt: 2027-01-04
+publishedAt: 2026-08-17
 tags: design-systems, diseno-ui
 ---
 

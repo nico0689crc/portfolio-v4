@@ -9,7 +9,7 @@ ogTitle: "If your UX persona didn't change your mind, it didn't do its job"
 ogDescription: "How I build personas that get used, instead of ending up pinned to a wall."
 coverAlt: "UX persona card with behavioural data instead of a stock photo"
 status: published
-publishedAt: 2026-12-14
+publishedAt: 2026-10-26
 tags: ux-research, producto
 ---
 

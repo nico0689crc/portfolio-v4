@@ -9,7 +9,7 @@ ogTitle: "Diez mil usuarios registrados no pagan ninguna cuenta"
 ogDescription: "Las métricas que realmente sigo en un SaaS chico, y por qué las más impresionantes no son las más útiles."
 coverAlt: "Panel de métricas mostrando indicadores reales de retención en vez de solo totales"
 status: published
-publishedAt: 2027-08-09
+publishedAt: 2027-06-07
 tags: negocio, producto
 imagePrompt: "Editorial vector illustration, an abstract dashboard where one large flashy number sits dimmed and a smaller quiet number glows with real significance, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

@@ -9,7 +9,7 @@ ogTitle: "10 ideas, 6 sobrevivieron, y ninguna se salvó por ser la favorita de 
 ogDescription: "La matriz que uso para priorizar ideas de diseño y producto sin que gane la más ruidosa."
 coverAlt: "Matriz de priorización con ideas ubicadas según valor y dificultad"
 status: published
-publishedAt: 2026-12-28
+publishedAt: 2026-11-09
 tags: producto, diseno-ui
 imagePrompt: "Editorial vector illustration, an abstract 2x2 matrix grid with geometric shapes scattered across quadrants, some highlighted, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

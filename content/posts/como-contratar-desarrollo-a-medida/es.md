@@ -9,7 +9,7 @@ ogTitle: "El contrato no te protege de un mal alcance. La conversación de la se
 ogDescription: "La guía que le daría a cualquiera antes de contratar su primer desarrollo a medida."
 coverAlt: "Lista de verificación para contratar un desarrollo de software a medida"
 status: published
-publishedAt: 2026-11-30
+publishedAt: 2026-07-13
 tags: negocio, producto
 imagePrompt: "Editorial vector illustration, an abstract handshake formed from geometric puzzle pieces fitting together, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

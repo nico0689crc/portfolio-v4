@@ -9,7 +9,7 @@ ogTitle: "Ningún dispositivo real respeta tus tres breakpoints"
 ogDescription: "El cambio de criterio que hice en diseño responsive: de tamaños fijos de pantalla a puntos donde el contenido realmente se rompe."
 coverAlt: "Layout de interfaz adaptándose fluidamente entre distintos anchos de pantalla"
 status: published
-publishedAt: 2027-05-03
+publishedAt: 2027-03-01
 tags: diseno-ui, react
 imagePrompt: "Editorial vector illustration, an abstract flexible grid of blocks reflowing smoothly across a continuous width gradient, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

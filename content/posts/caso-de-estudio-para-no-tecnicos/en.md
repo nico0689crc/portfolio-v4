@@ -9,7 +9,7 @@ ogTitle: "An HR recruiter doesn't know what a tree test is, and that's fine"
 ogDescription: "How I write a case study that's rigorous for a designer and understandable for anyone else."
 coverAlt: "UX case study with the same content explained at two levels of detail"
 status: published
-publishedAt: 2027-08-30
+publishedAt: 2027-06-28
 tags: diseno-ui, carrera
 ---
 

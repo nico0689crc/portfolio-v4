@@ -9,7 +9,7 @@ ogTitle: "Every time I improve a page's SEO, its UX improves too"
 ogDescription: "Why SEO and user experience stopped being goals in tension, with concrete examples."
 coverAlt: "Interface with overlapping SEO and accessibility signals aligning"
 status: published
-publishedAt: 2027-02-08
+publishedAt: 2026-12-14
 tags: seo, diseno-ui, rendimiento
 ---
 

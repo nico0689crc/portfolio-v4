@@ -9,7 +9,7 @@ ogTitle: "The fastest image is the one you never had to download"
 ogDescription: "How I optimize images in Next.js without visual quality taking a hit."
 coverAlt: "Comparison of one image at different sizes and compression formats"
 status: published
-publishedAt: 2027-04-05
+publishedAt: 2027-02-01
 tags: nextjs, rendimiento
 ---
 

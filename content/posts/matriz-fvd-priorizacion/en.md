@@ -9,7 +9,7 @@ ogTitle: "10 ideas, 6 survived, and none of them survived for being anyone's fav
 ogDescription: "The matrix I use to prioritize design and product ideas without the loudest one winning."
 coverAlt: "Prioritization matrix with ideas plotted by value and difficulty"
 status: published
-publishedAt: 2026-12-28
+publishedAt: 2026-11-09
 tags: producto, diseno-ui
 ---
 

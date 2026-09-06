@@ -9,7 +9,7 @@ ogTitle: "El número que digo primero no es el que se me ocurre, es el que calcu
 ogDescription: "Cómo decido mi tarifa como freelance con un criterio, en vez de con la incomodidad del momento."
 coverAlt: "Balanza comparando el valor del trabajo con el precio cobrado"
 status: published
-publishedAt: 2027-03-29
+publishedAt: 2027-01-25
 tags: carrera, negocio
 imagePrompt: "Editorial vector illustration, an abstract balance scale weighing a geometric value shape against a price tag shape, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

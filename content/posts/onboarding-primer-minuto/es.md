@@ -9,7 +9,7 @@ ogTitle: "Un onboarding no enseña a usar el producto, demuestra por qué usarlo
 ogDescription: "El criterio que uso para diseñar el primer minuto de un producto, que es el que decide si alguien vuelve."
 coverAlt: "Pantalla de bienvenida de un producto mostrando su primer valor concreto"
 status: published
-publishedAt: 2027-04-26
+publishedAt: 2027-02-22
 tags: producto, diseno-ui
 imagePrompt: "Editorial vector illustration, an abstract open door with a single glowing path leading directly to a value marker, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

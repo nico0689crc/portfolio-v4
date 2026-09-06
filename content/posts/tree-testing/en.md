@@ -9,7 +9,7 @@ ogTitle: "Renaming one category nearly doubled how often people found it"
 ogDescription: "How to test whether your menu makes sense, before designing on top of it."
 coverAlt: "Site category tree with navigation paths highlighted"
 status: published
-publishedAt: 2026-10-05
+publishedAt: 2026-09-21
 tags: ux-research
 ---
 

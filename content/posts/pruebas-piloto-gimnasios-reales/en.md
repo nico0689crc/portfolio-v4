@@ -9,7 +9,7 @@ ogTitle: "The gym's wifi wasn't the same as my apartment's"
 ogDescription: "What real-context pilot testing revealed that no controlled test would have shown."
 coverAlt: "Access monitor screen installed at a real gym's front desk"
 status: published
-publishedAt: 2027-06-07
+publishedAt: 2027-04-05
 tags: casos, ux-research, producto
 ---
 

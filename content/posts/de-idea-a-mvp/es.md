@@ -9,7 +9,7 @@ ogTitle: "Un MVP no es tu producto con menos cosas"
 ogDescription: "Cómo decidir qué entra en la primera versión, con las decisiones reales de un SaaS en producción."
 coverAlt: "Diagrama de alcance de producto con funcionalidades dentro y fuera de la primera versión"
 status: published
-publishedAt: 2026-09-21
+publishedAt: 2026-08-10
 tags: producto, negocio
 imagePrompt: "Editorial vector illustration, an abstract funnel narrowing many geometric shapes down to one solid shape, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

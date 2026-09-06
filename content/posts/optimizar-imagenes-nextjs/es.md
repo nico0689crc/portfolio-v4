@@ -9,7 +9,7 @@ ogTitle: "La imagen más rápida es la que nunca tuviste que descargar"
 ogDescription: "Cómo optimizo imágenes en Next.js sin que la calidad visual se resienta."
 coverAlt: "Comparación de una imagen en distintos tamaños y formatos de compresión"
 status: published
-publishedAt: 2027-04-05
+publishedAt: 2027-02-01
 tags: nextjs, rendimiento
 imagePrompt: "Editorial vector illustration, an abstract image icon splitting into multiple sized versions of itself flowing toward different device shapes, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

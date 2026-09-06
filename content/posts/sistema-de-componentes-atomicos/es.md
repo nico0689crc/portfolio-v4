@@ -9,7 +9,7 @@ ogTitle: "Un componente reutilizable no sabe en qué pantalla está"
 ogDescription: "El criterio real detrás del atomic design, más allá de la nomenclatura de átomos y moléculas."
 coverAlt: "Componentes de interfaz organizados de piezas pequeñas a pantallas completas"
 status: published
-publishedAt: 2026-11-23
+publishedAt: 2026-10-12
 tags: design-systems, react, diseno-ui
 imagePrompt: "Editorial vector illustration, small abstract geometric pieces assembling upward into larger composite shapes, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

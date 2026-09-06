@@ -9,7 +9,7 @@ ogTitle: "\"It's an MVP\" is not an excuse for shipping something broken"
 ogDescription: "Minimum and viable are two words, and the second one is usually ignored."
 coverAlt: "Comparison between a small working product and an incomplete version"
 status: published
-publishedAt: 2026-10-12
+publishedAt: 2026-08-24
 tags: producto, negocio
 ---
 

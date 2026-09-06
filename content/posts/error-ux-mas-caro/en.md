@@ -9,7 +9,7 @@ ogTitle: "Finishing the test isn't the same as having no more findings"
 ogDescription: "The mistake I've seen repeated the most in UX projects, with my own example that I documented instead of hiding."
 coverAlt: "Research report with one finding marked as pending"
 status: published
-publishedAt: 2027-01-11
+publishedAt: 2026-11-16
 tags: ux-research, producto
 ---
 

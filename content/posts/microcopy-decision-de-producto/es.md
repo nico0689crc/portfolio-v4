@@ -9,7 +9,7 @@ ogTitle: "\"Algo salió mal\" no es un mensaje de error, es una forma de lavarse
 ogDescription: "Por qué el texto de la interfaz decide tanto como el diseño visual, y por qué se suele escribir de último."
 coverAlt: "Botón de interfaz con múltiples variantes de texto probadas"
 status: published
-publishedAt: 2026-12-21
+publishedAt: 2026-11-02
 tags: diseno-ui, producto
 imagePrompt: "Editorial vector illustration, an abstract button shape with speech-bubble fragments emerging from it in different directions, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

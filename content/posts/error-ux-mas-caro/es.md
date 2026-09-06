@@ -9,7 +9,7 @@ ogTitle: "Terminar el test no es lo mismo que no tener más hallazgos"
 ogDescription: "El error que más veces vi repetirse en proyectos de UX, con un ejemplo propio que dejé documentado en vez de esconder."
 coverAlt: "Informe de research con un hallazgo marcado como pendiente"
 status: published
-publishedAt: 2027-01-11
+publishedAt: 2026-11-16
 tags: ux-research, producto
 imagePrompt: "Editorial vector illustration, an abstract checklist where one item remains visibly unchecked among completed ones, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

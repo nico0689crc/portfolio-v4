@@ -9,7 +9,7 @@ ogTitle: "El 90% de un sitio no necesita JavaScript en el navegador"
 ogDescription: "El criterio que uso para elegir entre Server y Client Components en cada componente de un proyecto real."
 coverAlt: "Diagrama de árbol de componentes con nodos marcados como servidor o cliente"
 status: published
-publishedAt: 2026-11-09
+publishedAt: 2026-10-05
 tags: nextjs, react, rendimiento
 imagePrompt: "Editorial vector illustration, an abstract component tree split into two zones, solid nodes on one side and outlined interactive nodes on the other, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

@@ -9,7 +9,7 @@ ogTitle: "El wifi del gimnasio no era el mismo que el de mi departamento"
 ogDescription: "Lo que las pruebas piloto en contexto real revelaron que ningún test controlado hubiera mostrado."
 coverAlt: "Pantalla de monitor de acceso instalada en la recepción real de un gimnasio"
 status: published
-publishedAt: 2027-06-07
+publishedAt: 2027-04-05
 tags: casos, ux-research, producto
 imagePrompt: "Editorial vector illustration, an abstract kiosk screen installed in a real busy environment with light and motion around it, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

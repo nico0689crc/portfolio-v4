@@ -9,7 +9,7 @@ ogTitle: "Ten thousand registered users don't pay a single bill"
 ogDescription: "The metrics I actually track in a small SaaS, and why the most impressive ones aren't the most useful."
 coverAlt: "Metrics dashboard showing real retention indicators instead of just totals"
 status: published
-publishedAt: 2027-08-09
+publishedAt: 2027-06-07
 tags: negocio, producto
 ---
 

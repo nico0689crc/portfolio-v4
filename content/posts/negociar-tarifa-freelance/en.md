@@ -9,7 +9,7 @@ ogTitle: "The number I say first isn't the one that comes to mind, it's the one 
 ogDescription: "How I decide my freelance rate with criteria, instead of with the discomfort of the moment."
 coverAlt: "Balance scale comparing the value of the work with the price charged"
 status: published
-publishedAt: 2027-03-29
+publishedAt: 2027-01-25
 tags: carrera, negocio
 ---
 

@@ -9,7 +9,7 @@ ogTitle: "If your survey agrees with you, it's probably badly written"
 ogDescription: "The four mistakes that turn a survey into a mirror of what you already thought."
 coverAlt: "Survey form with questions marked up and corrected"
 status: published
-publishedAt: 2026-09-28
+publishedAt: 2026-09-14
 tags: ux-research
 ---
 

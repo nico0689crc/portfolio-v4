@@ -9,7 +9,7 @@ ogTitle: "El estado que menos se diseña es el que más frustra cuando aparece"
 ogDescription: "El criterio para diseñar estados de error que no dejen a nadie sin salida."
 coverAlt: "Interfaz mostrando un estado de error con una acción clara para continuar"
 status: published
-publishedAt: 2027-06-21
+publishedAt: 2027-04-19
 tags: diseno-ui, producto
 imagePrompt: "Editorial vector illustration, an abstract interface panel showing a broken path that reconnects to a clear alternate route, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

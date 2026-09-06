@@ -9,7 +9,7 @@ ogTitle: "Un boceto generado por IA en tres minutos vale más que una descripci�
 ogDescription: "Cómo integro IA en el prototipado de interfaces, y dónde trazo la línea entre explorar y decidir."
 coverAlt: "Boceto de interfaz generado rápidamente junto a una versión refinada"
 status: published
-publishedAt: 2027-03-08
+publishedAt: 2027-01-04
 tags: ia, diseno-ui
 imagePrompt: "Editorial vector illustration, an abstract rough sketch interface rapidly solidifying into a refined polished version, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

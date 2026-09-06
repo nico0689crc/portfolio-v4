@@ -9,7 +9,7 @@ ogTitle: "El día que cambiaron el color de marca en una sola línea"
 ogDescription: "Cómo organizo los design tokens para que un cambio de diseño sea un cambio de código, y no una búsqueda componente por componente."
 coverAlt: "Paleta de colores organizada en capas de tokens primitivos y semánticos"
 status: published
-publishedAt: 2026-10-26
+publishedAt: 2026-07-27
 tags: design-systems, diseno-ui, react
 imagePrompt: "Editorial vector illustration, abstract layered swatches flowing from a design panel into stacked code brackets, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

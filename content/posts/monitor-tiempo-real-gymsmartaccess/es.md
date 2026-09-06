@@ -9,7 +9,7 @@ ogTitle: "El mejor dashboard, acá, era el que menos se parecía a un dashboard"
 ogDescription: "Cómo diseñé una pantalla para que un recepcionista la entienda sin leer una palabra."
 coverAlt: "Pantalla de monitor con un solo estado grande y claro, sin texto adicional"
 status: published
-publishedAt: 2027-02-01
+publishedAt: 2026-12-07
 tags: diseno-ui, casos, producto
 imagePrompt: "Editorial vector illustration, a single oversized traffic-light style status indicator on an otherwise empty screen, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

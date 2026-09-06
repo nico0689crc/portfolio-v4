@@ -9,7 +9,7 @@ ogTitle: "\"Es un MVP\" no es excusa para entregar algo roto"
 ogDescription: "Mínimo y viable son dos palabras, y casi siempre se ignora la segunda."
 coverAlt: "Comparación entre un producto mínimo funcional y una versión incompleta"
 status: published
-publishedAt: 2026-10-12
+publishedAt: 2026-08-24
 tags: producto, negocio
 imagePrompt: "Editorial vector illustration, two abstract vehicles side by side, one small but complete and one that is half-built, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

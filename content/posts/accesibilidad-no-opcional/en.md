@@ -9,7 +9,7 @@ ogTitle: "What gets designed without accessibility gets rebuilt with accessibili
 ogDescription: "The three checks I build in from the first component, because adding them later costs twice as much."
 coverAlt: "Interface with keyboard focus indicators and colour contrast markers"
 status: published
-publishedAt: 2026-11-16
+publishedAt: 2026-07-20
 tags: accesibilidad, diseno-ui
 ---
 

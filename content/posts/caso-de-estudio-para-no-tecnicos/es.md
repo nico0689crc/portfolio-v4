@@ -9,7 +9,7 @@ ogTitle: "Un directorio de RR.HH. no sabe qué es un tree test, y eso está bien
 ogDescription: "Cómo escribo un caso de estudio que sea riguroso para un diseñador y entendible para cualquier otra persona."
 coverAlt: "Caso de estudio de UX con el mismo contenido explicado en dos niveles de detalle"
 status: published
-publishedAt: 2027-08-30
+publishedAt: 2027-06-28
 tags: diseno-ui, carrera
 imagePrompt: "Editorial vector illustration, an abstract document splitting into two parallel readable paths of different depth from the same source, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

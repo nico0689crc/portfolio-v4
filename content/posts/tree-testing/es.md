@@ -9,7 +9,7 @@ ogTitle: "Renombrar una categoría subió su hallazgo de 40% a casi el doble"
 ogDescription: "Cómo probar si tu menú se entiende, antes de diseñar sobre él."
 coverAlt: "Árbol de categorías de un sitio con caminos de navegación marcados"
 status: published
-publishedAt: 2026-10-05
+publishedAt: 2026-09-21
 tags: ux-research
 imagePrompt: "Editorial vector illustration, an abstract branching tree diagram of nested nodes with one path highlighted, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

@@ -9,7 +9,7 @@ ogTitle: "If you can't explain what an animation communicates, it's decoration"
 ogDescription: "The criteria I use to decide when a transition helps and when it just distracts, with real examples."
 coverAlt: "Interface element mid-transition showing a clear state change"
 status: published
-publishedAt: 2027-05-31
+publishedAt: 2027-03-29
 tags: diseno-ui, react
 ---
 

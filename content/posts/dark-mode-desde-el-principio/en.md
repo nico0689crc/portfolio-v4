@@ -9,7 +9,7 @@ ogTitle: "Inverting the colours isn't designing a dark theme"
 ogDescription: "What changes when dark mode is planned from the first screen, instead of bolted on at the end."
 coverAlt: "Same interface shown in light theme and dark theme"
 status: published
-publishedAt: 2027-04-12
+publishedAt: 2027-02-08
 tags: diseno-ui, design-systems
 ---
 

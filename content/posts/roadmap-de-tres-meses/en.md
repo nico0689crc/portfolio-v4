@@ -9,7 +9,7 @@ ogTitle: "A twelve-month roadmap is a story you tell yourself"
 ogDescription: "Why I prefer planning in three-month horizons instead of faking certainty over a full year."
 coverAlt: "Roadmap timeline staying sharp for a short stretch and marked uncertain afterward"
 status: published
-publishedAt: 2027-07-19
+publishedAt: 2027-05-17
 tags: producto, negocio
 ---
 

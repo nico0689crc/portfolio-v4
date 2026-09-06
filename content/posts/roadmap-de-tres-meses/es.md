@@ -9,7 +9,7 @@ ogTitle: "Un roadmap de doce meses es una historia que te contás a vos mismo"
 ogDescription: "Por qué prefiero planificar en horizontes de tres meses en vez de fingir certeza sobre un año entero."
 coverAlt: "Línea de tiempo de roadmap con un horizonte corto claro y el resto marcado como incierto"
 status: published
-publishedAt: 2027-07-19
+publishedAt: 2027-05-17
 tags: producto, negocio
 imagePrompt: "Editorial vector illustration, an abstract timeline that stays sharp and clear for a short stretch and fades into soft uncertainty afterward, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

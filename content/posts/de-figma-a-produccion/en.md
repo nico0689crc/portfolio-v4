@@ -9,7 +9,7 @@ ogTitle: "A design that can't be implemented is a design that isn't finished"
 ogDescription: "How I take a Figma file to real components, being the same person on both sides."
 coverAlt: "Figma panel next to a code editor showing the same component"
 status: published
-publishedAt: 2026-10-19
+publishedAt: 2026-08-31
 tags: diseno-ui, react, producto
 ---
 
