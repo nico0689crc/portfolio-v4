@@ -3,8 +3,8 @@ slug: auditoria-heuristica-nielsen
 title: "Cómo audito una interfaz con los 10 principios de Nielsen"
 excerpt: "Una auditoría heurística es la forma más barata de encontrar problemas reales antes de tocar un píxel. Así la hago, con lo que encontré al aplicarla sobre un e-commerce con 34 años en el mercado."
 focusKeyphrase: auditoría heurística
-seoTitle: "Auditoría heurística: cómo evaluar una interfaz con los principios de Nielsen"
-seoDescription: "Cómo hacer una auditoría heurística paso a paso con los 10 principios de usabilidad de Nielsen, con ejemplos reales de un e-commerce argentino donde 7 de 10 fallaban."
+seoTitle: "Auditoría heurística: cómo evaluar una interfaz"
+seoDescription: "Cómo hacer una auditoría heurística paso a paso con los 10 principios de Nielsen, con un caso real donde 7 de 10 principios fallaban."
 ogTitle: "7 de 10 principios de usabilidad fallaban. Y nadie lo había notado"
 ogDescription: "Cómo hacer una auditoría heurística que encuentre problemas reales, no opiniones de diseño."
 coverAlt: "Lista de verificación de principios de usabilidad sobre una interfaz"
@@ -20,7 +20,7 @@ Es también la única forma que conozco de convertir "esta interfaz está mal" e
 
 ## Qué es, en concreto
 
-Recorrer la interfaz evaluándola contra los 10 principios de usabilidad que Jakob Nielsen publicó en 1994 y que envejecieron sorprendentemente bien. No es una opinión sobre si algo se ve lindo. Es un chequeo contra criterios que existen antes de que vos llegaras al proyecto.
+Recorrer la interfaz evaluándola contra los [10 principios de usabilidad](https://www.nngroup.com/articles/ten-usability-heuristics/) que Jakob Nielsen publicó en 1994 y que envejecieron sorprendentemente bien. No es una opinión sobre si algo se ve lindo. Es un chequeo contra criterios que existen antes de que vos llegaras al proyecto.
 
 Los diez, en una línea cada uno:
 
@@ -55,7 +55,7 @@ Apliqué esto sobre la plataforma de Mexx, el retailer de tecnología más grand
 
 Ninguno de los dos hallazgos tenía que ver con lo que la interfaz parecía. Los dos costaban ventas.
 
-## Lo que la auditoría no puede hacer
+## Lo que la auditoría heurística no puede hacer
 
 Acá está el límite, y decirlo importa más que vender la técnica.
 
