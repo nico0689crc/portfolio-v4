@@ -35,7 +35,13 @@ export async function renderCvPdf(locale: string): Promise<Uint8Array> {
   );
 }
 
-/** Nombre de archivo estable y descriptivo: es como queda guardado. */
+/**
+ * El mismo nombre que tenían los archivos estáticos.
+ *
+ * No es cosmético: esas URLs pueden estar en un LinkedIn, en una firma de mail
+ * o en una postulación ya enviada. Conservarlas hace que todo eso siga
+ * resolviendo, ahora con el CV al día en vez de con la copia congelada.
+ */
 export function cvFileName(locale: string) {
-  return `Nicolas-Ariel-Fernandez-CV-${locale.toUpperCase()}.pdf`;
+  return `CV_Nicolas_Fernandez_FullStack_UXUI_${locale.toUpperCase()}.pdf`;
 }
