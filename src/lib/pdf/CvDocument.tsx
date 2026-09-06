@@ -60,25 +60,32 @@ const styles = StyleSheet.create({
   contact: { fontSize: 8, color: MUTED, marginTop: 5 },
   headerRule: { borderBottomWidth: 2, borderBottomColor: ACCENT, marginTop: 10, marginBottom: 4 },
 
+  // La separación entre secciones se reparte entre el margen del título y el
+  // del último elemento de la sección anterior. Igualar los de abajo —entrada y
+  // celda de skills— es lo que hace que todas las secciones respiren igual: sin
+  // eso el hueco variaba entre 27 y 38 puntos según qué las precediera.
   sectionTitle: {
     fontSize: 8.5,
     fontFamily: 'Helvetica-Bold',
     color: ACCENT,
     letterSpacing: 1.4,
-    marginTop: 14,
-    marginBottom: 5
+    marginTop: 15,
+    marginBottom: 6
   },
 
-  // 1.7 sobre 9pt: un resumen es lo primero que se lee y lo que más se
-  // abandona si viene apretado.
-  summary: { color: MUTED, lineHeight: 1.7 },
+  // Mismo margen inferior que una entrada, para que todas las secciones
+  // arranquen a la misma distancia de lo que las precede.
+  summary: { color: MUTED, marginBottom: 7 },
 
   // `wrap={false}` en cada entrada evita que un puesto quede partido entre dos
   // páginas, que es lo que más ensucia un CV impreso.
-  entry: { marginBottom: 8 },
-  entryTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
+  entry: { marginBottom: 7 },
+  entryTop: { flexDirection: 'row', justifyContent: 'space-between' },
   role: { fontFamily: 'Helvetica-Bold', fontSize: 10, flex: 1 },
-  dates: { fontSize: 8, color: FAINT, marginLeft: 8 },
+  // `paddingTop` compensa la diferencia de línea base entre 8pt y 10pt:
+  // react-pdf alinea las cajas por arriba y `alignItems: 'baseline'` no tiene
+  // efecto, así que sin esto la fecha queda flotando sobre el título.
+  dates: { fontSize: 8, color: FAINT, marginLeft: 8, paddingTop: 1.8 },
   org: { fontSize: 8.5, color: MUTED, marginBottom: 2.5 },
   description: { color: MUTED },
   techs: { fontSize: 7.5, color: FAINT, marginTop: 2.5 },
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
   // Dos columnas: las categorías son cortas y apiladas desperdician media
   // página que después falta para la experiencia.
   skillGrid: { flexDirection: 'row', flexWrap: 'wrap' },
-  skillCell: { width: '50%', paddingRight: 12, marginBottom: 5 },
+  skillCell: { width: '50%', paddingRight: 12, marginBottom: 7 },
   skillLabel: { fontFamily: 'Helvetica-Bold', fontSize: 8.5, marginBottom: 0.5 },
   skillList: { fontSize: 8.5, color: MUTED },
 
@@ -138,7 +145,11 @@ const orgLine = (org: string, location: string | null) => {
 };
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <View>
+  // Reserva lo justo para que el título no quede solo al pie con su contenido
+  // en la página siguiente. Cuarenta puntos alcanzan para el título más una
+  // primera línea; con sesenta empujaba una sección entera y el documento se
+  // iba de dos páginas a tres.
+  <View minPresenceAhead={40}>
     <Text style={styles.sectionTitle}>{title.toUpperCase()}</Text>
     {children}
   </View>
