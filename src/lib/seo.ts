@@ -1,7 +1,18 @@
 import type { Metadata } from 'next';
 import { getPathname, routing } from '@/i18n/routing';
 
-export const SITE_URL = 'https://nicolasarielfernandez.com';
+/**
+ * El dominio canónico, con `www`.
+ *
+ * Es el que Vercel sirve; el apex redirige 308 hacia acá. Declarar el apex
+ * —como estaba— hacía que cada canonical, cada hreflang y las dieciséis URLs
+ * del sitemap apuntaran a una dirección que redirige de vuelta a la página que
+ * las emitió. Google lo resuelve, pero es señal contradictoria y gasto de
+ * rastreo en cada página.
+ *
+ * Esta constante es el único lugar del código que fija el dominio.
+ */
+export const SITE_URL = 'https://www.nicolasarielfernandez.com';
 export const SITE_NAME = 'Nicolás Ariel Fernández';
 export const AUTHOR_EMAIL = 'contacto@nicolasarielfernandez.com';
 
