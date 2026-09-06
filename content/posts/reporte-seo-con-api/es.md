@@ -3,8 +3,8 @@ slug: como-armo-un-reporte-de-seo-con-datos-reales-por-api
 title: "Cómo armo un reporte de SEO con datos reales, por API, en vez de a ojo"
 excerpt: "Revisar el SEO de un sitio mirando el panel de Search Console una vez por mes es reactivo. Conectar sus datos por API a las decisiones que ya tomás todos los días es otra cosa."
 focusKeyphrase: reporte de SEO con API
-seoTitle: "Cómo armar un reporte de SEO conectando Search Console y GA4 por API"
-seoDescription: "Cómo conecté Search Console y GA4 por API para tener datos de SEO reales integrados al flujo de trabajo, en vez de revisar un panel una vez al mes."
+seoTitle: "Reporte de SEO con API: Search Console y GA4 conectados"
+seoDescription: "Cómo armé un reporte de SEO con API, conectando Search Console y GA4 al flujo de trabajo en vez de revisar un panel una vez al mes."
 ogTitle: "Un dashboard que revisás una vez al mes es un dashboard que casi no sirve"
 ogDescription: "Cómo conecté Search Console y GA4 por API para que el SEO deje de ser una revisión mensual."
 coverAlt: "Panel de métricas de SEO con datos de Search Console y Google Analytics integrados"
@@ -14,32 +14,38 @@ tags: seo, negocio
 imagePrompt: "Editorial vector illustration, an abstract data stream flowing from two separate sources merging into one unified readable panel, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
 
-Durante mucho tiempo, mi relación con el SEO de mis propios proyectos fue la típica: entrar a Search Console una vez al mes, mirar el panel, anotar mentalmente que "algo bajó" o "algo subió", y volver a mis tareas normales sin conectar ese dato con ninguna decisión concreta. Es mejor que no mirar nada, pero es una forma reactiva de trabajar con información que podría ser mucho más útil.
+Durante mucho tiempo mi relación con el SEO de mis proyectos fue la típica: entrar a Search Console una vez al mes, mirar el panel y anotar mentalmente que algo bajó o algo subió. Después volvía a mis tareas sin conectar ese dato con ninguna decisión. Armar un reporte de SEO con API cambió eso, porque convirtió una revisión pasiva en una fuente de datos más.
 
 ## El problema de mirar un dashboard ajeno una vez al mes
 
-Los paneles de Search Console y Google Analytics son excelentes para lo que fueron diseñados: exploración manual, puntual, con la interfaz de Google. Pero eso significa que la información vive aislada de cualquier otro sistema — no se cruza automáticamente con tus propias métricas de negocio, no dispara ninguna alerta cuando algo cambia de forma relevante, y depende de que alguien se acuerde de entrar a revisarlo.
+Los paneles de Search Console y Google Analytics son excelentes para lo que fueron diseñados: exploración manual y puntual. Pero la información vive aislada de cualquier otro sistema. No se cruza con tus métricas de negocio, no dispara alertas cuando algo cambia, y depende de que alguien se acuerde de entrar.
 
-## Lo que cambié: conectar los datos por API
+## Cómo armé el reporte de SEO con API
 
-En vez de depender de mirar el panel, conecté la API de Search Console y la API de Google Analytics 4 directamente a un flujo propio, que trae los datos de posicionamiento, clics, impresiones y las dimensiones y eventos clave configurados en GA4, y los organiza en un reporte que puedo consultar cuando quiero, con la granularidad que me importa a mí, no la que Google decidió mostrar por default.
+En vez de depender del panel, conecté la [API de Search Console](https://developers.google.com/webmaster-tools/v1/api_reference_index) y la de Google Analytics 4 a un flujo propio. Trae posicionamiento, clics, impresiones y los eventos clave configurados en GA4. Y los organiza en un reporte que consulto cuando quiero, con la granularidad que me importa a mí y no la que Google muestra por default.
 
-Esto no reemplaza los paneles nativos — sigo usándolos para investigación puntual y profunda. Los complementa con una vista que cruza la información con lo que realmente me importa monitorear: qué páginas específicas están ganando o perdiendo posiciones, qué búsquedas traen tráfico que después convierte, y qué cambios técnicos coinciden con cambios en el posicionamiento.
+Esto no reemplaza los paneles nativos: los sigo usando para investigación profunda. Los complementa con una vista de lo que me importa monitorear. Qué páginas ganan o pierden posiciones, qué búsquedas traen tráfico que después convierte, y qué cambios técnicos coinciden con cambios en el posicionamiento.
 
 ## Por qué esto importa más que "tener un dashboard lindo"
 
-El valor real no es la estética del reporte. Es que conectar los datos por API significa que puedo automatizar preguntas específicas que antes tenía que responder mirando manualmente: ¿esta página nueva empezó a indexarse? ¿el cambio que hice en un título de SEO tuvo algún efecto medible en dos semanas? ¿hay alguna página perdiendo posiciones de forma sostenida que merece atención antes de que se vuelva un problema grande?
+El valor real no es la estética del reporte. Es que los datos por API me dejan automatizar preguntas que antes contestaba mirando a mano. ¿Esta página nueva empezó a indexarse? ¿El cambio en un título tuvo efecto medible en dos semanas? ¿Hay alguna página perdiendo posiciones de forma sostenida?
 
 Sin la conexión por API, cada una de esas preguntas requiere entrar manualmente, filtrar, comparar fechas a mano. Con los datos disponibles programáticamente, se convierten en consultas que puedo correr cuando quiera, sobre datos que ya están ahí.
 
 ## El error que evité gracias a tener esto conectado
 
-Configurar bien las dimensiones y eventos clave en GA4 —cuáles cuentan como conversión, cuáles son solo navegación— no es un detalle menor. Sin esa configuración correcta, cualquier reporte que se construya encima, por API o no, va a estar contando cosas que no representan lo que realmente importa medir. Antes de conectar cualquier dato por API, me aseguré de que la definición de qué es un evento relevante en GA4 reflejara decisiones reales de negocio, no la configuración por default que viene con la plataforma.
+Configurar bien las dimensiones y eventos clave en GA4 —cuáles cuentan como conversión, cuáles son solo navegación— no es un detalle menor. Sin esa configuración, cualquier reporte construido encima cuenta cosas que no representan lo que importa medir. Antes de conectar nada, me aseguré de que la definición de evento relevante en GA4 reflejara decisiones de negocio, no la configuración por default.
 
 ## Lo que esto tiene que ver con SEO y UX
 
-Esto conecta con algo que escribí en [SEO y UX no son objetivos opuestos](/es/blog/seo-y-ux-no-son-objetivos-opuestos): las mismas señales que le importan a un buscador —velocidad, estructura, contenido que responde una pregunta real— son las que le importan a un usuario real. Tener esos datos conectados y accesibles hace más fácil verificar esa relación con evidencia, en vez de asumirla en abstracto. Si una página mejora en velocidad y en la misma ventana de tiempo mejora en posicionamiento, esa correlación es exactamente el tipo de conexión que un dashboard revisado una vez al mes deja pasar desapercibida.
+Esto conecta con [SEO y UX no son objetivos opuestos](/es/blog/seo-y-ux-no-son-objetivos-opuestos). Las mismas señales que le importan a un buscador, velocidad, estructura y contenido que responde una pregunta real, son las que le importan a una persona. Tener los datos accesibles hace más fácil verificar esa relación con evidencia. Si una página mejora en velocidad y en la misma ventana mejora en posicionamiento, eso es justo lo que un panel mensual deja pasar.
+
+## Cada cuánto lo miro
+
+Una vez por semana, y toma cinco minutos. No porque el SEO se mueva rápido, sino porque revisarlo seguido y en poco tiempo es lo que hace que no se convierta en una tarea que se posterga.
+
+Lo que miro es siempre lo mismo: páginas que se movieron más de tres posiciones, búsquedas nuevas que aparecieron, y páginas que perdieron clics sin perder impresiones. Ese último caso casi siempre es un título o una descripción que dejó de funcionar.
 
 ## La regla práctica que me queda
 
-No hace falta un sistema elaborado desde el primer día. Lo que sí hace falta es dejar de tratar el SEO como una revisión pasiva mensual y empezar a tratarlo como una fuente de datos más, integrable a las decisiones que ya se toman todo el tiempo sobre el producto. La diferencia entre las dos formas de trabajar no es la cantidad de datos disponibles —Google ya te los da gratis en el panel—, es qué tan fácil es convertir esos datos en una pregunta específica que podés contestar cuando la necesitás, no solo cuando te acordás de mirar.
+No hace falta un sistema elaborado desde el primer día. Hace falta dejar de tratar el SEO como una revisión mensual y empezar a tratarlo como una fuente de datos más. La diferencia no es la cantidad de datos disponibles, porque Google ya te los da gratis. Es qué tan fácil resulta convertirlos en una pregunta concreta que podés contestar cuando la necesitás.
