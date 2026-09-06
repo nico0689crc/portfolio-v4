@@ -18,12 +18,12 @@
     "title": "Home",
     "welcome": "Welcome to my portfolio.",
     "hero": {
-      "badge": "Available for remote work",
+      "badge": "Open to remote roles and custom projects",
       "title": {
         "1": "Web development with",
         "2": "design vision"
       },
-      "subtitle": "Full Stack Developer & UX/UI Designer. I build scalable, intuitive digital products with real impact.",
+      "subtitle": "Full Stack Developer & UX/UI Designer with {years}+ years of experience. I build custom software for businesses and scalable, intuitive digital products with real impact.",
       "location": "Argentina · Worldwide remote",
       "cta": {
         "projects": "View Projects",
@@ -32,7 +32,7 @@
     },
     "shortAbout": {
       "title": "A bit about me",
-      "desc": "I am a Full Stack Developer and UX/UI Design Student dedicated to building robust and memorable digital tools. I actively leverage Artificial Intelligence in my workflows to accelerate development and maintain flawless code. I prioritize server-side scalability while designing interfaces that end-users actually enjoy using.",
+      "desc": "I'm a Full Stack Developer with a background in UX/UI Design, dedicated to building robust and memorable software — from custom projects for businesses to products for engineering teams. I actively leverage Artificial Intelligence in my workflows to accelerate development and maintain flawless code. I prioritize server-side scalability while designing interfaces that end-users actually enjoy using.",
       "cv": "Download CV",
       "cvUrl": "/CV_Nicolas_Fernandez_FullStack_UXUI_EN.pdf"
     },
@@ -52,13 +52,34 @@
         "desc": "Every line of code I write has the user in mind. I design intuitive, accessible, and efficient interfaces that solve real problems."
       },
       "soft": {
-        "title": "Collaborative Mindset",
-        "desc": "I believe in assertive communication and teamwork as pillars of success. I adapt quickly to new challenges, bringing proactivity and practical solutions to the project."
+        "title": "Communication & Ownership",
+        "desc": "I work with direct, assertive communication, taking ownership of the project end to end. I adapt quickly to new contexts, whether embedded in a team or leading a custom build on my own."
       },
       "fullstack": {
         "title": "Full Stack Vision",
-        "desc": "From wireframe to deploy. I handle the entire product lifecycle: design, frontend, backend, databases, and infrastructure."
+        "desc": "From wireframe to deploy. I handle the entire product lifecycle —design, frontend, backend, databases, and infrastructure— ideal both for joining an engineering team and for leading a custom software project solo."
       }
+    },
+    "howWeWork": {
+      "title": "How I Work",
+      "subtitle": "A clear process to take your project from end to end, whether you're adding me to a team or hiring me for a custom build.",
+      "discovery": {
+        "title": "Discovery",
+        "desc": "I dig deep into your need and the product's goal before writing a single line of code."
+      },
+      "design": {
+        "title": "Design & Planning",
+        "desc": "I define the architecture, the UX/UI design, and break the project into clear, measurable stages."
+      },
+      "development": {
+        "title": "Modular Development",
+        "desc": "I build iteratively, shipping functional versions in short cycles so progress can be validated."
+      },
+      "delivery": {
+        "title": "Delivery & Maintenance",
+        "desc": "I deploy to production with clean, scalable, optimized code, and support you after launch."
+      },
+      "cta": "Let's talk about your project"
     }
   },
   "About": {
@@ -307,7 +328,7 @@
         "ideate": "Used Lean UX Canvas + FVD Matrix to prioritize 10 ideas. Selected 6 solutions: persistent cart (DB sync instead of localStorage), transparent floating cost breakdown, digital product label, express login modal, guest checkout, and magic link cart recovery. Discarded 4 low-value ideas: WhatsApp cart integration, AFIP tax calculator, AI chatbot, and gamification.",
         "prototype": "Built a high-fidelity interactive prototype in Figma covering both complete flows. Designed a full design system: Mexx red (#E73E3E) color palette, Inter + Merriweather typography, 4px spacing system, atomic reusable components, and 6 documented UI animations (hero slider, auth modal, cost breakdown, save indicator, loading states, checkout transitions).",
         "test": "Usability testing on Maze with 10 participants across 2 tasks. Task 1 (cart continuity): 100% success rate, 32s avg time, 80% directness, 0% drop-off. Task 2 (cost transparency): 85.7% success, 71s avg, 40% directness, 14.3% drop-off (rational decision after reviewing cost — not friction). Key insight: 49-51% misclick rate reveals a header hierarchy improvement opportunity.",
-        "results": "Both hypotheses validated with real data. Cart persistence achieved perfect task completion; transparent cost breakdown eliminated surprise abandonments. The design system is scalable, documented with CSS tokens, and ready for developer handoff.",
+        "results": "Both hypotheses validated with real data. Cart persistence achieved perfect task completion; transparent cost breakdown eliminated surprise abandonments. The design system is scalable, documented with CSS tokens, and ready for developer handoff. In business terms: every friction point resolved is a sale that used to be lost — at Mexx's volume, the recovered cart and the transparent costs translate directly into conversion rate.",
         "metric1": {
           "value": "+15%",
           "label": "Projected conversion rate"

@@ -1,13 +1,16 @@
 import { Reveal } from "@/components/ui/reveal";
 import { Link } from "@/i18n/routing";
 import { ArrowDown, Mail } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 import profilePhoto from "@/assets/profile-picture.webp";
 import Image from "next/image";
+import { getYearsOfExperience } from "@/lib/content";
 
 
-export default function Hero() {
-  const t = useTranslations("Home");
+export default async function Hero() {
+  const t = await getTranslations("Home");
+  const locale = await getLocale();
+  const years = await getYearsOfExperience(locale);
   return (
     <section className="section-dark min-h-screen flex items-center relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.03]" style={{
@@ -40,7 +43,7 @@ export default function Hero() {
             </h1>
 
             <p className="text-lg md:text-xl text-primary-foreground/70 max-w-xl mb-10 leading-relaxed">
-              {t("hero.subtitle")}{" "}
+              {t("hero.subtitle", { years })}{" "}
               <span className="text-primary-foreground/50">{t("hero.location")}</span>
             </p>
 
