@@ -461,7 +461,10 @@
     "summaryTitle": "Perfil profesional",
     "rolesToggle": "Ver los {count} puestos en detalle",
     "rolesDownload": "Descargar CV extendido",
-    "downloadExtended": "También disponible: versión extendida, con los {count} puestos de la carrera gastronómica en detalle"
+    "downloadExtended": "También disponible: versión extendida, con los {count} puestos de la carrera gastronómica en detalle",
+    "versionShort": "Resumida",
+    "versionExtended": "Extendida",
+    "versionPick": "Elegir versión"
   },
   "Consent": {
     "title": "Usamos analítica anónima",

@@ -462,7 +462,10 @@
     "summaryTitle": "Professional Summary",
     "rolesToggle": "See all {count} positions in detail",
     "rolesDownload": "Download extended CV",
-    "downloadExtended": "Also available: extended version, with all {count} hospitality positions in detail"
+    "downloadExtended": "Also available: extended version, with all {count} hospitality positions in detail",
+    "versionShort": "Short",
+    "versionExtended": "Extended",
+    "versionPick": "Choose version"
   },
   "Consent": {
     "title": "We use anonymous analytics",

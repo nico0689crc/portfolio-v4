@@ -2,7 +2,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Download, ArrowRight, Briefcase, GraduationCap, Award, ChevronRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { Reveal } from "@/components/ui/reveal";
-import { TrackedLink } from "@/components/analytics/tracked-link";
+import CvDownload from "./CvDownload";
 import { getResumeHighlights } from "@/lib/content";
 import type { CvData } from "@/lib/cv-schema";
 
@@ -29,6 +29,7 @@ const Resume = async ({ cv }: { cv: CvData }) => {
   const extendedCv = primaryCv.replace(/\.pdf$/, "_Extended.pdf");
   const extraRoles = cv.experiences.reduce((total, job) => total + job.roles.length, 0);
   const secondaryCv = cv.cvFiles[secondaryLocale] ?? cv.cvFiles.en;
+  const secondaryExtendedCv = secondaryCv.replace(/\.pdf$/, "_Extended.pdf");
 
   return (
     <section className="section-padding bg-background">
@@ -43,41 +44,22 @@ const Resume = async ({ cv }: { cv: CvData }) => {
           <p className="text-lg text-foreground/80 leading-relaxed mb-10">{t("intro", { years: cv.yearsOfExperience })}</p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <TrackedLink
-              href={primaryCv}
-              target="_blank"
-              rel="noopener noreferrer"
-              event={{ name: "cv_download", params: { file_language: locale, source: "resume" } }}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-accent-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity duration-200"
-            >
-              <Download className="w-5 h-5" />
-              {locale === "es" ? t("downloadEs") : t("downloadEn")}
-            </TrackedLink>
-            <TrackedLink
-              href={secondaryCv}
-              target="_blank"
-              rel="noopener noreferrer"
-              event={{ name: "cv_download", params: { file_language: secondaryLocale, source: "resume" } }}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-border text-foreground font-semibold rounded-lg hover:border-accent hover:text-accent transition-colors duration-200"
-            >
-              <Download className="w-5 h-5" />
-              {secondaryLocale === "es" ? t("downloadEs") : t("downloadEn")}
-            </TrackedLink>
+            <CvDownload
+              label={locale === "es" ? t("downloadEs") : t("downloadEn")}
+              locale={locale}
+              shortHref={primaryCv}
+              extendedHref={extraRoles > 0 ? extendedCv : null}
+              labels={{ short: t("versionShort"), extended: t("versionExtended"), pick: t("versionPick") }}
+            />
+            <CvDownload
+              label={secondaryLocale === "es" ? t("downloadEs") : t("downloadEn")}
+              locale={secondaryLocale}
+              shortHref={secondaryCv}
+              extendedHref={extraRoles > 0 ? secondaryExtendedCv : null}
+              labels={{ short: t("versionShort"), extended: t("versionExtended"), pick: t("versionPick") }}
+              variant="outline"
+            />
           </div>
-
-          {extraRoles > 0 && (
-            <p className="mt-5 text-sm text-muted-foreground">
-              <TrackedLink
-                href={extendedCv}
-                target="_blank"
-                rel="noopener noreferrer"
-                event={{ name: "cv_download", params: { file_language: locale, source: "resume_extended" } }}
-                className="text-accent font-medium hover:underline"
-              >
-                {t("downloadExtended", { count: extraRoles })}
-              </TrackedLink>
-            </p>
-          )}
 
         </Reveal>
 
