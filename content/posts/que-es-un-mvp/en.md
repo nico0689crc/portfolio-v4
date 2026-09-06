@@ -3,8 +3,8 @@ slug: what-an-mvp-is-and-isnt
 title: "What an MVP is and isn't (almost everyone defines it wrong)"
 excerpt: "The acronym gets used to justify two opposite things: shipping little and shipping badly. The difference matters, especially if you're the one paying for the build."
 focusKeyphrase: what is an MVP
-seoTitle: "What an MVP is and isn't: the definition that matters if you're paying for it"
-seoDescription: "What Minimum Viable Product actually means, how it differs from a prototype and from a trimmed-down version, and how to tell whether what you're offered is a real MVP."
+seoTitle: "What is an MVP, and what it definitely is not"
+seoDescription: "What is an MVP for real: how it differs from a prototype and from a trimmed-down version, and how to tell whether what you are offered is one."
 ogTitle: "\"It's an MVP\" is not an excuse for shipping something broken"
 ogDescription: "Minimum and viable are two words, and the second one is usually ignored."
 coverAlt: "Comparison between a small working product and an incomplete version"
@@ -41,7 +41,7 @@ The usual analogy is a good one: a scooter is an MVP of a car, because it gets y
 
 ## So what is it for?
 
-To **answer a business question you can't answer yet**, spending as little as possible.
+To **answer a business question you can't answer yet**, spending as little as possible. That's the original sense [Eric Ries](http://www.startuplessonslearned.com/2009/08/minimum-viable-product-guide.html) gave it, and the one most often lost along the way.
 
 When I built [GymSmartAccess](/en/projects/gym-smart-access), the question was whether the owner of a neighbourhood gym would pay a monthly fee to stop chasing members for payment. Everything that helped answer that went in. Everything else stayed out: advanced reports, multi-location, a native app, workout plans.
 
