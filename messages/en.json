@@ -506,7 +506,15 @@
     "toc": "In this post",
     "related": "Keep reading",
     "filter": {
-      "all": "All"
+      "all": "All",
+      "label": "Filter by topic"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {page} of {total}",
+      "goToPage": "Go to page {page}",
+      "titleSuffix": "Page {page}"
     }
   }
 }

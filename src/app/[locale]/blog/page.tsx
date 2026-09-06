@@ -1,13 +1,21 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import BlogList from '@/components/pages/blog';
+import { getBlogListing } from '@/components/pages/blog/listing';
 import { JsonLd } from '@/components/seo/json-ld';
-import { getPosts } from '@/lib/content';
 import { pageMetadata } from '@/lib/page-metadata';
 import { PERSON_ID, SITE_URL, breadcrumbSchema, jsonLdGraph, localizedUrl } from '@/lib/seo';
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ tag?: string }>;
+}): Promise<Metadata> {
   const { locale } = await params;
+  const { tag } = await searchParams;
   const t = await getTranslations({ locale, namespace: 'Blog' });
 
   // Igual que el resto de las rutas fijas: el título y la descripción salen de
@@ -15,10 +23,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   // de mensajes que nadie asocia con SEO.
   const metadata = await pageMetadata({ locale, routeKey: '/blog', href: '/blog' });
 
+  // Un tag filtrado no tiene hreflang propio (el slug del tag difiere por
+  // idioma), así que sólo se ajusta el canonical y se descarta el resto.
+  const alternates: Metadata['alternates'] = tag
+    ? { canonical: `${metadata.alternates?.canonical}?tag=${encodeURIComponent(tag)}` }
+    : { ...metadata.alternates };
+
   return {
     ...metadata,
     alternates: {
-      ...metadata.alternates,
+      ...alternates,
       // Declarar el feed acá es lo que hace que un lector lo descubra solo al
       // pegar la URL del blog, sin tener que adivinar la ruta.
       types: {
@@ -33,12 +47,21 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
-export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {
+export default async function BlogPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ tag?: string }>;
+}) {
   const { locale } = await params;
+  const { tag } = await searchParams;
   setRequestLocale(locale);
 
-  const [posts, t, tHeader] = await Promise.all([
-    getPosts(locale),
+  const listing = await getBlogListing(locale, 1, tag);
+  if (!listing) notFound();
+
+  const [t, tHeader] = await Promise.all([
     getTranslations({ locale, namespace: 'Blog' }),
     getTranslations({ locale, namespace: 'Header' }),
   ]);
@@ -54,7 +77,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
       description: t('subtitle'),
       inLanguage: locale,
       author: { '@id': PERSON_ID },
-      blogPost: posts.map((post) => ({
+      blogPost: listing.posts.map((post) => ({
         '@type': 'BlogPosting',
         headline: post.title,
         description: post.excerpt,
@@ -70,7 +93,15 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
 
   return (
     <>
-      <BlogList posts={posts} locale={locale} />
+      <BlogList
+        posts={listing.posts}
+        locale={locale}
+        tags={listing.tags}
+        activeTag={listing.activeTag}
+        totalPosts={listing.totalPosts}
+        currentPage={listing.currentPage}
+        totalPages={listing.totalPages}
+      />
       <JsonLd data={schema} />
     </>
   );

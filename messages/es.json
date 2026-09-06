@@ -505,7 +505,15 @@
     "toc": "En esta nota",
     "related": "Seguí leyendo",
     "filter": {
-      "all": "Todas"
+      "all": "Todas",
+      "label": "Filtrar por tema"
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "page": "Página {page} de {total}",
+      "goToPage": "Ir a la página {page}",
+      "titleSuffix": "Página {page}"
     }
   }
 }

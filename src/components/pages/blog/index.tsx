@@ -1,16 +1,17 @@
-"use client";
-
-import { useMemo, useState } from "react";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
 import { Reveal } from "@/components/ui/reveal";
+import { Link } from "@/i18n/routing";
 import DefaultCover from "./DefaultCover";
 // Directo al módulo y no al barrel de `@/lib/content`: ese reexporta `cache.ts`,
 // que importa `revalidateTag`, y desde un componente cliente eso arrastra código
-// de servidor al bundle y rompe la compilación.
+// de servidor al bundle y rompe la compilación. `TagFilter`/`BlogPagination` son
+// client components, así que sólo llegan tipos y helpers puros de `./pagination`.
 import { coverSrc } from "@/lib/content/storage";
 import type { PostSummary } from "@/lib/content/types";
+import type { TagWithCount } from "./pagination";
+import TagFilter from "./TagFilter";
+import BlogPagination from "./BlogPagination";
 
 /** Fecha larga en el idioma de la página, sin depender del locale del server. */
 const formatDate = (value: string, locale: string) =>
@@ -20,32 +21,18 @@ const formatDate = (value: string, locale: string) =>
     year: "numeric",
   });
 
-const ALL = "all";
+type BlogListProps = {
+  posts: PostSummary[];
+  locale: string;
+  tags: TagWithCount[];
+  activeTag: TagWithCount | null;
+  totalPosts: number;
+  currentPage: number;
+  totalPages: number;
+};
 
-const BlogList = ({ posts, locale }: { posts: PostSummary[]; locale: string }) => {
-  const t = useTranslations("Blog");
-  const [active, setActive] = useState<string>(ALL);
-
-  // Sólo las etiquetas que tienen notas. Ofrecer un filtro que devuelve una
-  // grilla vacía es peor que no ofrecerlo: el lector cree que se rompió.
-  const tags = useMemo(() => {
-    const seen = new Map<string, { slug: string; name: string; count: number }>();
-
-    for (const post of posts) {
-      for (const tag of post.tags) {
-        const entry = seen.get(tag.key);
-
-        if (entry) entry.count += 1;
-        else seen.set(tag.key, { slug: tag.slug, name: tag.name, count: 1 });
-      }
-    }
-
-    return [...seen.entries()]
-      .map(([key, value]) => ({ key, ...value }))
-      .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
-  }, [posts]);
-
-  const filtered = active === ALL ? posts : posts.filter((post) => post.tags.some((tag) => tag.key === active));
+const BlogList = async ({ posts, locale, tags, activeTag, totalPosts, currentPage, totalPages }: BlogListProps) => {
+  const t = await getTranslations({ locale, namespace: "Blog" });
 
   return (
     <section className="section-padding bg-background">
@@ -62,86 +49,78 @@ const BlogList = ({ posts, locale }: { posts: PostSummary[]; locale: string }) =
           <div className="w-12 h-1 bg-accent mx-auto rounded-full mt-4" />
         </Reveal>
 
-        {tags.length > 1 && (
-          <div className="flex flex-wrap justify-center gap-2 mb-10">
-            {[{ key: ALL, name: t("filter.all"), count: posts.length }, ...tags].map((tag) => (
-              <button
-                key={tag.key}
-                type="button"
-                onClick={() => setActive(tag.key)}
-                aria-pressed={active === tag.key}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 border ${
-                  active === tag.key
-                    ? "bg-accent text-accent-foreground border-accent shadow-md"
-                    : "bg-muted/50 text-muted-foreground border-border hover:bg-muted hover:text-foreground"
-                }`}
-              >
-                {tag.name}
-                <span className="ml-1.5 opacity-60 tabular-nums">{tag.count}</span>
-              </button>
-            ))}
-          </div>
-        )}
+        <div className="lg:grid lg:grid-cols-[240px_1fr] lg:gap-12 lg:items-start">
+          <TagFilter tags={tags} activeTag={activeTag} totalPosts={totalPosts} />
 
-        {filtered.length === 0 ? (
-          <p className="text-muted-foreground text-center py-16">{t("empty")}</p>
-        ) : (
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {filtered.map((post, index) => (
-              <Reveal
-                key={post.key}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08, duration: 0.5 }}
-                className="card-portfolio group flex flex-col"
-                as="article"
-              >
-                <div className="relative aspect-video overflow-hidden bg-muted">
-                  <div className="absolute inset-0 transition-transform duration-300 group-hover:scale-105">
-                    {coverSrc(post) ? (
-                      <Image
-                        src={coverSrc(post)!}
-                        alt={post.coverAlt ?? ""}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-cover"
-                      />
-                    ) : (
-                      <DefaultCover />
-                    )}
-                  </div>
-                </div>
-
-                <div className="p-6 flex flex-col flex-1">
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mb-3">
-                    {post.publishedAt && <time dateTime={post.publishedAt}>{formatDate(post.publishedAt, locale)}</time>}
-                    {post.readingMinutes && (
-                      <>
-                        <span aria-hidden>·</span>
-                        <span>
-                          {post.readingMinutes} {t("readingTime")}
-                        </span>
-                      </>
-                    )}
-                  </div>
-
-                  <h2 className="font-display font-bold text-xl text-foreground mb-2 group-hover:text-accent transition-colors duration-200">
-                    {post.title}
-                  </h2>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-5 flex-1">{post.excerpt}</p>
-
-                  <Link
-                    href={{ pathname: "/blog/[slug]", params: { slug: post.slug } }}
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline self-start"
+          <div>
+            {posts.length === 0 ? (
+              <p className="text-muted-foreground text-center py-16">{t("empty")}</p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+                {posts.map((post, index) => (
+                  <Reveal
+                    key={post.key}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.08, duration: 0.5 }}
+                    className="card-portfolio group flex flex-col"
+                    as="article"
                   >
-                    {t("readMore")} →
-                  </Link>
-                </div>
-              </Reveal>
-            ))}
+                    <div className="relative aspect-video overflow-hidden bg-muted">
+                      <div className="absolute inset-0 transition-transform duration-300 group-hover:scale-105">
+                        {coverSrc(post) ? (
+                          <Image
+                            src={coverSrc(post)!}
+                            alt={post.coverAlt ?? ""}
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                            className="object-cover"
+                          />
+                        ) : (
+                          <DefaultCover />
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="p-6 flex flex-col flex-1">
+                      <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mb-3">
+                        {post.publishedAt && <time dateTime={post.publishedAt}>{formatDate(post.publishedAt, locale)}</time>}
+                        {post.readingMinutes && (
+                          <>
+                            <span aria-hidden>·</span>
+                            <span>
+                              {post.readingMinutes} {t("readingTime")}
+                            </span>
+                          </>
+                        )}
+                      </div>
+
+                      <h2 className="font-display font-bold text-xl text-foreground mb-2 group-hover:text-accent transition-colors duration-200">
+                        {post.title}
+                      </h2>
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-5 flex-1">{post.excerpt}</p>
+
+                      <Link
+                        href={{ pathname: "/blog/[slug]", params: { slug: post.slug } }}
+                        className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline self-start"
+                      >
+                        {t("readMore")} →
+                      </Link>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            )}
+
+            <BlogPagination
+              locale={locale}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              activeTagSlug={activeTag?.slug ?? null}
+            />
           </div>
-        )}
+        </div>
       </div>
     </section>
   );
