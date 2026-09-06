@@ -18,7 +18,6 @@ import { updateSettings, type SettingsFormState } from '@/lib/admin/settings-act
 
 export type SettingsValues = {
   contactEmail: string
-  yearsOfExperience: number
   socialLinks: string[]
   cvFiles: { es: string; en: string }
 }
@@ -40,23 +39,13 @@ const SettingsForm = ({ values }: { values: SettingsValues }) => {
         <CardHeader>
           <CardTitle>Contacto</CardTitle>
         </CardHeader>
-        <CardContent className='grid gap-4 sm:grid-cols-2'>
+        <CardContent>
           <Field>
             <FieldLabel htmlFor='contact_email'>Email de contacto</FieldLabel>
             <Input id='contact_email' name='contact_email' type='email' defaultValue={values.contactEmail} />
             <FieldDescription>Adónde llegan los mensajes del formulario público.</FieldDescription>
           </Field>
 
-          <Field>
-            <FieldLabel htmlFor='years_of_experience'>Años de experiencia</FieldLabel>
-            <Input
-              id='years_of_experience'
-              name='years_of_experience'
-              type='number'
-              defaultValue={values.yearsOfExperience}
-            />
-            <FieldDescription>Se muestra en la home y en el CV.</FieldDescription>
-          </Field>
         </CardContent>
       </Card>
 

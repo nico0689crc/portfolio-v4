@@ -5,16 +5,10 @@ import {
   getEducation,
   getExperiences,
   getSkillCategories,
-  getTechnicalSkills,
-  getYearsOfExperience
+  getTechnicalSkills
 } from '@/lib/content';
+import { computeYearsOfExperience } from '@/lib/content/experience-span';
 import type { CvData } from '@/lib/cv-schema';
-
-/**
- * Used only if `settings` has no years-of-experience row. It is an editorial
- * claim rather than a computed value, so there is nothing sane to derive.
- */
-const FALLBACK_YEARS = 3;
 
 /**
  * Assembles everything the CV surfaces need for one locale.
@@ -31,7 +25,6 @@ export async function loadCvData(locale: string): Promise<CvData> {
     certifications,
     skillCategories,
     technicalSkills,
-    years,
     cvFiles,
     meta,
     resume
@@ -41,11 +34,15 @@ export async function loadCvData(locale: string): Promise<CvData> {
     getCertifications(locale),
     getSkillCategories(locale),
     getTechnicalSkills(),
-    getYearsOfExperience(),
     getCvFiles(),
     getTranslations({ locale, namespace: 'Metadata' }),
     getTranslations({ locale, namespace: 'Resume' })
   ]);
+
+  // Derivado de las fechas y no leído de `settings`: un número escrito a mano
+  // queda desactualizado el día que se agrega un puesto, y nadie se entera
+  // hasta que un reclutador cruza el CV con el LinkedIn.
+  const years = computeYearsOfExperience(experiences);
 
   return {
     experiences,
@@ -53,9 +50,11 @@ export async function loadCvData(locale: string): Promise<CvData> {
     certifications,
     skillCategories,
     technicalSkills,
-    yearsOfExperience: years ?? FALLBACK_YEARS,
+    yearsOfExperience: years,
     jobTitle: meta('jobTitle'),
-    summary: resume('intro'),
+    // El texto lleva `{years}` en lugar del número: la prosa sigue siendo
+    // editable y la cifra no puede quedar desfasada del resto del CV.
+    summary: resume('intro', { years }),
     cvFiles
   };
 }

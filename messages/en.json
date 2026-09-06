@@ -65,12 +65,12 @@
     "cv": "Download CV",
     "cvUrl": "/CV_Nicolas_Fernandez_FullStack_UXUI_EN.pdf",
     "about": {
-      "p1": "I'm <strong>Nicolás Ariel Fernández</strong>, a Full Stack Developer and UX/UI Design Student, with over 3 years of software development experience.",
+      "p1": "I'm <strong>Nicolás Ariel Fernández</strong>, a Full Stack Developer and UX/UI Design Student, with over {years} years of software development experience.",
       "p2": "My main focus is developing efficient web applications using modern technologies like <strong class='text-accent'>React, Next.js, Node.js, and TypeScript</strong>. In parallel, my training in UX/UI Design gives me a user-centered vision, allowing me to design interfaces that not only look amazing but are highly functional, intuitive, and accessible.",
       "p3": "I consider myself a proactive professional, detail-oriented, and always ready to learn new industry tools. I enjoy working in teams and being involved in the entire product lifecycle: from visual conceptualization to the final code in production."
     },
     "card1": {
-      "title": "3+ years of experience",
+      "title": "{years}+ years of experience",
       "desc": "React, Next.js, TypeScript, Node.js, and modern architectures."
     },
     "card2": {
@@ -396,7 +396,7 @@
   "Resume": {
     "title": "Resume",
     "subtitle": "Full Stack Developer & UX/UI Designer",
-    "intro": "Over 3 years building web applications end to end: from research and interface design through to APIs, databases and production deployment. I work with React, Next.js, TypeScript and Node.js, and lean on AI tooling to iterate faster without trading away code quality.",
+    "intro": "Over {years} years building web applications end to end: from research and interface design through to APIs, databases and production deployment. I work with React, Next.js, TypeScript and Node.js, and lean on AI tooling to iterate faster without trading away code quality.",
     "downloadEs": "Descargar CV en español (PDF)",
     "downloadEn": "Download CV in English (PDF)",
     "highlightsTitle": "At a glance",

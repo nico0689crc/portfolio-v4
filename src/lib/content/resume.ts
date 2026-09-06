@@ -2,6 +2,7 @@ import { supabasePublic } from '@/lib/supabase/public';
 import { cached } from './cache';
 import { TAGS } from './tags';
 import { FALLBACK_LOCALE, localesFor, orThrow, pick, toYearMonth } from './internal';
+import { computeYearsOfExperience } from './experience-span';
 import type {
   Certification,
   Education,
@@ -21,6 +22,20 @@ import type {
  * to move a row by hand without fighting the dates.
  */
 
+/**
+ * Años de experiencia técnica, derivados de las fechas.
+ *
+ * Reemplaza al valor que vivía en `settings`. Comparte el mismo tag que las
+ * experiencias, así que agregar un puesto lo actualiza sin que nadie tenga que
+ * acordarse de tocar un segundo lugar — que es exactamente como el número
+ * quedaba viejo antes.
+ */
+export const getYearsOfExperience = cached(
+  async (locale: string): Promise<number> => computeYearsOfExperience(await getExperiences(locale)),
+  ['years-of-experience'],
+  [TAGS.experiences, TAGS.all]
+);
+
 export const getExperiences = cached(
   async (locale: string): Promise<Experience[]> => {
     const rows = orThrow(
@@ -29,6 +44,7 @@ export const getExperiences = cached(
         .from('experiences')
         .select(
           `id, organization, employment_type, remote, techs, start_date, end_date, periods,
+           counts_as_experience,
            experience_translations(locale, role, company, location, date_label, description)`
         )
         .in('experience_translations.locale', localesFor(locale))
@@ -61,6 +77,7 @@ export const getExperiences = cached(
           // column existed, so it renders something rather than blank.
           company: t.company ?? row.organization,
           dateLabel: t.date_label,
+          countsAsExperience: row.counts_as_experience,
           description: t.description
         }
       ];

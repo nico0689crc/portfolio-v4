@@ -15,6 +15,7 @@ export type * from './types';
 
 export {
   getCertifications,
+  getYearsOfExperience,
   getEducation,
   getExperiences,
   getFaqs,
@@ -34,8 +35,7 @@ export {
   getContactEmail,
   getCvFiles,
   getSetting,
-  getSocialLinks,
-  getYearsOfExperience
+  getSocialLinks
 } from './settings';
 
 export { getMessageTree } from './messages';

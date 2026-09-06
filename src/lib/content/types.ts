@@ -34,6 +34,8 @@ export interface Experience {
   company: string;
   /** Editorial prose per language, not a format of the dates. */
   dateLabel: string;
+  /** Si suma a los años de experiencia calculados. False para lo no técnico. */
+  countsAsExperience: boolean;
   description: string;
 }
 

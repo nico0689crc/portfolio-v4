@@ -51,6 +51,3 @@ export async function getContactEmail(): Promise<string | null> {
  * from a different starting point, which is why it is stored rather than
  * derived from `min(start_date)`.
  */
-export async function getYearsOfExperience(): Promise<number | null> {
-  return getSetting<number>('years_of_experience');
-}

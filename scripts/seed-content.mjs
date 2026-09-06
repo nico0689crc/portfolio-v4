@@ -658,6 +658,43 @@ async function seedUiMessages() {
 
 // ---------------------------------------------------------------------------
 
+/**
+ * El seed es para inicializar una base vacía, no para sincronizar una viva.
+ *
+ * Escribe con dos mecanismos y los dos destruyen: `resolveOrdered()` vacía la
+ * tabla cuando el conteo no coincide con `cvData.ts`, y `upsert()` pisa fila
+ * por fila sin mirar qué había. El segundo es peor porque no deja señal: no hay
+ * diferencia de conteo que lo delate.
+ *
+ * Un guard por tabla no alcanzó —cubría el primer mecanismo y no el segundo—,
+ * así que la comprobación es una sola y arriba de todo: si ya hay contenido,
+ * abortar. Correr esto contra una base en uso borró dos veces cambios hechos
+ * por migración.
+ */
+async function assertEmptyOrForced() {
+  if (FORCE || DRY) return;
+
+  const tables = ['projects', 'experiences', 'page_seo', 'faqs'];
+  const counts = [];
+
+  for (const table of tables) {
+    const { count } = await db.from(table).select('*', { count: 'exact', head: true });
+
+    if (count) counts.push(`${table}: ${count}`);
+  }
+
+  if (counts.length === 0) return;
+
+  throw new Error(
+    `la base ya tiene contenido (${counts.join(', ')}).\n\n` +
+      `  El seed inicializa desde los archivos del repo, así que correrlo ahora\n` +
+      `  sobrescribe lo que se haya cargado desde el panel o por migración —\n` +
+      `  incluidos los textos de SEO y el CV.\n\n` +
+      `  Para sincronizar sólo textos de UI:  node scripts/seed-content.mjs --only-messages\n` +
+      `  Para reinicializar de verdad:        node scripts/seed-content.mjs --force`
+  );
+}
+
 async function main() {
   if (ONLY_MESSAGES) {
     console.log(`${DRY ? 'DRY RUN — ' : ''}seeding UI messages only — ${URL}\n`);
@@ -669,6 +706,8 @@ async function main() {
 
     return;
   }
+
+  await assertEmptyOrForced();
 
   console.log(`${DRY ? 'DRY RUN — ' : ''}seeding ${URL}\n`);
 

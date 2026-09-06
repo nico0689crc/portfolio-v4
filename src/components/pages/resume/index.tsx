@@ -35,7 +35,7 @@ const Resume = async ({ cv }: { cv: CvData }) => {
           </h1>
           <p className="text-accent font-semibold text-lg mb-6">{t("subtitle")}</p>
           <div className="w-12 h-1 bg-accent mx-auto rounded-full mb-8" />
-          <p className="text-lg text-foreground/80 leading-relaxed mb-10">{t("intro")}</p>
+          <p className="text-lg text-foreground/80 leading-relaxed mb-10">{t("intro", { years: cv.yearsOfExperience })}</p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <TrackedLink
@@ -73,7 +73,12 @@ const Resume = async ({ cv }: { cv: CvData }) => {
                 <dt className="text-xs font-semibold uppercase tracking-wider text-accent mb-2">
                   {item.label}
                 </dt>
-                <dd className="text-foreground font-medium">{item.value}</dd>
+                {/* `{years}` se sustituye acá: el destacado es contenido
+                    editable, pero la cifra sale de las fechas para que no pueda
+                    contradecir al resto del CV. */}
+                <dd className="text-foreground font-medium">
+                  {item.value.replace("{years}", String(cv.yearsOfExperience))}
+                </dd>
               </div>
             ))}
           </dl>

@@ -563,6 +563,7 @@ export type Database = {
       }
       experiences: {
         Row: {
+          counts_as_experience: boolean
           created_at: string
           employment_type: string
           end_date: string | null
@@ -576,6 +577,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          counts_as_experience?: boolean
           created_at?: string
           employment_type?: string
           end_date?: string | null
@@ -589,6 +591,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          counts_as_experience?: boolean
           created_at?: string
           employment_type?: string
           end_date?: string | null

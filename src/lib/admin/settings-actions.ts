@@ -25,7 +25,6 @@ export type SettingsFormState = {
  */
 const SCHEMAS = {
   contact_email: z.string().trim().email('Tiene que ser un email válido'),
-  years_of_experience: z.coerce.number().int().min(0).max(80),
   social_links: z.array(z.string().url('Cada enlace tiene que ser una URL')),
   cv_files: z.object({
     es: z.string().trim().startsWith('/', 'Tiene que ser una ruta del sitio'),
@@ -41,7 +40,6 @@ export async function updateSettings(
 
   const raw = {
     contact_email: String(formData.get('contact_email') ?? '').trim(),
-    years_of_experience: String(formData.get('years_of_experience') ?? ''),
     social_links: String(formData.get('social_links') ?? '')
       .split('\n')
       .map(line => line.trim())

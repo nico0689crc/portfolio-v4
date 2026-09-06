@@ -16,7 +16,6 @@ const AdminSettingsPage = async () => {
   // fila, no sólo editarla.
   const values: SettingsValues = {
     contactEmail: typeof byKey.contact_email === 'string' ? byKey.contact_email : '',
-    yearsOfExperience: typeof byKey.years_of_experience === 'number' ? byKey.years_of_experience : 0,
     socialLinks: Array.isArray(byKey.social_links) ? (byKey.social_links as string[]) : [],
     cvFiles: {
       es: (byKey.cv_files as Record<string, string> | null)?.es ?? '',
