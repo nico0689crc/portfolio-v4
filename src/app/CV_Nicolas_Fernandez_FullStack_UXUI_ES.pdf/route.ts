@@ -13,7 +13,12 @@ export async function GET() {
       // no que se le descargue un archivo sin previsualizar. El nombre igual
       // se respeta cuando decide guardarlo.
       'Content-Disposition': `inline; filename="${cvFileName('es')}"`,
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600'
+      // `max-age=0` deja que el navegador revalide en cada visita. Con 3600
+      // guardaba el PDF una hora: se actualizaba la base, se invalidaba el
+      // cache del servidor, y quien ya lo habia abierto seguia viendo el viejo
+      // sin forma de saberlo. Es el mismo perfil que usa /resume.json, y por la
+      // misma razon: el documento tiene que reflejar el contenido de ahora.
+      'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=86400'
     }
   });
 }

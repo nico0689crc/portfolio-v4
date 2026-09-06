@@ -10,6 +10,20 @@ import { unstable_cache, revalidateTag, updateTag } from 'next/cache';
  * `@deprecated` marker, so there is no rush. When `cacheComponents` is
  * eventually enabled, only this file changes.
  */
+/**
+ * Cuánto puede vivir una lectura sin que nadie la invalide.
+ *
+ * Es una red de seguridad, no la estrategia. La invalidación por tag es lo que
+ * da el refresco inmediato al guardar; esto acota el daño cuando no ocurre —
+ * porque el contenido cambió fuera de la app, o porque la invalidación falló.
+ *
+ * Sin esto, `unstable_cache` no vence nunca: una lectura cacheada se sirve
+ * igual para siempre. Verificado en next@16.1.6 que `revalidateTag` no purga
+ * estas entradas, así que sin vencimiento el sitio podía quedar mostrando datos
+ * viejos de forma indefinida.
+ */
+const MAX_AGE_SECONDS = 60;
+
 export function cached<A extends unknown[], R>(
   fn: (...args: A) => Promise<R>,
   keyParts: string[],
@@ -17,7 +31,7 @@ export function cached<A extends unknown[], R>(
 ): (...args: A) => Promise<R> {
   // The arguments are part of the cache key on top of `keyParts`, which is what
   // keeps one tag serving every locale correctly.
-  return unstable_cache(fn, keyParts, { tags });
+  return unstable_cache(fn, keyParts, { tags, revalidate: MAX_AGE_SECONDS });
 }
 
 /**
@@ -42,7 +56,10 @@ export function cachedPerLocale<R>(
   return (locale: string) => {
     let f = wrapped.get(locale);
     if (!f) {
-      f = unstable_cache(fn, [...keyParts, locale], { tags: tagsFor(locale) });
+      f = unstable_cache(fn, [...keyParts, locale], {
+        tags: tagsFor(locale),
+        revalidate: MAX_AGE_SECONDS
+      });
       wrapped.set(locale, f);
     }
     return f(locale);
