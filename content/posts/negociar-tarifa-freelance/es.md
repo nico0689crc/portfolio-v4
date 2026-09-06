@@ -11,7 +11,7 @@ coverAlt: "Balanza comparando el valor del trabajo con el precio cobrado"
 status: published
 publishedAt: 2027-01-25
 tags: carrera, negocio
-imagePrompt: "Editorial vector illustration, an abstract balance scale weighing a geometric value shape against a price tag shape, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A price block resting on top of four stacked slabs of different thickness representing time, absorbed risk, combined skills and opportunity cost. Thin measurement marks run along the side of the whole stack. Composition: single focal cluster centred slightly left, wide empty margins, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the price block on top. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Durante mis primeros años como freelance, mi tarifa la decidía la incomodidad del momento. Decía un número, veía la cara de la otra persona, y si parecía demasiado alto lo bajaba en la misma conversación. Eso no es negociar. Es dejar que la reacción ajena decida mi precio.

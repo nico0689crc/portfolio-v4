@@ -11,7 +11,7 @@ coverAlt: "Interfaz con indicadores de foco de teclado y contraste de color marc
 status: published
 publishedAt: 2026-07-20
 tags: accesibilidad, diseno-ui
-imagePrompt: "Editorial vector illustration, an abstract interface component with a visible focus ring and contrast indicator, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. Two identical interface panels side by side: the left one plain, the right one the same layout rebuilt with a thick visible keyboard focus ring around one control and a contrast-check marker beside a block of body copy. A curved arrow loops from the left panel back into the right one, showing the rework. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the focus ring. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 "Lo vemos en la fase 2" es la frase que más veces escuché sobre accesibilidad web. No tiene sentido técnico, aunque tenga mucho sentido de presupuesto a corto plazo.

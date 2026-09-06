@@ -11,7 +11,7 @@ coverAlt: "Documento de arquitectura explicando el razonamiento detrás de una d
 status: published
 publishedAt: 2027-06-14
 tags: casos, producto
-imagePrompt: "Editorial vector illustration, an abstract branching decision path with one branch highlighted and annotated, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A branching path where one branch is taken as a solid line and the others fade into the ground. Beside the taken branch sits a small open document panel with three short annotation blocks pointing back at the fork. Composition: single focal cluster centred slightly left, wide empty margins, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the annotation document. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 El código dice qué se construyó. Casi nunca dice por qué se construyó así y no de otra forma. Documentar decisiones técnicas es, sobre todo, guardar la respuesta a esa segunda pregunta. Es la que más falta hace cuando alguien —incluido yo mismo, meses después— tiene que decidir si una decisión vieja sigue teniendo sentido.

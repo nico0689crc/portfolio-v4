@@ -11,7 +11,7 @@ coverAlt: "Panel de métricas de SEO con datos de Search Console y Google Analyt
 status: published
 publishedAt: 2027-04-26
 tags: seo, negocio
-imagePrompt: "Editorial vector illustration, an abstract data stream flowing from two separate sources merging into one unified readable panel, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A closed dashboard panel with a single lonely monthly tick beside it, and next to it an open connector line feeding a continuous stream of small data marks into a compact custom report. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the continuous stream of data marks. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Durante mucho tiempo mi relación con el SEO de mis proyectos fue la típica: entrar a Search Console una vez al mes, mirar el panel y anotar mentalmente que algo bajó o algo subió. Después volvía a mis tareas sin conectar ese dato con ninguna decisión. Armar un reporte de SEO con API cambió eso, porque convirtió una revisión pasiva en una fuente de datos más.

@@ -11,7 +11,7 @@ coverAlt: "Currículum comparando una descripción genérica con una descripció
 status: published
 publishedAt: 2026-07-06
 tags: carrera, negocio
-imagePrompt: "Editorial vector illustration, an abstract document where generic bullet lines transform into a single specific highlighted line, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. Two resume columns side by side: the left a uniform stack of short identical chips of equal weight, the right a single wide row expanded into a small before-and-after diagram showing a measurable change. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the expanded row on the right. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Durante años, mi CV de desarrollador describía cada trabajo con una variación de la misma frase: "Desarrollé aplicaciones web utilizando React, Node.js y PostgreSQL". Es información correcta y completamente inútil. Esa misma frase la puede escribir cualquiera con dos años de experiencia, haya hecho un trabajo brillante o mediocre.

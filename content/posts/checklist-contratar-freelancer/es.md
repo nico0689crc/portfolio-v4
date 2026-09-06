@@ -11,7 +11,7 @@ coverAlt: "Lista de preguntas para una entrevista con un desarrollador freelance
 status: published
 publishedAt: 2027-01-11
 tags: negocio, producto
-imagePrompt: "Editorial vector illustration, an abstract interview checklist with a magnifying glass hovering over one key question, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A vertical stack of question rows, each a rounded bar with a small marker at its left edge. One row near the bottom is wider than the rest and pulled slightly out of the stack toward the viewer. Composition: single focal cluster centred slightly left, wide empty margins, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the row pulled out of the stack. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Contraté freelancers y trabajé como freelancer, así que vi esta conversación de los dos lados de la mesa. Las mejores preguntas para contratar un freelancer casi nunca son técnicas: cualquiera puede memorizar terminología. Son las que revelan cómo esa persona piensa un proyecto que todavía no existe.

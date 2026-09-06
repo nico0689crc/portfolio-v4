@@ -11,7 +11,7 @@ coverAlt: "Pantalla de bienvenida de un producto mostrando su primer valor concr
 status: published
 publishedAt: 2027-02-22
 tags: producto, diseno-ui
-imagePrompt: "Editorial vector illustration, an abstract open door with a single glowing path leading directly to a value marker, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A very short path running from an entry point to a single bright moment, with almost nothing between them. A much longer tutorial path with many small steps runs parallel below it, dimmed. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the bright moment at the end of the short path. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 La mayoría de los onboardings que veo están diseñados para enseñar cómo funciona el producto. Ese es el error de origen del diseño de onboarding. Nadie que recién llega quiere aprender cómo funciona algo: quiere saber si le va a servir, y rápido.

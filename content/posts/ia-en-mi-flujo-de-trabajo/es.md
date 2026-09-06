@@ -11,7 +11,7 @@ coverAlt: "Editor de código con una sugerencia de IA junto a una revisión manu
 status: published
 publishedAt: 2026-11-23
 tags: ia, producto
-imagePrompt: "Editorial vector illustration, an abstract hand guiding a stream of geometric code fragments through a checkpoint gate, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A block of generated code emerging quickly from a source on one side, then passing through a narrow review gate where several of its lines are marked before it is allowed to continue. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the review gate. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 La pregunta que me hacen más seguido sobre IA en desarrollo de software no es si la uso: eso ya se asume. Es si confío en lo que genera. La respuesta corta es que no, y esa desconfianza específica es lo que la hace útil en vez de riesgosa.

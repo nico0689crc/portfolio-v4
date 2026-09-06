@@ -11,7 +11,7 @@ coverAlt: "Sesión de research improvisada con herramientas gratuitas y particip
 status: published
 publishedAt: 2027-05-03
 tags: ux-research, negocio
-imagePrompt: "Editorial vector illustration, an abstract research setup built from simple everyday shapes instead of expensive equipment, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A research setup assembled from plain improvised parts, a propped phone, a small stack of cards and a hand-drawn chart, arranged with the same rigour as a formal lab layout drawn faintly behind it. Composition: single focal cluster centred slightly left, wide empty margins, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the improvised setup. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 "No tenemos presupuesto para research" es la razón más común para saltarse la investigación. Y descansa en una premisa falsa: que investigar requiere pagar participantes y herramientas premium. La investigación de usuarios sin presupuesto pierde precisión, no pierde la posibilidad de existir.

@@ -11,7 +11,7 @@ coverAlt: "Persona explicando una decisión técnica frente a un pizarrón, sin 
 status: published
 publishedAt: 2027-03-08
 tags: carrera
-imagePrompt: "Editorial vector illustration, an abstract conversation bubble containing a small decision tree instead of code syntax, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A binary tree diagram drawn faint and unused on one side, and on the other a solid decision path with annotation blocks branching from a real architecture stack. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the annotated decision path. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Hay una industria entera construida alrededor de los ejercicios de algoritmos: invertir árboles binarios, resolver programación dinámica contra reloj. Practiqué esos ejercicios en su momento. La conclusión honesta es que cómo prepararse para una entrevista técnica tiene poco que ver con eso, porque casi nunca refleja el trabajo que hago todos los días.

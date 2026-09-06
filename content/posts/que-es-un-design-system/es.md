@@ -11,7 +11,7 @@ coverAlt: "Biblioteca de componentes de interfaz organizados jerárquicamente"
 status: published
 publishedAt: 2026-08-17
 tags: design-systems, diseno-ui
-imagePrompt: "Editorial vector illustration, an abstract library of modular geometric building blocks organized on shelves, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. Three stacked layers standing together: a row of token swatches, a row of components built from them, and a rulebook panel above. Beside them sits a separate box holding only the component row, visibly missing the other two layers. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the rulebook panel. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Preguntarse qué es un design system tiene menos interés del que parece. Es una de esas frases que justifican tanto trabajo necesario como trabajo desperdiciado, y la diferencia no está en la definición. Está en si el proyecto realmente lo necesitaba.

@@ -11,7 +11,7 @@ coverAlt: "Ficha de persona de UX con datos de comportamiento en vez de foto de 
 status: published
 publishedAt: 2026-10-26
 tags: ux-research, producto
-imagePrompt: "Editorial vector illustration, an abstract user profile card made of behavioral data points instead of a photo, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A persona card in which the portrait area is replaced by a small behaviour chart. Three short evidence lines run from the card back to a stack of survey responses behind it. Composition: single focal cluster centred slightly left, wide empty margins, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the behaviour chart standing in for the portrait. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Las personas de UX tienen mala fama, y es una fama merecida. La mayoría son un nombre inventado, una foto de banco de imágenes sonriendo, y tres datos demográficos que no cambian ninguna decisión de diseño. Se hacen, se imprimen, se pegan en una pared, y nadie las vuelve a mirar.

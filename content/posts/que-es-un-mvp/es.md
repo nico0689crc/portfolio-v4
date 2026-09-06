@@ -11,7 +11,7 @@ coverAlt: "Comparación entre un producto mínimo funcional y una versión incom
 status: published
 publishedAt: 2026-08-24
 tags: producto, negocio
-imagePrompt: "Editorial vector illustration, two abstract vehicles side by side, one small but complete and one that is half-built, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. Two vehicle silhouettes on one shared baseline: on the left a small complete form with both wheels attached and a closed body, on the right a larger chassis missing its wheels with its frame still open. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the small complete vehicle. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 "Hagamos un MVP" es una de esas frases que todos aceptan en una reunión y que cada uno entiende distinto. Y cuando hay plata de por medio, esa diferencia de interpretación es la que después se discute por mail.
