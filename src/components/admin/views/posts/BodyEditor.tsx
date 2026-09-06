@@ -50,7 +50,8 @@ const BodyEditor = ({
   name,
   defaultValue
 }: {
-  postKey: string
+  /** Null mientras el artículo no existe: no hay dónde guardar el archivo. */
+  postKey: string | null
   name: string
   defaultValue: string
 }) => {
@@ -60,7 +61,7 @@ const BodyEditor = ({
   const fileRef = useRef<HTMLInputElement>(null)
 
   const [uploadState, uploadAction, isUploading] = useActionState(
-    uploadBodyImage.bind(null, postKey),
+    uploadBodyImage.bind(null, postKey ?? ''),
     EMPTY
   )
 
@@ -129,8 +130,8 @@ const BodyEditor = ({
           variant='ghost'
           size='icon'
           aria-label='Insertar imagen'
-          title='Insertar imagen'
-          disabled={preview || isUploading}
+          title={postKey ? 'Insertar imagen' : 'Disponible después de crear el artículo'}
+          disabled={preview || isUploading || !postKey}
           onClick={() => fileRef.current?.click()}
         >
           <ImageIcon className='size-4' />

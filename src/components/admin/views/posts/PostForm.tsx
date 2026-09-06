@@ -26,8 +26,9 @@ import CharCounter from './CharCounter'
 import SerpPreview, { DESCRIPTION_LIMIT, TITLE_LIMIT } from './SerpPreview'
 
 // Lib Imports
-import { updatePost, type PostFormState } from '@/lib/admin/posts-actions'
+import { createPost, updatePost, type PostFormState } from '@/lib/admin/posts-actions'
 import { SITE_URL } from '@/lib/seo'
+import { slugify } from '@/lib/slug'
 
 export type PostTranslationValues = {
   slug: string
@@ -67,12 +68,20 @@ type LivePreview = { title: string; seoTitle: string; excerpt: string; seoDescri
 const LocalePanel = ({
   locale,
   postKey,
-  values
+  values,
+  mode
 }: {
   locale: string
-  postKey: string
+  postKey: string | null
   values: PostTranslationValues
+  mode: 'create' | 'edit'
 }) => {
+  // El slug sigue al título mientras nadie lo toque. Una vez editado a mano
+  // deja de seguirlo para siempre: pisar un slug escrito a propósito porque
+  // alguien corrigió una tilde del título es la clase de sorpresa que hace
+  // desconfiar del formulario entero.
+  const [slugTouched, setSlugTouched] = useState(mode === 'edit')
+
   const [live, setLive] = useState<LivePreview>({
     title: values.title,
     seoTitle: values.seoTitle,
@@ -83,6 +92,16 @@ const LocalePanel = ({
 
   const set = (key: keyof LivePreview) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setLive(current => ({ ...current, [key]: event.target.value }))
+
+  const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const title = event.target.value
+
+    setLive(current => ({
+      ...current,
+      title,
+      slug: slugTouched ? current.slug : slugify(title)
+    }))
+  }
 
   // El fallback replica el del servidor: lo que se previsualiza es lo que se
   // va a servir cuando el override está vacío.
@@ -102,7 +121,7 @@ const LocalePanel = ({
               id={`${locale}.title`}
               name={`${locale}.title`}
               defaultValue={values.title}
-              onChange={set('title')}
+              onChange={onTitleChange}
             />
           </Field>
 
@@ -111,10 +130,17 @@ const LocalePanel = ({
             <Input
               id={`${locale}.slug`}
               name={`${locale}.slug`}
-              defaultValue={values.slug}
-              onChange={set('slug')}
+              value={live.slug}
+              onChange={event => {
+                setSlugTouched(true)
+                set('slug')(event)
+              }}
             />
-            <FieldDescription>Cambiarlo deja una redirección desde el anterior.</FieldDescription>
+            <FieldDescription>
+              {mode === 'create'
+                ? 'Se genera del título. Editalo si querés otra URL.'
+                : 'Cambiarlo deja una redirección desde el anterior.'}
+            </FieldDescription>
           </Field>
 
           <Field>
@@ -249,14 +275,22 @@ const LocalePanel = ({
   )
 }
 
-const PostForm = ({ post, tags }: { post: PostFormValues; tags: TagOption[] }) => {
+const PostForm = ({
+  post,
+  tags,
+  mode = 'edit'
+}: {
+  post: PostFormValues
+  tags: TagOption[]
+  mode?: 'create' | 'edit'
+}) => {
   const [tagIds, setTagIds] = useState<string[]>(post.tagIds)
 
   const toggleTag = (id: string) =>
     setTagIds(current => (current.includes(id) ? current.filter(t => t !== id) : [...current, id]))
 
   const [state, formAction, isPending] = useActionState<PostFormState, FormData>(
-    updatePost.bind(null, post.key),
+    mode === 'create' ? createPost : updatePost.bind(null, post.key),
     { error: null, saved: false }
   )
 
@@ -281,7 +315,14 @@ const PostForm = ({ post, tags }: { post: PostFormValues; tags: TagOption[] }) =
           // y sus campos no viajan en el FormData, así que guardar desde una
           // pestaña borraría el otro idioma entero.
           <TabsContent key={locale} value={locale} keepMounted className='pt-6'>
-            <LocalePanel locale={locale} postKey={post.key} values={post.translations[locale]} />
+            <LocalePanel
+              locale={locale}
+              // En alta todavía no hay post, así que no hay dónde guardar un
+              // archivo: el editor deshabilita la subida en vez de fallar.
+              postKey={mode === 'create' ? null : post.key}
+              values={post.translations[locale]}
+              mode={mode}
+            />
           </TabsContent>
         ))}
       </Tabs>
@@ -318,7 +359,13 @@ const PostForm = ({ post, tags }: { post: PostFormValues; tags: TagOption[] }) =
           quince scrolls del campo que se acaba de tocar. */}
       <div className='bg-background/80 border-border sticky bottom-0 -mx-2 flex justify-end border-t px-2 py-3 backdrop-blur'>
         <Button type='submit' disabled={isPending}>
-          {isPending ? 'Guardando…' : 'Guardar cambios'}
+          {isPending
+            ? mode === 'create'
+              ? 'Creando…'
+              : 'Guardando…'
+            : mode === 'create'
+              ? 'Crear artículo'
+              : 'Guardar cambios'}
         </Button>
       </div>
     </form>
