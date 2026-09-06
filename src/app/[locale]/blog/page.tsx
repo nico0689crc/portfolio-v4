@@ -3,29 +3,17 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import BlogList from '@/components/pages/blog';
 import { JsonLd } from '@/components/seo/json-ld';
 import { getPosts } from '@/lib/content';
-import {
-  PERSON_ID,
-  SITE_URL,
-  breadcrumbSchema,
-  buildPageMetadata,
-  jsonLdGraph,
-  localizedUrl,
-} from '@/lib/seo';
+import { pageMetadata } from '@/lib/page-metadata';
+import { PERSON_ID, SITE_URL, breadcrumbSchema, jsonLdGraph, localizedUrl } from '@/lib/seo';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Blog' });
 
-  // El blog no está en `page_seo`: esa tabla cubre las rutas que ya existían
-  // cuando se sembró. Cuando haya una fila, esto pasa a `pageMetadata` como el
-  // resto.
-  const metadata = buildPageMetadata({
-    locale,
-    href: '/blog',
-    title: t('title'),
-    description: t('subtitle'),
-    image: '/og/default.png',
-  });
+  // Igual que el resto de las rutas fijas: el título y la descripción salen de
+  // `page_seo`, así que se editan desde el panel en vez de vivir en una clave
+  // de mensajes que nadie asocia con SEO.
+  const metadata = await pageMetadata({ locale, routeKey: '/blog', href: '/blog' });
 
   return {
     ...metadata,

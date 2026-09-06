@@ -1,10 +1,9 @@
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Hero from "@/components/pages/home/hero";
 import ShortAbout from "@/components/pages/home/short-about";
 import Skills from "@/components/pages/home/skills";
 import WhyMe from '@/components/pages/home/why-me';
-import { buildPageMetadata } from '@/lib/seo';
 import { pageMetadata } from '@/lib/page-metadata';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -14,7 +13,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     locale,
     routeKey: '/',
     href: '/',
-    type: 'profile'
+    type: 'profile',
+    absoluteTitle: true
   });
 }
 

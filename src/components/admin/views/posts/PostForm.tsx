@@ -22,9 +22,9 @@ import { Switch } from '@/components/admin/ui/switch'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/admin/ui/tabs'
 import { Textarea } from '@/components/admin/ui/textarea'
 import BodyEditor from './BodyEditor'
-import CharCounter from './CharCounter'
+import CharCounter from '@/components/admin/shared/CharCounter'
 import SeoAnalysis from './SeoAnalysis'
-import SerpPreview, { DESCRIPTION_LIMIT, TITLE_LIMIT } from './SerpPreview'
+import SerpPreview, { DESCRIPTION_LIMIT, TITLE_LIMIT } from '@/components/admin/shared/SerpPreview'
 
 // Lib Imports
 import { createPost, updatePost, type PostFormState } from '@/lib/admin/posts-actions'

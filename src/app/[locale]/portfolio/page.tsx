@@ -6,7 +6,6 @@ import { getPageSeo, getProjects } from '@/lib/content';
 import {
   PERSON_ID,
   breadcrumbSchema,
-  buildPageMetadata,
   jsonLdGraph,
   localizedUrl,
 } from '@/lib/seo';

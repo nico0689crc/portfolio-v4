@@ -21,26 +21,41 @@ export async function pageMetadata({
   routeKey,
   href,
   type = 'website',
-  fallbackImage = '/og/default.png'
+  fallbackImage = '/og/default.png',
+  absoluteTitle = false
 }: {
   locale: string;
   routeKey: string;
   href: LocalizedHref;
   type?: 'website' | 'profile' | 'article';
   fallbackImage?: string;
+  /**
+   * Emite el título tal cual, sin el sufijo del template.
+   *
+   * Lo necesita la home y sólo la home, por una regla poco conocida de Next:
+   * `title.template` se aplica a los segmentos hijos, no a la página del mismo
+   * segmento donde se define. `[locale]/page.tsx` convive con el layout que lo
+   * declara, así que su título salía pelado mientras el resto del sitio recibía
+   * el sufijo — y la portada es justo la página donde peor se nota.
+   */
+  absoluteTitle?: boolean;
 }): Promise<Metadata> {
   const [seo, t] = await Promise.all([
     getPageSeo(routeKey, locale),
     getTranslations({ locale, namespace: 'Metadata' })
   ]);
 
-  return buildPageMetadata({
+  const title = seo?.title ?? t('defaultTitle');
+
+  const metadata = buildPageMetadata({
     locale,
     href,
-    title: seo?.title ?? t('defaultTitle'),
+    title,
     description: seo?.description ?? t('defaultDescription'),
     image: seo?.ogImage ?? fallbackImage,
     type,
     noindex: seo?.noindex ?? false
   });
+
+  return absoluteTitle ? { ...metadata, title: { absolute: title } } : metadata;
 }

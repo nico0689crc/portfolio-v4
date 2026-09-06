@@ -5,7 +5,6 @@ import { JsonLd } from '@/components/seo/json-ld';
 import {
   PERSON_ID,
   breadcrumbSchema,
-  buildPageMetadata,
   jsonLdGraph,
   localizedUrl,
 } from '@/lib/seo';
