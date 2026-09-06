@@ -25,6 +25,25 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const DRY = process.argv.includes('--dry');
+
+/**
+ * Permite que el seed borre filas que él no creó.
+ *
+ * Sin esto aborta. `resolveOrdered()` sincroniza posicionalmente contra
+ * `cvData.ts`, así que cuando la base tiene más filas que el archivo, su forma
+ * de "arreglarlo" es vaciar la tabla y reinsertar. Eso tenía sentido cuando el
+ * archivo era la única fuente; con el backoffice andando, significa que correr
+ * el seed para sincronizar un texto de UI se lleva puesto lo que el editor
+ * cargó desde el panel.
+ *
+ * Paso exactamente eso: una corrida para agregar una clave de mensaje borró dos
+ * experiencias y seis certificaciones cargadas por migración.
+ */
+const FORCE = process.argv.includes('--force');
+
+/** Sincroniza sólo `ui_message_keys` y `ui_messages`, que es lo que hace falta
+ *  al agregar una clave nueva y no toca ninguna entidad. */
+const ONLY_MESSAGES = process.argv.includes('--only-messages');
 const ROOT = process.cwd();
 
 // ---------------------------------------------------------------------------
@@ -142,6 +161,17 @@ async function resolveOrdered(table, count, rowFor) {
     bump(table, count);
     return existing;
   }
+  if (existing?.length && !FORCE) {
+    throw new Error(
+      `${table}: la base tiene ${existing.length} filas y cvData.ts define ${count}.\n` +
+        `  El seed sincroniza por posición, así que para igualarlas tendría que borrar la tabla\n` +
+        `  y reinsertar desde el archivo — perdiendo lo que se haya cargado desde el panel o por\n` +
+        `  migración.\n\n` +
+        `  Si querés sincronizar sólo textos de UI:  node scripts/seed-content.mjs --only-messages\n` +
+        `  Si de verdad querés reemplazar la tabla:  node scripts/seed-content.mjs --force`
+    );
+  }
+
   if (existing?.length) await db.from(table).delete().neq('sort_order', -1);
   const rows = Array.from({ length: count }, (_, i) => rowFor(i));
   const { data, error } = await db.from(table).insert(rows).select('id');
@@ -629,6 +659,17 @@ async function seedUiMessages() {
 // ---------------------------------------------------------------------------
 
 async function main() {
+  if (ONLY_MESSAGES) {
+    console.log(`${DRY ? 'DRY RUN — ' : ''}seeding UI messages only — ${URL}\n`);
+
+    const n = await seedUiMessages();
+
+    console.log(`${n} UI string keys x ${LOCALES.length} locales`);
+    console.log('ninguna entidad tocada.');
+
+    return;
+  }
+
   console.log(`${DRY ? 'DRY RUN — ' : ''}seeding ${URL}\n`);
 
   await seedProjects();
