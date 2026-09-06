@@ -87,7 +87,7 @@
     "cv": "Descargar CV",
     "cvUrl": "/CV_Nicolas_Fernandez_FullStack_UXUI_ES.pdf",
     "about": {
-      "p1": "Soy <strong>Nicolás Ariel Fernández</strong>, Desarrollador Full Stack y Estudiante Diseñador UX/UI, con más de {years} años de experiencia en desarrollo de software.",
+      "p1": "Soy <strong>Nicolás Ariel Fernández</strong>, Desarrollador Full Stack y Diseñador UX/UI egresado de la <a href=\"https://www.coderhouse.com/ar/diplomaturas/diseno\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-accent underline underline-offset-2 hover:opacity-80\">Diplomatura de Diseño UX/UI de Coderhouse</a>, con más de {years} años de experiencia en desarrollo de software.",
       "p2": "Mi enfoque principal es desarrollar aplicaciones web eficientes mediante tecnologías modernas como <strong class=\"text-accent\">React, Next.js, Node.js y TypeScript</strong>. Paralelamente, mi formación en Diseño UX/UI me aporta una visión centrada en el usuario, permitiéndome diseñar interfaces que no solo lucen increíbles, sino que son altamente funcionales, intuitivas y accesibles.",
       "p3": "Me considero un profesional proactivo, meticuloso con los detalles y siempre dispuesto a aprender nuevas herramientas de la industria. Disfruto trabajar en equipo e involucrarme en todo el ciclo de vida del producto: desde su conceptualización visual hasta el código final en producción."
     },
@@ -503,6 +503,9 @@
     "published": "Publicado el",
     "updated": "Actualizado el",
     "toc": "En esta nota",
-    "related": "Seguí leyendo"
+    "related": "Seguí leyendo",
+    "filter": {
+      "all": "Todas"
+    }
   }
 }

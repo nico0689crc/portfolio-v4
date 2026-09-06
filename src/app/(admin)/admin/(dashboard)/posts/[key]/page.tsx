@@ -28,7 +28,7 @@ const AdminPostEditPage = async ({ params }: { params: Promise<{ key: string }> 
     supabase
       .from('posts')
       .select(
-        `key, cover_path, cover_width, cover_height,
+        `key, cover_path, cover_width, cover_height, image_prompt,
          post_tags(tag_id),
          post_translations(locale, slug, title, excerpt, body, status, published_at, noindex,
                            reading_minutes, word_count, seo_title, seo_description, og_image,
@@ -104,6 +104,7 @@ const AdminPostEditPage = async ({ params }: { params: Promise<{ key: string }> 
 
       <PostMedia
         postKey={post.key}
+        imagePrompt={post.image_prompt}
         cover={
           post.cover_path && post.cover_width && post.cover_height
             ? { path: post.cover_path, width: post.cover_width, height: post.cover_height }

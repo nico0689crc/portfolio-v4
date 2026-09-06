@@ -194,13 +194,14 @@ export interface PostSummary {
   coverWidth: number | null;
   coverHeight: number | null;
   noindex: boolean;
+  /** Etiquetas de la nota. El listado filtra por acá. */
+  tags: Tag[];
 }
 
 export interface PostDetail extends PostSummary {
   body: string;
   wordCount: number | null;
   coverBlurDataUrl: string | null;
-  tags: Tag[];
 }
 
 export interface Tag {

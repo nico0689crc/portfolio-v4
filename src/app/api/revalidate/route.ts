@@ -30,10 +30,19 @@ export async function POST(request: NextRequest) {
   // Handler, verificado en next@16.1.6.
   purgeTags([TAGS.all]);
 
-  // Los tags no alcanzan para los documentos generados: verificado en
-  // next@16.1.6 que `revalidateTag` no purga las entradas de `unstable_cache`,
-  // mientras que `revalidatePath` sí fuerza el re-render. Sin esto el CV en PDF
-  // seguía sirviendo la versión anterior aunque la respuesta dijera 200.
+  // Los tags tampoco alcanzan para las páginas ya renderizadas. Invalidar el
+  // layout raíz arrastra todo lo que cuelga de él, que es exactamente lo que
+  // pide una escritura hecha fuera de la app: no se sabe qué páginas la
+  // muestran.
+  //
+  // Sin esto, cargar notas con el seed devolvía 200 y el listado seguía
+  // mostrando las de antes. Sólo se refrescaba al tocar código, porque lo que
+  // vencía el cache de ruta era la recompilación y no la invalidación.
+  revalidatePath('/', 'layout');
+
+  // Los documentos generados van igual uno por uno: no cuelgan del layout de
+  // las páginas, así que el barrido de arriba no los alcanza. Sin esto el CV en
+  // PDF seguía sirviendo la versión anterior aunque la respuesta dijera 200.
   for (const route of GENERATED_DOCUMENT_ROUTES) revalidatePath(route);
 
   return NextResponse.json({ purged: TAGS.all, at: new Date().toISOString() });
