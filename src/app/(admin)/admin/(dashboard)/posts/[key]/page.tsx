@@ -1,8 +1,13 @@
 // Next Imports
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 // Component Imports
+import { Button } from '@/components/admin/ui/button'
+
+// Component Imports
 import PostForm, { type PostFormValues, type TagOption } from '@/components/admin/views/posts/PostForm'
+import PostMedia from '@/components/admin/views/posts/PostMedia'
 
 // Lib Imports
 import { createSupabaseServerClient } from '@/lib/supabase/server'
@@ -23,7 +28,7 @@ const AdminPostEditPage = async ({ params }: { params: Promise<{ key: string }> 
     supabase
       .from('posts')
       .select(
-        `key,
+        `key, cover_path, cover_width, cover_height,
          post_tags(tag_id),
          post_translations(locale, slug, title, excerpt, body, status, published_at, noindex,
                            reading_minutes, word_count, seo_title, seo_description, og_image,
@@ -74,12 +79,34 @@ const AdminPostEditPage = async ({ params }: { params: Promise<{ key: string }> 
 
   return (
     <div className='flex flex-col gap-6'>
-      <div>
-        <h1 className='text-2xl font-semibold tracking-tight'>
-          {values.translations.es.title || post.key}
-        </h1>
-        <p className='text-muted-foreground font-mono text-xs'>{post.key}</p>
+      <div className='flex flex-wrap items-start justify-between gap-4'>
+        <div>
+          <h1 className='text-2xl font-semibold tracking-tight'>
+            {values.translations.es.title || post.key}
+          </h1>
+          <p className='text-muted-foreground font-mono text-xs'>{post.key}</p>
+        </div>
+
+        {/* Se abre en otra pestaña porque la vista previa vive en el sitio
+            público: volver con el botón atrás perdería lo que no se guardó. */}
+        <div className='flex gap-2'>
+          <Button variant='outline' size='sm' render={<Link href={`/es/preview/blog/${post.key}`} target='_blank' />}>
+            Ver en español
+          </Button>
+          <Button variant='outline' size='sm' render={<Link href={`/en/preview/blog/${post.key}`} target='_blank' />}>
+            Ver en inglés
+          </Button>
+        </div>
       </div>
+
+      <PostMedia
+        postKey={post.key}
+        cover={
+          post.cover_path && post.cover_width && post.cover_height
+            ? { path: post.cover_path, width: post.cover_width, height: post.cover_height }
+            : null
+        }
+      />
 
       <PostForm post={values} tags={tags} />
     </div>

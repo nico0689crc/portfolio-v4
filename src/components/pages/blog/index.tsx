@@ -47,7 +47,7 @@ const BlogList = async ({ posts, locale }: { posts: PostSummary[]; locale: strin
                 {post.coverPath && post.coverWidth && post.coverHeight && (
                   <div className="relative aspect-video overflow-hidden bg-muted">
                     <Image
-                      src={storageUrl(post.coverPath, BUCKETS.postCovers)}
+                      src={storageUrl(post.coverPath, BUCKETS.postMedia)}
                       alt=""
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"

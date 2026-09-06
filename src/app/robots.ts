@@ -31,7 +31,10 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         // /admin is the backoffice: authenticated, monolingual and with no
         // public inbound links. It must never appear in an index.
-        disallow: ['/api/', '/_next/', '/admin'],
+        // /preview sirve borradores a un editor con sesión; para un crawler es
+        // un redirect al login, pero declararlo evita que gaste presupuesto de
+        // rastreo descubriéndolo.
+        disallow: ['/api/', '/_next/', '/admin', '/preview', '/*/preview'],
       },
       {
         userAgent: AI_CRAWLERS,

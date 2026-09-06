@@ -1,11 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { Link, permanentRedirect, routing } from '@/i18n/routing';
-import PostBody from '@/components/pages/blog/PostBody';
-import TableOfContents from '@/components/pages/blog/TableOfContents';
-import { extractHeadings } from '@/components/pages/blog/headings';
+import { permanentRedirect, routing } from '@/i18n/routing';
+import PostArticle from '@/components/pages/blog/PostArticle';
 import { JsonLd } from '@/components/seo/json-ld';
 import { BUCKETS, getPost, getPostSlugMap, getPosts, getRedirectedSlug, storageUrl } from '@/lib/content';
 import {
@@ -57,7 +54,7 @@ export async function generateMetadata({
     href: await hrefResolver(post.key, slug),
     title: post.seoTitle ?? post.title,
     description: post.seoDescription ?? post.excerpt,
-    image: social ? storageUrl(social, BUCKETS.postCovers) : '/og/default.png',
+    image: social ? storageUrl(social, BUCKETS.postMedia) : '/og/default.png',
     type: 'article',
     noindex: post.noindex,
     article: {
@@ -105,7 +102,6 @@ export default async function PostPage({
     getPosts(locale),
   ]);
 
-  const headings = extractHeadings(post.body);
 
   // Las más recientes que no sean esta. Relacionar por tags compartidos sería
   // mejor, pero con pocos artículos deja el bloque vacío la mitad de las veces
@@ -114,12 +110,6 @@ export default async function PostPage({
 
   const url = localizedUrl(locale, { pathname: '/blog/[slug]', params: { slug: post.slug } });
 
-  const formatDate = (value: string) =>
-    new Date(value).toLocaleDateString(locale === 'es' ? 'es-AR' : 'en-US', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    });
 
   const schema = jsonLdGraph(
     {
@@ -147,7 +137,7 @@ export default async function PostPage({
       // "este contenido" de "esta URL".
       mainEntityOfPage: { '@type': 'WebPage', '@id': url },
       image: post.coverPath
-        ? storageUrl(post.coverPath, BUCKETS.postCovers)
+        ? storageUrl(post.coverPath, BUCKETS.postMedia)
         : `${SITE_URL}/og/default.png`,
       isPartOf: { '@id': `${localizedUrl(locale, '/blog')}#blog` },
     },
@@ -160,91 +150,7 @@ export default async function PostPage({
 
   return (
     <>
-      <article className="pt-24">
-        <div className="section-padding pb-8">
-          <div className="container mx-auto max-w-3xl">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors mb-8"
-            >
-              ← {t('backToBlog')}
-            </Link>
-
-            <h1 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-4">{post.title}</h1>
-
-            <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground mb-6">
-              {post.publishedAt && (
-                <time dateTime={post.publishedAt}>
-                  {t('published')} {formatDate(post.publishedAt)}
-                </time>
-              )}
-              {post.readingMinutes && (
-                <>
-                  <span aria-hidden>·</span>
-                  <span>
-                    {post.readingMinutes} {t('readingTime')}
-                  </span>
-                </>
-              )}
-            </div>
-
-            {post.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-8">
-                {post.tags.map((tag) => (
-                  <span key={tag.key} className="tech-tag">
-                    {tag.name}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            {post.coverPath && post.coverWidth && post.coverHeight && (
-              <div className="relative aspect-video rounded-xl overflow-hidden bg-muted mb-10">
-                <Image
-                  src={storageUrl(post.coverPath, BUCKETS.postCovers)}
-                  alt={post.coverAlt ?? ''}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 768px"
-                  {...(post.coverBlurDataUrl
-                    ? { placeholder: 'blur' as const, blurDataURL: post.coverBlurDataUrl }
-                    : {})}
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            )}
-
-            <TableOfContents headings={headings} label={t('toc')} />
-
-            <PostBody body={post.body} />
-          </div>
-        </div>
-
-        {related.length > 0 && (
-          // Enlaces internos reales al final del artículo: es lo que reparte
-          // autoridad entre notas y lo que evita que cada una sea un callejón.
-          <div className="section-padding pt-0">
-            <div className="container mx-auto max-w-3xl">
-              <h2 className="font-display text-xl font-bold text-foreground mb-4">{t('related')}</h2>
-              <ul className="grid gap-4 sm:grid-cols-2">
-                {related.map((other) => (
-                  <li key={other.key}>
-                    <Link
-                      href={{ pathname: '/blog/[slug]', params: { slug: other.slug } }}
-                      className="block rounded-xl border border-border p-5 hover:border-accent transition-colors"
-                    >
-                      <span className="font-display font-bold text-foreground block mb-1">
-                        {other.title}
-                      </span>
-                      <span className="text-muted-foreground text-sm line-clamp-2">{other.excerpt}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-      </article>
+      <PostArticle post={post} locale={locale} related={related} />
       <JsonLd data={schema} />
     </>
   );

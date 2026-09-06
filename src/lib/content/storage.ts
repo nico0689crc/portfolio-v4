@@ -1,6 +1,7 @@
 export const BUCKETS = {
   projectImages: 'project-images',
-  postCovers: 'post-covers'
+  /** Portadas e imágenes dentro del cuerpo: un solo bucket, un solo permiso. */
+  postMedia: 'post-media'
 } as const;
 
 /**
