@@ -3,8 +3,8 @@ slug: design-tokens-figma-a-tailwind
 title: "Design tokens: cómo lo que diseño en Figma termina siendo config de Tailwind"
 excerpt: "Un token de diseño no es una buena práctica decorativa: es lo que hace que cambiar un color sea una línea en vez de una búsqueda componente por componente. Cómo los organizo y cómo cruzan a código."
 focusKeyphrase: design tokens
-seoTitle: "Design tokens: cómo pasar de variables de Figma a config de Tailwind"
-seoDescription: "Qué son los design tokens, cómo se organizan en tres capas (primitivos, semánticos, de componente) y cómo cruzan de Figma a un archivo de configuración de Tailwind."
+seoTitle: "Design tokens: de variables de Figma a config de Tailwind"
+seoDescription: "Qué son los design tokens, cómo organizarlos en tres capas (primitivos, semánticos y de componente) y cómo cruzan de Figma a Tailwind."
 ogTitle: "El día que cambiaron el color de marca en una sola línea"
 ogDescription: "Cómo organizo los design tokens para que un cambio de diseño sea un cambio de código, y no una búsqueda componente por componente."
 coverAlt: "Paleta de colores organizada en capas de tokens primitivos y semánticos"
@@ -36,11 +36,11 @@ Uso tres niveles, y confundirlos es el error más común que veo en sistemas que
 
 La razón de tener tres capas y no una es que cada una cambia por una razón distinta. Los primitivos cambian cuando rediseñás la paleta entera. Los semánticos cambian cuando redefinís qué significa "el color de peligro" en tu producto. Los de componente cambian cuando un botón específico necesita comportarse distinto. Sin las capas, esas tres razones de cambio quedan mezcladas en el mismo lugar, y tocar una te arriesga a romper las otras dos.
 
-## Cómo cruzan de Figma a código
+## Cómo cruzan los design tokens de Figma a código
 
 En Figma, los "variables" o "styles" son la versión visual de la capa semántica: vos les asignás un valor y los componentes de la librería los referencian. Hasta ahí, es exactamente el mismo modelo mental que en código.
 
-El cruce real pasa en un archivo de configuración. En un proyecto con Tailwind, eso significa que el token semántico de Figma tiene una fila espejo en la configuración del proyecto:
+El cruce real pasa en un archivo de configuración. En un proyecto con Tailwind, eso significa que el token semántico de Figma tiene una fila espejo en [el tema del proyecto](https://tailwindcss.com/docs/theme):
 
 ```
 --color-accent: hsl(38 92% 50%);

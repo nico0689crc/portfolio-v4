@@ -3,8 +3,8 @@ slug: design-tokens-figma-to-tailwind
 title: "Design tokens: how what I design in Figma ends up as Tailwind config"
 excerpt: "A design token isn't a decorative best practice: it's what turns changing a colour into one line instead of a component-by-component search. How I organize them and how they cross into code."
 focusKeyphrase: design tokens
-seoTitle: "Design tokens: how to go from Figma variables to Tailwind config"
-seoDescription: "What design tokens are, how to organize them in three layers (primitive, semantic, component) and how they cross from Figma into a Tailwind configuration file."
+seoTitle: "Design tokens: from Figma variables to Tailwind config"
+seoDescription: "What design tokens are, how to organize them in three layers (primitive, semantic, component) and how they cross from Figma into Tailwind."
 ogTitle: "The day the brand colour changed in a single line"
 ogDescription: "How I organize design tokens so a design change is a code change, not a component-by-component search."
 coverAlt: "Colour palette organized into primitive and semantic token layers"
@@ -35,11 +35,11 @@ I use three levels, and confusing them is the most common mistake I see in syste
 
 The reason for three layers instead of one is that each changes for a different reason. Primitives change when you redesign the entire palette. Semantics change when you redefine what "the danger colour" means in your product. Component tokens change when one specific button needs to behave differently. Without the layers, those three reasons for change get tangled in the same place, and touching one risks breaking the other two.
 
-## How they cross from Figma into code
+## How design tokens cross from Figma into code
 
 In Figma, "variables" or "styles" are the visual version of the semantic layer: you assign them a value and the library's components reference them. Up to there, it's exactly the same mental model as in code.
 
-The real crossover happens in a configuration file. On a project using Tailwind, that means the Figma semantic token has a mirror row in the project's config:
+The real crossover happens in a configuration file. On a project using Tailwind, that means the Figma semantic token has a mirror row in [the project's theme](https://tailwindcss.com/docs/theme):
 
 ```
 --color-accent: hsl(38 92% 50%);
