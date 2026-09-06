@@ -61,7 +61,9 @@ const ScheduleDialog = ({
   currentDocument,
   hasCover,
   triggerLabel,
-  triggerVariant = 'outline'
+  triggerVariant = 'outline',
+  open: controlledOpen,
+  onOpenChange
 }: {
   postId: string
   shareId?: string
@@ -77,10 +79,16 @@ const ScheduleDialog = ({
   currentDocument: string | null
   /** Sin portada no hay miniatura, y Buffer la exige para un documento. */
   hasCover: boolean
-  triggerLabel: React.ReactNode
+  /** Sin esto el diálogo no dibuja disparador: lo abre quien lo controla desde afuera. */
+  triggerLabel?: React.ReactNode
   triggerVariant?: 'outline' | 'ghost'
+  /** Controlado desde afuera cuando el disparador es un ítem de menú, que se cierra al hacer clic. */
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }) => {
-  const [open, setOpen] = useState(false)
+  const [selfOpen, setSelfOpen] = useState(false)
+  const open = controlledOpen ?? selfOpen
+  const setOpen = onOpenChange ?? setSelfOpen
   const [media, setMedia] = useState(defaultMedia)
   const [linkInComment, setLinkInComment] = useState(defaultLinkInFirstComment)
   const [isPending, startTransition] = useTransition()
@@ -114,9 +122,11 @@ const ScheduleDialog = ({
     <Dialog open={open} onOpenChange={setOpen}>
       {/* El disparador va afuera del Dialog y la apertura se maneja con estado,
           igual que en `PostRowActions`. */}
-      <Button variant={triggerVariant} size='sm' onClick={() => setOpen(true)}>
-        {triggerLabel}
-      </Button>
+      {triggerLabel !== undefined && (
+        <Button variant={triggerVariant} size='sm' onClick={() => setOpen(true)}>
+          {triggerLabel}
+        </Button>
+      )}
 
       <DialogContent className='sm:max-w-lg'>
         <form action={submit}>

@@ -9,9 +9,10 @@ import { Badge } from '@/components/admin/ui/badge'
 import { Button } from '@/components/admin/ui/button'
 import PublishedShares, { type PublishedShare } from '@/components/admin/views/linkedin/PublishedShares'
 import ShareActions from '@/components/admin/views/linkedin/ShareActions'
-import UnscheduledPosts, { type Candidate } from '@/components/admin/views/linkedin/UnscheduledPosts'
+import UnscheduledPosts from '@/components/admin/views/linkedin/UnscheduledPosts'
 
 // Lib Imports
+import { listCandidates } from '@/lib/admin/linkedin-candidates'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import {
   AGENDA_OFFSET_HOURS,
@@ -19,7 +20,6 @@ import {
   buildMessage,
   linkedInPostUrl,
   nextSlot,
-  postUrl,
   shareLabel,
   type ShareAsset,
   type ShareStatus
@@ -95,36 +95,42 @@ const AdminLinkedInPage = async ({
   // después de publicar.
   const canComment = account?.scopes.includes('w_member_social_feed') ?? false
 
-  // Dos consultas y el cruce en JS en vez de un embed de PostgREST: la FK es
-  // compuesta (post_id, locale) y el volumen es de decenas de filas, así que el
-  // join en memoria sale más barato que pelear con la sintaxis del embed.
-  const [{ data: shares, error: sharesError }, { data: translations, error: postsError }] =
-    await Promise.all([
-      supabase
-        .from('post_social_shares')
-        .select(
-          'id, post_id, locale, status, message, scheduled_at, delivered_at, error, external_id, assets, link_in_first_comment, provider'
-        )
-        .eq('channel', 'linkedin')
-        .order('scheduled_at', { ascending: true }),
-      supabase
-        .from('post_translations')
-        .select(
-          // `body` viaja entero porque el texto por defecto arranca con la
-          // entrada de la nota. Son decenas de artículos en una pantalla del
-          // panel: pesa, pero menos que una segunda consulta para el mismo dato.
-          'post_id, title, excerpt, body, slug, published_at, posts!inner(key, archived_at, cover_path)'
-        )
-        .eq('locale', SHARE_LOCALE)
-        .eq('status', 'published')
-    ])
+  // La agenda y la lista de la derecha son dos consultas independientes: la
+  // derecha se pagina contra el server —`listCandidates` es lo mismo que llama
+  // el navegador al cambiar de página— así que acá sólo se pide la primera.
+  const [{ data: shares, error: sharesError }, firstPage] = await Promise.all([
+    supabase
+      .from('post_social_shares')
+      .select(
+        'id, post_id, locale, status, message, scheduled_at, delivered_at, error, external_id, assets, link_in_first_comment, provider'
+      )
+      .eq('channel', 'linkedin')
+      .order('scheduled_at', { ascending: true }),
+    listCandidates()
+  ])
 
-  if (sharesError || postsError) {
-    return (
-      <p className='text-destructive text-sm'>
-        No se pudo cargar la agenda: {(sharesError ?? postsError)!.message}
-      </p>
-    )
+  if (sharesError) {
+    return <p className='text-destructive text-sm'>No se pudo cargar la agenda: {sharesError.message}</p>
+  }
+
+  // Sólo las notas que tienen algo agendado. `body` viaja entero porque el texto
+  // por defecto arranca con la entrada de la nota, y ese es el motivo de acotar
+  // la consulta a la agenda en vez de traer todo lo publicado: el cuerpo es la
+  // columna más pesada de la tabla.
+  const shareIds = [...new Set((shares ?? []).map(s => s.post_id))]
+
+  const { data: translations, error: postsError } =
+    shareIds.length === 0
+      ? { data: [], error: null }
+      : await supabase
+          .from('post_translations')
+          .select('post_id, title, excerpt, body, slug, posts!inner(cover_path)')
+          .eq('locale', SHARE_LOCALE)
+          .eq('status', 'published')
+          .in('post_id', shareIds)
+
+  if (postsError) {
+    return <p className='text-destructive text-sm'>No se pudo cargar la agenda: {postsError.message}</p>
   }
 
   const byPost = new Map(translations.map(t => [t.post_id, t]))
@@ -202,22 +208,6 @@ const AdminLinkedInPage = async ({
       warning: s.error
     }))
   const active = agenda.filter(s => ACTIVE.includes(s.status))
-  // Lo que todavía tiene turno reservado. Es más angosto que `active` a
-  // propósito: un envío ya entregado no ocupa nada, y el índice único de la
-  // base tampoco lo cuenta. De ahí sale que una nota publicada pueda volver a
-  // programarse, que es el caso de recirculación.
-  const pending = agenda.filter(s => s.status === 'scheduled' || s.status === 'sending')
-
-  // La última vez que cada nota salió, para no repetirla sin querer.
-  const lastShared = new Map<string, string>()
-
-  for (const share of agenda) {
-    if (!share.delivered_at) continue
-
-    const previous = lastShared.get(share.post_id)
-
-    if (!previous || share.delivered_at > previous) lastShared.set(share.post_id, share.delivered_at)
-  }
   const scheduledCount = agenda.filter(s => s.status === 'scheduled').length
   const failedCount = agenda.filter(s => s.status === 'failed').length
 
@@ -232,32 +222,6 @@ const AdminLinkedInPage = async ({
   const reserved = active.filter(s => s.scheduled_at > new Date().toISOString())
   const lastTaken = reserved.length > 0 ? reserved[reserved.length - 1].scheduled_at : null
   const slot = nextSlot(lastTaken)
-
-  // Sólo se ofrece lo que no tiene un envío en curso. Lo ya publicado sí puede
-  // volver a la lista: recircular una nota vieja es el caso más valioso.
-  const taken = new Set(pending.map(s => s.post_id))
-
-  // Por fecha de publicación, la más vieja primero: la lista es una cola de
-  // trabajo —el archivo que falta difundir— y se recorre desde el fondo.
-  const candidates: Candidate[] = translations
-    .filter(t => !taken.has(t.post_id) && t.posts.archived_at === null)
-    .sort((a, b) => (a.published_at ?? '').localeCompare(b.published_at ?? ''))
-    .map(t => ({
-      postId: t.post_id,
-      key: t.posts.key,
-      title: t.title,
-      publishedAt: t.published_at,
-      lastSharedAt: lastShared.get(t.post_id) ?? null,
-      hasCover: t.posts.cover_path !== null,
-      autoMessage: buildMessage({
-        title: t.title,
-        excerpt: t.excerpt,
-        body: t.body,
-        locale: SHARE_LOCALE,
-        slug: t.slug
-      }),
-      postUrl: postUrl(SHARE_LOCALE, t.slug)
-    }))
 
   return (
     <div className='flex flex-col gap-6'>
@@ -311,7 +275,7 @@ const AdminLinkedInPage = async ({
       <div>
         <h1 className='text-2xl font-semibold tracking-tight'>LinkedIn</h1>
         <p className='text-muted-foreground text-sm'>
-          {scheduledCount} programados · {done.length} publicados · {candidates.length} sin turno
+          {scheduledCount} programados · {done.length} publicados · {firstPage.actionable} para programar
           {failedCount > 0 && ` · ${failedCount} con error`}
         </p>
       </div>
@@ -382,11 +346,11 @@ const AdminLinkedInPage = async ({
 
         <section className='flex flex-col gap-3'>
           <h2 className='text-sm font-medium'>
-            Sin programar ({candidates.length}) — próximo turno {formatSlot(slot)}
+            Para programar ({firstPage.actionable}) — próximo turno {formatSlot(slot)}
           </h2>
 
           <UnscheduledPosts
-            candidates={candidates}
+            initial={firstPage}
             nextSlotLocal={toAgendaInput(slot)}
             nextSlotLabel={formatSlot(slot)}
           />

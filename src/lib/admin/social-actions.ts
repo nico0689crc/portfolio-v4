@@ -12,6 +12,13 @@ import { BUCKETS, storageUrl } from '@/lib/content/storage'
 import { deliverShare, getDeliveryConfig } from '@/lib/social/deliver'
 import { SHARE_LOCALE, type ShareAsset } from '@/lib/social/shares'
 import { requireAdmin } from './auth'
+import {
+  listCandidates,
+  type BlogFilter,
+  type CandidateFilter,
+  type CandidatePage,
+  type ShareDecision
+} from './linkedin-candidates'
 
 export type ShareFormState = { error: string | null; saved: boolean }
 
@@ -325,4 +332,80 @@ export async function publishNow(id: string): Promise<{ error: string | null; wa
   return result.ok
     ? { error: null, warning: result.warning }
     : { error: result.error, warning: null }
+}
+
+/** Los valores que aceptan los filtros de la lista. El cliente manda strings sueltos. */
+const CANDIDATE_FILTERS: CandidateFilter[] = [
+  'to-schedule',
+  'undecided',
+  'approved',
+  'discarded',
+  'shared',
+  'all'
+]
+
+const BLOG_FILTERS: BlogFilter[] = ['all', 'live', 'upcoming']
+
+/**
+ * Una página de la lista «sin programar».
+ *
+ * Lo que pide el navegador al cambiar de página, buscar o filtrar. La primera
+ * página la arma la propia página del panel llamando a `listCandidates`
+ * directo: este wrapper existe para el resto, que llega desde el cliente y por
+ * lo tanto tiene que pasar por `requireAdmin` y por el saneo de los parámetros.
+ */
+export async function listUnscheduled(params: {
+  page?: number
+  query?: string
+  filter?: string
+  blog?: string
+}): Promise<CandidatePage> {
+  await requireAdmin()
+
+  return listCandidates({
+    page: Number.isFinite(params.page) ? params.page : 1,
+    // El texto entra en un `includes` sobre datos ya cargados, no en la
+    // consulta, pero cortarlo igual evita que alguien pegue un megabyte.
+    query: (params.query ?? '').slice(0, 200),
+    filter: CANDIDATE_FILTERS.includes(params.filter as CandidateFilter)
+      ? (params.filter as CandidateFilter)
+      : undefined,
+    blog: BLOG_FILTERS.includes(params.blog as BlogFilter) ? (params.blog as BlogFilter) : undefined
+  })
+}
+
+/**
+ * Aprueba o descarta una nota para el canal, o borra la decisión.
+ *
+ * `null` no se guarda: la ausencia de fila **es** «sin decidir», así que quitar
+ * una decisión es borrarla y no dejar un tercer valor que después hay que
+ * interpretar en cada consulta.
+ */
+export async function setShareDecision(
+  postId: string,
+  decision: ShareDecision
+): Promise<{ error: string | null }> {
+  await requireAdmin()
+
+  const supabase = await createSupabaseServerClient()
+
+  const { error } =
+    decision === null
+      ? await supabase
+          .from('post_social_decisions')
+          .delete()
+          .eq('post_id', postId)
+          .eq('channel', 'linkedin')
+      : await supabase.from('post_social_decisions').upsert(
+          { post_id: postId, channel: 'linkedin', decision, decided_at: new Date().toISOString() },
+          // La clave es compuesta y `upsert` no la deduce sola: sin esto un
+          // segundo cambio de decisión choca con la primaria en vez de pisarla.
+          { onConflict: 'post_id,channel' }
+        )
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/admin/linkedin')
+
+  return { error: null }
 }
