@@ -26,21 +26,38 @@ import type { PostDetail, PostSummary, SlugMapEntry, Tag } from './types';
  */
 const nowIso = () => new Date().toISOString();
 
+/**
+ * En desarrollo la agenda se ve entera: las notas programadas aparecen en el
+ * listado junto a las publicadas, ordenadas primero por ser las más nuevas.
+ *
+ * Es la única forma de releer la cola completa en contexto —en el listado, con
+ * su portada y su bajada— antes de que salga. Revisar quince notas entrando una
+ * por una a su vista previa no es lo mismo.
+ *
+ * No alcanza para los borradores, y no puede: la policy
+ * `post_translations_public_read` filtra por `status = 'published'` en la base,
+ * así que el cliente anónimo no los ve ni pidiéndolos. Para eso está
+ * `/preview/blog/<key>`, que lee con la sesión del editor.
+ */
+const SHOW_SCHEDULED = process.env.NODE_ENV === 'development';
+
 export const getPosts = cached(
   async (locale: string): Promise<PostSummary[]> => {
+    const query = supabasePublic
+      .from('post_translations')
+      .select(
+        `slug, title, excerpt, published_at, content_updated_at, reading_minutes, noindex,
+         seo_title, seo_description, og_image, og_title, og_description, cover_alt,
+         posts!inner(key, cover_path, cover_width, cover_height)`
+      )
+      .eq('locale', locale)
+      .eq('status', 'published');
+
     const rows = orThrow(
       'getPosts',
-      await supabasePublic
-        .from('post_translations')
-        .select(
-          `slug, title, excerpt, published_at, content_updated_at, reading_minutes, noindex,
-           seo_title, seo_description, og_image, og_title, og_description, cover_alt,
-           posts!inner(key, cover_path, cover_width, cover_height)`
-        )
-        .eq('locale', locale)
-        .eq('status', 'published')
-        .lte('published_at', nowIso())
-        .order('published_at', { ascending: false })
+      await (SHOW_SCHEDULED ? query : query.lte('published_at', nowIso())).order('published_at', {
+        ascending: false
+      })
     );
 
     return rows.map((row) => ({
@@ -69,7 +86,7 @@ export const getPosts = cached(
 
 export const getPost = cached(
   async (slug: string, locale: string): Promise<PostDetail | null> => {
-    const { data, error } = await supabasePublic
+    const detail = supabasePublic
       .from('post_translations')
       .select(
         `slug, title, excerpt, body, published_at, content_updated_at,
@@ -80,9 +97,9 @@ export const getPost = cached(
       )
       .eq('slug', slug)
       .eq('locale', locale)
-      .eq('status', 'published')
-      .lte('published_at', nowIso())
-      .maybeSingle();
+      .eq('status', 'published');
+
+    const { data, error } = await (SHOW_SCHEDULED ? detail : detail.lte('published_at', nowIso())).maybeSingle();
 
     if (error) throw new Error(`content/getPost: ${error.message}`);
     if (!data) return null;
@@ -144,7 +161,11 @@ export const getPostSlugMap = cached(
         key: row.key,
         slugs: Object.fromEntries(
           row.post_translations
-            .filter((t) => t.status === 'published' && t.published_at !== null && t.published_at <= now)
+            .filter(
+              (t) =>
+                t.status === 'published' &&
+                (SHOW_SCHEDULED || (t.published_at !== null && t.published_at <= now))
+            )
             .map((t) => [t.locale, t.slug])
         )
       }))
