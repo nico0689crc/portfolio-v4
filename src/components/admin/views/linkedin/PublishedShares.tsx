@@ -188,10 +188,10 @@ const PublishedShares = ({ shares }: { shares: PublishedShare[] }) => {
                   <Row label='Media'>{MEDIA_LABEL[detail.media]}</Row>
                   <Row label='Link'>
                     {detail.media === 'article'
-                      ? 'En la tarjeta y en el texto'
+                      ? 'En la tarjeta'
                       : detail.linkInFirstComment
                         ? 'Primer comentario'
-                        : 'En el texto'}
+                        : 'En ningún lado'}
                   </Row>
                 </div>
 

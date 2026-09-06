@@ -17,7 +17,7 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/admin/ui/dialog'
-import { Field, FieldDescription, FieldLabel } from '@/components/admin/ui/field'
+import { Field, FieldLabel } from '@/components/admin/ui/field'
 import { Input } from '@/components/admin/ui/input'
 import {
   Select,
@@ -28,9 +28,11 @@ import {
 } from '@/components/admin/ui/select'
 import { Switch } from '@/components/admin/ui/switch'
 import { Textarea } from '@/components/admin/ui/textarea'
+import FieldHelp from './FieldHelp'
 
 // Lib Imports
 import { scheduleShare, updateShare } from '@/lib/admin/social-actions'
+import { SLOT_TIMEZONE_OFFSET } from '@/lib/social/shares'
 
 /** El orden es el del select, y el primero es el default de un envío nuevo. */
 const MEDIA_OPTIONS = [
@@ -39,15 +41,6 @@ const MEDIA_OPTIONS = [
   { value: 'document', label: 'Carrusel (PDF)' },
   { value: 'none', label: 'Sin imagen' }
 ]
-
-/** `+03:00` / `-03:00` para la fecha dada, en el huso del navegador. */
-const offsetOf = (date: Date) => {
-  const minutes = -date.getTimezoneOffset()
-  const sign = minutes < 0 ? '-' : '+'
-  const abs = Math.abs(minutes)
-
-  return `${sign}${String(Math.floor(abs / 60)).padStart(2, '0')}:${String(abs % 60).padStart(2, '0')}`
-}
 
 /**
  * El diálogo de programar, que también sirve para editar.
@@ -93,10 +86,12 @@ const ScheduleDialog = ({
   const [isPending, startTransition] = useTransition()
   const editing = shareId !== undefined
 
-  // Con tarjeta el link es la tarjeta, así que el switch ni se ofrece y lo
-  // guardado deja de aplicar. Vale la pena calcularlo una vez: de acá salen
-  // tanto el texto que se arma solo como lo que el copy promete.
-  const linkGoesToComment = linkInComment && media !== 'article'
+  // Adónde va el link, calculado igual que en `deliverShare`. De acá salen tanto
+  // el placeholder como el copy: si se calculara distinto, el preview prometería
+  // un texto que después no sale.
+  const withCard = media === 'article'
+  const linkGoesToComment = linkInComment && !withCard
+
 
   // El envío va por `useTransition` y no por `useActionState` para poder cerrar
   // el diálogo en el callback: con el estado del action habría que cerrarlo
@@ -135,12 +130,20 @@ const ScheduleDialog = ({
           <div className='flex flex-col gap-4 py-4'>
             {shareId && <input type='hidden' name='id' value={shareId} />}
             <input type='hidden' name='post_id' value={postId} />
-            {/* El offset del navegador viaja con el formulario: sin esto el
-                server interpretaría «09:00» en UTC y el posteo saldría a las 6. */}
-            <input type='hidden' name='tz_offset' value={offsetOf(new Date())} />
+            {/* Sin esto el server interpretaría «11:00» en UTC y el posteo
+                saldría a las 8. Va el offset de la agenda y no el del
+                navegador: el campo ya muestra hora argentina, así que
+                interpretarlo con otra zona lo correría de lugar si el editor
+                abre el panel de viaje. */}
+            <input type='hidden' name='tz_offset' value={SLOT_TIMEZONE_OFFSET} />
 
             <Field>
-              <FieldLabel htmlFor={`scheduled_at-${shareId ?? postId}`}>Fecha y hora</FieldLabel>
+              <FieldLabel htmlFor={`scheduled_at-${shareId ?? postId}`}>
+                Fecha y hora
+                <FieldHelp label='Fecha y hora'>
+                  Hora argentina. Sugerida por la cadencia; cambiala si querés otro turno.
+                </FieldHelp>
+              </FieldLabel>
               <Input
                 id={`scheduled_at-${shareId ?? postId}`}
                 name='scheduled_at'
@@ -148,11 +151,21 @@ const ScheduleDialog = ({
                 defaultValue={defaultScheduledAt}
                 required
               />
-              <FieldDescription>Sugerida por la cadencia. Cambiala si querés otro turno.</FieldDescription>
             </Field>
 
             <Field>
-              <FieldLabel htmlFor={`media-${shareId ?? postId}`}>Media</FieldLabel>
+              <FieldLabel htmlFor={`media-${shareId ?? postId}`}>
+                Media
+                <FieldHelp label='Media'>
+                  {media === 'auto'
+                    ? 'Se adjunta la portada vigente al entregar, no la de hoy.'
+                    : media === 'article'
+                      ? 'Tarjeta clickeable al pie, con portada, título y bajada; es la que lleva el link, sin ensuciar el texto. La API no scrapea la URL, así que la tarjeta se arma acá: sin esto un link suelto no genera preview.'
+                      : media === 'document'
+                        ? 'El carrusel de LinkedIn es un PDF de varias páginas: el multi-imagen nativo ya no existe.'
+                        : 'Texto solo, sin nada adjunto.'}
+                </FieldHelp>
+              </FieldLabel>
               <Select
                 name='media'
                 value={media}
@@ -170,38 +183,37 @@ const ScheduleDialog = ({
                   ))}
                 </SelectContent>
               </Select>
-              <FieldDescription>
-                {media === 'auto'
-                  ? 'Se adjunta la portada vigente al entregar, no la de hoy.'
-                  : media === 'article'
-                    ? 'Tarjeta clickeable al pie, con portada, título y bajada; el link queda además escrito en el texto. La API no scrapea la URL, así que la tarjeta se arma acá: sin esto un link suelto no genera preview.'
-                    : media === 'document'
-                      ? 'El carrusel de LinkedIn es un PDF de varias páginas: el multi-imagen nativo ya no existe.'
-                      : 'Texto solo, sin nada adjunto.'}
-              </FieldDescription>
             </Field>
 
             {media === 'document' && (
               <Field>
-                <FieldLabel htmlFor={`document-${shareId ?? postId}`}>PDF del carrusel</FieldLabel>
+                <FieldLabel htmlFor={`document-${shareId ?? postId}`}>
+                  PDF del carrusel
+                  <FieldHelp label='PDF del carrusel'>
+                    {currentDocument
+                      ? `Cargado: ${currentDocument}. Subí otro sólo si querés reemplazarlo.`
+                      : 'Hasta 2 MB. Diseñá cada página en 1080×1080 o 1920×1080.'}
+                    {!hasCover && ' Falta la portada del artículo, que es la miniatura del documento.'}
+                  </FieldHelp>
+                </FieldLabel>
                 <Input
                   id={`document-${shareId ?? postId}`}
                   name='document'
                   type='file'
                   accept='application/pdf'
                 />
-                <FieldDescription>
-                  {currentDocument
-                    ? `Cargado: ${currentDocument}. Subí otro sólo si querés reemplazarlo.`
-                    : 'Hasta 2 MB. Diseñá cada página en 1080×1080 o 1920×1080.'}
-                  {!hasCover && ' Falta la portada del artículo, que es la miniatura del documento.'}
-                </FieldDescription>
               </Field>
             )}
 
             {/* Con tarjeta el link ya es la tarjeta: ofrecer además mandarlo
-                al comentario sería ofrecer duplicarlo. */}
-            {media !== 'article' && (
+                al comentario sería ofrecer duplicarlo. Igual se guarda lo
+                elegido, para que cambiar de media más tarde no deje el link
+                sin destino. */}
+            {withCard && (
+              <input type='hidden' name='link_in_first_comment' value={linkInComment ? 'on' : ''} />
+            )}
+
+            {!withCard && (
               <Field orientation='horizontal'>
                 <Switch
                   id={`link_in_first_comment-${shareId ?? postId}`}
@@ -216,7 +228,23 @@ const ScheduleDialog = ({
             )}
 
             <Field>
-              <FieldLabel htmlFor={`message-${shareId ?? postId}`}>Texto del posteo</FieldLabel>
+              <FieldLabel htmlFor={`message-${shareId ?? postId}`}>
+                Texto del posteo
+                {/* Tres ideas, y en este orden: qué pasa si no escribís nada
+                    —que es lo que hace el 90% de las veces—, dónde queda el
+                    link, y qué perdés si escribís. */}
+                <FieldHelp label='Texto del posteo'>
+                  Dejalo vacío y sale lo que ves en gris: título, bajada y el arranque de la
+                  nota. La URL nunca va acá
+                  {withCard
+                    ? ': la lleva la tarjeta.'
+                    : linkGoesToComment
+                      ? ': va como primer comentario.'
+                      : ', y así no sale en ningún lado.'}{' '}
+                  Se arma al entregar, así que una corrección hecha antes del turno igual sale.
+                  Si escribís acá, ese texto queda fijo y ya no se actualiza solo.
+                </FieldHelp>
+              </FieldLabel>
               <Textarea
                 id={`message-${shareId ?? postId}`}
                 name='message'
@@ -224,14 +252,12 @@ const ScheduleDialog = ({
                 defaultValue={defaultMessage}
                 placeholder={autoMessage}
               />
-              {/* Dos ideas, y en este orden: qué pasa si no escribís nada —que
-                  es lo que hace el 90% de las veces— y qué perdés si escribís. */}
-              <FieldDescription>
-                Dejalo vacío y sale lo que ves en gris: título, bajada
-                {linkGoesToComment ? ' y el link como primer comentario.' : ' y el link con UTMs.'}{' '}
-                Se arma al entregar, así que una corrección de título hecha antes del turno igual
-                sale. Si escribís acá, ese texto queda fijo y ya no se actualiza solo.
-              </FieldDescription>
+              {!withCard && !linkGoesToComment && (
+                <p className='text-xs text-amber-600 dark:text-amber-500'>
+                  Así el link no sale en ningún lado: activá el primer comentario o elegí tarjeta
+                  de enlace.
+                </p>
+              )}
             </Field>
           </div>
 
