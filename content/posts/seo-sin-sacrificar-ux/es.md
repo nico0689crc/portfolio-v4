@@ -11,7 +11,7 @@ coverAlt: "Interfaz con superposición de señales de SEO y de accesibilidad coi
 status: published
 publishedAt: 2026-12-14
 tags: seo, diseno-ui, rendimiento
-imagePrompt: "Editorial vector illustration, two abstract overlapping circles perfectly aligned, one made of search-ranking marks and one made of interface elements, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. Two overlapping circles whose intersection is unusually large and fully resolved, holding shared signals inside it: a speed gauge, a heading hierarchy and a structured outline. The outer crescents left over are small and nearly empty. Composition: single focal cluster centred slightly left, wide empty margins, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the intersection. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Todavía se escucha que optimizar para SEO significa sacrificar experiencia: rellenar de palabras clave, escribir para un algoritmo en vez de para una persona. Esa tensión existió, pero es de hace más de una década. Hoy SEO y UX piden casi exactamente lo mismo.

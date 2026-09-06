@@ -11,7 +11,7 @@ coverAlt: "Componentes de interfaz organizados de piezas pequeñas a pantallas c
 status: published
 publishedAt: 2026-10-12
 tags: design-systems, react, diseno-ui
-imagePrompt: "Editorial vector illustration, small abstract geometric pieces assembling upward into larger composite shapes, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. One small component shape at the centre, with four completely different screen layouts arranged around it. Each layout accepts the identical shape without altering it in any way. Composition: single focal cluster centred slightly left, wide empty margins, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the central component shape. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 El [atomic design](https://bradfrost.com/blog/post/atomic-web-design/) tiene un problema de marketing. La metáfora de átomos, moléculas y organismos es tan pegadiza que la gente memoriza los nombres y se olvida de la pregunta que viene a contestar. Sin esa pregunta terminás con una carpeta de componentes atómicos que cumple la nomenclatura y que nadie reutiliza.

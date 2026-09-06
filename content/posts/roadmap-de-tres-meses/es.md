@@ -11,7 +11,7 @@ coverAlt: "Línea de tiempo de roadmap con un horizonte corto claro y el resto m
 status: published
 publishedAt: 2027-05-17
 tags: producto, negocio
-imagePrompt: "Editorial vector illustration, an abstract timeline that stays sharp and clear for a short stretch and fades into soft uncertainty afterward, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A timeline where the first short segment is drawn solid with three defined milestone blocks, and everything after it continues as an open dashed direction arrow carrying no blocks at all. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the solid short segment. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Un roadmap de producto de doce meses, con funcionalidades asignadas a cada trimestre, se ve impresionante en una presentación. Para la mayoría de los productos sin un mercado validado, también es una ficción cuidadosamente diseñada. Una forma de proyectar control sobre algo que depende de datos que todavía no existen.

@@ -11,7 +11,7 @@ coverAlt: "Informe de research con un hallazgo marcado como pendiente"
 status: published
 publishedAt: 2026-11-16
 tags: ux-research, producto
-imagePrompt: "Editorial vector illustration, an abstract checklist where one item remains visibly unchecked among completed ones, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A page header bar with a dense scatter of small click marks across it. Roughly half of the marks land on the two real interactive elements and the other half fall on the empty space between them. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the misplaced clicks in the empty space. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 De todos los errores comunes de UX, el más caro que vi —y que cometí— no tiene que ver con la herramienta ni con la metodología. Es más simple y más humano: confundir "terminamos el test" con "ya no queda nada por encontrar".

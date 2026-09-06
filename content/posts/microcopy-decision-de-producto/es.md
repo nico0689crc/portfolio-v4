@@ -11,7 +11,7 @@ coverAlt: "Botón de interfaz con múltiples variantes de texto probadas"
 status: published
 publishedAt: 2026-11-02
 tags: diseno-ui, producto
-imagePrompt: "Editorial vector illustration, an abstract button shape with speech-bubble fragments emerging from it in different directions, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A single interface button repeated four times down a column, each version a slightly different width and weight. A small decision fork is drawn beside the column, resolving toward one of them. Composition: single focal cluster centred slightly left, wide empty margins, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the chosen button. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Hay una prueba rápida para saber si un equipo trata al microcopy como decisión de producto o como relleno final: fijate quién escribe los mensajes de error. Si la respuesta es "el que estaba programando esa pantalla, cinco minutos antes de subir a producción", ya sabés el resultado: "Algo salió mal. Intentá de nuevo."

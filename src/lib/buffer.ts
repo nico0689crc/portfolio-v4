@@ -26,6 +26,8 @@ export type LinkedInPost = {
   assets: ShareAsset[];
   /** El link, cuando no va en el cuerpo. Null lo omite. */
   firstComment: string | null;
+  /** Publicar ya en vez de esperar a `dueAt`. Es lo que hace «Publicar ahora» del panel. */
+  immediate?: boolean;
 };
 
 /**
@@ -37,12 +39,26 @@ export type LinkedInPost = {
  * público y accesible todo ese tiempo — de ahí que se sirvan desde el bucket
  * público de Supabase y no desde una URL firmada, que expira.
  */
-const toBufferAssets = (assets: ShareAsset[]) =>
-  assets.map(asset =>
-    asset.kind === 'image'
-      ? { image: { url: asset.url, ...(asset.altText ? { metadata: { altText: asset.altText } } : {}) } }
-      : { document: { url: asset.url, title: asset.title, thumbnailUrl: asset.thumbnailUrl } }
-  );
+type BufferAsset =
+  | { image: { url: string; metadata?: { altText: string } } }
+  | { document: { url: string; title: string; thumbnailUrl: string } };
+
+const toBufferAssets = (assets: ShareAsset[]): BufferAsset[] =>
+  assets.flatMap<BufferAsset>(asset => {
+    if (asset.kind === 'image') {
+      return [{ image: { url: asset.url, ...(asset.altText ? { metadata: { altText: asset.altText } } : {}) } }];
+    }
+
+    if (asset.kind === 'document') {
+      return [{ document: { url: asset.url, title: asset.title, thumbnailUrl: asset.thumbnailUrl } }];
+    }
+
+    // La tarjeta de enlace no tiene equivalente: el `linkAttachment` de Buffer
+    // vive en `metadata` y es mutuamente excluyente con `assets`, así que no se
+    // puede mandar como uno más. Por Buffer el link queda en el cuerpo y la
+    // tarjeta la arma LinkedIn a su criterio, que es lo que hacía antes.
+    return [];
+  });
 
 /** `null` si falta alguna env var — el cron lo trata como "no configurado" y no falla. */
 export function getBufferConfig(): BufferConfig | null {
@@ -94,8 +110,9 @@ export async function scheduleLinkedInPost(config: BufferConfig, post: LinkedInP
           // expresa acá sino en `mode`: `customScheduled` + `dueAt` es la hora
           // exacta, frente a `addToQueue`, que la decide la cola de Buffer.
           schedulingType: 'automatic',
-          mode: 'customScheduled',
-          dueAt: post.dueAt.toISOString(),
+          ...(post.immediate
+            ? { mode: 'shareNow' }
+            : { mode: 'customScheduled', dueAt: post.dueAt.toISOString() }),
           ...(post.assets.length > 0 ? { assets: toBufferAssets(post.assets) } : {}),
           // `linkAttachment` vive en este mismo objeto y Buffer rechaza la
           // mutación si se manda junto con assets, así que no se usa: el link

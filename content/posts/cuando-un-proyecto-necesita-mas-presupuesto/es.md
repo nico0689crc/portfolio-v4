@@ -11,7 +11,7 @@ coverAlt: "Gráfico de alcance de proyecto creciendo por encima del presupuesto 
 status: published
 publishedAt: 2026-12-28
 tags: negocio, producto
-imagePrompt: "Editorial vector illustration, an abstract budget bar slowly overflowing its container in small geometric increments, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A horizontal budget line with a stack of many thin identical slabs accumulating above it. Each slab is almost negligible on its own, but together they push the top of the stack well past the line. Composition: single focal cluster centred slightly left, wide empty margins, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the budget line where the stack crosses it. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Ningún presupuesto de software se rompe con un anuncio grande. Se rompe con quince decisiones chicas que, cada una por separado, parecen razonables de aceptar. El truco no es evitarlas todas: algunas son necesarias. Es aprender a verlas cuando todavía se pueden conversar, no cuando ya se acumularon.

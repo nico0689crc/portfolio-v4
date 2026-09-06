@@ -11,7 +11,7 @@ coverAlt: "Árbol de componentes con flechas mostrando el orden de pedidos de da
 status: published
 publishedAt: 2026-11-30
 tags: nextjs, rendimiento, react
-imagePrompt: "Editorial vector illustration, an abstract waterfall of geometric request arrows cascading down a component tree versus parallel arrows firing together, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A component tree of nested rectangles with data request arrows. On one side the arrows descend as a staircase, each starting only where the previous one ends; on the other the same arrows all leave a single higher node at the same instant, forming one flat row. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the flat row of parallel arrows. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Hay un error de data fetching en Next.js que no se ve en el código, solo en la pestaña de red del navegador. Son pedidos de datos que deberían dispararse todos juntos y se disparan uno atrás del otro, porque cada uno espera a que termine el anterior.

@@ -11,7 +11,7 @@ coverAlt: "Árbol de categorías de un sitio con caminos de navegación marcados
 status: published
 publishedAt: 2026-09-21
 tags: ux-research
-imagePrompt: "Editorial vector illustration, an abstract branching tree diagram of nested nodes with one path highlighted, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A bare category tree with navigation paths traced through it. Through one branch the paths wander and double back on themselves, while through the branch beside it the paths run straight to their target. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the straight paths. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Hay un tipo de error de diseño que no se arregla con diseño, y el tree testing existe para encontrarlo: cuando el problema no es cómo se ve el menú, sino cómo se llaman las cosas que hay adentro.

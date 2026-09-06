@@ -11,7 +11,7 @@ coverAlt: "Diagrama de alcance de producto con funcionalidades dentro y fuera de
 status: published
 publishedAt: 2026-08-10
 tags: producto, negocio
-imagePrompt: "Editorial vector illustration, an abstract funnel narrowing many geometric shapes down to one solid shape, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A funnel narrowing a wide field of feature blocks down to one single path that runs unbroken from end to end. The blocks that do not fit are set outside the funnel in a neat deliberate row rather than scattered. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the single unbroken path. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Todos los proyectos que vi fracasar por alcance fracasaron igual: nadie dijo que no a tiempo. Saber cómo definir un MVP es, sobre todo, saber recortarlo. No fue una mala decisión grande, fueron treinta decisiones chicas, cada una razonable por separado, que convirtieron una primera versión de tres meses en una de catorce.

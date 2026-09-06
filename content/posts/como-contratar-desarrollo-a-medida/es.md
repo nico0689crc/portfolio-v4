@@ -11,7 +11,7 @@ coverAlt: "Lista de verificación para contratar un desarrollo de software a med
 status: published
 publishedAt: 2026-07-13
 tags: negocio, producto
-imagePrompt: "Editorial vector illustration, an abstract handshake formed from geometric puzzle pieces fitting together, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A thick stack of contract sheets on one side, and on the other two simple seat shapes facing each other across a small table with a single sheet between them. The two-seat scene is drawn larger and more resolved than the stack. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the single sheet between the seats. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Saber cómo contratar desarrollo a medida tiene poco que ver con la tecnología. Casi todos los proyectos que vi salir mal no fracasaron por una mala elección de stack. Fracasaron por algo que se decidió mal en la primera semana y que nadie volvió a mirar hasta que ya era caro corregirlo.

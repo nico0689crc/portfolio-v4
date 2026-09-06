@@ -32,7 +32,9 @@ import { Textarea } from '@/components/admin/ui/textarea'
 // Lib Imports
 import { scheduleShare, updateShare } from '@/lib/admin/social-actions'
 
+/** El orden es el del select, y el primero es el default de un envío nuevo. */
 const MEDIA_OPTIONS = [
+  { value: 'article', label: 'Tarjeta de enlace' },
   { value: 'auto', label: 'Portada del artículo' },
   { value: 'document', label: 'Carrusel (PDF)' },
   { value: 'none', label: 'Sin imagen' }
@@ -76,7 +78,7 @@ const ScheduleDialog = ({
   defaultMessage: string
   /** El texto que saldría si el campo queda vacío. Se muestra como placeholder. */
   autoMessage: string
-  defaultMedia: 'auto' | 'document' | 'none'
+  defaultMedia: 'auto' | 'article' | 'document' | 'none'
   defaultLinkInFirstComment: boolean
   /** Nombre del PDF ya cargado, si lo hay: evita tener que volver a subirlo al editar. */
   currentDocument: string | null
@@ -87,8 +89,14 @@ const ScheduleDialog = ({
 }) => {
   const [open, setOpen] = useState(false)
   const [media, setMedia] = useState(defaultMedia)
+  const [linkInComment, setLinkInComment] = useState(defaultLinkInFirstComment)
   const [isPending, startTransition] = useTransition()
   const editing = shareId !== undefined
+
+  // Con tarjeta el link es la tarjeta, así que el switch ni se ofrece y lo
+  // guardado deja de aplicar. Vale la pena calcularlo una vez: de acá salen
+  // tanto el texto que se arma solo como lo que el copy promete.
+  const linkGoesToComment = linkInComment && media !== 'article'
 
   // El envío va por `useTransition` y no por `useActionState` para poder cerrar
   // el diálogo en el callback: con el estado del action habría que cerrarlo
@@ -165,9 +173,11 @@ const ScheduleDialog = ({
               <FieldDescription>
                 {media === 'auto'
                   ? 'Se adjunta la portada vigente al entregar, no la de hoy.'
-                  : media === 'document'
-                    ? 'El carrusel de LinkedIn es un PDF de varias páginas: el multi-imagen nativo ya no existe.'
-                    : 'Texto solo, sin nada adjunto.'}
+                  : media === 'article'
+                    ? 'Tarjeta clickeable al pie, con portada, título y bajada; el link queda además escrito en el texto. La API no scrapea la URL, así que la tarjeta se arma acá: sin esto un link suelto no genera preview.'
+                    : media === 'document'
+                      ? 'El carrusel de LinkedIn es un PDF de varias páginas: el multi-imagen nativo ya no existe.'
+                      : 'Texto solo, sin nada adjunto.'}
               </FieldDescription>
             </Field>
 
@@ -189,16 +199,21 @@ const ScheduleDialog = ({
               </Field>
             )}
 
-            <Field orientation='horizontal'>
-              <Switch
-                id={`link_in_first_comment-${shareId ?? postId}`}
-                name='link_in_first_comment'
-                defaultChecked={defaultLinkInFirstComment}
-              />
-              <FieldLabel htmlFor={`link_in_first_comment-${shareId ?? postId}`}>
-                Link en el primer comentario
-              </FieldLabel>
-            </Field>
+            {/* Con tarjeta el link ya es la tarjeta: ofrecer además mandarlo
+                al comentario sería ofrecer duplicarlo. */}
+            {media !== 'article' && (
+              <Field orientation='horizontal'>
+                <Switch
+                  id={`link_in_first_comment-${shareId ?? postId}`}
+                  name='link_in_first_comment'
+                  checked={linkInComment}
+                  onCheckedChange={setLinkInComment}
+                />
+                <FieldLabel htmlFor={`link_in_first_comment-${shareId ?? postId}`}>
+                  Link en el primer comentario
+                </FieldLabel>
+              </Field>
+            )}
 
             <Field>
               <FieldLabel htmlFor={`message-${shareId ?? postId}`}>Texto del posteo</FieldLabel>
@@ -209,9 +224,13 @@ const ScheduleDialog = ({
                 defaultValue={defaultMessage}
                 placeholder={autoMessage}
               />
+              {/* Dos ideas, y en este orden: qué pasa si no escribís nada —que
+                  es lo que hace el 90% de las veces— y qué perdés si escribís. */}
               <FieldDescription>
-                Vacío usa título + bajada + link con UTMs, armado al entregar para que tome el
-                título vigente.
+                Dejalo vacío y sale lo que ves en gris: título, bajada
+                {linkGoesToComment ? ' y el link como primer comentario.' : ' y el link con UTMs.'}{' '}
+                Se arma al entregar, así que una corrección de título hecha antes del turno igual
+                sale. Si escribís acá, ese texto queda fijo y ya no se actualiza solo.
               </FieldDescription>
             </Field>
           </div>

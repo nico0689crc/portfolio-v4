@@ -11,7 +11,7 @@ coverAlt: "Campo de formulario mostrando validación en el momento correcto, no 
 status: published
 publishedAt: 2027-05-24
 tags: diseno-ui, react
-imagePrompt: "Editorial vector illustration, an abstract form field showing a checkmark appearing at the right moment, not too early, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A form field caught mid-entry with a partial value and an error marker already attached to it, beside the same field completed with its marker resolved. A timing bar underneath shows how early the first marker appeared. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the timing bar. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 La validación de formularios en tiempo real se convirtió en un default automático. Cada framework moderno la hace fácil de implementar y se siente mejor que esperar al envío. El problema es que la mayoría de las implementaciones validan en el momento equivocado, y eso convierte una ayuda en una molestia.

@@ -11,7 +11,7 @@ coverAlt: "Diagrama de las cinco etapas de un proceso de diseño UX/UI"
 status: published
 publishedAt: 2026-09-06
 tags: ux-research, diseno-ui, producto
-imagePrompt: "Editorial vector illustration, five abstract geometric stages connected left to right like a process diagram, muted ochre and deep teal on warm off-white background, flat design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. Five stations along a horizontal path, each more resolved than the last: the first three are loose research marks and rough problem definition blocks, the fourth is a structured layout grid, the fifth a test result panel with plotted outcomes. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the fourth station, the layout grid. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Cuando alguien me pide una interfaz nueva, la primera reacción casi siempre es la misma: mandame el Figma. Y es entendible, porque en todo proceso de diseño UX/UI el Figma es lo único que se puede mirar. Pero abrirlo primero es como empezar a cocinar sin saber cuánta gente viene a comer.

@@ -11,7 +11,7 @@ coverAlt: "Red de contactos propia conectada directamente, sin intermediario cen
 status: published
 publishedAt: 2027-05-10
 tags: carrera, negocio
-imagePrompt: "Editorial vector illustration, an abstract direct network of connected nodes bypassing a central hub, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. Two network diagrams side by side: on the left many small nodes all routed through one large central hub, on the right the same nodes connected directly to each other with no hub present at all. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the direct connections on the right. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Conseguir clientes freelance a través de plataformas resuelve un problema real: conectan con demanda que de otra forma sería difícil encontrar. El problema no es que existan. Es depender exclusivamente de ellas, porque esa dependencia tiene un costo que crece con el tiempo en vez de reducirse.

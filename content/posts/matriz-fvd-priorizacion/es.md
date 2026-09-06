@@ -11,7 +11,7 @@ coverAlt: "Matriz de priorización con ideas ubicadas según valor y dificultad"
 status: published
 publishedAt: 2026-11-09
 tags: producto, diseno-ui
-imagePrompt: "Editorial vector illustration, an abstract 2x2 matrix grid with geometric shapes scattered across quadrants, some highlighted, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A two-axis grid with ten idea dots plotted across it and a single threshold line drawn through the field. Six dots sit above the line and four fall below it. Composition: single focal cluster centred slightly left, wide empty margins, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the threshold line. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Toda sesión de ideación termina igual: quince ideas en un pizarrón, presupuesto para tres. La discusión se resuelve por quién habló más convencido, no por cuál idea era mejor. Una matriz de priorización de producto existe para sacar esa decisión de la sala de reuniones y ponerla en un cálculo que cualquiera puede revisar.

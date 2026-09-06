@@ -11,7 +11,7 @@ coverAlt: "Dos versiones de una página en distintos idiomas conectadas correcta
 status: published
 publishedAt: 2027-03-15
 tags: seo, nextjs
-imagePrompt: "Editorial vector illustration, two abstract mirrored language flags connected by a single verified link versus a broken dangling one, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. Two page rectangles joined by a clean two-way arrow, and a third arrow leaving one of them toward an empty dashed outline where no page exists. The broken arrow visibly weakens the working pair beside it. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the broken arrow and its empty target. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 De todos los errores de SEO técnico que corregí en sitios multilenguaje, el hreflang mal declarado es el que más daño hace en relación a lo simple que parece. Una etiqueta con la URL equivocada puede sacar de la indexación no solo esa página, sino todo el clúster de idiomas conectado a ella.

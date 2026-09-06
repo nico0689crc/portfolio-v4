@@ -11,7 +11,7 @@ coverAlt: "Boceto de interfaz generado rápidamente junto a una versión refinad
 status: published
 publishedAt: 2027-01-04
 tags: ia, diseno-ui
-imagePrompt: "Editorial vector illustration, an abstract rough sketch interface rapidly solidifying into a refined polished version, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. Three rough interface variants generated quickly in a row, with one of them lifted out and rebuilt beside them as a precise version aligned to a visible grid. Composition: horizontal band across the middle third of the frame, wide empty margins above and below, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the rebuilt precise version. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 Discutir una idea de interfaz solo con palabras es lento y ambiguo: dos personas pueden estar de acuerdo mientras imaginan cosas distintas. Prototipar con IA cambia esa conversación, porque tener algo navegable en pantalla, aunque sea tosco, la mueve de "¿te imaginás algo como...?" a "mirá esto, ¿qué le cambiarías?".

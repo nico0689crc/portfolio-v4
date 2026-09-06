@@ -11,7 +11,7 @@ coverAlt: "Diagrama de tipos de TypeScript modelando estados válidos de un domi
 status: published
 publishedAt: 2027-05-31
 tags: react, nextjs
-imagePrompt: "Editorial vector illustration, an abstract set of interlocking geometric shapes where only valid combinations physically fit together, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. A set of interlocking state shapes where only certain combinations physically fit together. One invalid combination is shown as two pieces that cannot join, held slightly apart with a visible gap between them. Composition: single focal cluster centred slightly left, wide empty margins, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the gap between the pieces that cannot join. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 La forma más común de explicar el valor de TypeScript es que atrapa errores antes de producción, con el ejemplo del typo en el nombre de una propiedad. Es real, y es la parte menos interesante. Tipar el dominio con TypeScript apunta a otra cosa: modelar el negocio de forma que un estado inválido no se pueda ni escribir.

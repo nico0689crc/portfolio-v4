@@ -11,7 +11,7 @@ coverAlt: "Selección curada de proyectos de portafolio, con algunos descartados
 status: published
 publishedAt: 2027-06-21
 tags: carrera, producto
-imagePrompt: "Editorial vector illustration, an abstract gallery wall with a few carefully framed pieces and empty space deliberately left around them, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
+imagePrompt: "Flat editorial vector illustration, modern tech-magazine spot art, geometric and diagrammatic. Ten project cards arranged in a grid. Three are pulled forward, larger and fully detailed with visible internal structure, while the remaining seven recede as flat dimmed outlines. Composition: single focal cluster centred slightly left, wide empty margins, nothing important in the outer 8 percent. Palette: deep navy ground #0F172A, desaturated slate mid-tones #1E293B and #334155, off-white #F8FAFC for thin lines and highlights, and a single amber #F59E0B accent used only on the three chosen cards. Soft light from the top left, long low-contrast shadows, layered overlapping planes for depth. Fine film grain. No text, no letters, no numbers, no logos, no user interface chrome, no faces, no photorealism, no mesh gradients, no drop shadows on text. Aspect ratio 1.91:1, 1200x630."
 ---
 
 La tentación de mostrar todo lo que hice es entendible: cada proyecto costó tiempo real, y dejarlo afuera se siente como desperdiciar ese esfuerzo. Pero un portafolio de proyectos no es un archivo histórico. Es un argumento específico sobre qué tipo de trabajo podés hacer, y cada proyecto que no ayuda a ese argumento le resta espacio a los que sí.

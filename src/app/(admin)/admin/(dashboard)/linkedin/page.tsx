@@ -7,6 +7,7 @@ import { AlertTriangle, CheckCircle2, Clock, Plug, Send } from 'lucide-react'
 // Component Imports
 import { Badge } from '@/components/admin/ui/badge'
 import { Button } from '@/components/admin/ui/button'
+import PublishedShares, { type PublishedShare } from '@/components/admin/views/linkedin/PublishedShares'
 import ShareActions from '@/components/admin/views/linkedin/ShareActions'
 import UnscheduledPosts, { type Candidate } from '@/components/admin/views/linkedin/UnscheduledPosts'
 
@@ -15,6 +16,7 @@ import { createSupabaseServerClient } from '@/lib/supabase/server'
 import {
   SHARE_LOCALE,
   buildMessage,
+  linkedInPostUrl,
   nextSlot,
   shareLabel,
   type ShareAsset,
@@ -51,6 +53,12 @@ const STATUS_STYLE: Record<string, { className: string; icon: typeof Clock }> = 
   Cancelado: { className: 'bg-muted text-muted-foreground', icon: AlertTriangle }
 }
 
+/** Cuántos días antes de que venza el token empieza a avisar el panel. */
+const EXPIRY_WARNING_DAYS = 10
+
+/** Días que faltan para una fecha. Redondea hacia abajo: avisa de más, nunca de menos. */
+const daysUntil = (iso: string) => Math.floor((new Date(iso).getTime() - new Date().getTime()) / 86_400_000)
+
 /**
  * La agenda de LinkedIn.
  *
@@ -59,12 +67,6 @@ const STATUS_STYLE: Record<string, { className: string; icon: typeof Clock }> = 
  * programada + la cadencia—, así llenar la agenda del archivo entero es un
  * clic por nota en vez de elegir fecha cincuenta veces.
  */
-/** Cuántos días antes de que venza el token empieza a avisar el panel. */
-const EXPIRY_WARNING_DAYS = 10
-
-/** Días que faltan para una fecha. Redondea hacia abajo: avisa de más, nunca de menos. */
-const daysUntil = (iso: string) => Math.floor((new Date(iso).getTime() - new Date().getTime()) / 86_400_000)
-
 const AdminLinkedInPage = async ({
   searchParams
 }: {
@@ -94,7 +96,7 @@ const AdminLinkedInPage = async ({
       supabase
         .from('post_social_shares')
         .select(
-          'id, post_id, locale, status, message, scheduled_at, error, external_id, assets, link_in_first_comment'
+          'id, post_id, locale, status, message, scheduled_at, delivered_at, error, external_id, assets, link_in_first_comment, provider'
         )
         .eq('channel', 'linkedin')
         .order('scheduled_at', { ascending: true }),
@@ -122,9 +124,10 @@ const AdminLinkedInPage = async ({
     // título sería ruido, y el cron ya lo marca `failed` si llega su turno.
     if (!post) return []
 
-    const label = shareLabel(share.status, share.scheduled_at)
+    const label = shareLabel(share.status, share.scheduled_at, share.provider)
     const assets = share.assets as ShareAsset[] | null
     const document = assets?.find(a => a.kind === 'document')
+    const article = assets?.some(a => a.kind === 'article')
 
     return [{
       ...share,
@@ -132,25 +135,73 @@ const AdminLinkedInPage = async ({
       // `null` es el modo automático —la portada vigente— y `[]` la decisión
       // explícita de no adjuntar nada. Son dos cosas distintas y la UI las
       // muestra distinto.
-      media: (document ? 'document' : assets?.length === 0 ? 'none' : 'auto') as
-        | 'auto'
-        | 'document'
-        | 'none',
+      media: (document
+        ? 'document'
+        : article
+          ? 'article'
+          : assets?.length === 0
+            ? 'none'
+            : 'auto') as 'auto' | 'article' | 'document' | 'none',
       documentName: document ? decodeURIComponent(document.url.split('/').pop() ?? '') : null,
       hasCover: post.posts.cover_path !== null,
+      // Con tarjeta el switch no aplica —`deliverShare` lo ignora— así que el
+      // preview tiene que ignorarlo también o promete un texto que no sale.
       autoMessage: buildMessage(
         { title: post.title, excerpt: post.excerpt, locale: share.locale, slug: post.slug },
-        share.link_in_first_comment
+        share.link_in_first_comment && !article
       ),
       label,
       style: STATUS_STYLE[label]
     }]
   })
 
-  // Lo cancelado no se muestra: se cancela justamente para sacarlo de la vista,
-  // y la nota vuelve sola a la columna de la derecha.
-  const visible = agenda.filter(s => s.status !== 'canceled')
+  // La agenda es un plan y el historial es un registro: responden preguntas
+  // distintas y mezclarlos hace que la más importante —qué falta— quede
+  // sepultada bajo lo que ya salió, que además va primero por orden de fecha.
+  //
+  // Lo cancelado no aparece en ninguna de las dos: se cancela justamente para
+  // sacarlo de la vista, y la nota vuelve sola a la columna de la derecha.
+  const upcoming = agenda.filter(
+    s => s.status === 'scheduled' || s.status === 'sending' || s.status === 'failed'
+  )
+  const done: PublishedShare[] = agenda
+    .filter(s => s.status === 'queued')
+    .sort((a, b) => (b.delivered_at ?? '').localeCompare(a.delivered_at ?? ''))
+    .map(s => ({
+      id: s.id,
+      title: s.title,
+      deliveredAt: s.delivered_at,
+      scheduledAt: s.scheduled_at,
+      label: s.label,
+      provider: s.provider,
+      media: s.media,
+      linkInFirstComment: s.link_in_first_comment,
+      // Con `message` vacío el texto no se guarda en ningún lado: se arma al
+      // entregar y se pierde. Reconstruirlo acá con lo vigente es lo más
+      // parecido a lo que salió, y para eso sirve `autoMessage`.
+      text: s.message?.trim() || s.autoMessage,
+      textIsCustom: Boolean(s.message?.trim()),
+      postUrl: linkedInPostUrl(s.external_id, s.provider),
+      // En `queued` la columna `error` guarda el aviso, no un fallo.
+      warning: s.error
+    }))
   const active = agenda.filter(s => ACTIVE.includes(s.status))
+  // Lo que todavía tiene turno reservado. Es más angosto que `active` a
+  // propósito: un envío ya entregado no ocupa nada, y el índice único de la
+  // base tampoco lo cuenta. De ahí sale que una nota publicada pueda volver a
+  // programarse, que es el caso de recirculación.
+  const pending = agenda.filter(s => s.status === 'scheduled' || s.status === 'sending')
+
+  // La última vez que cada nota salió, para no repetirla sin querer.
+  const lastShared = new Map<string, string>()
+
+  for (const share of agenda) {
+    if (!share.delivered_at) continue
+
+    const previous = lastShared.get(share.post_id)
+
+    if (!previous || share.delivered_at > previous) lastShared.set(share.post_id, share.delivered_at)
+  }
   const scheduledCount = agenda.filter(s => s.status === 'scheduled').length
   const failedCount = agenda.filter(s => s.status === 'failed').length
 
@@ -162,7 +213,7 @@ const AdminLinkedInPage = async ({
 
   // Sólo se ofrece lo que no tiene un envío en curso. Lo ya publicado sí puede
   // volver a la lista: recircular una nota vieja es el caso más valioso.
-  const taken = new Set(active.map(s => s.post_id))
+  const taken = new Set(pending.map(s => s.post_id))
 
   const candidates: Candidate[] = translations
     .filter(t => !taken.has(t.post_id) && t.posts.archived_at === null)
@@ -172,8 +223,9 @@ const AdminLinkedInPage = async ({
       key: t.posts.key,
       title: t.title,
       publishedAt: t.published_at,
+      lastSharedAt: lastShared.get(t.post_id) ?? null,
       hasCover: t.posts.cover_path !== null,
-      // Sin el link: por defecto va al primer comentario, no al cuerpo.
+      // Con el link: el default es la tarjeta de enlace, y ahí va en el cuerpo.
       autoMessage: buildMessage({ title: t.title, excerpt: t.excerpt, locale: SHARE_LOCALE, slug: t.slug })
     }))
 
@@ -229,7 +281,7 @@ const AdminLinkedInPage = async ({
       <div>
         <h1 className='text-2xl font-semibold tracking-tight'>LinkedIn</h1>
         <p className='text-muted-foreground text-sm'>
-          {scheduledCount} programados · {candidates.length} sin turno
+          {scheduledCount} programados · {done.length} publicados · {candidates.length} sin turno
           {failedCount > 0 && ` · ${failedCount} con error`}
         </p>
       </div>
@@ -238,13 +290,13 @@ const AdminLinkedInPage = async ({
         <section className='flex flex-col gap-3'>
           <h2 className='text-sm font-medium'>Agenda</h2>
 
-          {visible.length === 0 ? (
+          {upcoming.length === 0 ? (
             <p className='text-muted-foreground rounded-lg border border-dashed p-8 text-center text-sm'>
-              Todavía no programaste ninguno. Elegí uno de la derecha.
+              Nada pendiente. Elegí un artículo de la derecha.
             </p>
           ) : (
             <ul className='divide-border border-border divide-y rounded-lg border'>
-              {visible.map(share => {
+              {upcoming.map(share => {
                 const Icon = share.style?.icon ?? Clock
 
                 return (
@@ -257,6 +309,7 @@ const AdminLinkedInPage = async ({
                         <p className='text-muted-foreground text-xs'>
                           {formatSlot(share.scheduled_at)}
                           {share.media === 'document' && ' · carrusel'}
+                          {share.media === 'article' && ' · tarjeta'}
                           {share.media === 'none' && ' · sin imagen'}
                         </p>
                       </div>
@@ -287,6 +340,13 @@ const AdminLinkedInPage = async ({
                 )
               })}
             </ul>
+          )}
+
+          {done.length > 0 && (
+            <>
+              <h2 className='mt-4 text-sm font-medium'>Ya publicados ({done.length})</h2>
+              <PublishedShares shares={done} />
+            </>
           )}
         </section>
 
