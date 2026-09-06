@@ -887,6 +887,7 @@ export type Database = {
       }
       posts: {
         Row: {
+          archived_at: string | null
           cover_blur_data_url: string | null
           cover_height: number | null
           cover_path: string | null
@@ -897,6 +898,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          archived_at?: string | null
           cover_blur_data_url?: string | null
           cover_height?: number | null
           cover_path?: string | null
@@ -907,6 +909,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          archived_at?: string | null
           cover_blur_data_url?: string | null
           cover_height?: number | null
           cover_path?: string | null

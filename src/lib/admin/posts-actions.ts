@@ -2,6 +2,7 @@
 
 // Next Imports
 import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 
 // Third-party Imports
 import { z } from 'zod'
@@ -11,6 +12,7 @@ import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { updateTags } from '@/lib/content/cache'
 import { TAGS } from '@/lib/content/tags'
 import { requireAdmin } from './auth'
+import { slugify } from '@/lib/slug'
 
 export type PostFormState = {
   error: string | null
@@ -30,25 +32,106 @@ const key = z
 
 const slug = key
 
+/**
+ * Claves que chocarían con una ruta del panel.
+ *
+ * `/admin/posts/nuevo` es una pantalla, así que un artículo con esa clave sería
+ * inalcanzable para editar: Next resuelve el segmento estático antes que el
+ * dinámico y el editor nunca llegaría a su propio post.
+ */
+const RESERVED_KEYS = ['nuevo', 'new']
+
+/**
+ * Crea el post a partir de los títulos.
+ *
+ * La clave y los slugs se derivan y no se piden: son detalles de URL que el
+ * editor no tiene por qué inventar, y pedirlos convertía la pantalla de alta en
+ * un formulario técnico que no parecía servir para escribir un artículo. Los
+ * dos siguen siendo editables después.
+ */
 export async function createPost(_prev: PostFormState, formData: FormData): Promise<PostFormState> {
   await requireAdmin()
 
-  const parsed = key.safeParse(formData.get('key'))
+  const titles = {
+    es: String(formData.get('es.title') ?? '').trim(),
+    en: String(formData.get('en.title') ?? '').trim()
+  }
+
+  if (!titles.es) return { error: 'El título en español es obligatorio.', saved: false }
+
+  const derived = slugify(titles.es)
+
+  if (!derived) return { error: 'Ese título no genera una URL válida. Usá letras o números.', saved: false }
+
+  const parsed = key.safeParse(derived)
 
   if (!parsed.success) return { error: parsed.error.issues[0].message, saved: false }
+  if (RESERVED_KEYS.includes(parsed.data)) {
+    return { error: 'Ese título genera una URL reservada. Cambiá alguna palabra.', saved: false }
+  }
 
   const supabase = await createSupabaseServerClient()
-  const { error } = await supabase.from('posts').insert({ key: parsed.data })
+
+  const { data: post, error } = await supabase
+    .from('posts')
+    .insert({ key: parsed.data })
+    .select('id')
+    .single()
 
   if (error) {
     return {
-      error: error.code === '23505' ? 'Ya existe un post con esa clave.' : error.message,
+      error:
+        error.code === '23505'
+          ? 'Ya existe un artículo con ese título. Cambiá alguna palabra.'
+          : error.message,
       saved: false
+    }
+  }
+
+  // Nace como borrador en los dos idiomas: crear no es publicar, y un artículo
+  // que apareciera en el sitio apenas se le pone título sería una trampa.
+  const rows = LOCALES.filter(locale => titles[locale]).map(locale => ({
+    post_id: post.id,
+    locale,
+    slug: slugify(titles[locale]),
+    title: titles[locale],
+    excerpt: '',
+    body: '',
+    status: 'draft' as const
+  }))
+
+  if (rows.length > 0) {
+    const { error: translationError } = await supabase.from('post_translations').insert(rows)
+
+    if (translationError) {
+      // Sin traducciones el post es una fila huérfana que nadie puede editar.
+      await supabase.from('posts').delete().eq('id', post.id)
+
+      return { error: `No se pudo crear: ${translationError.message}`, saved: false }
     }
   }
 
   updateTags([TAGS.posts, TAGS.all])
   redirect(`/admin/posts/${parsed.data}`)
+}
+
+/** Archiva o restaura. Es una fecha, así que restaurar es ponerla en null. */
+export async function setPostArchived(postKey: string, archived: boolean): Promise<{ error: string | null }> {
+  await requireAdmin()
+
+  const supabase = await createSupabaseServerClient()
+
+  const { error } = await supabase
+    .from('posts')
+    .update({ archived_at: archived ? new Date().toISOString() : null })
+    .eq('key', postKey)
+
+  if (error) return { error: error.message }
+
+  updateTags([TAGS.posts, TAGS.post(postKey), TAGS.all])
+  revalidatePath('/admin/posts')
+
+  return { error: null }
 }
 
 /**
@@ -155,5 +238,8 @@ export async function deletePost(postKey: string): Promise<{ error: string | nul
   if (error) return { error: error.message }
 
   updateTags([TAGS.posts, TAGS.post(postKey), TAGS.all])
+  // Sin esto, borrar desde el propio listado redirige a la misma ruta y el
+  // navegador vuelve a mostrar la fila que ya no existe.
+  revalidatePath('/admin/posts')
   redirect('/admin/posts')
 }
