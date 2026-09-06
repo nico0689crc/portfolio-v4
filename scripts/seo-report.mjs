@@ -60,6 +60,10 @@ const creds = JSON.parse(
 
 const argv = process.argv.slice(2);
 const AS_JSON = argv.includes('--json');
+/** Lista las propiedades que la cuenta de servicio alcanza. Es el primer
+ *  diagnostico util ante un 403: casi siempre el nombre de la propiedad no es
+ *  el que uno cree (apex vs www, prefijo de URL vs dominio). */
+const LIST_SITES = argv.includes('--sites');
 const DAYS = Number(argv[argv.indexOf('--days') + 1]) || 28;
 
 /** Search Console cierra el día con 2-3 de retraso; hoy siempre viene vacío. */
@@ -221,6 +225,20 @@ function shorten(value, max = 52) {
 
 async function main() {
   TOKEN = await accessToken();
+
+  if (LIST_SITES) {
+    const res = await fetch('https://searchconsole.googleapis.com/webmasters/v3/sites', {
+      headers: { authorization: `Bearer ${TOKEN}` },
+    });
+    const body = await res.json();
+    heading('Propiedades visibles para la cuenta de servicio');
+    table(
+      ['propiedad', 'permiso'],
+      (body.siteEntry ?? []).map((s) => [s.siteUrl, s.permissionLevel]),
+    );
+    console.log('');
+    return;
+  }
 
   const report = { period, previous, searchConsole: {}, ga4: {} };
 

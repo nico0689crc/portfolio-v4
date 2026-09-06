@@ -43,3 +43,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# claves de cuentas de servicio (Google Cloud) — nunca se commitean
+/claves/
