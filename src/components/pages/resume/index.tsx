@@ -27,6 +27,7 @@ const Resume = async ({ cv }: { cv: CvData }) => {
   // documento con más detalle, y dos rutas configurables por separado
   // terminarían apuntando a idiomas distintos.
   const extendedCv = primaryCv.replace(/\.pdf$/, "_Extended.pdf");
+  const extraRoles = cv.experiences.reduce((total, job) => total + job.roles.length, 0);
   const secondaryCv = cv.cvFiles[secondaryLocale] ?? cv.cvFiles.en;
 
   return (
@@ -63,6 +64,21 @@ const Resume = async ({ cv }: { cv: CvData }) => {
               {secondaryLocale === "es" ? t("downloadEs") : t("downloadEn")}
             </TrackedLink>
           </div>
+
+          {extraRoles > 0 && (
+            <p className="mt-5 text-sm text-muted-foreground">
+              <TrackedLink
+                href={extendedCv}
+                target="_blank"
+                rel="noopener noreferrer"
+                event={{ name: "cv_download", params: { file_language: locale, source: "resume_extended" } }}
+                className="text-accent font-medium hover:underline"
+              >
+                {t("downloadExtended", { count: extraRoles })}
+              </TrackedLink>
+            </p>
+          )}
+
         </Reveal>
 
         {/* Highlights */}

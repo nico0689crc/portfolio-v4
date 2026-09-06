@@ -1,4 +1,5 @@
 // Component Imports
+import RegenerateDocuments from '@/components/admin/views/settings/RegenerateDocuments'
 import SettingsForm, { type SettingsValues } from '@/components/admin/views/settings/SettingsForm'
 
 // Lib Imports
@@ -33,6 +34,8 @@ const AdminSettingsPage = async () => {
       </div>
 
       <SettingsForm values={values} />
+
+      <RegenerateDocuments />
     </div>
   )
 }

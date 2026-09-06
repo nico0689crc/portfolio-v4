@@ -1,5 +1,7 @@
+import { revalidatePath } from 'next/cache';
 import { NextResponse, type NextRequest } from 'next/server';
 import { purgeTags, TAGS } from '@/lib/content';
+import { GENERATED_DOCUMENT_ROUTES } from '@/lib/content/routes';
 
 /**
  * Invalida el cache de contenido desde afuera de la app.
@@ -27,6 +29,12 @@ export async function POST(request: NextRequest) {
   // `purgeTags` y no `updateTags`: este último tira E872 desde un Route
   // Handler, verificado en next@16.1.6.
   purgeTags([TAGS.all]);
+
+  // Los tags no alcanzan para los documentos generados: verificado en
+  // next@16.1.6 que `revalidateTag` no purga las entradas de `unstable_cache`,
+  // mientras que `revalidatePath` sí fuerza el re-render. Sin esto el CV en PDF
+  // seguía sirviendo la versión anterior aunque la respuesta dijera 200.
+  for (const route of GENERATED_DOCUMENT_ROUTES) revalidatePath(route);
 
   return NextResponse.json({ purged: TAGS.all, at: new Date().toISOString() });
 }

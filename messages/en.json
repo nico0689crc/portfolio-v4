@@ -461,7 +461,8 @@
     "certificationsNote": "Full list of certifications and ongoing learning available on LinkedIn.",
     "summaryTitle": "Professional Summary",
     "rolesToggle": "See all {count} positions in detail",
-    "rolesDownload": "Download extended CV"
+    "rolesDownload": "Download extended CV",
+    "downloadExtended": "Also available: extended version, with all {count} hospitality positions in detail"
   },
   "Consent": {
     "title": "We use anonymous analytics",

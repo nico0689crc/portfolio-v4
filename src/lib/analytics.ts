@@ -15,12 +15,15 @@ export const CONSENT_STORAGE_KEY = 'portfolio.consent.v1';
 export type ConsentChoice = 'granted' | 'denied';
 
 /** Where a CV download was triggered from. */
-export type CvLocation = 'home' | 'about' | 'resume';
+export type CvLocation = 'home' | 'about' | 'resume' | 'resume_extended';
 
 /** Which outbound resource a project link points at. */
 export type ProjectLinkType = 'demo' | 'github' | 'canva' | 'figjam' | 'lofi';
 
 export type AnalyticsEvent =
+  // `source` distingue de dónde salió la descarga; `resume_extended` es la
+  // versión con los puestos desplegados, que interesa medir aparte: dice si el
+  // detalle de la carrera gastronómica le importa a alguien.
   | { name: 'cv_download'; params: { file_language: string; source: CvLocation } }
   | { name: 'contact_submit'; params: { status: 'success' | 'error' } }
   | {
