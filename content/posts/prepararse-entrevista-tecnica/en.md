@@ -9,7 +9,7 @@ ogTitle: "I never inverted a binary tree in a real job. I did practice explainin
 ogDescription: "How I prepare for technical interviews by practicing what actually gets used day to day."
 coverAlt: "Person explaining a technical decision at a whiteboard, no algorithm code"
 status: published
-publishedAt: 2027-05-10
+publishedAt: 2027-03-08
 tags: carrera
 ---
 

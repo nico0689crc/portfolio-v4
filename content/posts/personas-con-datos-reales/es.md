@@ -9,7 +9,7 @@ ogTitle: "Si tu persona de UX no te hizo cambiar de opinión, no hizo su trabajo
 ogDescription: "Cómo construyo personas que se usan de verdad en vez de terminar pegadas en una pared."
 coverAlt: "Ficha de persona de UX con datos de comportamiento en vez de foto de stock"
 status: published
-publishedAt: 2026-12-14
+publishedAt: 2026-10-26
 tags: ux-research, producto
 imagePrompt: "Editorial vector illustration, an abstract user profile card made of behavioral data points instead of a photo, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

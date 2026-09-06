@@ -9,7 +9,7 @@ ogTitle: "Budgets don't break all at once. They break one small decision at a ti
 ogDescription: "How I catch early that a project needs more budget, before it turns into a surprise."
 coverAlt: "Project scope chart growing beyond the original budget"
 status: published
-publishedAt: 2027-03-01
+publishedAt: 2026-12-28
 tags: negocio, producto
 ---
 

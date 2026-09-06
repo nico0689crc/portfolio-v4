@@ -9,7 +9,7 @@ ogTitle: "A hreflang pointing to a page that doesn't exist can bring down both v
 ogDescription: "The most common multilingual SEO mistake, and why the fix is simpler than it looks."
 coverAlt: "Two versions of a page in different languages correctly connected by hreflang"
 status: published
-publishedAt: 2027-05-17
+publishedAt: 2027-03-15
 tags: seo, nextjs
 ---
 

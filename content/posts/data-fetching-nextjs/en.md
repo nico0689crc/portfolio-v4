@@ -9,7 +9,7 @@ ogTitle: "The same data, requested one level up, changes the load time"
 ogDescription: "Where I request data in a Next.js component tree, and the waterfall mistake I see repeated the most."
 coverAlt: "Component tree with arrows showing the order of data requests"
 status: published
-publishedAt: 2027-01-25
+publishedAt: 2026-11-30
 tags: nextjs, rendimiento, react
 ---
 

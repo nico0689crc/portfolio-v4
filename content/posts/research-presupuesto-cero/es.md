@@ -9,7 +9,7 @@ ogTitle: "Cero presupuesto no es lo mismo que cero investigación"
 ogDescription: "Los métodos de research que uso cuando no hay presupuesto para participantes pagos ni herramientas premium."
 coverAlt: "Sesión de research improvisada con herramientas gratuitas y participantes voluntarios"
 status: published
-publishedAt: 2027-07-05
+publishedAt: 2027-05-03
 tags: ux-research, negocio
 imagePrompt: "Editorial vector illustration, an abstract research setup built from simple everyday shapes instead of expensive equipment, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

@@ -9,7 +9,7 @@ ogTitle: "Que el código compile no significa que sea el código correcto"
 ogDescription: "El proceso que sigo para revisar código generado por IA antes de que entre a un proyecto real."
 coverAlt: "Código en un editor con anotaciones de revisión manual sobre líneas específicas"
 status: published
-publishedAt: 2027-06-14
+publishedAt: 2027-04-12
 tags: ia, nextjs
 imagePrompt: "Editorial vector illustration, an abstract magnifying glass hovering over lines of code with a few flagged sections, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

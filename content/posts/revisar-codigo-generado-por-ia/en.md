@@ -9,7 +9,7 @@ ogTitle: "Code compiling doesn't mean it's the correct code"
 ogDescription: "The process I follow to review AI-generated code before it enters a real project."
 coverAlt: "Code in an editor with manual review annotations on specific lines"
 status: published
-publishedAt: 2027-06-14
+publishedAt: 2027-04-12
 tags: ia, nextjs
 ---
 

@@ -9,7 +9,7 @@ ogTitle: "Ten mediocre projects communicate less than three well told"
 ogDescription: "The criteria I use to curate what goes into my portfolio, beyond how much work each project took."
 coverAlt: "Curated selection of portfolio projects, with some deliberately left out"
 status: published
-publishedAt: 2027-08-23
+publishedAt: 2027-06-21
 tags: carrera, producto
 ---
 

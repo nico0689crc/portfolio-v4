@@ -9,7 +9,7 @@ ogTitle: "The AI that writes code fastest is the one you should trust least unsu
 ogDescription: "Where I fold AI into my workflow, and the three questions I ask before accepting anything it generates."
 coverAlt: "Code editor with an AI suggestion next to a manual review"
 status: published
-publishedAt: 2027-01-18
+publishedAt: 2026-11-23
 tags: ia, producto
 ---
 

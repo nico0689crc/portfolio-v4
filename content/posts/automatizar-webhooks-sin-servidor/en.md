@@ -9,7 +9,7 @@ ogTitle: "The goal wasn't proving I could write the code"
 ogDescription: "Why I automated payment webhooks with an external tool instead of maintaining a server of my own."
 coverAlt: "Flow diagram of a payment webhook passing through a serverless automation"
 status: published
-publishedAt: 2027-04-19
+publishedAt: 2027-02-15
 tags: casos, negocio, nextjs
 ---
 

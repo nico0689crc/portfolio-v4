@@ -9,7 +9,7 @@ ogTitle: "The state that gets designed the least is the one that frustrates the 
 ogDescription: "The criteria for designing error states that never leave anyone stranded."
 coverAlt: "Interface showing an error state with a clear action to continue"
 status: published
-publishedAt: 2027-06-21
+publishedAt: 2027-04-19
 tags: diseno-ui, producto
 ---
 

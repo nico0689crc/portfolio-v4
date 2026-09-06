@@ -9,7 +9,7 @@ ogTitle: "The best dashboard here was the one that looked least like a dashboard
 ogDescription: "How I designed a screen for a receptionist to understand without reading a single word."
 coverAlt: "Monitor screen with one large, clear status indicator and no extra text"
 status: published
-publishedAt: 2027-02-01
+publishedAt: 2026-12-07
 tags: diseno-ui, casos, producto
 ---
 

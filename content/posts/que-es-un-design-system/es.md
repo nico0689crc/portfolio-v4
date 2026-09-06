@@ -9,7 +9,7 @@ ogTitle: "Un design system que nadie reutiliza es una librería con nombre elega
 ogDescription: "Cuándo un design system vale la inversión, y cuándo es trabajo invertido en flexibilidad que nadie va a usar."
 coverAlt: "Biblioteca de componentes de interfaz organizados jerárquicamente"
 status: published
-publishedAt: 2027-01-04
+publishedAt: 2026-08-17
 tags: design-systems, diseno-ui
 imagePrompt: "Editorial vector illustration, an abstract library of modular geometric building blocks organized on shelves, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

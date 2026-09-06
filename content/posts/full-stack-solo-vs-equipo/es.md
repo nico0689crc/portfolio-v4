@@ -9,7 +9,7 @@ ogTitle: "La pregunta correcta no es cuál es mejor, es cuál necesitás vos"
 ogDescription: "Un criterio objetivo para decidir entre un desarrollador full stack y un equipo, según el proyecto."
 coverAlt: "Comparación entre un desarrollador full stack y un equipo distribuido en un proyecto"
 status: published
-publishedAt: 2027-03-22
+publishedAt: 2027-01-18
 tags: negocio, producto
 imagePrompt: "Editorial vector illustration, an abstract single point of light versus a small constellation of connected points, both equally valid but different shapes, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

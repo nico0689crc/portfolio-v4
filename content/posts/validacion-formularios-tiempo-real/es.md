@@ -9,7 +9,7 @@ ogTitle: "Un campo marcado en rojo mientras todavía estás escribiendo no es ay
 ogDescription: "El criterio para decidir cuándo validar un formulario en tiempo real y cuándo esperar al envío."
 coverAlt: "Campo de formulario mostrando validación en el momento correcto, no antes de tiempo"
 status: published
-publishedAt: 2027-07-26
+publishedAt: 2027-05-24
 tags: diseno-ui, react
 imagePrompt: "Editorial vector illustration, an abstract form field showing a checkmark appearing at the right moment, not too early, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

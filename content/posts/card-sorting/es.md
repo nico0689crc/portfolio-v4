@@ -9,7 +9,7 @@ ogTitle: "Le pedí a diez personas que agruparan 40 tarjetas, y ninguna las agru
 ogDescription: "Cómo uso card sorting para descubrir cómo la gente agrupa información, antes de decidir la estructura de un sitio."
 coverAlt: "Tarjetas de contenido agrupadas en distintas categorías sobre una mesa"
 status: published
-publishedAt: 2027-02-22
+publishedAt: 2026-12-21
 tags: ux-research
 imagePrompt: "Editorial vector illustration, an abstract set of index cards being sorted into clustered groups by an unseen hand, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

@@ -9,7 +9,7 @@ ogTitle: "\"Something went wrong\" isn't an error message, it's a shrug"
 ogDescription: "Why interface text decides as much as visual design, and why it usually gets written last."
 coverAlt: "Interface button with multiple tested text variants"
 status: published
-publishedAt: 2026-12-21
+publishedAt: 2026-11-02
 tags: diseno-ui, producto
 ---
 

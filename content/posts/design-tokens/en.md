@@ -9,7 +9,7 @@ ogTitle: "The day the brand colour changed in a single line"
 ogDescription: "How I organize design tokens so a design change is a code change, not a component-by-component search."
 coverAlt: "Colour palette organized into primitive and semantic token layers"
 status: published
-publishedAt: 2026-10-26
+publishedAt: 2026-07-27
 tags: design-systems, diseno-ui, react
 ---
 

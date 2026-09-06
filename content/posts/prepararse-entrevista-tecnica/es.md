@@ -9,7 +9,7 @@ ogTitle: "Nunca invertí un árbol binario en un trabajo real. Practiqué explic
 ogDescription: "Cómo me preparo para entrevistas técnicas practicando lo que de verdad se usa en el día a día."
 coverAlt: "Persona explicando una decisión técnica frente a un pizarrón, sin código de algoritmos"
 status: published
-publishedAt: 2027-05-10
+publishedAt: 2027-03-08
 tags: carrera
 imagePrompt: "Editorial vector illustration, an abstract conversation bubble containing a small decision tree instead of code syntax, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

@@ -9,7 +9,7 @@ ogTitle: "The question that reveals the most isn't about technology"
 ogDescription: "Ten questions for the first call with a freelancer, and what each one reveals."
 coverAlt: "Checklist of questions for an interview with a freelance developer"
 status: published
-publishedAt: 2027-03-15
+publishedAt: 2027-01-11
 tags: negocio, producto
 ---
 

@@ -9,7 +9,7 @@ ogTitle: "Construir el producto es el 30% del trabajo"
 ogDescription: "Lo que cambia cuando un SaaS deja de ser un proyecto y pasa a tener clientes que dependen de que funcione."
 coverAlt: "Panel de monitoreo de un SaaS en producción con métricas en tiempo real"
 status: published
-publishedAt: 2026-12-07
+publishedAt: 2026-10-19
 tags: casos, negocio, producto
 imagePrompt: "Editorial vector illustration, an abstract dashboard with a heartbeat monitoring line running through geometric building blocks, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

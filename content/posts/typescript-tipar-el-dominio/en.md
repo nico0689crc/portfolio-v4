@@ -9,7 +9,7 @@ ogTitle: "The best bug is the one that can't even be written"
 ogDescription: "Why typing the business domain with TypeScript prevents more bugs than any test suite."
 coverAlt: "TypeScript type diagram modeling valid states of a business domain"
 status: published
-publishedAt: 2027-08-02
+publishedAt: 2027-05-31
 tags: react, nextjs
 ---
 

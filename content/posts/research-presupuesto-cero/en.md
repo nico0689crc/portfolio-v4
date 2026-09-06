@@ -9,7 +9,7 @@ ogTitle: "Zero budget isn't the same as zero research"
 ogDescription: "The research methods I use when there's no budget for paid participants or premium tools."
 coverAlt: "Improvised research session using free tools and volunteer participants"
 status: published
-publishedAt: 2027-07-05
+publishedAt: 2027-05-03
 tags: ux-research, negocio
 ---
 

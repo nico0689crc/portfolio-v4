@@ -9,7 +9,7 @@ ogTitle: "Si no podés explicar qué comunica una animación, es decoración"
 ogDescription: "El criterio que uso para decidir cuándo una transición ayuda y cuándo solo distrae, con ejemplos reales."
 coverAlt: "Elemento de interfaz en transición mostrando un cambio de estado claro"
 status: published
-publishedAt: 2027-05-31
+publishedAt: 2027-03-29
 tags: diseno-ui, react
 imagePrompt: "Editorial vector illustration, an abstract shape mid-transition between two clear states, motion trails showing purposeful direction, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

@@ -9,7 +9,7 @@ ogTitle: "El mejor bug es el que ni siquiera se puede escribir"
 ogDescription: "Por qué tipar el dominio de negocio con TypeScript previene más errores que cualquier suite de tests."
 coverAlt: "Diagrama de tipos de TypeScript modelando estados válidos de un dominio de negocio"
 status: published
-publishedAt: 2027-08-02
+publishedAt: 2027-05-31
 tags: react, nextjs
 imagePrompt: "Editorial vector illustration, an abstract set of interlocking geometric shapes where only valid combinations physically fit together, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

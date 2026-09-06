@@ -9,7 +9,7 @@ ogTitle: "Building the product is 30% of the work"
 ogDescription: "What changes when a SaaS stops being a project and starts having customers who depend on it working."
 coverAlt: "Monitoring dashboard of a SaaS in production with real-time metrics"
 status: published
-publishedAt: 2026-12-07
+publishedAt: 2026-10-19
 tags: casos, negocio, producto
 ---
 

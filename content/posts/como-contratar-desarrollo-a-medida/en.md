@@ -9,7 +9,7 @@ ogTitle: "The contract doesn't protect you from bad scope. The week-one conversa
 ogDescription: "The guide I'd give anyone before hiring their first custom development."
 coverAlt: "Checklist for hiring a custom software development project"
 status: published
-publishedAt: 2026-11-30
+publishedAt: 2026-07-13
 tags: negocio, producto
 ---
 

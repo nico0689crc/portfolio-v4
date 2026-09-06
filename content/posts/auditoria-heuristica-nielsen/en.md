@@ -9,7 +9,7 @@ ogTitle: "7 out of 10 usability heuristics were failing. Nobody had noticed"
 ogDescription: "How to run a heuristic audit that finds real problems instead of design opinions."
 coverAlt: "Usability heuristics checklist over an interface"
 status: published
-publishedAt: 2026-09-14
+publishedAt: 2026-08-03
 tags: ux-research, casos
 ---
 

@@ -9,7 +9,7 @@ ogTitle: "Elegí a quién no venderle antes de elegir el framework"
 ogDescription: "Las decisiones que definen si un SaaS funciona, y ninguna es sobre el código."
 coverAlt: "Diagrama de decisiones de negocio previas a la arquitectura técnica de un producto"
 status: published
-publishedAt: 2026-11-02
+publishedAt: 2026-09-28
 tags: producto, negocio, casos
 imagePrompt: "Editorial vector illustration, an abstract decision tree where the first branches are business shapes and only the last ones are code brackets, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

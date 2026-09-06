@@ -9,7 +9,7 @@ ogTitle: "El feedback más ruidoso no es el más importante"
 ogDescription: "El criterio que uso para decidir qué feedback de usuarios prioridad y cuál dejar pasar."
 coverAlt: "Bandeja de mensajes de feedback con algunos marcados como prioritarios"
 status: published
-publishedAt: 2027-05-24
+publishedAt: 2027-03-22
 tags: ux-research, producto
 imagePrompt: "Editorial vector illustration, an abstract inbox of feedback message shapes being filtered through a funnel into fewer highlighted ones, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

@@ -9,7 +9,7 @@ ogTitle: "\"Trabajé con React y Node.js\" no le dice nada a nadie"
 ogDescription: "El cambio que hice en cómo describo mi experiencia, de tecnologías usadas a decisiones tomadas."
 coverAlt: "Currículum comparando una descripción genérica con una descripción específica de una decisión"
 status: published
-publishedAt: 2027-02-15
+publishedAt: 2026-07-06
 tags: carrera, negocio
 imagePrompt: "Editorial vector illustration, an abstract document where generic bullet lines transform into a single specific highlighted line, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

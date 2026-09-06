@@ -9,7 +9,7 @@ ogTitle: "No real device respects your three breakpoints"
 ogDescription: "The shift in criteria I made in responsive design: from fixed screen sizes to the points where content actually breaks."
 coverAlt: "Interface layout smoothly adapting across different screen widths"
 status: published
-publishedAt: 2027-05-03
+publishedAt: 2027-03-01
 tags: diseno-ui, react
 ---
 

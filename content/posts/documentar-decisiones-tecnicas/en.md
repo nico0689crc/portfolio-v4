@@ -9,7 +9,7 @@ ogTitle: "A year from now, nobody will remember why we chose this — not even m
 ogDescription: "Why I document the reasoning behind a technical decision, not just the decision itself."
 coverAlt: "Architecture document explaining the reasoning behind a technical decision"
 status: published
-publishedAt: 2027-08-16
+publishedAt: 2027-06-14
 tags: casos, producto
 ---
 

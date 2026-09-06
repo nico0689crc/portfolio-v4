@@ -9,7 +9,7 @@ ogTitle: "El diseño que no se puede implementar es un diseño sin terminar"
 ogDescription: "Cómo paso un archivo de Figma a componentes de verdad, siendo la misma persona en los dos lados."
 coverAlt: "Panel de Figma junto a un editor de código mostrando el mismo componente"
 status: published
-publishedAt: 2026-10-19
+publishedAt: 2026-08-31
 tags: diseno-ui, react, producto
 imagePrompt: "Editorial vector illustration, an abstract design canvas transforming into code brackets through a bridge shape, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

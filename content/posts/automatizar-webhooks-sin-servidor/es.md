@@ -9,7 +9,7 @@ ogTitle: "El objetivo no era demostrar que podía escribir el código"
 ogDescription: "Por qué automaticé los webhooks de pago con una herramienta externa en vez de mantener un servidor propio."
 coverAlt: "Diagrama de flujo de un webhook de pago pasando por una automatización sin servidor"
 status: published
-publishedAt: 2027-04-19
+publishedAt: 2027-02-15
 tags: casos, negocio, nextjs
 imagePrompt: "Editorial vector illustration, an abstract payment event flowing through automated gears instead of a server rack, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

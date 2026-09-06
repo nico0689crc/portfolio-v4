@@ -9,7 +9,7 @@ ogTitle: "An onboarding doesn't teach how to use the product, it proves why to u
 ogDescription: "The criteria I use to design a product's first minute, the one that decides whether someone comes back."
 coverAlt: "Welcome screen of a product showing its first concrete value"
 status: published
-publishedAt: 2027-04-26
+publishedAt: 2027-02-22
 tags: producto, diseno-ui
 ---
 

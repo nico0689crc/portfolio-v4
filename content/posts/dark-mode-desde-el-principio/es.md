@@ -9,7 +9,7 @@ ogTitle: "Invertir los colores no es diseñar un tema oscuro"
 ogDescription: "Lo que cambia cuando el modo oscuro se piensa desde la primera pantalla, y no se agrega al final."
 coverAlt: "Misma interfaz mostrada en tema claro y tema oscuro"
 status: published
-publishedAt: 2027-04-12
+publishedAt: 2027-02-08
 tags: diseno-ui, design-systems
 imagePrompt: "Editorial vector illustration, an abstract interface panel split diagonally between a light and a dark version of the same layout, muted amber and deep navy palette, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

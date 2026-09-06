@@ -9,7 +9,7 @@ ogTitle: "A reusable component doesn't know which screen it's on"
 ogDescription: "The real criteria behind atomic design, beyond the atoms-and-molecules naming."
 coverAlt: "Interface components arranged from small pieces up to full screens"
 status: published
-publishedAt: 2026-11-23
+publishedAt: 2026-10-12
 tags: design-systems, react, diseno-ui
 ---
 

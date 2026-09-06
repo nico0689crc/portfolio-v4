@@ -9,7 +9,7 @@ ogTitle: "Un hreflang que apunta a una página que no existe puede tirar abajo l
 ogDescription: "El error más común de SEO multilenguaje, y por qué la solución es más simple de lo que parece."
 coverAlt: "Dos versiones de una página en distintos idiomas conectadas correctamente por hreflang"
 status: published
-publishedAt: 2027-05-17
+publishedAt: 2027-03-15
 tags: seo, nextjs
 imagePrompt: "Editorial vector illustration, two abstract mirrored language flags connected by a single verified link versus a broken dangling one, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

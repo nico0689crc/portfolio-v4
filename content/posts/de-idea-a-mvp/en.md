@@ -9,7 +9,7 @@ ogTitle: "An MVP is not your product with fewer things"
 ogDescription: "How to decide what goes into the first version, with real decisions from a SaaS in production."
 coverAlt: "Product scope diagram showing features inside and outside the first version"
 status: published
-publishedAt: 2026-09-21
+publishedAt: 2026-08-10
 tags: producto, negocio
 ---
 

@@ -9,7 +9,7 @@ ogTitle: "The loudest feedback isn't the most important"
 ogDescription: "The criteria I use to decide which user feedback gets priority and which gets left aside."
 coverAlt: "Feedback message inbox with some items marked as priority"
 status: published
-publishedAt: 2027-05-24
+publishedAt: 2027-03-22
 tags: ux-research, producto
 ---
 

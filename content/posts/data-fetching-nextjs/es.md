@@ -9,7 +9,7 @@ ogTitle: "El mismo dato, pedido un nivel más arriba, cambia el tiempo de carga"
 ogDescription: "Dónde pido los datos en el árbol de componentes de Next.js, y el error de cascada que más se repite."
 coverAlt: "Árbol de componentes con flechas mostrando el orden de pedidos de datos"
 status: published
-publishedAt: 2027-01-25
+publishedAt: 2026-11-30
 tags: nextjs, rendimiento, react
 imagePrompt: "Editorial vector illustration, an abstract waterfall of geometric request arrows cascading down a component tree versus parallel arrows firing together, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

@@ -9,7 +9,7 @@ ogTitle: "A dashboard you check once a month is a dashboard that barely helps"
 ogDescription: "How I connected Search Console and GA4 via API so SEO stopped being a monthly check-in."
 coverAlt: "SEO metrics panel with Search Console and Google Analytics data integrated"
 status: published
-publishedAt: 2027-06-28
+publishedAt: 2027-04-26
 tags: seo, negocio
 ---
 

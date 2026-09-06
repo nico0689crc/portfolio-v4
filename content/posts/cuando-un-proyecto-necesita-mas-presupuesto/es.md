@@ -9,7 +9,7 @@ ogTitle: "El presupuesto no se rompe de golpe. Se rompe una decisión chica a la
 ogDescription: "Cómo detecto a tiempo que un proyecto necesita más presupuesto, antes de que se vuelva una sorpresa."
 coverAlt: "Gráfico de alcance de proyecto creciendo por encima del presupuesto original"
 status: published
-publishedAt: 2027-03-01
+publishedAt: 2026-12-28
 tags: negocio, producto
 imagePrompt: "Editorial vector illustration, an abstract budget bar slowly overflowing its container in small geometric increments, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

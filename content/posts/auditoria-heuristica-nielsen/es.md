@@ -9,7 +9,7 @@ ogTitle: "7 de 10 principios de usabilidad fallaban. Y nadie lo había notado"
 ogDescription: "Cómo hacer una auditoría heurística que encuentre problemas reales, no opiniones de diseño."
 coverAlt: "Lista de verificación de principios de usabilidad sobre una interfaz"
 status: published
-publishedAt: 2026-09-14
+publishedAt: 2026-08-03
 tags: ux-research, casos
 imagePrompt: "Editorial vector illustration, a magnifying glass over an abstract wireframe interface with small warning markers, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---

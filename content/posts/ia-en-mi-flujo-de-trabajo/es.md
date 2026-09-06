@@ -9,7 +9,7 @@ ogTitle: "La IA que más rápido escribe código es la que menos deberías dejar
 ogDescription: "Dónde integro IA en mi flujo de trabajo, y las tres preguntas que uso antes de aceptar lo que genera."
 coverAlt: "Editor de código con una sugerencia de IA junto a una revisión manual"
 status: published
-publishedAt: 2027-01-18
+publishedAt: 2026-11-23
 tags: ia, producto
 imagePrompt: "Editorial vector illustration, an abstract hand guiding a stream of geometric code fragments through a checkpoint gate, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
