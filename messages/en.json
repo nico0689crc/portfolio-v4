@@ -12,7 +12,8 @@
     "desc": "I'm always learning, exploring new technologies, and looking for projects where I can bring real value. If you have an idea, a team, or a challenge, I'd love to hear from you.",
     "email": "Send an email",
     "made": "Made with",
-    "by": "by Nicolás Fernández"
+    "by": "by Nicolás Fernández",
+    "privacy": "Privacy"
   },
   "Home": {
     "title": "Home",
@@ -413,7 +414,9 @@
     "mexxDescription": "UX/UI portfolio case study: redesign of Mexx, Argentina's largest tech retailer. Cart persistence & transparent shipping costs validated with Maze and UXTweak.",
     "gymTitle": "GymSmartAccess — Full Stack Case Study",
     "gymDescription": "Full Stack SaaS portfolio case study. Gym management platform with automated Mercado Pago payments and QR access control, built with Next.js and Supabase.",
-    "jobTitle": "Full Stack Developer & UX/UI Designer"
+    "jobTitle": "Full Stack Developer & UX/UI Designer",
+    "privacyTitle": "Privacy policy",
+    "privacyDescription": "What data this portfolio collects, what it is used for, and how to ask me to delete it. No ads, no profiling and no cross-site tracking."
   },
   "Resume": {
     "title": "Resume",
@@ -516,5 +519,27 @@
       "goToPage": "Go to page {page}",
       "titleSuffix": "Page {page}"
     }
+  },
+  "Privacy": {
+    "title": "Privacy policy",
+    "updated": "Last updated: September 6, 2026",
+    "intro": "This is my personal portfolio. I sell nothing, there are no user accounts, and I don't make a living from your data. Even so, a site that receives messages and measures visits does collect some information, and this page spells out exactly what and why.",
+    "dataTitle": "What is collected",
+    "dataIntro": "Three things only, and none of them start without you doing something first.",
+    "dataContact": "Contact form. I keep the name, email and message you write, because without them I can't reply. Stored alongside each message are your IP address, browser and site language: not to identify you, but to tell a person from a bot when spam arrives.",
+    "dataAnalytics": "Analytics. I use Google Analytics to learn which sections are useful and which nobody reads. It stays off until you accept it in the cookie notice: if you decline, no measurement cookie loads and the site works exactly the same. There are no ads, no profiling and no cross-site tracking.",
+    "dataPreferences": "Browser preferences. Your cookie choice and your light or dark theme are stored in your own browser. Those values never reach a server: they live on your device and clearing the site's data removes them.",
+    "useTitle": "What they're used for",
+    "useBody": "Messages, to reply to you. Analytics, to decide what to write and what to improve. Nothing else. I don't sell data, hand it to advertisers, or build profiles of anyone.",
+    "sharingTitle": "Who else touches them",
+    "sharingBody": "The services that keep the site running, and only for their part of it: Vercel hosts it, Supabase stores the database and files, an email provider notifies me when a message arrives, and Google Analytics receives the measurement if you consented. None of them receive your data to use on their own account.",
+    "retentionTitle": "How long they're kept",
+    "retentionBody": "Messages stay for as long as the conversation is still worth having, and I delete them once it isn't. Analytics is kept in aggregate, under Google Analytics' own retention periods. If you'd rather I deleted your message sooner, just ask.",
+    "rightsTitle": "Your rights",
+    "rightsBody": "You can ask me for access to whatever I hold about you, to correct it, or to erase it, and you don't have to explain why. In Argentina this is covered by Law 25.326 on the Protection of Personal Data; if you're writing from the European Union, the GDPR gives you those rights and a few more. Write to me and I'll handle it.",
+    "contactTitle": "How to reach me",
+    "contactBody": "By email at contacto@nicolasarielfernandez.com, or through the site's contact form.",
+    "changesTitle": "Changes",
+    "changesBody": "If this changes, I update the date in the header. There's no fine print and no hidden previous versions: what you read here is what the site does today."
   }
 }

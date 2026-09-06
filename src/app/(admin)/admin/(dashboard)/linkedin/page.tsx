@@ -1,8 +1,12 @@
+// Next Imports
+import Link from 'next/link'
+
 // Third-party Imports
-import { AlertTriangle, CheckCircle2, Clock, Send } from 'lucide-react'
+import { AlertTriangle, CheckCircle2, Clock, Plug, Send } from 'lucide-react'
 
 // Component Imports
 import { Badge } from '@/components/admin/ui/badge'
+import { Button } from '@/components/admin/ui/button'
 import ShareActions from '@/components/admin/views/linkedin/ShareActions'
 import UnscheduledPosts, { type Candidate } from '@/components/admin/views/linkedin/UnscheduledPosts'
 
@@ -55,8 +59,32 @@ const STATUS_STYLE: Record<string, { className: string; icon: typeof Clock }> = 
  * programada + la cadencia—, así llenar la agenda del archivo entero es un
  * clic por nota en vez de elegir fecha cincuenta veces.
  */
-const AdminLinkedInPage = async () => {
+/** Cuántos días antes de que venza el token empieza a avisar el panel. */
+const EXPIRY_WARNING_DAYS = 10
+
+/** Días que faltan para una fecha. Redondea hacia abajo: avisa de más, nunca de menos. */
+const daysUntil = (iso: string) => Math.floor((new Date(iso).getTime() - new Date().getTime()) / 86_400_000)
+
+const AdminLinkedInPage = async ({
+  searchParams
+}: {
+  searchParams: Promise<{ conectado?: string; error?: string }>
+}) => {
+  const { conectado, error: authError } = await searchParams
   const supabase = await createSupabaseServerClient()
+
+  const { data: account } = await supabase
+    .from('social_accounts')
+    .select('account_name, account_urn, expires_at, scopes')
+    .eq('provider', 'linkedin')
+    .maybeSingle()
+
+  const expiresInDays = account ? daysUntil(account.expires_at) : null
+  // `w_member_social_feed` es un scope aparte del de publicar y "Share on
+  // LinkedIn" no lo incluye. Sin él el posteo sale igual, pero el link no se
+  // puede dejar como comentario: mejor decirlo acá que descubrirlo en un aviso
+  // después de publicar.
+  const canComment = account?.scopes.includes('w_member_social_feed') ?? false
 
   // Dos consultas y el cruce en JS en vez de un embed de PostgREST: la FK es
   // compuesta (post_id, locale) y el volumen es de decenas de filas, así que el
@@ -151,6 +179,53 @@ const AdminLinkedInPage = async () => {
 
   return (
     <div className='flex flex-col gap-6'>
+      {conectado && (
+        <p className='rounded-lg border border-emerald-600/30 bg-emerald-600/10 p-3 text-sm text-emerald-600 dark:text-emerald-500'>
+          Cuenta conectada: {conectado}
+        </p>
+      )}
+      {authError && (
+        <p className='border-destructive/30 bg-destructive/10 text-destructive rounded-lg border p-3 text-sm'>
+          No se pudo conectar: {authError}
+        </p>
+      )}
+
+      <div className='border-border flex flex-wrap items-center justify-between gap-3 rounded-lg border p-4'>
+        <div className='min-w-0'>
+          <p className='text-sm font-medium'>
+            {account ? `Publicando como ${account.account_name ?? account.account_urn}` : 'Sin cuenta conectada'}
+          </p>
+          <p className='text-muted-foreground text-xs'>
+            {account ? (
+              <>
+                El token vence en {expiresInDays} día{expiresInDays === 1 ? '' : 's'}.
+                {!canComment && ' Sin permiso de comentar: el link va en el cuerpo del posteo.'}
+              </>
+            ) : (
+              'Conectá tu cuenta para que el cron pueda publicar.'
+            )}
+          </p>
+        </div>
+        <Button
+          variant={account ? 'outline' : 'default'}
+          render={<Link href='/api/admin/linkedin/connect' prefetch={false} />}
+        >
+          <Plug className='size-4' /> {account ? 'Reconectar' : 'Conectar LinkedIn'}
+        </Button>
+      </div>
+
+      {/* LinkedIn no renueva el token solo con una app self-serve, así que el
+          único aviso posible es este. Sin él, el primer síntoma sería un envío
+          fallado el martes a la mañana. */}
+      {expiresInDays !== null && expiresInDays <= EXPIRY_WARNING_DAYS && (
+        <p className='rounded-lg border border-amber-600/30 bg-amber-600/10 p-3 text-sm text-amber-600 dark:text-amber-500'>
+          <AlertTriangle className='mr-1 inline size-4' />
+          {expiresInDays <= 0
+            ? 'El token venció. Reconectá o los envíos van a fallar.'
+            : `El token vence en ${expiresInDays} días. Reconectá cuando puedas.`}
+        </p>
+      )}
+
       <div>
         <h1 className='text-2xl font-semibold tracking-tight'>LinkedIn</h1>
         <p className='text-muted-foreground text-sm'>
