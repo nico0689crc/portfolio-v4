@@ -14,10 +14,12 @@ import UnscheduledPosts, { type Candidate } from '@/components/admin/views/linke
 // Lib Imports
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import {
+  AGENDA_OFFSET_HOURS,
   SHARE_LOCALE,
   buildMessage,
   linkedInPostUrl,
   nextSlot,
+  postUrl,
   shareLabel,
   type ShareAsset,
   type ShareStatus
@@ -28,12 +30,17 @@ export const metadata = { title: 'LinkedIn' }
 /** Los estados que ocupan un lugar en la agenda; el resto es historial. */
 const ACTIVE: ShareStatus[] = ['scheduled', 'sending', 'queued']
 
-/** `datetime-local` quiere `YYYY-MM-DDTHH:mm` en hora local, sin zona. */
-const toLocalInput = (date: Date) => {
-  const pad = (n: number) => String(n).padStart(2, '0')
-
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`
-}
+/**
+ * `datetime-local` quiere `YYYY-MM-DDTHH:mm` sin zona, y la zona que corresponde
+ * es la de la agenda, no la del server.
+ *
+ * Los getters locales —`getHours()` y compañía— responden al huso del proceso,
+ * que en Vercel es UTC: el turno de las 11 llegaba al input como las 14, y como
+ * el formulario lo reinterpretaba con el offset del navegador, se guardaba a las
+ * 14. En local no se notaba porque la máquina ya está en hora argentina.
+ */
+const toAgendaInput = (date: Date) =>
+  new Date(date.getTime() + AGENDA_OFFSET_HOURS * 3_600_000).toISOString().slice(0, 16)
 
 const formatSlot = (value: string | Date) =>
   new Date(value).toLocaleString('es-AR', {
@@ -102,7 +109,12 @@ const AdminLinkedInPage = async ({
         .order('scheduled_at', { ascending: true }),
       supabase
         .from('post_translations')
-        .select('post_id, title, excerpt, slug, published_at, posts!inner(key, archived_at, cover_path)')
+        .select(
+          // `body` viaja entero porque el texto por defecto arranca con la
+          // entrada de la nota. Son decenas de artículos en una pantalla del
+          // panel: pesa, pero menos que una segunda consulta para el mismo dato.
+          'post_id, title, excerpt, body, slug, published_at, posts!inner(key, archived_at, cover_path)'
+        )
         .eq('locale', SHARE_LOCALE)
         .eq('status', 'published')
     ])
@@ -144,12 +156,15 @@ const AdminLinkedInPage = async ({
             : 'auto') as 'auto' | 'article' | 'document' | 'none',
       documentName: document ? decodeURIComponent(document.url.split('/').pop() ?? '') : null,
       hasCover: post.posts.cover_path !== null,
-      // Con tarjeta el switch no aplica —`deliverShare` lo ignora— así que el
-      // preview tiene que ignorarlo también o promete un texto que no sale.
-      autoMessage: buildMessage(
-        { title: post.title, excerpt: post.excerpt, locale: share.locale, slug: post.slug },
-        share.link_in_first_comment && !article
-      ),
+      // El mismo texto que armaría la entrega, para que el placeholder del
+      // diálogo prometa exactamente lo que va a salir.
+      autoMessage: buildMessage({
+        title: post.title,
+        excerpt: post.excerpt,
+        body: post.body,
+        locale: share.locale,
+        slug: post.slug
+      }),
       label,
       style: STATUS_STYLE[label]
     }]
@@ -177,8 +192,9 @@ const AdminLinkedInPage = async ({
       media: s.media,
       linkInFirstComment: s.link_in_first_comment,
       // Con `message` vacío el texto no se guarda en ningún lado: se arma al
-      // entregar y se pierde. Reconstruirlo acá con lo vigente es lo más
-      // parecido a lo que salió, y para eso sirve `autoMessage`.
+      // entregar y se pierde. Se reconstruye con la misma regla que usó la
+      // entrega —el link en el cuerpo sólo si fue con tarjeta— para que el
+      // historial no muestre un texto que nunca salió así.
       text: s.message?.trim() || s.autoMessage,
       textIsCustom: Boolean(s.message?.trim()),
       postUrl: linkedInPostUrl(s.external_id, s.provider),
@@ -208,13 +224,21 @@ const AdminLinkedInPage = async ({
   // El turno sugerido se apoya en el último ocupado, no en la cantidad: si se
   // canceló uno del medio, el hueco queda libre a propósito y la cadencia sigue
   // corriendo desde el final.
-  const lastTaken = active.length > 0 ? active[active.length - 1].scheduled_at : null
+  //
+  // «Ocupado» es sólo lo que todavía no salió. Un envío ya publicado no reserva
+  // nada, y «Publicar ahora» además le deja como `scheduled_at` el instante en
+  // que salió: anclar ahí arrastraba ese día y esa hora —un domingo a las
+  // 7:15— a toda la agenda que viniera después.
+  const reserved = active.filter(s => s.scheduled_at > new Date().toISOString())
+  const lastTaken = reserved.length > 0 ? reserved[reserved.length - 1].scheduled_at : null
   const slot = nextSlot(lastTaken)
 
   // Sólo se ofrece lo que no tiene un envío en curso. Lo ya publicado sí puede
   // volver a la lista: recircular una nota vieja es el caso más valioso.
   const taken = new Set(pending.map(s => s.post_id))
 
+  // Por fecha de publicación, la más vieja primero: la lista es una cola de
+  // trabajo —el archivo que falta difundir— y se recorre desde el fondo.
   const candidates: Candidate[] = translations
     .filter(t => !taken.has(t.post_id) && t.posts.archived_at === null)
     .sort((a, b) => (a.published_at ?? '').localeCompare(b.published_at ?? ''))
@@ -225,8 +249,14 @@ const AdminLinkedInPage = async ({
       publishedAt: t.published_at,
       lastSharedAt: lastShared.get(t.post_id) ?? null,
       hasCover: t.posts.cover_path !== null,
-      // Con el link: el default es la tarjeta de enlace, y ahí va en el cuerpo.
-      autoMessage: buildMessage({ title: t.title, excerpt: t.excerpt, locale: SHARE_LOCALE, slug: t.slug })
+      autoMessage: buildMessage({
+        title: t.title,
+        excerpt: t.excerpt,
+        body: t.body,
+        locale: SHARE_LOCALE,
+        slug: t.slug
+      }),
+      postUrl: postUrl(SHARE_LOCALE, t.slug)
     }))
 
   return (
@@ -327,7 +357,7 @@ const AdminLinkedInPage = async ({
                         postId={share.post_id}
                         title={share.title}
                         status={share.status}
-                        scheduledAtLocal={toLocalInput(new Date(share.scheduled_at))}
+                        scheduledAtLocal={toAgendaInput(new Date(share.scheduled_at))}
                         message={share.message ?? ''}
                         autoMessage={share.autoMessage}
                         media={share.media}
@@ -357,7 +387,7 @@ const AdminLinkedInPage = async ({
 
           <UnscheduledPosts
             candidates={candidates}
-            nextSlotLocal={toLocalInput(slot)}
+            nextSlotLocal={toAgendaInput(slot)}
             nextSlotLabel={formatSlot(slot)}
           />
         </section>

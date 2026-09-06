@@ -93,7 +93,7 @@ export async function deliverShare(
   try {
     const { data: translation, error: missing } = await supabase
       .from('post_translations')
-      .select('title, excerpt, slug, cover_alt, posts!inner(cover_path)')
+      .select('title, excerpt, body, slug, cover_alt, posts!inner(cover_path)')
       .eq('post_id', claimed.post_id)
       .eq('locale', claimed.locale)
       .single();
@@ -103,6 +103,10 @@ export async function deliverShare(
     const post = {
       title: translation.title,
       excerpt: translation.excerpt,
+      // El arranque de la nota entra en el texto por defecto, así que el cuerpo
+      // viaja hasta acá aunque no se publique nada de él cuando hay mensaje
+      // escrito a mano.
+      body: translation.body,
       locale: claimed.locale,
       slug: translation.slug,
     };
@@ -139,14 +143,13 @@ export async function deliverShare(
         : asset
     );
 
-    // Con tarjeta el link ya viaja en la propia tarjeta, así que mandarlo
-    // además al primer comentario sería duplicarlo. En el cuerpo sí se repite a
-    // propósito: la tarjeta se ve al pie y recién al desplegar el texto, y el
-    // link escrito es lo que se puede copiar, citar y leer en el preview.
+    // El cuerpo nunca lleva la URL: el link sale por la tarjeta o por el primer
+    // comentario. Con tarjeta el comentario además sobra, porque la tarjeta ya
+    // es el link y repetirlo sería duplicarlo.
     const hasArticle = content.some(asset => asset.kind === 'article');
     const linkInFirstComment = claimed.link_in_first_comment && !hasArticle;
 
-    const text = claimed.message?.trim() || buildMessage(post, linkInFirstComment);
+    const text = claimed.message?.trim() || buildMessage(post);
     const firstComment = linkInFirstComment ? buildFirstComment(post) : null;
 
     let externalId: string;
