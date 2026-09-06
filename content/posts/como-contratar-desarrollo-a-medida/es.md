@@ -4,7 +4,7 @@ title: "Cómo contratar desarrollo a medida sin que se te vaya de las manos"
 excerpt: "La mayoría de los proyectos a medida no fracasan por mala tecnología. Fracasan por decisiones que se toman en la primera semana y que nadie revisa hasta que ya es tarde. Esta es la guía que le daría a un cliente antes de la primera reunión."
 focusKeyphrase: cómo contratar desarrollo a medida
 seoTitle: "Cómo contratar desarrollo a medida: guía para no técnicos"
-seoDescription: "Qué preguntar, cómo estructurar el pago y qué señales de alerta mirar antes de contratar un desarrollo de software a medida, explicado sin jerga técnica."
+seoDescription: "Cómo contratar desarrollo a medida sin sorpresas: qué preguntar, cómo estructurar el pago y qué señales de alerta mirar, sin jerga técnica."
 ogTitle: "El contrato no te protege de un mal alcance. La conversación de la semana uno, sí"
 ogDescription: "La guía que le daría a cualquiera antes de contratar su primer desarrollo a medida."
 coverAlt: "Lista de verificación para contratar un desarrollo de software a medida"
@@ -14,7 +14,7 @@ tags: negocio, producto
 imagePrompt: "Editorial vector illustration, an abstract handshake formed from geometric puzzle pieces fitting together, muted amber and deep navy palette on dark background, flat geometric design, generous negative space, subtle grain texture, no text, no letters, wide 1200x630 composition"
 ---
 
-Casi todos los proyectos a medida que vi salir mal no fracasaron por una mala elección de tecnología. Fracasaron por algo que se decidió mal en la primera semana y que nadie volvió a mirar hasta que ya era caro corregirlo.
+Saber cómo contratar desarrollo a medida tiene poco que ver con la tecnología. Casi todos los proyectos que vi salir mal no fracasaron por una mala elección de stack. Fracasaron por algo que se decidió mal en la primera semana y que nadie volvió a mirar hasta que ya era caro corregirlo.
 
 Esta es la guía que le daría a cualquiera antes de su primera reunión con un desarrollador o un estudio, esté del lado que esté.
 
@@ -44,7 +44,7 @@ Podés leer más sobre cómo se traduce esa pregunta en alcance en [de idea a MV
 
 ## Las señales de alerta que aprendí a reconocer
 
-**Un presupuesto que nadie puede explicar cómo se calculó.** Un presupuesto serio se puede desglosar por funcionalidad o por etapa. Si la respuesta es un número sin desglose, ese número probablemente tiene mucho colchón adentro, o muy poco.
+**Un presupuesto que nadie puede explicar cómo se calculó.** Un presupuesto serio se puede desglosar por funcionalidad o por etapa, idealmente con una técnica de estimación explícita como la [planificación basada en evidencia](https://www.joelonsoftware.com/2007/10/26/evidence-based-scheduling/). Si la respuesta es un número sin desglose, ese número probablemente tiene mucho colchón adentro, o muy poco.
 
 **Nadie pregunta por tus usuarios reales.** Si en ningún momento de la conversación preguntan quién va a usar el producto y qué sabe hacer esa persona, el producto que van a construir va a estar pensado para el desarrollador, no para quien lo va a usar todos los días.
 
@@ -58,7 +58,7 @@ Alguien que te pregunta "¿por qué querés esto?" antes de preguntarte "¿cómo
 
 Ninguna de esas señales tiene que ver con el stack tecnológico. Tienen que ver con si la persona del otro lado está pensando en tu negocio o en su próximo sprint.
 
-## Una guía, no una garantía
+## Cómo contratar desarrollo a medida: una guía, no una garantía
 
 Nada de esto elimina el riesgo por completo — ningún proyecto de software está libre de sorpresas. Pero reduce el riesgo más común, que no es técnico: es el de descubrir a mitad de camino que nadie tenía el mismo proyecto en la cabeza.
 

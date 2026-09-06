@@ -3,8 +3,8 @@ slug: questions-to-ask-before-hiring-a-freelance-developer
 title: "The questions to ask before hiring a freelance developer"
 excerpt: "Ten concrete questions for the first call, designed so the answer tells you more about how that person works than about which technologies they know."
 focusKeyphrase: questions to hire a freelancer
-seoTitle: "Checklist: what to ask before hiring a freelance developer"
-seoDescription: "Ten concrete questions to ask on the first call with a freelance developer, with what each answer actually reveals beyond the technical."
+seoTitle: "Questions to hire a freelancer: a checklist"
+seoDescription: "Ten questions to hire a freelancer with judgement, and what each answer actually reveals beyond the technical, on the very first call."
 ogTitle: "The question that reveals the most isn't about technology"
 ogDescription: "Ten questions for the first call with a freelancer, and what each one reveals."
 coverAlt: "Checklist of questions for an interview with a freelance developer"
@@ -13,7 +13,7 @@ publishedAt: 2027-03-15
 tags: negocio, producto
 ---
 
-I've hired freelancers and worked as one, so I've seen this conversation from both sides of the table. The questions that give the most information are almost never technical — anyone can memorize terminology. They're the ones that reveal how that person thinks about a project that doesn't exist yet.
+I've hired freelancers and worked as one, so I've seen this conversation from both sides of the table. The best questions to hire a freelancer are almost never technical: anyone can memorize terminology. They're the ones that reveal how that person thinks about a project that doesn't exist yet.
 
 These are the ten I'd ask today, with what I'm looking for in each answer.
 
@@ -33,7 +33,7 @@ These are the ten I'd ask today, with what I'm looking for in each answer.
 
 ## About the past, told with evidence
 
-**6. "Tell me about a project where something went wrong. What happened?"** Everyone has one. Someone who says nothing ever went wrong either has no real experience or isn't being honest. What matters is what they learned, not that they never failed.
+**6. "Tell me about a project where something went wrong. What happened?"** Everyone has one. Someone who says nothing ever went wrong either has no real experience or isn't being honest. What matters is what they learned, not that they never failed. It's the same logic as the [blameless post mortem culture](https://sre.google/sre-book/postmortem-culture/) Google uses on its infrastructure teams.
 
 **7. "Can you show me something you built that's still running in production today?"** A portfolio of finished projects is different from a project that's still alive, with real users, months or years later. Keeping something running in production teaches things finishing a project doesn't — I wrote about it in detail in [building and running a SaaS](/en/blog/building-and-running-a-saas-in-production).
 
@@ -43,7 +43,7 @@ These are the ten I'd ask today, with what I'm looking for in each answer.
 
 **9. "What happens if the project takes longer than estimated because of something you underestimated?"** This question separates someone who takes responsibility from someone who's going to charge extra for their own miscalculation. The honest answer acknowledges it happens sometimes and that the responsibility for a bad estimate sits with whoever made it.
 
-## The last one, the one that filters the most
+## Of all the questions to hire a freelancer, the one that filters most
 
 **10. "Why shouldn't we work together?"** It's deliberately uncomfortable. Someone who answers honestly — "if you need something delivered in two weeks, I'm not the person, my pace is different" or "if you want someone who only executes without opinions, I'm not a fit" — is giving you real information about fit, instead of selling you a universal compatibility that doesn't exist.
 

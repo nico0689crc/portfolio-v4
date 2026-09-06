@@ -3,8 +3,8 @@ slug: how-to-hire-custom-development
 title: "How to hire custom development without it spiraling out of control"
 excerpt: "Most custom projects don't fail because of bad technology. They fail over decisions made in the first week that nobody revisits until it's already expensive to fix. The guide I'd give a client before the first meeting."
 focusKeyphrase: how to hire custom development
-seoTitle: "How to hire custom software development: a guide for non-technical buyers"
-seoDescription: "What to ask, how to structure payment, and what red flags to watch for before hiring custom software development, explained without jargon."
+seoTitle: "How to hire custom development: a buyer's guide"
+seoDescription: "How to hire custom development without surprises: what to ask, how to structure payment, and what red flags to watch for, explained without jargon."
 ogTitle: "The contract doesn't protect you from bad scope. The week-one conversation does"
 ogDescription: "The guide I'd give anyone before hiring their first custom development."
 coverAlt: "Checklist for hiring a custom software development project"
@@ -13,7 +13,7 @@ publishedAt: 2026-11-30
 tags: negocio, producto
 ---
 
-Almost every custom project I've seen go wrong didn't fail because of a bad technology choice. It failed over something decided badly in the first week that nobody looked at again until fixing it had already gotten expensive.
+Knowing how to hire custom development has little to do with technology. Almost every custom project I've seen go wrong didn't fail because of a bad stack choice. It failed over something decided badly in the first week that nobody looked at again until fixing it had already gotten expensive.
 
 This is the guide I'd give anyone before their first meeting with a developer or a studio, whichever side of the table they're on.
 
@@ -43,7 +43,7 @@ You can read more about how that question turns into scope in [from idea to MVP]
 
 ## The red flags I've learned to recognize
 
-**A quote nobody can explain how it was calculated.** A serious quote can be broken down by feature or by stage. If the answer is a number with no breakdown, that number probably has too much padding in it, or not enough.
+**A quote nobody can explain how it was calculated.** A serious quote can be broken down by feature or by stage, ideally with an explicit estimation technique like [evidence-based scheduling](https://www.joelonsoftware.com/2007/10/26/evidence-based-scheduling/). If the answer is a number with no breakdown, that number probably has too much padding in it, or not enough.
 
 **Nobody asks about your real users.** If at no point in the conversation does anyone ask who's going to use the product and what that person knows how to do, the product they build will be designed for the developer, not for whoever uses it every day.
 
@@ -57,7 +57,7 @@ Someone who asks "why do you want this?" before asking "how do you want it?". So
 
 None of those signs have anything to do with the tech stack. They have to do with whether the person on the other side is thinking about your business or their next sprint.
 
-## A guide, not a guarantee
+## How to hire custom development: a guide, not a guarantee
 
 None of this removes risk entirely — no software project is free of surprises. But it reduces the most common risk, which isn't technical: it's discovering halfway through that nobody had the same project in mind.
 
