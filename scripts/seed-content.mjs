@@ -44,6 +44,12 @@ const FORCE = process.argv.includes('--force');
 /** Sincroniza sólo `ui_message_keys` y `ui_messages`, que es lo que hace falta
  *  al agregar una clave nueva y no toca ninguna entidad. */
 const ONLY_MESSAGES = process.argv.includes('--only-messages');
+
+/** Sincroniza sólo proyectos y case studies (`seedProjects`), que son upserts
+ *  por clave natural (`project_id`, `project_id,locale`, `project_id,slug`) y
+ *  no usan `resolveOrdered`, así que no arriesgan pisar experiencias, FAQs ni
+ *  el resto de las entidades posicionales. */
+const ONLY_PROJECTS = process.argv.includes('--only-projects');
 const ROOT = process.cwd();
 
 // ---------------------------------------------------------------------------
@@ -703,6 +709,17 @@ async function main() {
 
     console.log(`${n} UI string keys x ${LOCALES.length} locales`);
     console.log('ninguna entidad tocada.');
+
+    return;
+  }
+
+  if (ONLY_PROJECTS) {
+    console.log(`${DRY ? 'DRY RUN — ' : ''}seeding projects & case studies only — ${URL}\n`);
+
+    await seedProjects();
+
+    console.log(`${PROJECTS.length} proyectos sincronizados.`);
+    console.log('ninguna otra entidad tocada.');
 
     return;
   }

@@ -1,0 +1,325 @@
+#!/usr/bin/env node
+/**
+ * Informe de SEO: Search Console + Google Analytics 4.
+ *
+ * Se consulta a mano, cuando querés saber cómo viene el posicionamiento. No
+ * guarda nada: la serie histórica ya la guardan Google y Search Console, y
+ * duplicarla acá solo agrega una base que se desincroniza.
+ *
+ * Search Console responde "¿nos encuentran?" (impresiones, clics, posición por
+ * consulta y por página) y GA4 responde "¿de dónde vienen y qué hacen?" (país,
+ * páginas, descargas del CV). Son preguntas distintas y por eso el informe
+ * tiene dos mitades.
+ *
+ * Sin dependencias: el JWT se firma con node:crypto contra la cuenta de
+ * servicio. La clave vive solo en .env (ignorado por git) y nunca en Vercel —
+ * el sitio desplegado no necesita leer métricas.
+ *
+ *   node scripts/seo-report.mjs [--days 28] [--json]
+ */
+
+import {
+  loadEnv,
+  accessToken,
+  request,
+  credentials,
+  heading,
+  table,
+  BOLD,
+  DIM,
+  GREEN,
+  RED,
+  OFF,
+} from './lib/google.mjs';
+
+loadEnv();
+
+const GA4_PROPERTY = (process.env.GA4_PROPERTY_ID ?? '').replace(/^properties\//, '');
+const SC_SITE = process.env.SEARCH_CONSOLE_SITE_URL;
+
+const missing = [
+  !process.env.GOOGLE_SERVICE_ACCOUNT_JSON && 'GOOGLE_SERVICE_ACCOUNT_JSON',
+  !GA4_PROPERTY && 'GA4_PROPERTY_ID',
+  !SC_SITE && 'SEARCH_CONSOLE_SITE_URL',
+].filter(Boolean);
+
+if (missing.length) {
+  console.error(`Faltan variables en .env: ${missing.join(', ')}`);
+  process.exit(1);
+}
+
+// ---------------------------------------------------------------------------
+// Argumentos
+// ---------------------------------------------------------------------------
+
+const argv = process.argv.slice(2);
+const AS_JSON = argv.includes('--json');
+/** Lista las propiedades que la cuenta de servicio alcanza. Es el primer
+ *  diagnostico util ante un 403: casi siempre el nombre de la propiedad no es
+ *  el que uno cree (apex vs www, prefijo de URL vs dominio). */
+const LIST_SITES = argv.includes('--sites');
+const DAYS = Number(argv[argv.indexOf('--days') + 1]) || 28;
+
+/** Search Console cierra el día con 2-3 de retraso; hoy siempre viene vacío. */
+const day = (offset) => new Date(Date.now() - offset * 86_400_000).toISOString().slice(0, 10);
+
+const period = { start: day(DAYS), end: day(1) };
+const previous = { start: day(DAYS * 2), end: day(DAYS + 1) };
+
+// ---------------------------------------------------------------------------
+// Alcances
+// ---------------------------------------------------------------------------
+
+/** Solo lectura: este script nunca escribe. La configuración de GA4 que sí
+ *  necesita escribir vive aparte, en ga4-setup.mjs. */
+const SCOPES = [
+  'https://www.googleapis.com/auth/webmasters.readonly',
+  'https://www.googleapis.com/auth/analytics.readonly',
+];
+
+// ---------------------------------------------------------------------------
+// Clientes
+// ---------------------------------------------------------------------------
+
+let TOKEN;
+
+const call = (url, payload) => request(TOKEN, url, payload);
+
+/** Una consulta a Search Console. `dimensions` vacío devuelve solo los totales. */
+async function searchConsole(dimensions, range, rowLimit = 25) {
+  const url = `https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(
+    SC_SITE,
+  )}/searchAnalytics/query`;
+  const body = await call(url, {
+    startDate: range.start,
+    endDate: range.end,
+    dimensions,
+    rowLimit,
+    // 'all' incluye los días todavía incompletos; sin esto los últimos 3 días
+    // simplemente no existen y el período corto miente hacia abajo.
+    dataState: 'all',
+  });
+  return body.rows ?? [];
+}
+
+async function ga4(dimensions, metrics, range, limit = 25, eventName) {
+  const url = `https://analyticsdata.googleapis.com/v1beta/properties/${GA4_PROPERTY}:runReport`;
+  const body = await call(url, {
+    dateRanges: [{ startDate: range.start, endDate: range.end }],
+    dimensions: dimensions.map((name) => ({ name })),
+    metrics: metrics.map((name) => ({ name })),
+    limit,
+    // Sin este filtro la consulta suma todos los eventos de la propiedad, no
+    // los del evento que se está mirando.
+    ...(eventName
+      ? {
+          dimensionFilter: {
+            filter: { fieldName: 'eventName', stringFilter: { value: eventName } },
+          },
+        }
+      : {}),
+  });
+  return (body.rows ?? []).map((row) => ({
+    keys: (row.dimensionValues ?? []).map((d) => d.value),
+    values: (row.metricValues ?? []).map((m) => Number(m.value)),
+  }));
+}
+
+// ---------------------------------------------------------------------------
+// Salida
+// ---------------------------------------------------------------------------
+
+const pct = (n) => `${(n * 100).toFixed(1)}%`;
+const pos = (n) => n.toFixed(1);
+
+function delta(now, before, { lowerIsBetter = false } = {}) {
+  if (!before) return '';
+  const change = ((now - before) / before) * 100;
+  if (Math.abs(change) < 0.5) return `${DIM}sin cambio${OFF}`;
+  const better = lowerIsBetter ? change < 0 : change > 0;
+  const arrow = change > 0 ? '▲' : '▼';
+  return `${better ? GREEN : RED}${arrow} ${Math.abs(change).toFixed(0)}%${OFF}`;
+}
+
+/** Recorta rutas largas por el medio: el final de la URL es lo que identifica. */
+function shorten(value, max = 52) {
+  const path = value.replace(/^https?:\/\/[^/]+/, '') || '/';
+  if (path.length <= max) return path;
+  return `${path.slice(0, max - 14)}…${path.slice(-13)}`;
+}
+
+// ---------------------------------------------------------------------------
+// Informe
+// ---------------------------------------------------------------------------
+
+async function main() {
+  TOKEN = await accessToken(SCOPES);
+
+  if (LIST_SITES) {
+    const res = await fetch('https://searchconsole.googleapis.com/webmasters/v3/sites', {
+      headers: { authorization: `Bearer ${TOKEN}` },
+    });
+    const body = await res.json();
+    heading('Propiedades visibles para la cuenta de servicio');
+    table(
+      ['propiedad', 'permiso'],
+      (body.siteEntry ?? []).map((s) => [s.siteUrl, s.permissionLevel]),
+    );
+    console.log('');
+    return;
+  }
+
+  const report = { period, previous, searchConsole: {}, ga4: {} };
+
+  // --- Search Console ------------------------------------------------------
+  const [totals, before, queries, pages, countries] = await Promise.all([
+    searchConsole([], period, 1),
+    searchConsole([], previous, 1),
+    searchConsole(['query'], period, 20),
+    searchConsole(['page'], period, 20),
+    searchConsole(['country'], period, 10),
+  ]);
+
+  const t = totals[0];
+  const b = before[0];
+  report.searchConsole = { totals: t ?? null, previous: b ?? null, queries, pages, countries };
+
+  if (!AS_JSON) {
+    console.log(
+      `\n${BOLD}Informe de SEO${OFF}  ${DIM}${period.start} → ${period.end} (${DAYS} días)${OFF}`,
+    );
+
+    heading('Search Console · totales');
+    if (!t || !t.impressions) {
+      console.log(
+        `${DIM}Sin impresiones en el período. Search Console tarda 2-3 días en\n` +
+          `publicar datos y el sitio se indexó hace poco.${OFF}`,
+      );
+    } else {
+      table(
+        ['', 'valor', 'vs. período anterior'],
+        [
+          ['Clics', String(t.clicks), delta(t.clicks, b?.clicks)],
+          ['Impresiones', String(t.impressions), delta(t.impressions, b?.impressions)],
+          ['CTR', pct(t.ctr), delta(t.ctr, b?.ctr)],
+          ['Posición media', pos(t.position), delta(t.position, b?.position, { lowerIsBetter: true })],
+        ],
+      );
+    }
+
+    heading('Search Console · consultas');
+    table(
+      ['consulta', 'impr.', 'clics', 'CTR', 'pos.'],
+      queries.map((r) => [
+        r.keys[0],
+        String(r.impressions),
+        String(r.clicks),
+        pct(r.ctr),
+        pos(r.position),
+      ]),
+    );
+
+    heading('Search Console · páginas');
+    table(
+      ['página', 'impr.', 'clics', 'pos.'],
+      pages.map((r) => [shorten(r.keys[0]), String(r.impressions), String(r.clicks), pos(r.position)]),
+    );
+
+    heading('Search Console · países');
+    table(
+      ['país', 'impr.', 'clics', 'pos.'],
+      countries.map((r) => [
+        r.keys[0].toUpperCase(),
+        String(r.impressions),
+        String(r.clicks),
+        pos(r.position),
+      ]),
+    );
+  }
+
+  // --- GA4 -----------------------------------------------------------------
+  const [audience, byCountry, byPage, events] = await Promise.all([
+    ga4([], ['activeUsers', 'sessions', 'screenPageViews'], period, 1),
+    ga4(['country'], ['activeUsers', 'sessions'], period, 10),
+    ga4(['pagePath'], ['screenPageViews', 'activeUsers'], period, 15),
+    ga4(['eventName'], ['eventCount'], period, 25),
+  ]);
+
+  // `source` es un parámetro del evento cv_download: solo se puede consultar si
+  // está registrado como dimensión personalizada en GA4. Si no lo está, la API
+  // rechaza la dimensión entera, así que se pregunta aparte.
+  let cvBySource = null;
+  let cvHint = null;
+  try {
+    cvBySource = await ga4(['customEvent:source'], ['eventCount'], period, 10, 'cv_download');
+  } catch (err) {
+    cvHint = err.message;
+  }
+
+  report.ga4 = { audience: audience[0]?.values ?? null, byCountry, byPage, events, cvBySource };
+
+  if (AS_JSON) {
+    console.log(JSON.stringify(report, null, 2));
+    return;
+  }
+
+  heading('GA4 · audiencia');
+  if (!audience[0] || !audience[0].values[0]) {
+    console.log(`${DIM}Sin visitas registradas en el período.${OFF}`);
+  } else {
+    const [users, sessions, views] = audience[0].values;
+    table(
+      ['', 'valor'],
+      [
+        ['Usuarios', String(users)],
+        ['Sesiones', String(sessions)],
+        ['Vistas de página', String(views)],
+      ],
+    );
+  }
+
+  heading('GA4 · países');
+  table(
+    ['país', 'usuarios', 'sesiones'],
+    byCountry.map((r) => [r.keys[0], String(r.values[0]), String(r.values[1])]),
+  );
+
+  heading('GA4 · páginas');
+  table(
+    ['ruta', 'vistas', 'usuarios'],
+    byPage.map((r) => [shorten(r.keys[0]), String(r.values[0]), String(r.values[1])]),
+  );
+
+  heading('GA4 · eventos');
+  table(
+    ['evento', 'cantidad'],
+    events.map((r) => [r.keys[0], String(r.values[0])]),
+  );
+
+  heading('GA4 · descargas del CV por versión');
+  if (cvBySource) {
+    table(
+      ['source', 'descargas'],
+      cvBySource.map((r) => [r.keys[0] || '(sin valor)', String(r.values[0])]),
+    );
+  } else {
+    console.log(
+      `${DIM}No disponible: registrá "source" como dimensión personalizada de\n` +
+        `evento en GA4 (Administrar → Definiciones personalizadas) para separar\n` +
+        `el CV resumido del extendido.\n${cvHint}${OFF}`,
+    );
+  }
+
+  console.log('');
+}
+
+main().catch((err) => {
+  console.error(`\n${err.message}\n`);
+  if (err.status === 403) {
+    console.error(
+      'Un 403 casi siempre es acceso, no credenciales: revisá que\n' +
+        `${credentials().client_email}\nesté agregada en GA4 (Lector) y en Search Console (Restringido).\n`,
+    );
+  }
+  process.exit(1);
+});

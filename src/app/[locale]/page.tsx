@@ -4,6 +4,7 @@ import Hero from "@/components/pages/home/hero";
 import ShortAbout from "@/components/pages/home/short-about";
 import Skills from "@/components/pages/home/skills";
 import WhyMe from '@/components/pages/home/why-me';
+import HowWeWork from '@/components/pages/home/how-we-work';
 import { pageMetadata } from '@/lib/page-metadata';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -28,6 +29,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <ShortAbout />
       <Skills />
       <WhyMe />
+      <HowWeWork />
     </>
   );
 }

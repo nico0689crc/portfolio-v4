@@ -18,12 +18,12 @@
     "title": "Inicio",
     "welcome": "Bienvenido a mi portafolio.",
     "hero": {
-      "badge": "Disponible para trabajo remoto",
+      "badge": "Disponible para roles remotos y proyectos a medida",
       "title": {
         "1": "Desarrollo web con",
         "2": "visión de diseño"
       },
-      "subtitle": "Full Stack Developer & UX/UI Designer. Construyo productos digitales escalables, intuitivos y con impacto real.",
+      "subtitle": "Full Stack Developer & UX/UI Designer con +{years} años de experiencia. Construyo software a medida para empresas y productos digitales escalables, intuitivos y con impacto real.",
       "location": "Argentina · Remoto global",
       "cta": {
         "projects": "Ver Proyectos",
@@ -32,7 +32,7 @@
     },
     "shortAbout": {
       "title": "Un poco sobre mí",
-      "desc": "Soy Desarrollador Full Stack y Estudiante de Diseño UX/UI dedicado a construir herramientas digitales robustas y memorables. Aprovecho activamente la Inteligencia Artificial en mis flujos de trabajo para acelerar el desarrollo y mantener un código impecable. Priorizo la escalabilidad del lado del servidor mientras diseño interfaces que el usuario final realmente disfruta utilizar.",
+      "desc": "Soy Desarrollador Full Stack con formación en Diseño UX/UI, dedicado a construir software robusto y memorable — desde proyectos a medida para empresas hasta productos para equipos de ingeniería. Aprovecho activamente la Inteligencia Artificial en mis flujos de trabajo para acelerar el desarrollo y mantener un código impecable. Priorizo la escalabilidad del lado del servidor mientras diseño interfaces que el usuario final realmente disfruta utilizar.",
       "cv": "Descargar CV",
       "cvUrl": "/CV_Nicolas_Fernandez_FullStack_UXUI_ES.pdf"
     },
@@ -52,13 +52,34 @@
         "desc": "Cada línea de código que escribo tiene al usuario en mente. Diseño interfaces intuitivas, accesibles y eficientes que resuelven problemas reales."
       },
       "soft": {
-        "title": "Mentalidad Colaborativa",
-        "desc": "Creo en la comunicación asertiva y el trabajo en equipo como pilares del éxito. Me adapto rápidamente a nuevos desafíos, aportando proactividad y soluciones prácticas al proyecto."
+        "title": "Comunicación y Ownership",
+        "desc": "Trabajo con comunicación directa y asertiva, tomando ownership del proyecto de principio a fin. Me adapto rápido a nuevos contextos, ya sea integrado a un equipo o al frente de un desarrollo a medida."
       },
       "fullstack": {
         "title": "Visión Full Stack",
-        "desc": "Del wireframe al deploy. Manejo todo el ciclo de vida del producto: diseño, frontend, backend, bases de datos e infraestructura."
+        "desc": "Del wireframe al deploy. Manejo todo el ciclo de vida del producto —diseño, frontend, backend, bases de datos e infraestructura— ideal tanto para sumarte a un equipo de ingeniería como para liderar en solitario un proyecto de software a medida."
       }
+    },
+    "howWeWork": {
+      "title": "¿Cómo trabajo?",
+      "subtitle": "Un proceso claro para llevar tu proyecto de punta a punta, ya sea que te sumes a un equipo o me contrates para un desarrollo a medida.",
+      "discovery": {
+        "title": "Descubrimiento",
+        "desc": "Entiendo a fondo tu necesidad y el objetivo del producto antes de escribir una sola línea de código."
+      },
+      "design": {
+        "title": "Diseño y Planificación",
+        "desc": "Defino la arquitectura, el diseño UX/UI y divido el proyecto en etapas claras y medibles."
+      },
+      "development": {
+        "title": "Desarrollo Modular",
+        "desc": "Construyo de forma iterativa, entregando versiones funcionales en ciclos cortos para validar avances."
+      },
+      "delivery": {
+        "title": "Entrega y Mantenimiento",
+        "desc": "Despliego en producción con código limpio, escalable y optimizado, y acompaño el mantenimiento posterior al lanzamiento."
+      },
+      "cta": "Hablemos de tu proyecto"
     }
   },
   "About": {
@@ -307,7 +328,7 @@
         "ideate": "Usé Lean UX Canvas + Matriz FVD para priorizar 10 ideas. Seleccioné 6 soluciones: carrito persistente (sincronización en BD en lugar de localStorage), desglose flotante de costos transparente, etiqueta de producto digital, modal de login exprés, guest checkout y recuperación de carrito por magic link. Descarté 4 ideas de bajo valor: integración de carrito por WhatsApp, calculadora fiscal AFIP, chatbot IA y gamificación.",
         "prototype": "Construí un prototipo interactivo de alta fidelidad en Figma cubriendo ambos flujos completos. Diseñé un sistema de diseño completo: paleta rojo Mexx (#E73E3E), tipografía Inter + Merriweather, sistema de espaciado de 4px, componentes atómicos reutilizables y 6 animaciones UI documentadas (slider hero, modal de auth, desglose de costos, indicador de guardado, estados de carga, transiciones de checkout).",
         "test": "Testing de usabilidad en Maze con 10 participantes en 2 tareas. Tarea 1 (continuidad del carrito): 100% de tasa de éxito, 32s promedio, 80% directness, 0% drop-off. Tarea 2 (transparencia de costos): 85.7% de éxito, 71s promedio, 40% directness, 14.3% drop-off (decisión racional tras revisar el costo — no es fricción). Insight clave: 49-51% de misclick rate revela una oportunidad de mejora en la jerarquía visual del header.",
-        "results": "Ambas hipótesis validadas con datos reales. La persistencia de carrito logró tasa de éxito perfecta; la transparencia de costos eliminó los abandonos por sorpresa. El sistema de diseño es escalable, documentado con tokens CSS y listo para handoff a desarrolladores.",
+        "results": "Ambas hipótesis validadas con datos reales. La persistencia de carrito logró tasa de éxito perfecta; la transparencia de costos eliminó los abandonos por sorpresa. El sistema de diseño es escalable, documentado con tokens CSS y listo para handoff a desarrolladores. Traducido a negocio: cada fricción resuelta es una venta que antes se perdía — en un retailer con el volumen de Mexx, el carrito recuperado y los costos transparentes representan un impacto directo en la tasa de conversión.",
         "metric1": {
           "value": "+15%",
           "label": "Tasa de conversión proyectada"
