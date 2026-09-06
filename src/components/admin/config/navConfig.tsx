@@ -75,6 +75,12 @@ export const navItems: NavItem[] = [
         label: 'Tags',
         href: '/admin/tags',
         activePath: '/admin/tags'
+      },
+      {
+        icon: 'Linkedin',
+        label: 'LinkedIn',
+        href: '/admin/linkedin',
+        activePath: '/admin/linkedin'
       }
     ]
   },

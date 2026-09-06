@@ -899,6 +899,68 @@ export type Database = {
           },
         ]
       }
+      post_social_shares: {
+        Row: {
+          assets: Json | null
+          attempts: number
+          channel: Database["public"]["Enums"]["social_channel"]
+          created_at: string
+          delivered_at: string | null
+          error: string | null
+          external_id: string | null
+          id: string
+          link_in_first_comment: boolean
+          locale: string
+          message: string | null
+          post_id: string
+          scheduled_at: string
+          status: Database["public"]["Enums"]["social_share_status"]
+          updated_at: string
+        }
+        Insert: {
+          assets?: Json | null
+          attempts?: number
+          channel?: Database["public"]["Enums"]["social_channel"]
+          created_at?: string
+          delivered_at?: string | null
+          error?: string | null
+          external_id?: string | null
+          id?: string
+          link_in_first_comment?: boolean
+          locale: string
+          message?: string | null
+          post_id: string
+          scheduled_at: string
+          status?: Database["public"]["Enums"]["social_share_status"]
+          updated_at?: string
+        }
+        Update: {
+          assets?: Json | null
+          attempts?: number
+          channel?: Database["public"]["Enums"]["social_channel"]
+          created_at?: string
+          delivered_at?: string | null
+          error?: string | null
+          external_id?: string | null
+          id?: string
+          link_in_first_comment?: boolean
+          locale?: string
+          message?: string | null
+          post_id?: string
+          scheduled_at?: string
+          status?: Database["public"]["Enums"]["social_share_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_social_shares_post_id_locale_fkey"
+            columns: ["post_id", "locale"]
+            isOneToOne: false
+            referencedRelation: "post_translations"
+            referencedColumns: ["post_id", "locale"]
+          },
+        ]
+      }
       post_translations: {
         Row: {
           body: string
@@ -1704,6 +1766,13 @@ export type Database = {
     Enums: {
       content_status: "draft" | "published"
       message_status: "new" | "read" | "replied" | "spam"
+      social_channel: "linkedin"
+      social_share_status:
+        | "scheduled"
+        | "sending"
+        | "queued"
+        | "failed"
+        | "canceled"
     }
     CompositeTypes: {
       [_ in never]: never
