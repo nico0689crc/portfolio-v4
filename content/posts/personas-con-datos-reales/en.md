@@ -3,7 +3,7 @@ slug: ux-personas-with-real-data
 title: "My UX personas don't have stock photos (and that's why they work)"
 excerpt: "A persona with a made-up name and a stock-photo smile is report decoration. How I build personas that actually change a design decision."
 focusKeyphrase: UX personas
-seoTitle: "UX personas that actually work: how to build them with real data"
+seoTitle: "UX personas built on real data, not stock photos"
 seoDescription: "Why most UX personas are decoration and how to build one that genuinely changes a design decision, with examples from a real case."
 ogTitle: "If your UX persona didn't change your mind, it didn't do its job"
 ogDescription: "How I build personas that get used, instead of ending up pinned to a wall."
@@ -23,15 +23,15 @@ Before building a persona, I ask myself: **what design decision is this going to
 
 If I have no answer, I don't make it. A persona that changes nothing is a graphic design exercise, not a research tool.
 
-## How I build them
+## How I build UX personas from data
 
 In the Mexx redesign I built two personas, Lucas and Sofía, and neither started with "let's imagine a user". They started with patterns that appeared in the survey and the audit.
 
-**Lucas, 26, developer.** Not a fact that "would be nice" to have. It came from several respondents mentioning they bought specific software licenses and had technical knowledge of what they were buying — they knew the difference between versions, compared prices elsewhere first. That pattern matters for design because it means the interface doesn't need to explain what a digital product is, but it does need to be fast and frictionless, because he already decided what to buy before arriving.
+**Lucas, 26, developer.** Not a fact that "would be nice" to have. It came from several respondents mentioning they bought specific software licenses and knew what they were buying. They knew the difference between versions and compared prices elsewhere first. That pattern matters because the interface doesn't need to explain what a digital product is. It needs to be fast and frictionless: he already decided what to buy before arriving.
 
-**Sofía, 32, freelancer.** Came from the opposite pattern: people who researched on their phone during the week and only bought over the weekend on a computer, comparing between open tabs. That pattern is directly what explains why the cart lost between devices was a real problem and not one of my hypotheses.
+**Sofía, 32, freelancer.** Came from the opposite pattern: people who researched on their phone during the week and bought at the weekend on a computer, comparing between tabs. That pattern explains why the cart lost between devices was a real problem and not one of my hypotheses.
 
-Neither has a photo. They have documented behaviour, with each data point's source marked.
+Neither has a photo. They have documented behaviour, with each data point's source marked. That's the difference between a persona and [what Nielsen Norman calls an evidence-based persona](https://www.nngroup.com/articles/persona/): the first describes someone, the second explains why they do what they do.
 
 ## The proof it worked
 
@@ -47,8 +47,10 @@ Fewer decorative details make it easier to see which ones matter.
 
 ## When NOT to build personas
 
-If you have fewer than five or six interviews or responses, there's no pattern yet — there are loose anecdotes. Building a persona out of that is inventing an average from a sample that isn't big enough. Better to say "I don't know what patterns exist yet" than to fabricate a persona that feels rigorous without being so.
+If you have fewer than five or six interviews or responses, there's no pattern yet: there are loose anecdotes. Building a persona out of that is inventing an average from a sample that isn't big enough. Better to say "I don't know what patterns exist yet" than to fabricate a persona that feels rigorous without being so.
 
 Personas are a summary of evidence, not a substitute for it. If you never went back to the original evidence after creating them, you probably did the wrong exercise.
+
+They are also worth revisiting when the product changes. A persona written for an early stage stops describing anyone once the real audience shifts, and keeping it out of habit is worse than having none: it lends the authority of data to an old memory.
 
 The full process where personas fit in — after the survey, before defining the problem — is in [how I design an interface from scratch](/en/blog/how-i-design-an-interface-from-scratch).
