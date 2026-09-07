@@ -28,10 +28,11 @@ export const SHARE_LOCALE = 'es';
  */
 export const CADENCE_DAYS = 3;
 export const SLOT_WEEKDAY = 2; // 0 = domingo
-// Mover este turno es seguro: el cron corre cada hora, así que la corrida
-// siguiente lo levanta igual. Lo que no da es exactitud al minuto — en el
-// camino directo el posteo sale a la hora de esa corrida, no a la de la fila,
-// así que el horario real cae hasta una hora después de lo que dice acá.
+// Atado al `schedule` de `vercel.json`, que corre una vez por día: en el
+// camino directo el posteo sale a la hora de esa corrida y no a la de la fila,
+// así que el cron va diez minutos después de este turno (11 ART = 14 UTC →
+// `10 14 * * *`). Mover esta hora sin mover el cron atrasa cada envío directo
+// un día entero.
 export const SLOT_HOUR = 11;
 // America/Argentina/Buenos_Aires. Tiene que coincidir con `PANEL_TIMEZONE` de
 // `@/lib/admin/dates`, que es con la que el panel muestra estas mismas fechas:
