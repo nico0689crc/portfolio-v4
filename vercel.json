@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/cron/linkedin-share",
-      "schedule": "5 * * * *"
+      "schedule": "10 14 * * *"
     }
   ]
 }
