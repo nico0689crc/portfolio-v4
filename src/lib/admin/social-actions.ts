@@ -10,7 +10,7 @@ import { z } from 'zod'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { BUCKETS, storageUrl } from '@/lib/content/storage'
 import { deliverShare, getDeliveryConfig } from '@/lib/social/deliver'
-import { SHARE_LOCALE, type ShareAsset } from '@/lib/social/shares'
+import { MESSAGE_HARD_LIMIT, SHARE_LOCALE, type ShareAsset } from '@/lib/social/shares'
 import { requireAdmin } from './auth'
 import {
   listCandidates,
@@ -118,7 +118,10 @@ const schema = z.object({
   // interpreta en el huso del server —UTC en Vercel— salvo que se le pegue el
   // offset local que el formulario manda aparte.
   scheduledAt: z.string().min(1, 'Falta la fecha'),
-  message: z.string().trim().max(3000, 'LinkedIn corta a los 3000 caracteres')
+  message: z
+    .string()
+    .trim()
+    .max(MESSAGE_HARD_LIMIT, `LinkedIn corta a los ${MESSAGE_HARD_LIMIT} caracteres`)
 })
 
 /** Une lo que escribió el editor con el offset de su navegador. */

@@ -28,6 +28,10 @@ export const SHARE_LOCALE = 'es';
  */
 export const CADENCE_DAYS = 3;
 export const SLOT_WEEKDAY = 2; // 0 = domingo
+// Mover este turno es seguro: el cron corre cada hora, así que la corrida
+// siguiente lo levanta igual. Lo que no da es exactitud al minuto — en el
+// camino directo el posteo sale a la hora de esa corrida, no a la de la fila,
+// así que el horario real cae hasta una hora después de lo que dice acá.
 export const SLOT_HOUR = 11;
 // America/Argentina/Buenos_Aires. Tiene que coincidir con `PANEL_TIMEZONE` de
 // `@/lib/admin/dates`, que es con la que el panel muestra estas mismas fechas:
@@ -166,6 +170,14 @@ type SharePost = {
  * 3000 que valida el formulario, queda bien lejos.
  */
 export const MESSAGE_MAX_CHARS = 1_500;
+
+/**
+ * El límite duro de LinkedIn, el único que puede hacer fallar el envío.
+ *
+ * Sólo importa cuando el editor escribe su propio texto: el automático corta
+ * mucho antes, en `MESSAGE_MAX_CHARS`.
+ */
+export const MESSAGE_HARD_LIMIT = 3_000;
 
 /** Markdown a texto plano: en el feed no hay nada que renderice el fuente. */
 const plainText = (block: string): string =>

@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useState, useTransition } from 'react'
+import { useRef, useState, useTransition } from 'react'
 
 // Third-party Imports
 import { toast } from 'sonner'
@@ -32,7 +32,7 @@ import FieldHelp from './FieldHelp'
 
 // Lib Imports
 import { scheduleShare, updateShare } from '@/lib/admin/social-actions'
-import { SLOT_TIMEZONE_OFFSET } from '@/lib/social/shares'
+import { MESSAGE_HARD_LIMIT, SLOT_TIMEZONE_OFFSET } from '@/lib/social/shares'
 
 /** El orden es el del select, y el primero es el default de un envío nuevo. */
 const MEDIA_OPTIONS = [
@@ -91,6 +91,10 @@ const ScheduleDialog = ({
   const setOpen = onOpenChange ?? setSelfOpen
   const [media, setMedia] = useState(defaultMedia)
   const [linkInComment, setLinkInComment] = useState(defaultLinkInFirstComment)
+  // Controlado porque el botón de «editar el texto» tiene que poder volcarle el
+  // automático adentro, y el de «volver al automático» vaciarlo.
+  const [message, setMessage] = useState(defaultMessage)
+  const messageRef = useRef<HTMLTextAreaElement>(null)
   const [isPending, startTransition] = useTransition()
   const editing = shareId !== undefined
 
@@ -100,6 +104,32 @@ const ScheduleDialog = ({
   const withCard = media === 'article'
   const linkGoesToComment = linkInComment && !withCard
 
+  // Vacío es el modo automático: el texto se arma al entregar. Escrito —aunque
+  // sea el automático con una palabra cambiada— queda fijo.
+  const isCustom = message.trim() !== ''
+
+  /**
+   * Pasar del automático a un texto propio sin tener que reescribirlo.
+   *
+   * El placeholder muestra lo que va a salir pero no se puede tocar, y cambiar
+   * una palabra obligaba a copiarlo a mano. Esto lo vuelca en el campo tal
+   * cual: es el mismo `buildMessage` que usa la entrega, así que confirmar sin
+   * tocar nada da el mismo posteo, sólo que ya congelado.
+   */
+  const editAutoMessage = () => {
+    setMessage(autoMessage)
+
+    // El foco al final, que es donde se escribe: abrir para retocar y quedar
+    // parado en el carácter cero obliga a un clic más.
+    requestAnimationFrame(() => {
+      const node = messageRef.current
+
+      if (!node) return
+
+      node.focus()
+      node.setSelectionRange(autoMessage.length, autoMessage.length)
+    })
+  }
 
   // El envío va por `useTransition` y no por `useActionState` para poder cerrar
   // el diálogo en el callback: con el estado del action habría que cerrarlo
@@ -252,16 +282,46 @@ const ScheduleDialog = ({
                       ? ': va como primer comentario.'
                       : ', y así no sale en ningún lado.'}{' '}
                   Se arma al entregar, así que una corrección hecha antes del turno igual sale.
-                  Si escribís acá, ese texto queda fijo y ya no se actualiza solo.
+                  Si querés retocarlo, «Editar este texto» lo copia al campo para cambiar lo que
+                  sea; desde ahí queda fijo y ya no se actualiza solo.
                 </FieldHelp>
               </FieldLabel>
+              {/* `field-sizing-content` lo hace crecer con el texto y el
+                  automático pasa los 1000 caracteres: sin techo el campo
+                  empujaba el pie del diálogo fuera de la pantalla. Mismo tope
+                  que el detalle del historial. */}
               <Textarea
                 id={`message-${shareId ?? postId}`}
                 name='message'
                 rows={8}
-                defaultValue={defaultMessage}
+                className='max-h-64 overflow-y-auto'
+                ref={messageRef}
+                value={message}
+                onChange={event => setMessage(event.target.value)}
                 placeholder={autoMessage}
               />
+              <div className='flex items-center justify-between gap-2'>
+                {isCustom ? (
+                  <Button type='button' variant='link' size='xs' className='px-0' onClick={() => setMessage('')}>
+                    Volver al texto automático
+                  </Button>
+                ) : (
+                  <Button type='button' variant='link' size='xs' className='px-0' onClick={editAutoMessage}>
+                    Editar este texto
+                  </Button>
+                )}
+                {isCustom && (
+                  <span
+                    className={
+                      message.length > MESSAGE_HARD_LIMIT
+                        ? 'text-destructive text-xs'
+                        : 'text-muted-foreground text-xs'
+                    }
+                  >
+                    {message.length}/{MESSAGE_HARD_LIMIT}
+                  </span>
+                )}
+              </div>
               {!withCard && !linkGoesToComment && (
                 <p className='text-xs text-amber-600 dark:text-amber-500'>
                   Así el link no sale en ningún lado: activá el primer comentario o elegí tarjeta
@@ -273,7 +333,7 @@ const ScheduleDialog = ({
 
           <DialogFooter>
             <DialogClose render={<Button type='button' variant='outline' />}>Cancelar</DialogClose>
-            <Button type='submit' disabled={isPending}>
+            <Button type='submit' disabled={isPending || message.length > MESSAGE_HARD_LIMIT}>
               {isPending ? 'Guardando…' : editing ? 'Guardar' : 'Programar'}
             </Button>
           </DialogFooter>
