@@ -14,11 +14,21 @@ import type { Database } from '@/types/database';
  * Los dos caminos son distintos en un punto que define el resto:
  *
  * - **LinkedIn directo** publica en el acto. `lifecycleState: PUBLISHED` es lo
- *   único que la API acepta al crear, así que el horario del posteo es el
- *   horario del cron. Corriendo 12:00 UTC a diario, eso son las 9 de la mañana
- *   de Argentina, que es la cadencia acordada.
+ *   único que la API acepta al crear, así que el horario del posteo es el de
+ *   la corrida, no el `scheduled_at` de la fila. Por eso el cron corre cada
+ *   hora y no una vez por día: la corrida que sigue al turno lo levanta, y el
+ *   posteo sale con menos de una hora de atraso sin que el horario del cron
+ *   tenga que estar calzado con `SLOT_HOUR`. Con una corrida diaria había que
+ *   ponerla justo después del turno, y correr cualquiera de los dos sin el
+ *   otro atrasaba cada envío un día entero.
  * - **Buffer** sí agenda, así que se le entrega con anticipación
  *   (`LOOKAHEAD_HOURS`) pasándole la fecha exacta como `dueAt`.
+ *
+ * Correr cada hora tiene un costo que hay que devolver: `BATCH` deja de ser un
+ * tope diario. Una agenda atrasada —el cron caído unos días, turnos cargados
+ * en el pasado— se publicaría a razón de uno por hora, que en LinkedIn es
+ * spam y no tiene arreglo después. `MIN_GAP_HOURS` es lo que lo evita. Buffer
+ * queda afuera de esa guarda porque entregar no es publicar: agenda.
  *
  * Única excepción del proyecto al "la service-role key queda afuera de la
  * app" (ver `src/lib/supabase/server.ts`): este handler no tiene sesión de
@@ -30,6 +40,17 @@ import type { Database } from '@/types/database';
 
 /** Cuánto antes de su turno se le entrega un envío a Buffer, que sí agenda. */
 const LOOKAHEAD_HOURS = 48;
+
+/**
+ * Cuánto tiene que haber pasado desde el último posteo directo para publicar
+ * otro. No es la cadencia —esa la fija la agenda, y es bastante más espaciada—
+ * sino el piso que impide que un backlog se vacíe de golpe.
+ *
+ * Cuenta desde `delivered_at`, así que «Publicar ahora» también corre el
+ * reloj: si se publicó a mano a la mañana, el turno agendado de esa tarde
+ * espera al día siguiente en vez de duplicar la presencia del día.
+ */
+const MIN_GAP_HOURS = 20;
 
 /** Cuántos envíos entrega cada corrida. Tope de seguridad, no cadencia: la cadencia es la agenda. */
 // `||` y no `??`: con la variable vacía, `Number('')` es 0 y el cron no
@@ -67,7 +88,7 @@ export async function GET(request: NextRequest) {
   // se le adelanta el trabajo, LinkedIn se publica cuando de verdad toca. Un
   // único `lte` con el horizonte largo publicaría en LinkedIn hasta dos días
   // antes de tiempo.
-  const [direct, queued] = await Promise.all([
+  const [direct, queued, lastDirect] = await Promise.all([
     supabase
       .from('post_social_shares')
       .select(columns)
@@ -84,15 +105,32 @@ export async function GET(request: NextRequest) {
       .lte('scheduled_at', horizon)
       .order('scheduled_at', { ascending: true })
       .limit(BATCH),
+    // El último posteo directo que de verdad salió. `delivered_at` sólo se
+    // escribe en el éxito, así que un envío fallido no bloquea el reintento.
+    supabase
+      .from('post_social_shares')
+      .select('delivered_at')
+      .eq('provider', 'linkedin')
+      .not('delivered_at', 'is', null)
+      .order('delivered_at', { ascending: false })
+      .limit(1)
+      .maybeSingle(),
   ]);
 
-  const error = direct.error ?? queued.error;
+  const error = direct.error ?? queued.error ?? lastDirect.error;
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  const due = [...(direct.data ?? []), ...(queued.data ?? [])]
+  // Las 23 corridas del día que caen fuera de turno no encuentran nada vencido
+  // y no hacen nada; ésta es la que frena a la vigésimo cuarta cuando la agenda
+  // viene atrasada y hay varias filas vencidas a la vez.
+  const lastAt = lastDirect.data?.delivered_at;
+  const throttled =
+    !!lastAt && Date.now() - new Date(lastAt).getTime() < MIN_GAP_HOURS * 3600 * 1000;
+
+  const due = [...(throttled ? [] : (direct.data ?? [])), ...(queued.data ?? [])]
     .sort((a, b) => a.scheduled_at.localeCompare(b.scheduled_at))
     .slice(0, BATCH);
 
@@ -107,5 +145,7 @@ export async function GET(request: NextRequest) {
     else if (result.claimed) errors.push({ id: share.id, message: result.error });
   }
 
-  return NextResponse.json({ delivered, errors, at: new Date().toISOString() });
+  // `throttled` viaja en la respuesta para que una corrida que no entregó nada
+  // se distinga de una que no tenía nada que entregar.
+  return NextResponse.json({ delivered, errors, throttled, at: new Date().toISOString() });
 }
