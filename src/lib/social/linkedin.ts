@@ -50,6 +50,16 @@ const headers = (config: LinkedInConfig) => ({
   'content-type': 'application/json',
 });
 
+/**
+ * Escapa el texto para el campo `commentary`.
+ *
+ * `commentary` no es texto plano sino «little text format»: menciones, hashtags
+ * y demás se escriben con estos caracteres, y uno suelto que no arma nada válido
+ * no se muestra tal cual — LinkedIn corta el posteo ahí. Un paréntesis en el
+ * tercer párrafo dejaba en el feed sólo los dos primeros, sin error ni aviso.
+ */
+const escapeLittleText = (text: string): string => text.replace(/[\\|{}@[\]()<>#*_~]/g, '\\$&');
+
 /** Los errores de LinkedIn vienen como JSON con `message`, pero no siempre. */
 async function fail(res: Response, what: string): Promise<never> {
   const body = await res.text();
@@ -168,7 +178,7 @@ export async function publishToLinkedIn(
     headers: headers(config),
     body: JSON.stringify({
       author: config.authorUrn,
-      commentary: post.text,
+      commentary: escapeLittleText(post.text),
       visibility: 'PUBLIC',
       distribution: {
         feedDistribution: 'MAIN_FEED',
