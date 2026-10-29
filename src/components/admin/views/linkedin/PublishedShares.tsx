@@ -5,7 +5,7 @@ import { useState, useTransition } from 'react'
 
 // Third-party Imports
 import { toast } from 'sonner'
-import { ExternalLink, MoreHorizontal, ScrollText, Trash2 } from 'lucide-react'
+import { ExternalLink, MoreHorizontal, RefreshCw, ScrollText, Trash2 } from 'lucide-react'
 
 // Component Imports
 import { Button } from '@/components/admin/ui/button'
@@ -29,7 +29,7 @@ import CoverThumb from './CoverThumb'
 
 // Lib Imports
 import { formatPanelDate } from '@/lib/admin/dates'
-import { deleteShare } from '@/lib/admin/social-actions'
+import { deleteShare, republishShare } from '@/lib/admin/social-actions'
 
 /** Cuántos se listan antes de esconder el resto detrás del botón. */
 const PREVIEW = 8
@@ -105,6 +105,7 @@ const PublishedShares = ({ shares }: { shares: PublishedShare[] }) => {
   const [expanded, setExpanded] = useState(false)
   const [detail, setDetail] = useState<PublishedShare | null>(null)
   const [confirming, setConfirming] = useState<PublishedShare | null>(null)
+  const [republishing, setRepublishing] = useState<PublishedShare | null>(null)
   const [isPending, startTransition] = useTransition()
 
   const visible = expanded ? shares : shares.slice(0, PREVIEW)
@@ -122,6 +123,23 @@ const PublishedShares = ({ shares }: { shares: PublishedShare[] }) => {
       toast.success('Borrado del historial')
       setConfirming(null)
       // El detalle puede estar abierto sobre la fila que se acaba de ir.
+      setDetail(current => (current?.id === share.id ? null : current))
+    })
+
+  const republish = (share: PublishedShare) =>
+    startTransition(async () => {
+      const { error, warning } = await republishShare(share.id)
+
+      if (error) {
+        toast.error(error)
+
+        return
+      }
+
+      if (warning) toast.warning(`Publicado de nuevo, con aviso: ${warning}`)
+      else toast.success('Publicado de nuevo')
+
+      setRepublishing(null)
       setDetail(current => (current?.id === share.id ? null : current))
     })
 
@@ -175,6 +193,11 @@ const PublishedShares = ({ shares }: { shares: PublishedShare[] }) => {
                     <span>Ver en LinkedIn</span>
                   </DropdownMenuItem>
                 )}
+
+                <DropdownMenuItem disabled={isPending} onClick={() => setRepublishing(share)}>
+                  <RefreshCw />
+                  <span>Volver a publicar</span>
+                </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
 
@@ -261,6 +284,32 @@ const PublishedShares = ({ shares }: { shares: PublishedShare[] }) => {
                     <ExternalLink className='size-4' /> Ver en LinkedIn
                   </Button>
                 )}
+              </DialogFooter>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={republishing !== null} onOpenChange={open => !open && setRepublishing(null)}>
+        <DialogContent>
+          {republishing && (
+            <>
+              <DialogHeader>
+                <DialogTitle>Volver a publicar</DialogTitle>
+                {/* El posteo viejo no se toca desde acá: si no se borra antes,
+                    quedan dos en el feed. Es lo que hay que leer antes de
+                    confirmar, por eso va primero. */}
+                <DialogDescription>
+                  Esto publica «{republishing.title}» otra vez, ahora mismo, con el texto y la media
+                  vigentes del artículo. El posteo anterior no se borra solo: si sigue en LinkedIn,
+                  borralo primero o van a quedar dos.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <DialogClose render={<Button variant='outline' />}>Cancelar</DialogClose>
+                <Button disabled={isPending} onClick={() => republish(republishing)}>
+                  {isPending ? 'Publicando…' : 'Publicar de nuevo'}
+                </Button>
               </DialogFooter>
             </>
           )}

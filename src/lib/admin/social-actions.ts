@@ -337,6 +337,58 @@ export async function publishNow(id: string): Promise<{ error: string | null; wa
     : { error: result.error, warning: null }
 }
 
+/**
+ * Vuelve a publicar un envío que ya salió.
+ *
+ * Para el posteo que salió mal —sin imagen porque la portada todavía no estaba,
+ * o con el texto cortado—: se borra a mano en LinkedIn y se manda de nuevo. Es
+ * la misma fila y no una nueva, así que el historial no queda con dos entradas
+ * de la misma nota; `external_id` pasa a ser el del posteo nuevo.
+ *
+ * El borrado del viejo no se hace desde acá: la API pide otro scope y, por
+ * Buffer, ni siquiera es nuestro el post. Por eso el panel lo advierte antes.
+ */
+export async function republishShare(
+  id: string
+): Promise<{ error: string | null; warning: string | null }> {
+  await requireAdmin()
+
+  const supabase = await createSupabaseServerClient()
+
+  const { data: share } = await supabase
+    .from('post_social_shares')
+    .select('post_id')
+    .eq('id', id)
+    .eq('status', 'queued')
+    .maybeSingle()
+
+  if (!share) return { error: 'El envío ya no figura como publicado', warning: null }
+
+  // Pasar por `sending` choca con `post_social_shares_pending_idx` si la nota
+  // tiene otro envío en la agenda, y ese error lo traga la reserva de
+  // `deliverShare`. Se pregunta antes para poder decir por qué.
+  const { count } = await supabase
+    .from('post_social_shares')
+    .select('id', { count: 'exact', head: true })
+    .eq('post_id', share.post_id)
+    .in('status', ['scheduled', 'sending'])
+
+  if (count) return { error: 'Ese artículo tiene otro envío en la agenda; publicá ese', warning: null }
+
+  const config = await getDeliveryConfig(supabase)
+
+  const result = await deliverShare(supabase, id, config, {
+    allowedFrom: ['queued'],
+    immediate: true
+  })
+
+  revalidatePath('/admin/linkedin')
+
+  return result.ok
+    ? { error: null, warning: result.warning }
+    : { error: result.error, warning: null }
+}
+
 /** Los valores que aceptan los filtros de la lista. El cliente manda strings sueltos. */
 const CANDIDATE_FILTERS: CandidateFilter[] = [
   'to-schedule',
